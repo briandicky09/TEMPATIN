@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Facade;
 
 return [
 
-    'name' => env('APP_NAME', 'PUSATKOS'),
+    'name' => env('APP_NAME', 'TEMPATIN'),
 
     'env' => env('APP_ENV', 'production'),
 

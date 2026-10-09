@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Detail Booking ' . $booking->booking_code . ' - PUSATKOS')
+@section('title', 'Detail Booking ' . $booking->booking_code . ' - TEMPATIN')
 
 @push('styles')
 <style>

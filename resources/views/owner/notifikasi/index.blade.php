@@ -1,6 +1,6 @@
 @extends('layouts.owner')
 
-@section('title', 'Notifikasi Owner - PUSATKOS')
+@section('title', 'Notifikasi Owner - TEMPATIN')
 
 @push('styles')
 <style>

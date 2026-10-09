@@ -1,6 +1,6 @@
-# PUSATKOS
+# TEMPATIN
 
-PUSATKOS adalah aplikasi web pencarian dan pengelolaan kos berbasis Laravel 12. Aplikasi ini dirancang untuk kebutuhan tiga peran utama:
+TEMPATIN adalah aplikasi web pencarian dan pengelolaan kos berbasis Laravel 12. Aplikasi ini dirancang untuk kebutuhan tiga peran utama:
 
 - Pengunjung umum mencari kos
 - Owner kos mengelola properti dan data listing
@@ -10,7 +10,7 @@ Project ini menggunakan Blade templating, Bootstrap, dan struktur Laravel modern
 
 ## Fitur utama
 
-- Homepage PUSATKOS dengan rekomendasi kos unggulan
+- Homepage TEMPATIN dengan rekomendasi kos unggulan
 - Halaman pencarian dan detail kos publik
 - Login dan registrasi untuk member/owner
 - Area owner untuk:
@@ -72,8 +72,8 @@ phpunit.xml
 1. Clone repository:
 
 ```bash
-git clone https://github.com/briandicky09/PUSATKOS.git
-cd PUSATKOS
+git clone https://github.com/briandicky09/TEMPATIN.git
+cd TEMPATIN
 ```
 
 2. Install dependency PHP:
@@ -102,7 +102,7 @@ Contoh konfigurasi MySQL:
 DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
 DB_PORT=3306
-DB_DATABASE=pusatkos
+DB_DATABASE=tempatin
 DB_USERNAME=root
 DB_PASSWORD=
 ```

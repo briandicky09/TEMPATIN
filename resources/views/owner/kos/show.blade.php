@@ -1,6 +1,6 @@
 @extends('layouts.owner')
 
-@section('title', $kos['title'] . ' - PUSATKOS')
+@section('title', $kos['title'] . ' - TEMPATIN')
 
 @section('owner-content')
 <main id="ts-main">

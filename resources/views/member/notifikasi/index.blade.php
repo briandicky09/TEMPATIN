@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Notifikasi - PUSATKOS')
+@section('title', 'Notifikasi - TEMPATIN')
 
 @push('styles')
 <style>

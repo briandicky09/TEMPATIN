@@ -1,8 +1,8 @@
 {
-    "name": "pusatkos/laravel",
+    "name": "tempatin/laravel",
     "type": "project",
-    "description": "PUSATKOS - Website pencarian kos berbasis Laravel 12.",
-    "keywords": ["laravel", "kos", "pusatkos"],
+    "description": "TEMPATIN - Website pencarian kos berbasis Laravel 12.",
+    "keywords": ["laravel", "kos", "tempatin"],
     "license": "MIT",
     "require": {
         "php": "^8.2",

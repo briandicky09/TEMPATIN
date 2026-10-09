@@ -8,7 +8,7 @@ use Illuminate\View\View;
 class HomeController extends Controller
 {
     /**
-     * Tampilkan halaman utama (homepage) PUSATKOS.
+     * Tampilkan halaman utama (homepage) TEMPATIN.
      */
     public function index(): View
     {
@@ -19,7 +19,7 @@ class HomeController extends Controller
     }
 
     /**
-     * Tampilkan halaman tentang PUSATKOS.
+     * Tampilkan halaman tentang TEMPATIN.
      */
     public function about(): View
     {

@@ -1,4 +1,4 @@
-{{-- Footer PUSATKOS --}}
+{{-- Footer TEMPATIN --}}
 <footer id="ts-footer" @if(!($noMarginFooter ?? false)) id="tentang" @else style="margin-top: 0 !important;" @endif>
 
     <!--MAIN FOOTER CONTENT
@@ -10,10 +10,10 @@
                 <!--Brand and description-->
                 <div class="col-md-4">
                     <a href="{{ route('home') }}" class="brand">
-                        <span class="pk-logo pk-logo--footer"><i class="fa fa-home mr-2"></i>PUSATKOS</span>
+                        <span class="pk-logo pk-logo--footer"><i class="fa fa-home mr-2"></i>TEMPATIN</span>
                     </a>
                     <p class="mb-4">
-                        PUSATKOS membantu kamu menemukan kos impian dengan mudah, cepat, dan aman.
+                        TEMPATIN membantu kamu menemukan kos impian dengan mudah, cepat, dan aman.
                         Ribuan pilihan kos putra, putri, campur, dan eksklusif tersedia di seluruh Indonesia.
                     </p>
                     <a href="{{ route('home') }}#kontak" class="btn btn-outline-dark mb-4">Hubungi Kami</a>
@@ -49,10 +49,10 @@
                         Sidoarjo, Jawa Timur
                         <br>
                         <strong>Email: </strong>
-                        <a href="mailto:hello@pusatkos.id" class="btn-link">hello@pusatkos.id</a>
+                        <a href="mailto:hello@tempatin.id" class="btn-link">hello@tempatin.id</a>
                         <br>
                         <strong>Telepon:</strong>
-                        0800-1-PUSATKOS
+                        0800-1-TEMPATIN
                     </address>
                 </div>
 
@@ -69,7 +69,7 @@
         <div class="container">
 
             <!--Copyright-->
-            <div class="ts-copyright">&copy; {{ date('Y') }} PUSATKOS. Seluruh hak cipta dilindungi.</div>
+            <div class="ts-copyright">&copy; {{ date('Y') }} TEMPATIN. Seluruh hak cipta dilindungi.</div>
 
             <!--Social Icons-->
             <div class="ts-footer-nav">

@@ -74,10 +74,10 @@ class AuthController extends Controller
         $request->session()->regenerate();
 
         if ($user->role === 'owner') {
-            return redirect()->route('owner.dashboard')->with('success', 'Selamat datang di PUSATKOS! Akun Owner Anda berhasil didaftarkan.');
+            return redirect()->route('owner.dashboard')->with('success', 'Selamat datang di TEMPATIN! Akun Owner Anda berhasil didaftarkan.');
         }
 
-        return redirect()->route('member.home')->with('success', 'Selamat datang di PUSATKOS! Akun Anda berhasil didaftarkan.');
+        return redirect()->route('member.home')->with('success', 'Selamat datang di TEMPATIN! Akun Anda berhasil didaftarkan.');
     }
 
     /**

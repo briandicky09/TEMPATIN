@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Invoice ' . (data_get($invoice, 'invoice_number') ?? '') . ' - PUSATKOS')
+@section('title', 'Invoice ' . (data_get($invoice, 'invoice_number') ?? '') . ' - TEMPATIN')
 
 @push('styles')
 <style>
@@ -192,7 +192,7 @@
                         <div class="pk-inv-header">
                             <div class="d-flex justify-content-between align-items-center flex-wrap">
                                 <div class="pk-inv-logo">
-                                    <i class="fa fa-home"></i>PUSATKOS
+                                    <i class="fa fa-home"></i>TEMPATIN
                                 </div>
                                 <div class="text-right">
                                     <div style="font-size: 13px; opacity: 0.9;">Nomor Invoice</div>

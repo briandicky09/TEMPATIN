@@ -233,7 +233,7 @@ class AuthTest extends TestCase
     {
         // Owner login
         $ownerResponse = $this->post('/login', [
-            'email' => 'owner@pusatkos.id',
+            'email' => 'owner@tempatin.id',
             'password' => 'password123',
         ]);
         $ownerResponse->assertRedirect(route('owner.dashboard'));
@@ -260,7 +260,7 @@ class AuthTest extends TestCase
     public function test_13_owner_redirect_ke_area_owner(): void
     {
         $response = $this->post('/login', [
-            'email' => 'owner@pusatkos.id',
+            'email' => 'owner@tempatin.id',
             'password' => 'password123',
         ]);
 
@@ -331,7 +331,7 @@ class AuthTest extends TestCase
      */
     public function test_18_user_yang_sudah_login_dapat_mengakses_area(): void
     {
-        $owner = User::where('email', 'owner@pusatkos.id')->first();
+        $owner = User::where('email', 'owner@tempatin.id')->first();
         $this->actingAs($owner);
         $ownerResponse = $this->get('/owner');
         $ownerResponse->assertStatus(200);
@@ -393,7 +393,7 @@ class AuthTest extends TestCase
      */
     public function test_21_owner_terautentikasi_mengakses_login_diarahkan_ke_owner_area(): void
     {
-        $owner = User::where('email', 'owner@pusatkos.id')->first();
+        $owner = User::where('email', 'owner@tempatin.id')->first();
         $this->actingAs($owner);
 
         $response = $this->get('/login');

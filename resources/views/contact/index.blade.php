@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Kontak - PUSATKOS')
+@section('title', 'Kontak - TEMPATIN')
 
 @section('content')
 <div class="ts-page-wrapper ts-has-bokeh-bg" id="page-top">
@@ -25,7 +25,7 @@
         <section id="page-title" class="py-4">
             <div class="container">
                 <div class="ts-title">
-                    <h1>Hubungi PUSATKOS</h1>
+                    <h1>Hubungi TEMPATIN</h1>
                     <p class="ts-opacity__70">Butuh bantuan atau ingin berbagi pertanyaan seputar kos? Tim kami siap membantu Anda dengan cepat.</p>
                 </div>
             </div>
@@ -47,7 +47,7 @@
                                     <li class="mb-3">
                                         <i class="fa fa-envelope mr-2 text-primary"></i>
                                         <strong>Email Dukungan:</strong><br>
-                                        <a href="mailto:hello@pusatkos.id">hello@pusatkos.id</a>
+                                        <a href="mailto:hello@tempatin.id">hello@tempatin.id</a>
                                     </li>
                                     <li>
                                         <i class="fa fa-clock mr-2 text-primary"></i>
@@ -104,7 +104,7 @@
                     <div class="card-body">
                         <div class="row align-items-center">
                             <div class="col-md-8">
-                                <h3 class="h5 mb-2">Alamat Kantor / Operational PUSATKOS</h3>
+                                <h3 class="h5 mb-2">Alamat Kantor / Operational TEMPATIN</h3>
                                 <p class="mb-0">
                                     Jl. Raya Sidoarjo No. 17, Sidoarjo, Jawa Timur.<br>
                                     Kantor kami melayani konsultasi seputar pencarian kos, kerja sama mitra, dan bantuan akun.

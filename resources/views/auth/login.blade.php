@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Masuk - PUSATKOS')
+@section('title', 'Masuk - TEMPATIN')
 
 @section('content')
 <div class="ts-page-wrapper ts-auth-page" id="page-top">

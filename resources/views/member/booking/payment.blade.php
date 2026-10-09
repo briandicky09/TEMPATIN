@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Pembayaran Booking - PUSATKOS')
+@section('title', 'Pembayaran Booking - TEMPATIN')
 
 @push('styles')
 <style>

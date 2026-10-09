@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', $kos['title'] . ' - PUSATKOS')
+@section('title', $kos['title'] . ' - TEMPATIN')
 
 @section('content')
 <div class="ts-page-wrapper ts-has-bokeh-bg" id="page-top">
@@ -80,7 +80,7 @@
                         <div id="page-title" class="mb-4">
                             <div class="mb-2">
                                 <span class="badge badge-primary px-3 py-1 font-weight-normal" style="border-radius: 4px;">
-                                    <i class="fa fa-check-circle mr-1"></i>PUSATKOS Verified
+                                    <i class="fa fa-check-circle mr-1"></i>TEMPATIN Verified
                                 </span>
                             </div>
 
@@ -443,10 +443,10 @@
                                     <dd class="border-bottom pb-2">{{ $kos['owner_phone'] ?? '-' }}</dd>
 
                                     <dt><i class="fa fa-envelope ts-opacity__30 mr-2"></i>Email:</dt>
-                                    <dd class="border-bottom pb-2"><a href="mailto:{{ $kos['owner_email'] ?? 'hello@pusatkos.id' }}">{{ $kos['owner_email'] ?? 'hello@pusatkos.id' }}</a></dd>
+                                    <dd class="border-bottom pb-2"><a href="mailto:{{ $kos['owner_email'] ?? 'hello@tempatin.id' }}">{{ $kos['owner_email'] ?? 'hello@tempatin.id' }}</a></dd>
 
                                     <dt><i class="fa fa-globe ts-opacity__30 mr-2"></i>Website:</dt>
-                                    <dd><a href="{{ route('home') }}">pusatkos.id</a></dd>
+                                    <dd><a href="{{ route('home') }}">tempatin.id</a></dd>
 
                                 </dl>
 

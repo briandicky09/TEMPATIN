@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Artikel - PUSATKOS')
+@section('title', 'Artikel - TEMPATIN')
 
 @section('content')
 <div class="ts-page-wrapper ts-has-bokeh-bg" id="page-top">
@@ -25,7 +25,7 @@
         <section id="page-title" class="py-4">
             <div class="container">
                 <div class="ts-title">
-                    <h1>Artikel & Tips PUSATKOS</h1>
+                    <h1>Artikel & Tips TEMPATIN</h1>
                     <p class="ts-opacity__70">Panduan praktis untuk mencari kos yang nyaman, aman, dan sesuai kebutuhanmu.</p>
                 </div>
             </div>
@@ -86,7 +86,7 @@
                             <div class="card-body">
                                 <h3 class="h5">Butuh Bantuan?</h3>
                                 <p>
-                                    Tim PUSATKOS siap membantu Anda menemukan kos yang sesuai dengan kebutuhan dan budget.
+                                    Tim TEMPATIN siap membantu Anda menemukan kos yang sesuai dengan kebutuhan dan budget.
                                 </p>
                                 <a href="{{ route('contact') }}" class="btn btn-primary">Hubungi Kami</a>
                             </div>

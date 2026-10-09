@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Tagihan / Invoice - PUSATKOS')
+@section('title', 'Tagihan / Invoice - TEMPATIN')
 
 @push('styles')
 <style>

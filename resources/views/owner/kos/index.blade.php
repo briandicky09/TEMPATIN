@@ -1,6 +1,6 @@
 @extends('layouts.owner')
 
-@section('title', 'Cari Kos - PUSATKOS')
+@section('title', 'Cari Kos - TEMPATIN')
 
 @section('owner-content')
 <main id="ts-main">

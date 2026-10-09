@@ -1,6 +1,6 @@
 @extends('layouts.customer')
 
-@section('title', 'Kos Saya - PUSATKOS')
+@section('title', 'Kos Saya - TEMPATIN')
 
 @section('customer-content')
 

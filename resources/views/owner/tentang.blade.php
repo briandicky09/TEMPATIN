@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Tentang PUSATKOS - PUSATKOS')
+@section('title', 'Tentang TEMPATIN - TEMPATIN')
 
 @section('content')
 <div class="ts-page-wrapper ts-has-bokeh-bg" id="page-top">
@@ -25,8 +25,8 @@
         <section id="page-title" class="py-4">
             <div class="container">
                 <div class="ts-title">
-                    <h1>Tentang PUSATKOS</h1>
-                    <p class="ts-opacity__70">Temukan cara cepat dan aman mencari kos di Indonesia bersama PUSATKOS.</p>
+                    <h1>Tentang TEMPATIN</h1>
+                    <p class="ts-opacity__70">Temukan cara cepat dan aman mencari kos di Indonesia bersama TEMPATIN.</p>
                 </div>
             </div>
         </section>
@@ -36,13 +36,13 @@
                 <div class="row">
                     <div class="col-lg-8">
                         <p class="h3 mb-4">
-                            PUSATKOS hadir untuk membantu pencari kos and pemilik kos terhubung lebih mudah.
+                            TEMPATIN hadir untuk membantu pencari kos and pemilik kos terhubung lebih mudah.
                         </p>
                         <p class="mb-4">
                             Dengan ribuan pilihan kos putra, putri, campur, dan eksklusif, kami menyediakan informasi lengkap yang mempermudah proses pencarian dan booking.
                         </p>
                         <p class="mb-4">
-                            Mulai dari filter kota, kampus, dan lokasi, hingga dukungan customer service yang siap membantu, PUSATKOS bertujuan menjadi platform terbaik untuk hunian kos di Indonesia.
+                            Mulai dari filter kota, kampus, dan lokasi, hingga dukungan customer service yang siap membantu, TEMPATIN bertujuan menjadi platform terbaik untuk hunian kos di Indonesia.
                         </p>
                         <a href="{{ route('register') }}" class="btn btn-primary">Daftar Jadi Mitra Pemilik Kos</a>
                     </div>
@@ -54,7 +54,7 @@
         <section id="about-us-team" class="pb-5 bg-white" style="background-color: #f8f9fa;">
             <div class="container">
                 <div class="ts-title text-center mb-4">
-                    <h2>Tim PUSATKOS</h2>
+                    <h2>Tim TEMPATIN</h2>
                     <p class="ts-text-color-light">Kami bekerja untuk mendukung pengalaman kos yang aman dan nyaman.</p>
                 </div>
                 <div class="row">
@@ -64,7 +64,7 @@
                             <div class="card-body">
                                 <h4>Rina Salsabila</h4>
                                 <p class="mb-2"><i class="fa fa-briefcase mr-2"></i>Founder & CEO</p>
-                                <p>Memimpin PUSATKOS agar pengguna dapat menemukan kos impian mereka dengan mudah.</p>
+                                <p>Memimpin TEMPATIN agar pengguna dapat menemukan kos impian mereka dengan mudah.</p>
                             </div>
                         </div>
                     </div>
@@ -101,7 +101,7 @@
                                 <div class="ts-circle__sm mx-auto" data-bg-image="{{ asset('assets/img/img-person-04.jpg') }}"></div>
                                 <h5 class="my-3">Aditya</h5>
                                 <p class="h5 font-weight-normal ts-text-color-light">
-                                    Cari kos dekat kampus jadi gampang lewat PUSATKOS. Info lengkap dan prosesnya cepat.
+                                    Cari kos dekat kampus jadi gampang lewat TEMPATIN. Info lengkap dan prosesnya cepat.
                                 </p>
                             </div>
                             <div class="ts-slide">

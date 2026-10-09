@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Profil Saya - PUSATKOS')
+@section('title', 'Profil Saya - TEMPATIN')
 
 @push('styles')
 <style>
@@ -97,7 +97,7 @@
     @include('partials.alert')
 
     @php
-        $displayName = $user?->name ?? 'Member PUSATKOS';
+        $displayName = $user?->name ?? 'Member TEMPATIN';
         $displayEmail = $user?->email ?? 'Email belum tersedia';
         $displayRole = ucfirst($user?->role ?? 'member');
     @endphp

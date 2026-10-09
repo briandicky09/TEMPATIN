@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="author" content="PUSATKOS">
-    <meta name="description" content="PUSATKOS - Temukan Kos Impianmu dengan Mudah. Cari kos putra, putri, campur, eksklusif, bulanan dan harian di seluruh kota di Indonesia.">
+    <meta name="author" content="TEMPATIN">
+    <meta name="description" content="TEMPATIN - Temukan Kos Impianmu dengan Mudah. Cari kos putra, putri, campur, eksklusif, bulanan dan harian di seluruh kota di Indonesia.">
 
     <!--CSS -->
     <link rel="stylesheet" href="{{ asset('assets/bootstrap/css/bootstrap.min.css') }}">
@@ -14,10 +14,10 @@
     <link rel="stylesheet" href="{{ asset('assets/css/owl.carousel.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/css/pusatkos.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/tempatin.css') }}">
     @stack('styles')
 
-    <title>@yield('title', 'PUSATKOS - Temukan Kos Impianmu dengan Mudah')</title>
+    <title>@yield('title', 'TEMPATIN - Temukan Kos Impianmu dengan Mudah')</title>
 
 </head>
 

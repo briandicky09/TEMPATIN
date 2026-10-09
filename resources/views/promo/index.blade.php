@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Promo PUSATKOS - Penawaran Kos Terbaik')
+@section('title', 'Promo TEMPATIN - Penawaran Kos Terbaik')
 
 @section('content')
 <div class="ts-page-wrapper ts-has-bokeh-bg" id="page-top">
@@ -29,7 +29,7 @@
                         <div class="ts-box ts-shadow__lg py-5 px-4" data-bg-color="rgba(0,0,0,.55)">
                             <span class="badge badge-primary mb-3">Promo Eksklusif</span>
                             <h1 class="mb-3">Diskon Spesial untuk Kos Impianmu</h1>
-                            <p class="lead ts-opacity__70 mb-4">Temukan pilihan kos putra, putri, campur, dan eksklusif dengan penawaran harga terbaik khusus dari PUSATKOS.</p>
+                            <p class="lead ts-opacity__70 mb-4">Temukan pilihan kos putra, putri, campur, dan eksklusif dengan penawaran harga terbaik khusus dari TEMPATIN.</p>
                             <a href="{{ route('kos.index') }}" class="btn btn-light btn-lg">Cari Kos Promo</a>
                         </div>
                     </div>
@@ -40,7 +40,7 @@
         <section id="promo-benefits" class="ts-block py-5">
             <div class="container">
                 <div class="ts-title text-center mb-5">
-                    <h2>Kenapa Promo PUSATKOS?</h2>
+                    <h2>Kenapa Promo TEMPATIN?</h2>
                     <p class="ts-text-color-light">Penawaran khusus dengan layanan terpercaya, cocok untuk mahasiswa dan penghuni baru yang ingin sewa kos cepat.</p>
                 </div>
 
@@ -63,7 +63,7 @@
                         <div class="ts-card ts-card-body h-100">
                             <i class="fa fa-check-circle fa-3x text-primary mb-3"></i>
                             <h5>Kos Terverifikasi</h5>
-                            <p>Setiap kamar promo sudah diverifikasi oleh tim PUSATKOS.</p>
+                            <p>Setiap kamar promo sudah diverifikasi oleh tim TEMPATIN.</p>
                         </div>
                     </div>
                     <div class="col-sm-6 col-lg-3 mb-4">

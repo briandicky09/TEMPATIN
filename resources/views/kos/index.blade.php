@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Cari Kos - PUSATKOS')
+@section('title', 'Cari Kos - TEMPATIN')
 
 @section('content')
 <div class="ts-page-wrapper ts-has-bokeh-bg" id="page-top">

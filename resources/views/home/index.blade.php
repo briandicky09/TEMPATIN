@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'PUSATKOS - Temukan Kos Impianmu dengan Mudah')
+@section('title', 'TEMPATIN - Temukan Kos Impianmu dengan Mudah')
 
 @section('content')
 <div class="ts-page-wrapper ts-homepage" id="page-top">
@@ -84,7 +84,7 @@
                                 </button>
                             </div>
                             <div class="col-md-4 form-group my-2">
-                                <a href="{{ route('owner.kos.create') }}" class="btn btn-outline-dark w-100">Jadi Mitra PUSATKOS</a>
+                                <a href="{{ route('owner.kos.create') }}" class="btn btn-outline-dark w-100">Jadi Mitra TEMPATIN</a>
                             </div>
                         </div>
 
@@ -220,7 +220,7 @@
 
                 <div class="ts-title text-center">
                     <h2>Kos Terbaru</h2>
-                    <p class="ts-text-color-light">Baru saja bergabung di PUSATKOS</p>
+                    <p class="ts-text-color-light">Baru saja bergabung di TEMPATIN</p>
                 </div>
 
                 <div class="row">
@@ -293,14 +293,14 @@
         </section>
         <!--end latest-listings-->
 
-        <!-- MENGAPA MEMILIH PUSATKOS
+        <!-- MENGAPA MEMILIH TEMPATIN
         =============================================================================================================-->
-        <section id="why-pusatkos" class="ts-block pt-5">
+        <section id="why-tempatin" class="ts-block pt-5">
             <div class="bg-white py-5" data-bg-color="#f6f6f6">
                 <div class="container py-4">
 
                     <div class="ts-title text-center">
-                        <h2>Mengapa Memilih PUSATKOS</h2>
+                        <h2>Mengapa Memilih TEMPATIN</h2>
                         <p class="ts-text-color-light">Cari dan booking kos jadi lebih mudah, cepat, dan aman</p>
                     </div>
 
@@ -315,7 +315,7 @@
                         <div class="col-sm-6 col-lg-3 mb-4">
                             <i class="fa fa-shield-alt fa-3x text-primary mb-3"></i>
                             <h5>Kos Terverifikasi</h5>
-                            <p class="ts-text-color-light">Setiap kos sudah dicek langsung oleh tim PUSATKOS.</p>
+                            <p class="ts-text-color-light">Setiap kos sudah dicek langsung oleh tim TEMPATIN.</p>
                         </div>
 
                         <div class="col-sm-6 col-lg-3 mb-4">
@@ -337,11 +337,11 @@
                 <!--end container-->
             </div>
         </section>
-        <!--end why-pusatkos-->
+        <!--end why-tempatin-->
 
         <!-- NUMBERS / STATISTIK
         =============================================================================================================-->
-        <section id="pusatkos-numbers">
+        <section id="tempatin-numbers">
             <div id="numbers" class="py-5 text-white text-center ts-separate-bg-element" data-bg-color="#000037" data-bg-image="{{ asset('assets/img/bg-apartment-table.jpg') }}" data-bg-image-opacity=".3">
                 <div class="container py-5">
                     <div class="ts-promo-numbers">
@@ -381,7 +381,7 @@
                 </div>
             </div>
         </section>
-        <!--end pusatkos-numbers-->
+        <!--end tempatin-numbers-->
 
         <!-- CARA BOOKING
         =============================================================================================================-->
@@ -442,7 +442,7 @@
                 <div class="container">
                     <div class="ts-title text-center">
                         <h2>Apa Kata Mereka</h2>
-                        <p class="ts-text-color-light">Pengalaman nyata dari penghuni PUSATKOS</p>
+                        <p class="ts-text-color-light">Pengalaman nyata dari penghuni TEMPATIN</p>
                     </div>
 
                     <div class="offset-lg-2 col-lg-8">
@@ -452,7 +452,7 @@
                                 <div class="ts-circle__sm mx-auto" data-bg-image="{{ asset('assets/img/img-person-01.jpg') }}"></div>
                                 <h5 class="my-3">Anisa Rahmawati</h5>
                                 <p class="h5 font-weight-normal ts-text-color-light">
-                                    Cari kos dekat kampus jadi gampang banget lewat PUSATKOS. Filter lokasinya
+                                    Cari kos dekat kampus jadi gampang banget lewat TEMPATIN. Filter lokasinya
                                     akurat dan prosesnya cepat.
                                 </p>
                             </div>
@@ -462,7 +462,7 @@
                                 <h5 class="my-3">Bagus Prasetyo</h5>
                                 <p class="h5 font-weight-normal ts-text-color-light">
                                     Sebagai pemilik kos, saya terbantu sekali. Kamar cepat penuh setelah
-                                    terdaftar di PUSATKOS.
+                                    terdaftar di TEMPATIN.
                                 </p>
                             </div>
 
@@ -552,17 +552,17 @@
 
         <!-- CALL TO ACTION
         =============================================================================================================-->
-        <section id="cta-pusatkos" class="ts-block pt-5">
+        <section id="cta-tempatin" class="ts-block pt-5">
             <div class="text-white text-center py-5 ts-separate-bg-element" data-bg-color="#000037" data-bg-image="{{ asset('assets/img/bg-woman-mobile.jpg') }}" data-bg-image-opacity=".35">
                 <div class="container py-4">
                     <h2>Siap Menemukan Kos Impianmu?</h2>
-                    <h5 class="ts-opacity__50 font-weight-normal mb-4">Ribuan kos berkualitas menunggumu di PUSATKOS</h5>
+                    <h5 class="ts-opacity__50 font-weight-normal mb-4">Ribuan kos berkualitas menunggumu di TEMPATIN</h5>
                     <a href="#cari-kos" class="ts-scroll btn btn-primary btn-lg mr-2">Cari Kos Sekarang</a>
                     <a href="{{ route('owner.kos.create') }}" class="btn btn-outline-light btn-lg">Jadi Mitra</a>
                 </div>
             </div>
         </section>
-        <!--end cta-pusatkos-->
+        <!--end cta-tempatin-->
 
     </main>
     <!--end #ts-main-->

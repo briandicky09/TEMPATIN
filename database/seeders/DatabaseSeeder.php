@@ -23,7 +23,7 @@ class DatabaseSeeder extends Seeder
 
         // 1. Users: Owner & Customer
         $owner = User::firstOrCreate(
-            ['email' => 'owner@pusatkos.id'],
+            ['email' => 'owner@tempatin.id'],
             [
                 'name' => 'Rokhim Wicaksono',
                 'phone' => '08028621673',

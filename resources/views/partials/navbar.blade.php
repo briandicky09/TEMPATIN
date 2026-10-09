@@ -1,4 +1,4 @@
-{{-- Header / Navbar PUSATKOS --}}
+{{-- Header / Navbar TEMPATIN --}}
 <header id="ts-header" class="fixed-top">
 
     <!-- SECONDARY NAVIGATION
@@ -10,11 +10,11 @@
             <div class="navbar-nav d-none d-sm-block">
                 <span class="mr-4">
                     <i class="fa fa-phone-square mr-1"></i>
-                    0800-1-PUSATKOS
+                    0800-1-TEMPATIN
                 </span>
-                <a href="mailto:hello@pusatkos.id">
+                <a href="mailto:hello@tempatin.id">
                     <i class="fa fa-envelope mr-1"></i>
-                    hello@pusatkos.id
+                    hello@tempatin.id
                 </a>
             </div>
 
@@ -45,7 +45,7 @@
             <!--Brand Logo-->
             @php $isMemberArea = request()->is('member*'); @endphp
             <a class="navbar-brand" href="{{ $isMemberArea ? url('/member' . route('home', [], false)) : route('home') }}">
-                <span class="pk-logo"><i class="fa fa-home mr-2"></i>PUSATKOS</span>
+                <span class="pk-logo"><i class="fa fa-home mr-2"></i>TEMPATIN</span>
             </a>
 
             <!--Responsive Collapse Button-->

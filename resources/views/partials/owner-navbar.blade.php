@@ -8,9 +8,9 @@
                     <i class="fa fa-briefcase mr-1"></i>
                     Owner Center
                 </span>
-                <a href="mailto:owner@pusatkos.id">
+                <a href="mailto:owner@tempatin.id">
                     <i class="fa fa-envelope mr-1"></i>
-                    owner@pusatkos.id
+                    owner@tempatin.id
                 </a>
             </div>
 
@@ -24,7 +24,7 @@
     <nav id="ts-primary-navigation" class="navbar navbar-expand-md navbar-light">
         <div class="container">
             <a class="navbar-brand" href="{{ route('owner.dashboard') }}">
-                <span class="pk-logo"><i class="fa fa-building mr-2"></i>PUSATKOS Owner</span>
+                <span class="pk-logo"><i class="fa fa-building mr-2"></i>TEMPATIN Owner</span>
             </a>
 
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarOwner" aria-controls="navbarOwner" aria-expanded="false" aria-label="Toggle navigation">
