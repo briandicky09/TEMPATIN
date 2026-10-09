@@ -1,33 +1,28 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="ts-page-wrapper ts-has-bokeh-bg" id="page-top">
+<div class="ts-page-wrapper" style="background-color: var(--surface-page-canvas); min-height: 100vh;">
 
     @include('partials.navbar')
-
     @include('partials.alert')
 
-    <section class="pt-5 mt-5 pb-5" style="margin-top: 90px;">
+    <main style="padding-top: 100px; padding-bottom: 80px;">
         <div class="container">
             <div class="row">
-
-                <!--Sidebar Customer-->
-                <div class="col-lg-3">
+                <!-- Sidebar Customer -->
+                <div class="col-lg-3 mb-4 mb-lg-0">
                     @include('partials.customer-sidebar')
                 </div>
 
-                <!--Content-->
+                <!-- Content Area -->
                 <div class="col-lg-9">
                     @yield('customer-content')
                 </div>
-
             </div>
-            <!--end row-->
         </div>
-        <!--end container-->
-    </section>
+    </main>
 
-    @include('partials.footer', ['noMarginFooter' => true])
+    @include('partials.footer')
 
 </div>
 @endsection

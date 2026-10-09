@@ -1,208 +1,205 @@
 @extends('layouts.owner')
 
-@section('title', 'Edit Kos - TEMPATIN')
+@section('title', 'Edit Kos: ' . $kos['title'] . ' - TEMPATIN')
 
 @section('owner-content')
-<main id="ts-main">
-    <section class="py-5">
-        <div class="container">
-            <div class="d-flex justify-content-between align-items-start mb-4">
+<div class="container">
+    <div class="row">
+
+        <!-- OWNER SIDEBAR -->
+        <div class="col-lg-3 mb-4 mb-lg-0">
+            @include('partials.owner-sidebar')
+        </div>
+
+        <!-- MAIN FORM CONTENT -->
+        <div class="col-lg-9">
+
+            <!-- HEADER -->
+            <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-3">
                 <div>
-                    <h2 class="mb-1">Edit Kos</h2>
-                    <p class="text-muted mb-0">Perbarui data properti kos Anda agar tetap relevan.</p>
+                    <div class="d-inline-flex align-items-center mb-2 px-2 py-1 rounded" style="background-color: var(--color-sky-tint); color: var(--color-notion-blue); font-size: 11px; font-weight: 600;">
+                        <i class="fa fa-edit mr-1"></i> PERBARUI PROPERTI
+                    </div>
+                    <h1 style="font-family: var(--font-serif); font-size: 1.85rem; font-weight: 700; color: var(--color-midnight-ink); margin-bottom: 4px;">
+                        Edit {{ $kos['title'] }}
+                    </h1>
+                    <p style="font-size: 14px; color: var(--color-stone); margin-bottom: 0;">
+                        Perbarui informasi kamar, status operasional, harga sewa, foto, dan fasilitas.
+                    </p>
                 </div>
-                <a href="{{ route('owner.kos.show', $kos['slug']) }}" class="btn btn-outline-secondary">Kembali</a>
+                <div>
+                    <a href="{{ route('owner.kos.show', $kos['slug']) }}" class="btn btn-sm" style="background-color: var(--surface-page-canvas); color: var(--color-midnight-ink); border: var(--border-hairline); font-weight: 600; font-size: 13px; border-radius: var(--radius-buttons); padding: 8px 16px;">
+                        <i class="fa fa-arrow-left mr-1"></i> Kembali ke Detail
+                    </a>
+                </div>
             </div>
 
-            <div class="card ts-card border-0 shadow-sm">
-                <div class="card-body p-4 p-md-5">
-                    <form id="form-edit-kos" class="ts-form" method="POST" action="{{ route('owner.kos.update', $kos['slug']) }}" enctype="multipart/form-data">
-                        @csrf
-                        @method('PUT')
+            <!-- FORM WRAPPER -->
+            <div class="p-4 p-md-5 rounded" style="background-color: #ffffff; border: var(--border-hairline); border-radius: var(--radius-cards);">
+                <form id="form-edit-kos" method="POST" action="{{ route('owner.kos.update', $kos['slug']) }}" enctype="multipart/form-data">
+                    @csrf
+                    @method('PUT')
 
-                        <div class="border rounded p-3 p-md-4 mb-4">
-                            <h6 class="font-weight-bold text-dark mb-3">Informasi Dasar</h6>
-
-                            <div class="form-row">
-                                <div class="col-md-6 form-group mb-3">
-                                    <label class="ts-text-small font-weight-bold text-muted mb-1">Nama Kos</label>
-                                    <input type="text" class="form-control" name="title" value="{{ old('title', $kos['title']) }}" placeholder="Contoh: Kos Putri Melati" required>
-                                </div>
-
-                                <div class="col-md-6 form-group mb-3">
-                                    <label class="ts-text-small font-weight-bold text-muted mb-1">Tipe Kos</label>
-                                    <select class="custom-select" name="type" required>
-                                        <option value="">Pilih Tipe</option>
-                                        <option value="Putra" {{ old('type', $kos['type']) === 'Putra' ? 'selected' : '' }}>Putra</option>
-                                        <option value="Putri" {{ old('type', $kos['type']) === 'Putri' ? 'selected' : '' }}>Putri</option>
-                                        <option value="Campur" {{ old('type', $kos['type']) === 'Campur' ? 'selected' : '' }}>Campur</option>
-                                        <option value="Eksklusif" {{ old('type', $kos['type']) === 'Eksklusif' ? 'selected' : '' }}>Eksklusif</option>
-                                    </select>
-                                </div>
-
-                                <div class="col-md-6 form-group mb-3">
-                                    <label class="ts-text-small font-weight-bold text-muted mb-1">Kota</label>
-                                    <input type="text" class="form-control" name="city" value="{{ old('city', $kos['city']) }}" placeholder="Contoh: Surabaya" required>
-                                </div>
-
-                                <div class="col-md-6 form-group mb-3">
-                                    <label class="ts-text-small font-weight-bold text-muted mb-1">Harga / Bulan</label>
-                                    <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text">Rp</span>
-                                        </div>
-                                        <input type="number" class="form-control" name="price" value="{{ old('price', $kos['price']) }}" placeholder="850000" required>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-6 form-group mb-3">
-                                    <label class="ts-text-small font-weight-bold text-muted mb-1">Status Properti</label>
-                                    <select class="custom-select" name="status">
-                                        <option value="active" {{ old('status', $kos['status']) === 'active' ? 'selected' : '' }}>Aktif</option>
-                                        <option value="inactive" {{ old('status', $kos['status']) === 'inactive' ? 'selected' : '' }}>Nonaktif</option>
-                                    </select>
-                                </div>
-
-                                <div class="col-md-6 form-group mb-0">
-                                    <label class="ts-text-small font-weight-bold text-muted mb-1">Alamat Lengkap</label>
-                                    <input type="text" class="form-control" name="address" value="{{ old('address', $kos['address'] ?? '') }}" placeholder="Jl. Raya Sidoarjo No. 17">
-                                </div>
-                            </div>
+                    <!-- SECTION 1: INFORMASI DASAR -->
+                    <div class="mb-5">
+                        <div class="d-flex align-items-center mb-3 pb-2 border-bottom" style="border-color: rgba(0,0,0,0.06) !important;">
+                            <span class="mr-2" style="width: 24px; height: 24px; border-radius: 50%; background-color: var(--color-sky-tint); color: var(--color-notion-blue); border: 1px solid rgba(0, 117, 222, 0.2); display: inline-flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700;">1</span>
+                            <h2 style="font-size: 1.1rem; font-weight: 700; color: var(--color-midnight-ink); margin-bottom: 0;">Informasi Properti</h2>
                         </div>
 
-                        <div class="border rounded p-3 p-md-4 mb-4">
-                            <h6 class="font-weight-bold text-dark mb-3">Deskripsi & Foto Sampul</h6>
-
-                            <div class="form-group mb-3">
-                                <label class="ts-text-small font-weight-bold text-muted mb-1">Deskripsi</label>
-                                <textarea class="form-control" name="description" rows="4" placeholder="Ceritakan keunggulan kos kamu...">{{ old('description', $kos['description'] ?? '') }}</textarea>
+                        <div class="row">
+                            <div class="col-md-6 form-group mb-3">
+                                <label style="font-size: 13px; font-weight: 600; color: var(--color-midnight-ink);">Nama Kos <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control @error('title') is-invalid @enderror" name="title" value="{{ old('title', $kos['title']) }}" placeholder="Nama Kos" required style="border-radius: var(--radius-inputs); border: var(--border-hairline); font-size: 14px; padding: 10px 14px;">
+                                @error('title') <div class="invalid-feedback">{{ $message }}</div> @enderror
                             </div>
 
-                            <div class="form-group mb-0">
-                                <label class="ts-text-small font-weight-bold text-muted mb-1">Foto Sampul Utama (Thumbnail)</label>
-                                <input type="file" class="form-control-file" name="thumbnail">
-                                <small class="form-text text-muted">Biarkan kosong jika tidak ingin mengganti foto sampul utama saat ini.</small>
+                            <div class="col-md-6 form-group mb-3">
+                                <label style="font-size: 13px; font-weight: 600; color: var(--color-midnight-ink);">Tipe Kos <span class="text-danger">*</span></label>
+                                <select class="form-control @error('type') is-invalid @enderror" name="type" required style="border-radius: var(--radius-inputs); border: var(--border-hairline); font-size: 14px; height: 44px; padding: 0 14px;">
+                                    <option value="">Pilih Tipe Kos...</option>
+                                    <option value="Putra" {{ old('type', $kos['type']) === 'Putra' ? 'selected' : '' }}>Kos Putra</option>
+                                    <option value="Putri" {{ old('type', $kos['type']) === 'Putri' ? 'selected' : '' }}>Kos Putri</option>
+                                    <option value="Campur" {{ old('type', $kos['type']) === 'Campur' ? 'selected' : '' }}>Kos Campur</option>
+                                    <option value="Eksklusif" {{ old('type', $kos['type']) === 'Eksklusif' ? 'selected' : '' }}>Kos Eksklusif</option>
+                                </select>
+                                @error('type') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                            </div>
+
+                            <div class="col-md-6 form-group mb-3">
+                                <label style="font-size: 13px; font-weight: 600; color: var(--color-midnight-ink);">Kota / Kabupaten <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control @error('city') is-invalid @enderror" name="city" value="{{ old('city', $kos['city']) }}" placeholder="Surabaya" required style="border-radius: var(--radius-inputs); border: var(--border-hairline); font-size: 14px; padding: 10px 14px;">
+                                @error('city') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                            </div>
+
+                            <div class="col-md-6 form-group mb-3">
+                                <label style="font-size: 13px; font-weight: 600; color: var(--color-midnight-ink);">Harga Sewa / Bulan (Rp) <span class="text-danger">*</span></label>
+                                <input type="number" class="form-control @error('price') is-invalid @enderror" name="price" value="{{ old('price', $kos['price']) }}" placeholder="850000" required style="border-radius: var(--radius-inputs); border: var(--border-hairline); font-size: 14px; padding: 10px 14px;">
+                                @error('price') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                            </div>
+
+                            <div class="col-md-6 form-group mb-3">
+                                <label style="font-size: 13px; font-weight: 600; color: var(--color-midnight-ink);">Status Ketersediaan</label>
+                                <select class="form-control" name="status" style="border-radius: var(--radius-inputs); border: var(--border-hairline); font-size: 14px; height: 44px; padding: 0 14px;">
+                                    <option value="active" {{ old('status', $kos['status']) === 'active' ? 'selected' : '' }}>Aktif (Menerima Pesanan)</option>
+                                    <option value="inactive" {{ old('status', $kos['status']) === 'inactive' ? 'selected' : '' }}>Nonaktif (Kamar Penuh / Renovasi)</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-6 form-group mb-3">
+                                <label style="font-size: 13px; font-weight: 600; color: var(--color-midnight-ink);">Alamat Lengkap</label>
+                                <input type="text" class="form-control @error('address') is-invalid @enderror" name="address" value="{{ old('address', $kos['address'] ?? '') }}" placeholder="Alamat kos" style="border-radius: var(--radius-inputs); border: var(--border-hairline); font-size: 14px; padding: 10px 14px;">
+                                @error('address') <div class="invalid-feedback">{{ $message }}</div> @enderror
                             </div>
                         </div>
+                    </div>
 
-                        <div class="border rounded p-3 p-md-4 mb-4">
-                            <h6 class="font-weight-bold text-dark mb-1">Galeri Foto Kos</h6>
-                            <p class="text-muted small mb-3">Kelola foto yang sudah ada atau tambahkan foto baru ke galeri kos.</p>
+                    <!-- SECTION 2: DESKRIPSI & THUMBNAIL -->
+                    <div class="mb-5">
+                        <div class="d-flex align-items-center mb-3 pb-2 border-bottom" style="border-color: rgba(0,0,0,0.06) !important;">
+                            <span class="mr-2" style="width: 24px; height: 24px; border-radius: 50%; background-color: var(--color-sky-tint); color: var(--color-notion-blue); border: 1px solid rgba(0, 117, 222, 0.2); display: inline-flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700;">2</span>
+                            <h2 style="font-size: 1.1rem; font-weight: 700; color: var(--color-midnight-ink); margin-bottom: 0;">Deskripsi & Foto Sampul</h2>
+                        </div>
 
-                            @if(isset($kos->photos) && $kos->photos->isNotEmpty())
-                                <h6 class="font-weight-bold text-dark small text-uppercase mb-2">Foto Saat Ini:</h6>
-                                <p class="text-muted small mb-3">Centang "Hapus" pada foto yang ingin dihapus dari galeri.</p>
-                                <div class="row mb-4">
-                                    @foreach($kos->photos as $photo)
-                                        <div class="col-6 col-md-4 col-lg-3 mb-3">
-                                            <div class="card h-100 border shadow-none overflow-hidden text-center" id="photo-card-{{ $photo->id }}">
-                                                <a href="{{ $photo->url }}" target="_blank">
-                                                    <img src="{{ $photo->url }}" alt="Foto Kos" class="card-img-top" style="height: 130px; object-fit: cover;">
-                                                </a>
-                                                <div class="card-body p-2 bg-light">
-                                                    <div class="custom-control custom-checkbox">
-                                                        <input type="checkbox"
-                                                               class="custom-control-input"
-                                                               id="delete-photo-{{ $photo->id }}"
-                                                               name="delete_photos[]"
-                                                               value="{{ $photo->id }}"
-                                                               {{ in_array($photo->id, old('delete_photos', [])) ? 'checked' : '' }}>
-                                                        <label class="custom-control-label text-danger font-weight-bold small" for="delete-photo-{{ $photo->id }}" style="cursor: pointer;">
-                                                            <i class="fa fa-trash mr-1"></i>Hapus
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    @endforeach
-                                </div>
-                            @else
-                                <p class="text-muted small mb-3">Belum ada foto galeri yang tersimpan untuk kos ini.</p>
+                        <div class="form-group mb-3">
+                            <label style="font-size: 13px; font-weight: 600; color: var(--color-midnight-ink);">Deskripsi Kos</label>
+                            <textarea class="form-control @error('description') is-invalid @enderror" name="description" rows="4" style="border-radius: var(--radius-inputs); border: var(--border-hairline); font-size: 14px; padding: 12px 14px; line-height: 1.5;">{{ old('description', $kos['description'] ?? '') }}</textarea>
+                            @error('description') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                        </div>
+
+                        <div class="d-flex align-items-center gap-3 p-3 rounded" style="background-color: var(--surface-page-canvas); border: 1px solid rgba(0,0,0,0.06);">
+                            @if(!empty($kos['thumbnail']))
+                                <img src="{{ asset($kos['thumbnail']) }}" alt="{{ $kos['title'] }}" class="rounded mr-3" style="width: 72px; height: 72px; object-fit: cover; border: var(--border-hairline);">
                             @endif
-
-                            <hr class="my-3">
-
-                            <h6 class="font-weight-bold text-dark small text-uppercase mb-2">Tambah Foto Baru:</h6>
-                            <div class="form-group mb-3">
-                                <label class="btn btn-outline-primary mb-2" style="cursor: pointer;">
-                                    <i class="fa fa-folder-open mr-2"></i>Pilih Foto Baru
-                                    <input type="file" class="d-none" id="photos-input" name="photos[]" multiple accept="image/jpeg,image/png,image/jpg,image/webp">
-                                </label>
-                                <span id="photos-count-label" class="text-muted small ml-2">Belum ada foto baru dipilih.</span>
-                                <small class="form-text text-muted">Format: JPG, JPEG, PNG, WEBP. Maksimal 2MB per file.</small>
+                            <div class="flex-grow-1">
+                                <label style="font-size: 13px; font-weight: 600; color: var(--color-midnight-ink); margin-bottom: 2px;">Ganti Foto Sampul Utama</label>
+                                <input type="file" class="form-control-file @error('thumbnail') is-invalid @enderror" name="thumbnail" accept="image/*" style="font-size: 12.5px;">
+                                <small class="text-muted d-block mt-1">Kosongkan jika ingin mempertahankan foto saat ini.</small>
                             </div>
+                        </div>
+                    </div>
 
-                            @error('photos')
-                                <div class="alert alert-danger py-2 mb-3">{{ $message }}</div>
-                            @enderror
-                            @error('photos.*')
-                                <div class="alert alert-danger py-2 mb-3">{{ $message }}</div>
-                            @enderror
-                            @error('delete_photos')
-                                <div class="alert alert-danger py-2 mb-3">{{ $message }}</div>
-                            @enderror
-                            @error('delete_photos.*')
-                                <div class="alert alert-danger py-2 mb-3">{{ $message }}</div>
-                            @enderror
-
-                            <!-- Container Preview Foto Baru Sebelum Submit -->
-                            <div id="photos-preview-container" class="row"></div>
+                    <!-- SECTION 3: GALERI FOTO -->
+                    <div class="mb-5">
+                        <div class="d-flex align-items-center mb-3 pb-2 border-bottom" style="border-color: rgba(0,0,0,0.06) !important;">
+                            <span class="mr-2" style="width: 24px; height: 24px; border-radius: 50%; background-color: var(--color-sky-tint); color: var(--color-notion-blue); border: 1px solid rgba(0, 117, 222, 0.2); display: inline-flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700;">3</span>
+                            <h2 style="font-size: 1.1rem; font-weight: 700; color: var(--color-midnight-ink); margin-bottom: 0;">Galeri Foto Properti</h2>
                         </div>
 
-                        <div class="border rounded p-3 p-md-4 mb-4">
-                            <div class="d-flex justify-content-between align-items-center mb-3">
-                                <div>
-                                    <h6 class="font-weight-bold text-dark mb-1">Fasilitas Kos</h6>
-                                    <p class="text-muted small mb-0">Pilih fasilitas yang tersedia pada properti kos ini.</p>
-                                </div>
+                        @if(isset($kos->photos) && $kos->photos->isNotEmpty())
+                            <div class="mb-3">
+                                <span style="font-size: 12px; font-weight: 700; color: var(--color-stone); text-transform: uppercase;">Foto Saat Ini:</span>
+                                <span style="font-size: 12px; color: var(--color-stone); display: block;">Centang kotak di bawah foto untuk menghapus dari galeri.</span>
                             </div>
-
-                            @error('facilities')
-                                <div class="alert alert-danger py-2 mb-3">{{ $message }}</div>
-                            @enderror
-                            @error('facilities.*')
-                                <div class="alert alert-danger py-2 mb-3">{{ $message }}</div>
-                            @enderror
-
-                            @php
-                                $selectedFacilities = old('facilities', isset($kos->facilities) ? $kos->facilities->pluck('id')->toArray() : []);
-                            @endphp
-
-                            <div class="row">
-                                @forelse($facilities as $facility)
+                            <div class="row mb-4">
+                                @foreach($kos->photos as $photo)
                                     <div class="col-6 col-md-4 col-lg-3 mb-3">
-                                        <div class="custom-control custom-checkbox">
-                                            <input type="checkbox"
-                                                   class="custom-control-input"
-                                                   id="facility-{{ $facility->id }}"
-                                                   name="facilities[]"
-                                                   value="{{ $facility->id }}"
-                                                   {{ in_array($facility->id, $selectedFacilities) ? 'checked' : '' }}>
-                                            <label class="custom-control-label font-weight-normal text-dark" for="facility-{{ $facility->id }}" style="cursor: pointer;">
-                                                {{ $facility->name }}
+                                        <div class="p-2 rounded text-center" style="background-color: var(--surface-page-canvas); border: var(--border-hairline);">
+                                            <img src="{{ is_object($photo) ? $photo->url : (is_array($photo) ? ($photo['url'] ?? '') : $photo) }}" alt="Foto Kos" class="w-100 rounded mb-2" style="height: 110px; object-fit: cover;">
+                                            <label class="d-flex align-items-center justify-content-center mb-0 cursor-pointer" style="font-size: 12px; color: var(--color-charcoal); font-weight: 600; cursor: pointer;">
+                                                <input type="checkbox" name="delete_photos[]" value="{{ is_object($photo) ? $photo->id : (is_array($photo) ? ($photo['id'] ?? '') : $photo) }}" class="mr-1" style="accent-color: var(--color-notion-blue);">
+                                                Hapus Foto
                                             </label>
                                         </div>
                                     </div>
-                                @empty
-                                    <div class="col-12">
-                                        <p class="text-muted mb-0 small">Belum ada fasilitas yang terdaftar di sistem.</p>
-                                    </div>
-                                @endforelse
+                                @endforeach
                             </div>
+                        @endif
+
+                        <div class="form-group mb-3">
+                            <label class="btn btn-sm d-inline-flex align-items-center mb-2" style="background-color: var(--surface-page-canvas); color: var(--color-midnight-ink); border: var(--border-hairline); font-weight: 600; font-size: 13px; border-radius: var(--radius-buttons); padding: 8px 16px; cursor: pointer;">
+                                <i class="fa fa-images mr-2" style="color: var(--color-notion-blue);"></i> Tambah Foto Baru ke Galeri
+                                <input type="file" class="d-none" id="photos-input" name="photos[]" multiple accept="image/jpeg,image/png,image/jpg,image/webp">
+                            </label>
+                            <span id="photos-count-label" class="text-muted small ml-2">Belum ada foto baru dipilih.</span>
                         </div>
 
-                        <div class="d-flex flex-wrap">
-                            <button type="submit" class="btn btn-primary font-weight-bold px-4 mr-2 mb-2">
-                                <i class="fa fa-save mr-2"></i>Simpan Perubahan
-                            </button>
-                            <a href="{{ route('owner.kos.show', $kos['slug']) }}" class="btn btn-outline-dark font-weight-bold px-4 mb-2">Batal</a>
+                        <div id="photos-preview-container" class="row"></div>
+                    </div>
+
+                    <!-- SECTION 4: FASILITAS -->
+                    <div class="mb-5">
+                        <div class="d-flex align-items-center mb-3 pb-2 border-bottom" style="border-color: rgba(0,0,0,0.06) !important;">
+                            <span class="mr-2" style="width: 24px; height: 24px; border-radius: 50%; background-color: var(--color-sky-tint); color: var(--color-notion-blue); border: 1px solid rgba(0, 117, 222, 0.2); display: inline-flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700;">4</span>
+                            <h2 style="font-size: 1.1rem; font-weight: 700; color: var(--color-midnight-ink); margin-bottom: 0;">Fasilitas Kos</h2>
                         </div>
-                    </form>
-                </div>
+
+                        <div class="row">
+                            @php
+                                $selectedFacilities = old('facilities', isset($kos->facilities) ? $kos->facilities->pluck('id')->toArray() : []);
+                            @endphp
+                            @forelse($facilities as $facility)
+                                <div class="col-6 col-md-4 col-lg-3 mb-2">
+                                    <label for="facility-{{ $facility->id }}" class="p-2 rounded d-flex align-items-center mb-0 cursor-pointer" style="background-color: var(--surface-page-canvas); border: 1px solid rgba(0,0,0,0.06); font-size: 13px; font-weight: 500; cursor: pointer;">
+                                        <input type="checkbox" id="facility-{{ $facility->id }}" name="facilities[]" value="{{ $facility->id }}" class="mr-2" {{ in_array($facility->id, $selectedFacilities) ? 'checked' : '' }} style="accent-color: var(--color-notion-blue);">
+                                        <span style="color: var(--color-charcoal);">{{ $facility->name }}</span>
+                                    </label>
+                                </div>
+                            @empty
+                                <div class="col-12">
+                                    <p class="text-muted small mb-0">Belum ada fasilitas di database.</p>
+                                </div>
+                            @endforelse
+                        </div>
+                    </div>
+
+                    <!-- ACTIONS -->
+                    <div class="pt-4 border-top d-flex gap-2" style="border-color: rgba(0,0,0,0.06) !important;">
+                        <button type="submit" class="btn btn-primary" style="font-weight: 600; font-size: 14px; padding: 12px 28px; border-radius: var(--radius-buttons);">
+                            <i class="fa fa-save mr-2"></i> Perbarui Data Kos
+                        </button>
+                        <a href="{{ route('owner.kos.show', $kos['slug']) }}" class="btn" style="background-color: var(--surface-page-canvas); color: var(--color-charcoal); border: var(--border-hairline); font-weight: 600; font-size: 14px; padding: 12px 20px; border-radius: var(--radius-buttons);">
+                            Batal
+                        </a>
+                    </div>
+
+                </form>
             </div>
+
         </div>
-    </section>
-</main>
+
+    </div>
+</div>
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {
@@ -238,36 +235,39 @@ document.addEventListener('DOMContentLoaded', function () {
             col.className = 'col-6 col-md-4 col-lg-3 mb-3';
 
             const card = document.createElement('div');
-            card.className = 'card h-100 border shadow-none overflow-hidden';
+            card.className = 'p-2 rounded text-center position-relative';
+            card.style.backgroundColor = 'var(--surface-page-canvas)';
+            card.style.border = 'var(--border-hairline)';
 
             const img = document.createElement('img');
-            img.className = 'card-img-top';
-            img.style.height = '130px';
+            img.className = 'w-100 rounded mb-2';
+            img.style.height = '110px';
             img.style.objectFit = 'cover';
             img.src = URL.createObjectURL(file);
 
-            const cardBody = document.createElement('div');
-            cardBody.className = 'card-body p-2 text-center bg-light';
-
             const nameSmall = document.createElement('small');
-            nameSmall.className = 'd-block text-truncate text-muted mb-1';
+            nameSmall.className = 'd-block text-truncate mb-2';
+            nameSmall.style.fontSize = '11px';
+            nameSmall.style.color = 'var(--color-stone)';
             nameSmall.textContent = file.name;
 
             const btnRemove = document.createElement('button');
             btnRemove.type = 'button';
-            btnRemove.className = 'btn btn-outline-danger btn-sm py-0 px-2';
-            btnRemove.innerHTML = '<i class="fa fa-trash mr-1"></i>Hapus';
+            btnRemove.className = 'btn btn-sm btn-block text-danger';
+            btnRemove.style.backgroundColor = '#ffffff';
+            btnRemove.style.border = 'var(--border-hairline)';
+            btnRemove.style.fontSize = '11px';
+            btnRemove.style.fontWeight = '600';
+            btnRemove.innerHTML = '<i class="fa fa-trash mr-1"></i> Batal';
             btnRemove.addEventListener('click', function () {
                 dt.items.remove(index);
                 input.files = dt.files;
                 renderPreviews();
             });
 
-            cardBody.appendChild(nameSmall);
-            cardBody.appendChild(btnRemove);
-
             card.appendChild(img);
-            card.appendChild(cardBody);
+            card.appendChild(nameSmall);
+            card.appendChild(btnRemove);
             col.appendChild(card);
             previewContainer.appendChild(col);
         });

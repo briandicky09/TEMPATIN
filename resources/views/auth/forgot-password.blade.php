@@ -3,77 +3,66 @@
 @section('title', 'Lupa Kata Sandi - TEMPATIN')
 
 @section('content')
-<div class="ts-page-wrapper ts-auth-page" id="page-top">
+<div class="ts-page-wrapper ts-auth-page" id="page-top" style="background-color: var(--surface-page-canvas); min-height: 100vh;">
 
-    <!--*********************************************************************************************************-->
-    <!--HEADER **************************************************************************************************-->
-    <!--*********************************************************************************************************-->
     @include('partials.navbar')
-
     @include('partials.alert')
-    <!--end Header-->
 
-    <!--*********************************************************************************************************-->
-    <!-- MAIN CONTENT (Forgot Password Page) ***********************************************************************-->
-    <!--*********************************************************************************************************-->
-    <main id="ts-main" style="background-image: url('{{ asset('assets/img/gambar-koss.jpeg') }}'); background-size: cover; background-position: center center; background-repeat: no-repeat; min-height: calc(100vh + 160px); margin-top: 0 !important; padding: 0 !important; background-color: transparent;">
+    <main id="ts-main" style="min-height: calc(100vh - 120px); display: flex; align-items: center; justify-content: center; padding-top: 100px; padding-bottom: 60px;">
 
-        <section id="ts-auth" class="py-5" style="position: relative; min-height: calc(100vh + 160px); display: flex; align-items: center; justify-content: center; margin-bottom: 0 !important; background: transparent;">
-            <div style="position: absolute; inset: 0; background: rgba(0,0,0,0.28); z-index: 1;"></div>
-            <div class="container py-5" style="position: relative; z-index: 2;">
-                <div class="row justify-content-center">
-                    <div class="col-md-8 col-lg-5">
-                        <div class="card ts-card p-4 p-md-5 border-0 shadow-lg" style="border-radius: 8px; background: rgba(255,255,255,0.96); backdrop-filter: blur(10px);">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-7 col-lg-5">
 
-                            <!-- Judul Card -->
-                            <div class="mb-4">
-                                <h4 class="mb-1 font-weight-bold">Lupa Kata Sandi</h4>
-                                <p class="text-muted ts-text-small mb-0">Masukkan email kamu, kami akan kirimkan tautan untuk atur ulang kata sandi.</p>
+                    <!-- NOTION AUTH CARD -->
+                    <div class="p-4 p-md-5 rounded" style="background-color: #ffffff; border: var(--border-hairline); border-radius: var(--radius-cards);">
+
+                        <!-- Card Header -->
+                        <div class="text-center mb-4">
+                            <div class="d-inline-flex align-items-center justify-content-center mb-3" style="width: 44px; height: 44px; border-radius: 8px; background-color: var(--surface-page-canvas); color: var(--color-midnight-ink); border: var(--border-hairline); font-size: 1.25rem;">
+                                <i class="fa fa-key"></i>
+                            </div>
+                            <h1 style="font-family: var(--font-serif); font-size: 1.65rem; font-weight: 700; color: var(--color-midnight-ink); margin-bottom: 6px;">
+                                Lupa Kata Sandi?
+                            </h1>
+                            <p style="font-size: 13px; color: var(--color-stone); line-height: 1.5; margin-bottom: 0;">
+                                Masukkan alamat email terdaftar kamu. Kami akan mengirimkan tautan untuk mengatur ulang kata sandi.
+                            </p>
+                        </div>
+
+                        <form id="form-forgot-password" class="ts-form" method="POST" action="#" onsubmit="event.preventDefault(); alert('Instruksi pengaturan ulang kata sandi telah dikirim ke email kamu jika terdaftar di TEMPATIN.');">
+                            @csrf
+
+                            <!-- Email Input -->
+                            <div class="form-group mb-4">
+                                <label for="forgot-email" style="font-size: 13px; font-weight: 600; color: var(--color-midnight-ink); margin-bottom: 6px;">Alamat Email</label>
+                                <input type="email" class="form-control" id="forgot-email" name="email" placeholder="nama@email.com" required style="border-radius: var(--radius-inputs); border: var(--border-hairline); font-size: 14px; padding: 10px 14px;">
                             </div>
 
-                            {{-- TODO: arahkan action ke route POST forgot-password setelah autentikasi diimplementasikan --}}
-                            <form id="form-forgot-password" class="ts-form" method="POST" action="#">
-                                @csrf
+                            <!-- Submit Button -->
+                            <button type="submit" class="btn btn-block" style="background-color: var(--color-midnight-ink); color: #ffffff; font-weight: 600; font-size: 14px; padding: 12px; border-radius: var(--radius-buttons); border: none;">
+                                Kirim Tautan Reset Sandi
+                            </button>
 
-                                <!--Email-->
-                                <div class="form-group mb-4">
-                                    <input type="email" class="form-control" id="forgot-email" name="email" placeholder="Email (nama@email.com)" required>
-                                </div>
+                            <!-- Back to login link -->
+                            <div class="text-center mt-4" style="font-size: 13px;">
+                                <span style="color: var(--color-stone);">Sudah ingat kata sandi?</span>
+                                <a href="{{ route('login') }}" style="color: var(--color-midnight-ink); font-weight: 600; text-decoration: none;" class="ml-1">
+                                    Masuk di sini
+                                </a>
+                            </div>
 
-                                <!-- TOMBOL KIRIM (Warna Biru Muda) -->
-                                <button type="submit" class="btn text-white w-100 mb-3 font-weight-bold" style="background-color: #38b6ff; border-color: #38b6ff;">
-                                    KIRIM TAUTAN RESET
-                                </button>
+                        </form>
 
-                                <!-- Link Kembali -->
-                                <div class="text-center mt-4 ts-text-small">
-                                    <p class="mb-0 text-muted">
-                                        Sudah ingat kata sandi? <a href="{{ route('login') }}" class="font-weight-bold" style="color: #007bff; text-decoration: underline;">Masuk di sini</a>
-                                    </p>
-                                </div>
-
-                            </form>
-
-                        </div>
-                        <!--end card-->
                     </div>
-                    <!--end col-->
 
                 </div>
-                <!--end row-->
             </div>
-            <!--end container-->
-        </section>
-        <!--end ts-auth-->
+        </div>
 
     </main>
-    <!--end #ts-main-->
 
-    <!--*********************************************************************************************************-->
-    <!--************ FOOTER *************************************************************************************-->
-    <!--*********************************************************************************************************-->
     @include('partials.footer')
 
 </div>
-<!--end .ts-page-wrapper-->
 @endsection

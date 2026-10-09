@@ -1,162 +1,340 @@
-{{-- Header / Navbar TEMPATIN --}}
-<header id="ts-header" class="fixed-top">
+{{-- Header / CardNav TEMPATIN --}}
+@php
+    $isMemberArea = request()->is('member*');
+    $homeUrl = $isMemberArea ? url('/member' . route('home', [], false)) : route('home');
+    $kosUrl = $isMemberArea ? url('/member' . route('kos.index', [], false)) : route('kos.index');
+    $promoUrl = $isMemberArea ? url('/member' . route('promo', [], false)) : route('promo');
+    $artikelUrl = $isMemberArea ? url('/member' . route('artikel', [], false)) : route('artikel');
+    $aboutUrl = $isMemberArea ? url('/member' . route('about', [], false)) : route('about');
+    $contactUrl = $isMemberArea ? url('/member' . route('contact', [], false)) : route('contact');
+    
+    $navCards = [
+        [
+            'label' => 'Eksplorasi Kos',
+            'bgColor' => '#111111',
+            'textColor' => '#ffffff',
+            'links' => [
+                ['label' => 'Semua Pilihan Kos', 'href' => $kosUrl, 'ariaLabel' => 'Lihat semua pilihan kos'],
+                ['label' => 'Kos Putra', 'href' => $kosUrl . '?gender=putra', 'ariaLabel' => 'Cari kos khusus putra'],
+                ['label' => 'Kos Putri', 'href' => $kosUrl . '?gender=putri', 'ariaLabel' => 'Cari kos khusus putri'],
+                ['label' => 'Kos Campur', 'href' => $kosUrl . '?gender=campur', 'ariaLabel' => 'Cari kos campur'],
+            ]
+        ],
+        [
+            'label' => 'Promo & Artikel',
+            'bgColor' => '#172332',
+            'textColor' => '#ffffff',
+            'links' => [
+                ['label' => 'Voucher & Promo', 'href' => $promoUrl, 'ariaLabel' => 'Lihat voucher dan promo sewa kos'],
+                ['label' => 'Artikel & Tips Kos', 'href' => $artikelUrl, 'ariaLabel' => 'Panduan dan artikel seputar kos'],
+                ['label' => 'Tentang TEMPATIN', 'href' => $aboutUrl, 'ariaLabel' => 'Tentang platform TEMPATIN'],
+                ['label' => 'Pusat Bantuan Kontak', 'href' => $contactUrl, 'ariaLabel' => 'Hubungi kontak bantuan'],
+            ]
+        ],
+        [
+            'label' => 'Akun & Layanan',
+            'bgColor' => '#0075de',
+            'textColor' => '#ffffff',
+            'links' => Auth::check() 
+                ? (Auth::user()->role === 'owner' 
+                    ? [
+                        ['label' => 'Dashboard Owner', 'href' => route('owner.dashboard'), 'ariaLabel' => 'Buka dashboard owner'],
+                        ['label' => 'Kelola Kos Saya', 'href' => route('owner.kos.index'), 'ariaLabel' => 'Kelola properti kos'],
+                        ['label' => 'Tambah Kos Baru', 'href' => route('owner.kos.create'), 'ariaLabel' => 'Daftarkan properti kos baru'],
+                        ['label' => 'Tentang Platform', 'href' => $aboutUrl, 'ariaLabel' => 'Tentang platform kami'],
+                      ]
+                    : [
+                        ['label' => 'Area Member', 'href' => route('member.home'), 'ariaLabel' => 'Buka beranda member'],
+                        ['label' => 'Tagihan / Invoice', 'href' => route('member.invoice.index'), 'ariaLabel' => 'Lihat tagihan dan invoice'],
+                        ['label' => 'Profil Saya', 'href' => route('member.profile'), 'ariaLabel' => 'Pengaturan profil saya'],
+                        ['label' => 'Pusat Bantuan', 'href' => $contactUrl, 'ariaLabel' => 'Pusat bantuan member'],
+                      ]
+                  )
+                : [
+                    ['label' => 'Masuk ke Akun', 'href' => route('login'), 'ariaLabel' => 'Masuk ke akun'],
+                    ['label' => 'Daftar Akun Baru', 'href' => route('register'), 'ariaLabel' => 'Daftar akun pencari kos'],
+                    ['label' => 'Gabung Mitra Owner', 'href' => route('owner.kos.create'), 'ariaLabel' => 'Daftarkan properti kos'],
+                    ['label' => 'Pusat Kontak & FAQ', 'href' => $contactUrl, 'ariaLabel' => 'Kontak dan tanya jawab'],
+                  ]
+        ]
+    ];
+@endphp
 
-    <!-- SECONDARY NAVIGATION
-    =============================================================================================================-->
-    <nav id="ts-secondary-navigation" class="navbar p-0">
-        <div class="container justify-content-end justify-content-sm-between">
-
-            <!--Left Side-->
-            <div class="navbar-nav d-none d-sm-block">
-                <span class="mr-4">
-                    <i class="fa fa-phone-square mr-1"></i>
-                    0800-1-TEMPATIN
-                </span>
-                <a href="mailto:hello@tempatin.id">
-                    <i class="fa fa-envelope mr-1"></i>
-                    hello@tempatin.id
+<header id="ts-header" class="card-nav-wrapper fixed-top">
+    <div class="card-nav-container">
+        <nav class="card-nav" id="mainCardNav" aria-label="Navigasi Utama">
+            
+            <!-- Top Bar (Collapsed 60px) -->
+            <div class="card-nav-top">
+                <!-- Brand Logo (Left) -->
+                <a href="{{ $homeUrl }}" class="card-nav-brand" aria-label="TEMPATIN Beranda">
+                    <img src="{{ asset('assets/img/logo.png') }}" alt="TEMPATIN" class="card-nav-logo-img">
                 </a>
-            </div>
 
-            <!--Right Side-->
-            <div class="navbar-nav flex-row">
-                @guest
-                <a href="{{ route('login') }}" class="nav-link px-3">Masuk</a>
-                <a href="{{ route('register') }}" class="nav-link px-3 border-left">Daftar</a>
-                @endguest
-                @auth
-                    @if(Auth::user()->role === 'owner')
-                        <a href="{{ route('owner.dashboard') }}" class="nav-link px-3">Area Owner</a>
-                    @else
-                        <a href="{{ route('member.home') }}" class="nav-link px-3">Area Member</a>
-                    @endif
-                @endauth
-            </div>
-            <!--end navbar-nav-->
-        </div>
-        <!--end container-->
-    </nav>
+                <!-- Right Controls: Toggle Menu + Actions -->
+                <div class="card-nav-right-group">
+                    <!-- Toggle Menu Button -->
+                    <button type="button" class="card-nav-toggle" id="cardNavToggle" aria-label="Buka navigasi menu" aria-expanded="false" title="Menu Navigasi">
+                        <span class="card-nav-toggle-icon" id="cardNavToggleIcon">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="4" y1="7" x2="20" y2="7"></line>
+                                <line x1="4" y1="12" x2="20" y2="12"></line>
+                                <line x1="4" y1="17" x2="20" y2="17"></line>
+                            </svg>
+                        </span>
+                    </button>
 
-    <!--PRIMARY NAVIGATION
-    =============================================================================================================-->
-    <nav id="ts-primary-navigation" class="navbar navbar-expand-md navbar-light">
-        <div class="container">
-
-            <!--Brand Logo-->
-            @php $isMemberArea = request()->is('member*'); @endphp
-            <a class="navbar-brand" href="{{ $isMemberArea ? url('/member' . route('home', [], false)) : route('home') }}">
-                <span class="pk-logo"><i class="fa fa-home mr-2"></i>TEMPATIN</span>
-            </a>
-
-            <!--Responsive Collapse Button-->
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarPrimary" aria-controls="navbarPrimary" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <!--Collapsing Navigation-->
-            <div class="collapse navbar-collapse" id="navbarPrimary">
-
-                <ul class="navbar-nav">
-                    <li class="nav-item {{ (request()->routeIs('home') || request()->routeIs('member.home') || request()->is('member')) ? 'active' : '' }}">
-                        <a class="nav-link {{ (request()->routeIs('home') || request()->routeIs('member.home') || request()->is('member')) ? 'active' : '' }}" href="{{ $isMemberArea ? url('/member' . route('home', [], false)) : route('home') }}">Home @if(request()->routeIs('home') || request()->routeIs('member.home'))<span class="sr-only">(current)</span>@endif</a>
-                    </li>
-                    <li class="nav-item {{ (request()->routeIs('kos.index') || request()->routeIs('member.kos.index') || request()->routeIs('search.kos') || request()->routeIs('member.search.kos') || request()->is('kos') || request()->is('member/kos') || request()->is('member/search')) ? 'active' : '' }}">
-                        <a class="nav-link {{ (request()->routeIs('kos.index') || request()->routeIs('member.kos.index') || request()->routeIs('search.kos') || request()->routeIs('member.search.kos') || request()->is('kos') || request()->is('member/kos') || request()->is('member/search')) ? 'active' : '' }}" href="{{ $isMemberArea ? url('/member' . route('kos.index', [], false)) : route('kos.index') }}">Cari Kos</a>
-                    </li>
-                    <li class="nav-item {{ (request()->routeIs('promo') || request()->routeIs('member.promo') || request()->is('member/promo')) ? 'active' : '' }}">
-                        <a class="nav-link {{ (request()->routeIs('promo') || request()->routeIs('member.promo') || request()->is('member/promo')) ? 'active' : '' }}" href="{{ $isMemberArea ? url('/member' . route('promo', [], false)) : route('promo') }}">Promo @if(request()->routeIs('promo') || request()->routeIs('member.promo'))<span class="sr-only">(current)</span>@endif</a>
-                    </li>
-                    @php
-                        $isMoreActive = request()->routeIs('artikel', 'member.artikel', 'about', 'member.about', 'contact', 'member.contact') || request()->is('member/artikel', 'member/tentang', 'member/kontak');
-                    @endphp
-                    <li class="nav-item dropdown {{ $isMoreActive ? 'active' : '' }}">
-                        <a class="nav-link dropdown-toggle {{ $isMoreActive ? 'active' : '' }}" href="#" id="moreDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Lainnya
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="moreDropdown">
-                            <a class="dropdown-item" href="{{ $isMemberArea ? url('/member' . route('artikel', [], false)) : route('artikel') }}">Artikel</a>
-                            <a class="dropdown-item" href="{{ $isMemberArea ? url('/member' . route('about', [], false)) : route('about') }}">Tentang</a>
-                            <a class="dropdown-item" href="{{ $isMemberArea ? url('/member' . route('contact', [], false)) : route('contact') }}">Kontak</a>
-                        </div>
-                    </li>
-                </ul>
-
-                @if(!$isMemberArea)
-                    @guest
-                    <ul class="navbar-nav ml-auto d-none d-md-flex">
-                        <li class="nav-item">
-                            <a href="{{ route('login') }}" class="btn btn-outline-dark btn-sm mr-2">Login</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ route('register') }}" class="btn btn-primary btn-sm">Daftar</a>
-                        </li>
-                    </ul>
-                    @else
-                    <ul class="navbar-nav ml-auto d-none d-md-flex align-items-center">
-                        <li class="nav-item">
+                    <!-- Right Action CTA -->
+                    <div class="card-nav-actions">
+                        @guest
+                            <a href="{{ route('login') }}" class="card-nav-cta-secondary d-none d-sm-inline-flex">
+                                Masuk
+                            </a>
+                            <a href="{{ $kosUrl }}" class="card-nav-cta-btn">
+                                <span>Cari Kos</span>
+                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-left: 6px;">
+                                    <circle cx="11" cy="11" r="8"></circle>
+                                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                                </svg>
+                            </a>
+                        @else
                             @if(Auth::user()->role === 'owner')
-                                <a href="{{ route('owner.dashboard') }}" class="btn btn-primary btn-sm"><i class="fa fa-tachometer-alt mr-1"></i> Dashboard Owner</a>
+                                <a href="{{ route('owner.dashboard') }}" class="card-nav-cta-btn">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px;">
+                                        <rect x="3" y="3" width="7" height="9"></rect>
+                                        <rect x="14" y="3" width="7" height="5"></rect>
+                                        <rect x="14" y="12" width="7" height="9"></rect>
+                                        <rect x="3" y="16" width="7" height="5"></rect>
+                                    </svg>
+                                    <span class="d-none d-sm-inline">Dashboard Owner</span>
+                                    <span class="d-sm-none">Dashboard</span>
+                                </a>
                             @else
-                                <a href="{{ route('member.home') }}" class="btn btn-primary btn-sm"><i class="fa fa-user mr-1"></i> Area Member</a>
+                                <a href="{{ route('member.home') }}" class="card-nav-cta-btn">
+                                    <span class="d-inline-flex align-items-center justify-content-center rounded-circle" style="width: 22px; height: 22px; background: rgba(255,255,255,0.25); font-size: 11px; font-weight: 700; margin-right: 6px;">
+                                        {{ strtoupper(substr(Auth::user()->name ?? 'U', 0, 1)) }}
+                                    </span>
+                                    <span class="d-none d-sm-inline">{{ Str::limit(Auth::user()->name, 12) }}</span>
+                                    <span class="d-sm-none">Member</span>
+                                </a>
                             @endif
-                        </li>
-                    </ul>
-                    @endguest
-                @else
-                <ul class="navbar-nav ml-auto d-flex flex-row align-items-center">
-                    <!-- Notification Dropdown -->
-                    <li class="nav-item dropdown mr-3">
-                        <a class="nav-link" href="#" id="notificationDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fa fa-bell fa-lg text-dark"></i>
-                            <span class="badge badge-danger badge-pill position-absolute" style="top: 5px; right: 0; font-size: 0.6rem;">0</span>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right shadow-sm border-0" aria-labelledby="notificationDropdown" style="width: 320px; padding: 0; border-radius: 8px;">
-                            <div class="d-flex justify-content-between align-items-center p-3 border-bottom">
-                                <h6 class="mb-0 font-weight-bold">Notifikasi</h6>
-                                <a href="#" class="text-dark" onclick="event.stopPropagation(); $(this).closest('.dropdown-menu').removeClass('show');"><i class="fa fa-times"></i></a>
-                            </div>
-                            <div class="p-2 border-bottom bg-light">
-                                <span class="badge badge-pill border px-3 py-2 bg-white text-dark"><i class="fa fa-info-circle mr-1"></i> Utama</span>
-                            </div>
-                            <div class="text-center py-5">
-                                <i class="fa fa-envelope-open-text fa-4x mb-3" style="color: #dee2e6 !important;"></i>
-                                <h6 class="font-weight-bold text-dark mt-2">Belum ada notifikasi...</h6>
-                                <p class="text-muted small mb-0 px-4">Belum ada notifikasi. Ketika ada notifikasi baru, akan muncul di halaman ini.</p>
-                            </div>
-                        </div>
-                    </li>
-                    
-                    <!-- Profile Dropdown -->
-                    <li class="nav-item dropdown">
-                        <a class="nav-link member-profile-toggle dropdown-toggle p-0" href="#" id="memberProfileDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" aria-label="Menu profil">
-                            <img src="{{ asset('assets/svg/logo-profil.png') }}" alt="Profil" class="member-profile__logo" style="width: 40px; height: 40px; object-fit: cover; border-radius: 50%;">
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right member-profile-menu shadow-sm border-0 mt-2" aria-labelledby="memberProfileDropdown" style="border-radius: 8px;">
-                            <a class="dropdown-item py-2" href="{{ route('member.profile') }}">Profil saya</a>
-                            <a class="dropdown-item py-2" href="{{ route('member.invoice.index') }}">Riwayat Transaksi</a>
-                            <a class="dropdown-item py-2" href="{{ route('member.contact') }}">Pusat bantuan</a>
-                            <div class="dropdown-divider"></div>
-                            <form id="form-logout" action="{{ route('member.logout') }}" method="POST">
-                                @csrf
-                                <button type="submit" class="dropdown-item text-danger py-2">Logout</button>
-                            </form>
-                        </div>
-                    </li>
-                </ul>
-                @endif
-
+                        @endguest
+                    </div>
+                </div>
             </div>
-            <!--end navbarPrimary-->
 
-        </div>
-        <!--end container-->
-    </nav>
-    <!--end #ts-primary-navigation-->
+            <!-- Content / Reveal Cards (Expanded) -->
+            <div class="card-nav-content" id="cardNavContent" aria-hidden="true">
+                @foreach($navCards as $idx => $card)
+                    <div class="nav-card" style="background-color: {{ $card['bgColor'] }}; color: {{ $card['textColor'] }};">
+                        <div class="nav-card-label">
+                            {{ $card['label'] }}
+                        </div>
+                        <div class="nav-card-links">
+                            @foreach($card['links'] as $link)
+                                <a href="{{ $link['href'] }}" class="nav-card-link" aria-label="{{ $link['ariaLabel'] }}">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="shrink-0">
+                                        <line x1="7" y1="17" x2="17" y2="7"></line>
+                                        <polyline points="7 7 17 7 17 17"></polyline>
+                                    </svg>
+                                    <span>{{ $link['label'] }}</span>
+                                </a>
+                            @endforeach
+                        </div>
+                    </div>
+                @endforeach
+            </div>
 
-    @if($isMemberArea)
-    <a href="{{ route('member.pesan') }}" class="member-floating-chat" aria-label="Pesan">
-        <img src="{{ asset('assets/svg/logo-pesan.png') }}" alt="Logo pesan" class="member-floating-chat__logo">
-    </a>
-    @endif
-
+        </nav>
+    </div>
 </header>
+
+{{-- GSAP CardNav Animation Engine --}}
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const navEl = document.getElementById('mainCardNav');
+    const toggleBtn = document.getElementById('cardNavToggle');
+    const contentEl = document.getElementById('cardNavContent');
+    if (!navEl || !toggleBtn || !contentEl || typeof gsap === 'undefined') return;
+
+    const cards = navEl.querySelectorAll('.nav-card');
+    let isExpanded = false;
+    let isAnimating = false;
+    const headerWrapper = document.getElementById('ts-header');
+
+    function getCollapsedHeight() {
+        const isShrunk = headerWrapper && headerWrapper.classList.contains('is-shrunk');
+        return isShrunk ? 54 : 68;
+    }
+
+    function calculateHeight() {
+        const isMobile = window.matchMedia('(max-width: 767.98px)').matches;
+        if (isMobile) {
+            const wasVis = contentEl.style.visibility;
+            const wasPos = contentEl.style.position;
+            const wasH = contentEl.style.height;
+
+            contentEl.style.visibility = 'visible';
+            contentEl.style.position = 'static';
+            contentEl.style.height = 'auto';
+
+            const topBar = getCollapsedHeight();
+            const padding = 20;
+            const contentHeight = contentEl.scrollHeight;
+
+            contentEl.style.visibility = wasVis;
+            contentEl.style.position = wasPos;
+            contentEl.style.height = wasH;
+
+            return topBar + contentHeight + padding;
+        }
+        return 290;
+    }
+
+    gsap.set(navEl, { height: getCollapsedHeight(), overflow: 'hidden' });
+    gsap.set(cards, { y: 24, opacity: 0 });
+
+    function updateToggleIcon(open) {
+        const iconSpan = toggleBtn.querySelector('.card-nav-toggle-icon');
+        if (!iconSpan) return;
+        if (open) {
+            iconSpan.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>';
+        } else {
+            iconSpan.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="7" x2="20" y2="7"></line><line x1="4" y1="12" x2="20" y2="12"></line><line x1="4" y1="17" x2="20" y2="17"></line></svg>';
+        }
+    }
+
+    function openMenu() {
+        if (isAnimating) return;
+        isAnimating = true;
+        isExpanded = true;
+
+        toggleBtn.setAttribute('aria-expanded', 'true');
+        updateToggleIcon(true);
+
+        navEl.classList.add('open');
+        if (headerWrapper) headerWrapper.classList.add('open');
+
+        contentEl.style.visibility = 'visible';
+        contentEl.style.pointerEvents = 'auto';
+        contentEl.setAttribute('aria-hidden', 'false');
+
+        const targetHeight = calculateHeight();
+
+        gsap.killTweensOf([navEl, cards]);
+
+        const openTl = gsap.timeline({
+            onComplete: function () {
+                isAnimating = false;
+            }
+        });
+
+        openTl.to(navEl, {
+            height: targetHeight,
+            duration: 0.45,
+            ease: 'power3.out'
+        });
+
+        openTl.fromTo(cards,
+            { y: 25, opacity: 0 },
+            { y: 0, opacity: 1, duration: 0.35, ease: 'power3.out', stagger: 0.06 },
+            '-=0.25'
+        );
+    }
+
+    function closeMenu() {
+        if (isAnimating) return;
+        isAnimating = true;
+
+        toggleBtn.setAttribute('aria-expanded', 'false');
+        updateToggleIcon(false);
+
+        const collapsedHeight = getCollapsedHeight();
+
+        gsap.killTweensOf([navEl, cards]);
+
+        const closeTl = gsap.timeline({
+            onComplete: function () {
+                isExpanded = false;
+                navEl.classList.remove('open');
+                if (headerWrapper) headerWrapper.classList.remove('open');
+
+                contentEl.style.visibility = 'hidden';
+                contentEl.style.pointerEvents = 'none';
+                contentEl.setAttribute('aria-hidden', 'true');
+
+                gsap.set(cards, { y: 24, opacity: 0 });
+                gsap.set(navEl, { height: getCollapsedHeight() });
+                isAnimating = false;
+            }
+        });
+
+        closeTl.to(cards, {
+            y: 16,
+            opacity: 0,
+            duration: 0.22,
+            ease: 'power2.in',
+            stagger: 0.03
+        });
+
+        closeTl.to(navEl, {
+            height: collapsedHeight,
+            duration: 0.38,
+            ease: 'power2.inOut'
+        }, '-=0.12');
+    }
+
+    function toggleMenu() {
+        if (!isExpanded) {
+            openMenu();
+        } else {
+            closeMenu();
+        }
+    }
+
+    toggleBtn.addEventListener('click', function (e) {
+        e.stopPropagation();
+        toggleMenu();
+    });
+
+    // Close when clicking outside of nav
+    document.addEventListener('click', function (e) {
+        if (isExpanded && !navEl.contains(e.target)) {
+            toggleMenu();
+        }
+    });
+
+    // Close on escape key
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && isExpanded) {
+            toggleMenu();
+        }
+    });
+
+    // Handle resize
+    window.addEventListener('resize', function () {
+        if (!tl) return;
+        if (isExpanded) {
+            const newHeight = calculateHeight();
+            gsap.to(navEl, { height: newHeight, duration: 0.3, ease: 'power3.out' });
+        } else {
+            createTimeline();
+        }
+    });
+
+    // Shrinking Sticky Header Controller:
+    // As soon as user scrolls >= 100px down, shrink header height by 20% and apply glassmorphism
+    const headerEl = document.getElementById('ts-header');
+    if (headerEl) {
+        function checkScrollHeader() {
+            if (window.scrollY >= 100) {
+                headerEl.classList.add('is-shrunk');
+            } else {
+                headerEl.classList.remove('is-shrunk');
+            }
+        }
+        window.addEventListener('scroll', checkScrollHeader, { passive: true });
+        checkScrollHeader();
+    }
+});
+</script>

@@ -1,131 +1,173 @@
 @extends('layouts.owner')
 
-@section('title', 'Laporan Statistik - TEMPATIN')
+@section('title', 'Laporan & Statistik Bisnis - TEMPATIN')
 
 @section('owner-content')
-<main id="ts-main">
-    <section class="py-5">
-        <div class="container">
-            <div class="mb-4">
-                <span class="text-primary font-weight-bold text-uppercase small">Laporan Owner</span>
-                <h2 class="mb-1 mt-1">Laporan Statistik</h2>
-                <p class="text-muted mb-0">Pantau performa bisnis kos Anda dalam satu ringkasan.</p>
-            </div>
+<div class="container">
+    <div class="row">
 
-            <div class="row mb-4">
-                <div class="col-sm-6 col-lg-3 mb-3">
-                    <div class="card border-0 shadow-sm h-100">
-                        <div class="card-body">
-                            <p class="text-muted small mb-2"><i class="fa fa-money mr-1 text-success"></i>Total Pendapatan</p>
-                            <h4 class="mb-0">Rp {{ number_format($summary['pendapatan'], 0, ',', '.') }}</h4>
-                            <small class="text-success"><i class="fa fa-arrow-up mr-1"></i>{{ $summary['pertumbuhan'] }}% dari bulan lalu</small>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-lg-3 mb-3">
-                    <div class="card border-0 shadow-sm h-100">
-                        <div class="card-body">
-                            <p class="text-muted small mb-2"><i class="fa fa-calendar-check-o mr-1 text-primary"></i>Total Booking</p>
-                            <h4 class="mb-0">{{ $summary['booking'] }}</h4>
-                            <small class="text-muted">Booking tahun ini</small>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-lg-3 mb-3">
-                    <div class="card border-0 shadow-sm h-100">
-                        <div class="card-body">
-                            <p class="text-muted small mb-2"><i class="fa fa-bed mr-1 text-warning"></i>Tingkat Hunian</p>
-                            <h4 class="mb-0">{{ $summary['tingkat_hunian'] }}%</h4>
-                            <small class="text-muted">Rata-rata seluruh kos</small>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-lg-3 mb-3">
-                    <div class="card border-0 shadow-sm h-100">
-                        <div class="card-body">
-                            <p class="text-muted small mb-2"><i class="fa fa-home mr-1 text-info"></i>Properti Aktif</p>
-                            <h4 class="mb-0">2 <small class="text-muted">/ 3 kos</small></h4>
-                            <small class="text-muted">Kos yang sedang aktif</small>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row mb-4">
-                <div class="col-lg-7 mb-4 mb-lg-0">
-                    <div class="card border-0 shadow-sm h-100">
-                        <div class="card-body p-4">
-                            <div class="d-flex justify-content-between align-items-center mb-4">
-                                <div>
-                                    <h5 class="mb-1">Pendapatan Bulanan</h5>
-                                    <small class="text-muted">6 bulan terakhir</small>
-                                </div>
-                                <span class="badge badge-light text-primary px-3 py-2">2026</span>
-                            </div>
-                            @php($maxRevenue = max(array_column($monthlyRevenue, 'value')))
-                            @foreach($monthlyRevenue as $revenue)
-                                <div class="d-flex align-items-center mb-3">
-                                    <span class="text-muted small" style="width: 35px;">{{ $revenue['month'] }}</span>
-                                    <div class="progress flex-grow-1" style="height: 10px;">
-                                        <div class="progress-bar bg-primary" role="progressbar" style="width: {{ ($revenue['value'] / $maxRevenue) * 100 }}%;" aria-label="Pendapatan {{ $revenue['month'] }}"></div>
-                                    </div>
-                                    <span class="small font-weight-bold text-right ml-3" style="width: 100px;">Rp {{ number_format($revenue['value'] / 1000000, 1, ',', '.') }} jt</span>
-                                </div>
-                            @endforeach
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-5">
-                    <div class="card border-0 shadow-sm h-100">
-                        <div class="card-body p-4">
-                            <h5 class="mb-1">Performa Kos</h5>
-                            <small class="text-muted d-block mb-4">Berdasarkan tingkat hunian</small>
-                            @foreach($kosPerformance as $kos)
-                                <div class="mb-4">
-                                    <div class="d-flex justify-content-between mb-2">
-                                        <strong class="small">{{ $kos['title'] }}</strong>
-                                        <span class="small text-success font-weight-bold">{{ $kos['occupancy'] }}%</span>
-                                    </div>
-                                    <div class="progress" style="height: 8px;">
-                                        <div class="progress-bar bg-success" role="progressbar" style="width: {{ $kos['occupancy'] }}%;" aria-label="Hunian {{ $kos['title'] }}"></div>
-                                    </div>
-                                </div>
-                            @endforeach
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card border-0 shadow-sm">
-                <div class="card-header bg-white border-bottom py-3">
-                    <h5 class="mb-0">Detail Performa Properti</h5>
-                </div>
-                <div class="card-body p-0">
-                    <div class="table-responsive">
-                        <table class="table table-hover mb-0 align-middle">
-                            <thead class="thead-light">
-                                <tr>
-                                    <th class="pl-4">Nama Kos</th>
-                                    <th>Tingkat Hunian</th>
-                                    <th>Booking</th>
-                                    <th class="pr-4">Pendapatan</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach($kosPerformance as $kos)
-                                    <tr>
-                                        <td class="pl-4"><strong>{{ $kos['title'] }}</strong></td>
-                                        <td><span class="badge badge-success">{{ $kos['occupancy'] }}%</span></td>
-                                        <td>{{ $kos['booking'] }} booking</td>
-                                        <td class="pr-4">Rp {{ number_format($kos['revenue'], 0, ',', '.') }}</td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
+        <!-- OWNER SIDEBAR -->
+        <div class="col-lg-3 mb-4 mb-lg-0">
+            @include('partials.owner-sidebar')
         </div>
-    </section>
-</main>
+
+        <!-- MAIN CONTENT -->
+        <div class="col-lg-9">
+
+            <!-- HEADER -->
+            <div class="mb-4">
+                <div class="d-inline-flex align-items-center mb-2 px-2 py-1 rounded" style="background-color: var(--color-sky-tint); color: var(--color-notion-blue); font-size: 11px; font-weight: 600;">
+                    <i class="fa fa-chart-line mr-1"></i> ANALITIKA PROPERTI
+                </div>
+                <h1 style="font-family: var(--font-serif); font-size: 1.85rem; font-weight: 700; color: var(--color-midnight-ink); margin-bottom: 4px;">
+                    Laporan Statistik & Pendapatan
+                </h1>
+                <p style="font-size: 14px; color: var(--color-stone); margin-bottom: 0;">
+                    Ringkasan performa finansial, rasio keterisian kamar (okupansi), dan tren pertumbuhan sewa.
+                </p>
+            </div>
+
+            <!-- KPI METRICS -->
+            <div class="row mb-4">
+                <div class="col-md-3 col-6 mb-3">
+                    <div class="p-3 rounded h-100" style="background-color: #ffffff; border: var(--border-hairline); border-radius: var(--radius-cards);">
+                        <div style="font-size: 12px; color: var(--color-stone); font-weight: 500; margin-bottom: 4px;">Total Pendapatan</div>
+                        <div style="font-size: 1.35rem; font-weight: 700; color: var(--color-midnight-ink); font-variant-numeric: tabular-nums; margin-bottom: 4px;">
+                            Rp {{ number_format($summary['pendapatan'], 0, ',', '.') }}
+                        </div>
+                        <span class="badge" style="background-color: #edf7ee; color: #166534; border: 1px solid rgba(22, 101, 52, 0.18); font-size: 11px; font-weight: 600;">
+                            <i class="fa fa-arrow-up mr-1" style="color: #166534;"></i>+{{ $summary['pertumbuhan'] }}% bln ini
+                        </span>
+                    </div>
+                </div>
+
+                <div class="col-md-3 col-6 mb-3">
+                    <div class="p-3 rounded h-100" style="background-color: #ffffff; border: var(--border-hairline); border-radius: var(--radius-cards);">
+                        <div style="font-size: 12px; color: var(--color-stone); font-weight: 500; margin-bottom: 4px;">Total Booking</div>
+                        <div style="font-size: 1.65rem; font-weight: 700; color: var(--color-midnight-ink); font-variant-numeric: tabular-nums; margin-bottom: 4px;">
+                            {{ $summary['booking'] }}
+                        </div>
+                        <span style="font-size: 11px; color: var(--color-stone);">Tahun berjalan</span>
+                    </div>
+                </div>
+
+                <div class="col-md-3 col-6 mb-3">
+                    <div class="p-3 rounded h-100" style="background-color: #ffffff; border: var(--border-hairline); border-radius: var(--radius-cards);">
+                        <div style="font-size: 12px; color: var(--color-stone); font-weight: 500; margin-bottom: 4px;">Tingkat Hunian</div>
+                        <div style="font-size: 1.65rem; font-weight: 700; color: var(--color-midnight-ink); font-variant-numeric: tabular-nums; margin-bottom: 4px;">
+                            {{ $summary['tingkat_hunian'] }}%
+                        </div>
+                        <span style="font-size: 11px; color: var(--color-stone);">Rata-rata okupansi</span>
+                    </div>
+                </div>
+
+                <div class="col-md-3 col-6 mb-3">
+                    <div class="p-3 rounded h-100" style="background-color: #ffffff; border: var(--border-hairline); border-radius: var(--radius-cards);">
+                        <div style="font-size: 12px; color: var(--color-stone); font-weight: 500; margin-bottom: 4px;">Properti Aktif</div>
+                        <div style="font-size: 1.65rem; font-weight: 700; color: var(--color-midnight-ink); font-variant-numeric: tabular-nums; margin-bottom: 4px;">
+                            {{ count($kosPerformance) }}
+                        </div>
+                        <span style="font-size: 11px; color: var(--color-stone);">Portofolio terdaftar</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CHARTS & PROGRESS BARS -->
+            <div class="row mb-4">
+                <!-- Monthly Revenue Meters -->
+                <div class="col-lg-7 mb-4 mb-lg-0">
+                    <div class="p-4 rounded h-100" style="background-color: #ffffff; border: var(--border-hairline); border-radius: var(--radius-cards);">
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <div>
+                                <h2 style="font-size: 1.15rem; font-weight: 700; color: var(--color-midnight-ink); margin-bottom: 2px;">Tren Pendapatan Bulanan</h2>
+                                <span style="font-size: 12px; color: var(--color-stone);">Arus kas sewa 6 bulan terakhir</span>
+                            </div>
+                            <span class="badge" style="background-color: var(--surface-page-canvas); color: var(--color-stone); border: var(--border-hairline); font-size: 11px;">Tahun 2026</span>
+                        </div>
+
+                        @php $maxRevenue = max(array_column($monthlyRevenue, 'value')); @endphp
+                        @foreach($monthlyRevenue as $rev)
+                            <div class="mb-3">
+                                <div class="d-flex justify-content-between align-items-center mb-1" style="font-size: 12.5px;">
+                                    <span style="font-weight: 600; color: var(--color-midnight-ink);">{{ $rev['month'] }}</span>
+                                    <span style="font-weight: 700; color: var(--color-midnight-ink); font-variant-numeric: tabular-nums;">
+                                        Rp {{ number_format($rev['value'] / 1000000, 1, ',', '.') }} Jt
+                                    </span>
+                                </div>
+                                <div class="rounded overflow-hidden" style="height: 8px; background-color: var(--surface-page-canvas);">
+                                    <div style="height: 100%; width: {{ ($rev['value'] / $maxRevenue) * 100 }}%; background-color: var(--color-notion-blue); border-radius: 4px; transition: width 0.3s ease;"></div>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+
+                <!-- Kos Occupancy Performance -->
+                <div class="col-lg-5">
+                    <div class="p-4 rounded h-100" style="background-color: #ffffff; border: var(--border-hairline); border-radius: var(--radius-cards);">
+                        <div class="mb-4">
+                            <h2 style="font-size: 1.15rem; font-weight: 700; color: var(--color-midnight-ink); margin-bottom: 2px;">Tingkat Okupansi</h2>
+                            <span style="font-size: 12px; color: var(--color-stone);">Keterisian kamar per properti</span>
+                        </div>
+
+                        @foreach($kosPerformance as $kos)
+                            <div class="mb-4">
+                                <div class="d-flex justify-content-between align-items-center mb-1" style="font-size: 13px;">
+                                    <strong style="color: var(--color-midnight-ink); font-size: 13.5px;">{{ $kos['title'] }}</strong>
+                                    <span style="font-weight: 700; color: var(--color-midnight-ink); font-variant-numeric: tabular-nums;">{{ $kos['occupancy'] }}%</span>
+                                </div>
+                                <div class="rounded overflow-hidden" style="height: 8px; background-color: var(--surface-page-canvas);">
+                                    <div style="height: 100%; width: {{ $kos['occupancy'] }}%; background-color: var(--color-notion-blue); border-radius: 4px;"></div>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+
+            <!-- TABLE OF PROPERTY PERFORMANCE -->
+            <div class="rounded overflow-hidden" style="background-color: #ffffff; border: var(--border-hairline); border-radius: var(--radius-cards);">
+                <div class="p-3 border-bottom" style="border-color: rgba(0,0,0,0.06) !important;">
+                    <h3 style="font-size: 14px; font-weight: 700; color: var(--color-midnight-ink); margin-bottom: 0;">
+                        Rincian Performa per Kos
+                    </h3>
+                </div>
+                <div class="table-responsive mb-0">
+                    <table class="table mb-0 align-middle">
+                        <thead style="background-color: var(--surface-page-canvas); border-bottom: var(--border-hairline);">
+                            <tr>
+                                <th style="font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-stone); font-weight: 600; padding: 12px 20px; border-top: none;">Nama Properti</th>
+                                <th style="font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-stone); font-weight: 600; padding: 12px 20px; border-top: none;">Tingkat Hunian</th>
+                                <th style="font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-stone); font-weight: 600; padding: 12px 20px; border-top: none;">Booking</th>
+                                <th style="font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-stone); font-weight: 600; padding: 12px 20px; border-top: none; text-align: right;">Total Pendapatan</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($kosPerformance as $kos)
+                                <tr style="border-bottom: 1px solid rgba(0,0,0,0.06);">
+                                    <td style="padding: 14px 20px; font-weight: 700; color: var(--color-midnight-ink); font-size: 14px;">
+                                        {{ $kos['title'] }}
+                                    </td>
+                                    <td style="padding: 14px 20px;">
+                                        <span class="badge" style="background-color: var(--surface-page-canvas); color: var(--color-midnight-ink); border: var(--border-hairline); font-size: 11px; font-weight: 700; padding: 4px 8px; border-radius: 4px;">
+                                            {{ $kos['occupancy'] }}%
+                                        </span>
+                                    </td>
+                                    <td style="padding: 14px 20px; font-size: 13.5px; color: var(--color-stone);">
+                                        {{ $kos['booking'] }} pesanan
+                                    </td>
+                                    <td style="padding: 14px 20px; text-align: right; font-weight: 700; color: var(--color-midnight-ink); font-variant-numeric: tabular-nums; font-size: 14px;">
+                                        Rp {{ number_format($kos['revenue'], 0, ',', '.') }}
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
 @endsection

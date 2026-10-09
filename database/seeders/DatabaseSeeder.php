@@ -82,6 +82,70 @@ class DatabaseSeeder extends Seeder
         $anggrekFacilities = Facility::whereIn('name', ['WiFi', 'Kasur', 'Lemari', 'Meja', 'Kursi', 'Parkir Motor', 'Listrik'])->pluck('id');
         $kosAnggrek->facilities()->sync($anggrekFacilities);
 
+        $kosLavender = Kos::firstOrCreate(
+            ['slug' => 'kos-eksklusif-lavender'],
+            [
+                'owner_id' => $owner->id,
+                'title' => "Kos Eksklusif D'Lavender",
+                'description' => 'Kos eksklusif modern dekat kampus UGM Yogyakarta. Keamanan 24 jam dengan fasilitas hotel berbintang.',
+                'price' => 1500000.00,
+                'type' => 'Eksklusif',
+                'city' => 'Yogyakarta',
+                'address' => 'Jl. Kaliurang KM 5.5 No. 42, Sleman, Yogyakarta',
+                'thumbnail' => 'assets/img/kos/3.png',
+                'status' => 'active',
+            ]
+        );
+        $kosLavender->facilities()->sync($melatiFacilities);
+
+        $kosCendana = Kos::firstOrCreate(
+            ['slug' => 'kos-putra-cendana'],
+            [
+                'owner_id' => $owner->id,
+                'title' => 'Kos Putra Cendana ITB',
+                'description' => 'Kos nyaman strategis 5 menit jalan kaki ke kampus ITB Ganesha Bandung. Sirkulasi udara sejuk dan lingkungan tenang.',
+                'price' => 950000.00,
+                'type' => 'Putra',
+                'city' => 'Bandung',
+                'address' => 'Jl. Dago Asri No. 18, Bandung',
+                'thumbnail' => 'assets/img/kos/4.png',
+                'status' => 'active',
+            ]
+        );
+        $kosCendana->facilities()->sync($anggrekFacilities);
+
+        $kosMawar = Kos::firstOrCreate(
+            ['slug' => 'kos-putri-mawar-asri'],
+            [
+                'owner_id' => $owner->id,
+                'title' => 'Kos Putri Mawar Asri',
+                'description' => 'Hunian tenang khusus mahasiswi dan karyawati di Jakarta Selatan. Dekat stasiun MRT dan pusat perkantoran.',
+                'price' => 1250000.00,
+                'type' => 'Putri',
+                'city' => 'Jakarta',
+                'address' => 'Jl. Fatmawati Raya No. 27, Jakarta Selatan',
+                'thumbnail' => 'assets/img/kos/5.png',
+                'status' => 'active',
+            ]
+        );
+        $kosMawar->facilities()->sync($melatiFacilities);
+
+        $kosHarmoni = Kos::firstOrCreate(
+            ['slug' => 'kos-harmoni-residence'],
+            [
+                'owner_id' => $owner->id,
+                'title' => 'Kos Harmoni Residence',
+                'description' => 'Kos campur eksklusif dekat kawasan Simpang Lima Semarang. Dilengkapi dapur bersama dan parkir mobil luas.',
+                'price' => 1100000.00,
+                'type' => 'Campur',
+                'city' => 'Semarang',
+                'address' => 'Jl. Pandanaran No. 70, Semarang',
+                'thumbnail' => 'assets/img/kos/6.png',
+                'status' => 'active',
+            ]
+        );
+        $kosHarmoni->facilities()->sync($anggrekFacilities);
+
         // 3. Booking: Dewi Sartika memesan Kos Putri Melati
         $booking = Booking::firstOrCreate(
             ['booking_code' => 'BKG-202608-0001'],

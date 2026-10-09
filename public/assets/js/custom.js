@@ -2,9 +2,11 @@
 
     "use strict";
 
-    if ( document.getElementById("ts-header").classList.contains("fixed-top") ){
-        if( !document.getElementsByClassName("ts-homepage")[0] ) {
-            document.getElementById("ts-main").style.marginTop = document.getElementById("ts-header").offsetHeight + "px";
+    var tsHeader = document.getElementById("ts-header");
+    var tsMain = document.getElementById("ts-main");
+    if ( tsHeader && tsHeader.classList.contains("fixed-top") ){
+        if( !document.getElementsByClassName("ts-homepage")[0] && tsMain ) {
+            tsMain.style.marginTop = tsHeader.offsetHeight + "px";
         }
     }
 

@@ -187,7 +187,7 @@
                             @empty
                             <div class="col-12">
                                 <div class="card p-5 text-center">
-                                    <div class="text-muted mb-3" style="font-size: 48px;">🔍</div>
+                                    <div class="text-muted mb-3" style="font-size: 36px;"><i class="fa fa-search"></i></div>
                                     <h4 class="font-weight-bold mb-2">Tidak Menemukan Kos</h4>
                                     <p class="text-muted mb-4">Coba ubah kata kunci atau bersihkan filter pencarian Anda.</p>
                                     <div>

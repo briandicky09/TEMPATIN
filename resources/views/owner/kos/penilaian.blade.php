@@ -1,106 +1,117 @@
 @extends('layouts.owner')
 
-@section('title', 'Penilaian Kos - TEMPATIN')
+@section('title', 'Penilaian & Ulasan Kos - TEMPATIN')
 
 @section('owner-content')
-<main id="ts-main">
-    <section class="py-5">
-        <div class="container">
-            <div class="mb-4">
-                <span class="text-primary font-weight-bold text-uppercase small">Manajemen Kos</span>
-                <h2 class="mb-1 mt-1">Penilaian Kos</h2>
-                <p class="text-muted mb-0">Pantau pengalaman penghuni melalui penilaian dan ulasan terbaru.</p>
-            </div>
+<div class="container">
+    <div class="row">
 
-            <div class="row mb-4">
-                <div class="col-md-4 mb-3 mb-md-0">
-                    <div class="card ts-card border-0 shadow-sm h-100">
-                        <div class="card-body d-flex align-items-center">
-                            <div class="rounded-circle bg-warning p-3 mr-3">
-                                <i class="fa fa-star text-white fa-lg"></i>
-                            </div>
-                            <div>
-                                <div class="text-muted small">Rata-rata penilaian</div>
-                                <div class="h3 mb-0 font-weight-bold">{{ number_format($rataRating, 1, ',', '.') }} <small class="text-muted">/ 5</small></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 mb-3 mb-md-0">
-                    <div class="card ts-card border-0 shadow-sm h-100">
-                        <div class="card-body d-flex align-items-center">
-                            <div class="rounded-circle bg-primary p-3 mr-3">
-                                <i class="fa fa-comments text-white fa-lg"></i>
-                            </div>
-                            <div>
-                                <div class="text-muted small">Total ulasan</div>
-                                <div class="h3 mb-0 font-weight-bold">{{ $totalUlasan }}</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card ts-card border-0 shadow-sm h-100">
-                        <div class="card-body d-flex align-items-center">
-                            <div class="rounded-circle bg-success p-3 mr-3">
-                                <i class="fa fa-building text-white fa-lg"></i>
-                            </div>
-                            <div>
-                                <div class="text-muted small">Kos dinilai</div>
-                                <div class="h3 mb-0 font-weight-bold">{{ count($ratings) }}</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card ts-card border-0 shadow-sm">
-                <div class="card-header bg-white border-bottom py-3">
-                    <h5 class="mb-0 font-weight-bold">Ringkasan Penilaian</h5>
-                </div>
-                <div class="card-body p-0">
-                    <div class="table-responsive">
-                        <table class="table table-hover mb-0 align-middle">
-                            <thead class="thead-light">
-                                <tr>
-                                    <th class="pl-4">Nama Kos</th>
-                                    <th>Rating</th>
-                                    <th>Jumlah Ulasan</th>
-                                    <th>Ulasan Terbaru</th>
-                                    <th class="pr-4">Aksi</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach($ratings as $rating)
-                                    <tr>
-                                        <td class="pl-4">
-                                            <strong>{{ $rating['kos'] }}</strong>
-                                            <div class="small text-muted">Penilaian penghuni</div>
-                                        </td>
-                                        <td>
-                                            <div class="text-warning text-nowrap">
-                                                @for($star = 1; $star <= 5; $star++)
-                                                    <i class="fa fa-star{{ $star <= round($rating['rating']) ? '' : '-o' }}"></i>
-                                                @endfor
-                                                <strong class="text-dark ml-1">{{ number_format($rating['rating'], 1, ',', '.') }}</strong>
-                                            </div>
-                                        </td>
-                                        <td>{{ $rating['total'] }} ulasan</td>
-                                        <td class="text-muted" style="min-width: 280px;">
-                                            <div class="text-dark">&ldquo;{{ $rating['latest'] }}&rdquo;</div>
-                                            <small>{{ $rating['reviewer'] }} &middot; {{ $rating['date'] }}</small>
-                                        </td>
-                                        <td class="pr-4">
-                                            <a href="{{ route('owner.kos.show', $rating['slug']) }}" class="btn btn-sm btn-outline-primary text-nowrap">Lihat Kos</a>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
+        <!-- OWNER SIDEBAR -->
+        <div class="col-lg-3 mb-4 mb-lg-0">
+            @include('partials.owner-sidebar')
         </div>
-    </section>
-</main>
+
+        <!-- MAIN CONTENT -->
+        <div class="col-lg-9">
+
+            <!-- HEADER -->
+            <div class="mb-4">
+                <div class="d-inline-flex align-items-center mb-2 px-2 py-1 rounded" style="background-color: var(--color-sky-tint); color: var(--color-notion-blue); font-size: 11px; font-weight: 600;">
+                    <i class="fa fa-star mr-1"></i> REPUTASI & KEPUASAN
+                </div>
+                <h1 style="font-family: var(--font-serif); font-size: 1.85rem; font-weight: 700; color: var(--color-midnight-ink); margin-bottom: 4px;">
+                    Penilaian & Ulasan Penghuni
+                </h1>
+                <p style="font-size: 14px; color: var(--color-stone); margin-bottom: 0;">
+                    Pantau kesan dan umpan balik langsung dari mahasiswa serta penyewa kamar kos Anda.
+                </p>
+            </div>
+
+            <!-- KPI METRICS -->
+            <div class="row mb-4">
+                <div class="col-md-4 col-sm-6 mb-3 mb-md-0">
+                    <div class="p-3 rounded h-100" style="background-color: #ffffff; border: var(--border-hairline); border-radius: var(--radius-cards);">
+                        <div style="font-size: 12px; color: var(--color-stone); font-weight: 500; margin-bottom: 6px;">Rata-rata Penilaian</div>
+                        <div class="d-flex align-items-center">
+                            <span style="font-size: 1.75rem; font-weight: 700; color: var(--color-midnight-ink); font-variant-numeric: tabular-nums;" class="mr-2">
+                                {{ number_format($rataRating, 1, ',', '.') }}
+                            </span>
+                            <span style="color: #ffb110; font-size: 1.1rem;"><i class="fa fa-star"></i></span>
+                            <span style="font-size: 12px; color: var(--color-stone);" class="ml-2">/ 5.0</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-sm-6 mb-3 mb-md-0">
+                    <div class="p-3 rounded h-100" style="background-color: #ffffff; border: var(--border-hairline); border-radius: var(--radius-cards);">
+                        <div style="font-size: 12px; color: var(--color-stone); font-weight: 500; margin-bottom: 6px;">Total Ulasan Diterima</div>
+                        <div style="font-size: 1.75rem; font-weight: 700; color: var(--color-midnight-ink); font-variant-numeric: tabular-nums;">
+                            {{ $totalUlasan }}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-sm-12">
+                    <div class="p-3 rounded h-100" style="background-color: #ffffff; border: var(--border-hairline); border-radius: var(--radius-cards);">
+                        <div style="font-size: 12px; color: var(--color-stone); font-weight: 500; margin-bottom: 6px;">Kos Memiliki Ulasan</div>
+                        <div style="font-size: 1.75rem; font-weight: 700; color: var(--color-notion-blue); font-variant-numeric: tabular-nums;">
+                            {{ count($ratings) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TABLE OF REVIEWS -->
+            <div class="rounded overflow-hidden" style="background-color: #ffffff; border: var(--border-hairline); border-radius: var(--radius-cards);">
+                <div class="table-responsive mb-0">
+                    <table class="table mb-0 align-middle">
+                        <thead style="background-color: var(--surface-page-canvas); border-bottom: var(--border-hairline);">
+                            <tr>
+                                <th style="font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-stone); font-weight: 600; padding: 14px 20px; border-top: none;">Nama Kos</th>
+                                <th style="font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-stone); font-weight: 600; padding: 14px 20px; border-top: none;">Skor</th>
+                                <th style="font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-stone); font-weight: 600; padding: 14px 20px; border-top: none;">Ulasan Terbaru</th>
+                                <th style="font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-stone); font-weight: 600; padding: 14px 20px; border-top: none; text-align: right;">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($ratings as $rating)
+                                <tr style="border-bottom: 1px solid rgba(0,0,0,0.06);">
+                                    <td style="padding: 16px 20px;">
+                                        <div style="font-weight: 700; color: var(--color-midnight-ink); font-size: 14px;">
+                                            {{ $rating['kos'] }}
+                                        </div>
+                                        <div style="font-size: 12px; color: var(--color-stone);">
+                                            {{ $rating['total'] }} ulasan masuk
+                                        </div>
+                                    </td>
+                                    <td style="padding: 16px 20px;">
+                                        <div class="d-flex align-items-center">
+                                            <span style="font-size: 14px; font-weight: 700; color: var(--color-midnight-ink); font-variant-numeric: tabular-nums;" class="mr-2">
+                                                {{ number_format($rating['rating'], 1, ',', '.') }}
+                                            </span>
+                                            <span style="color: #ffb110; font-size: 12px;"><i class="fa fa-star"></i></span>
+                                        </div>
+                                    </td>
+                                    <td style="padding: 16px 20px; font-size: 13.5px; color: var(--color-charcoal); max-width: 380px;">
+                                        <div style="font-style: italic; margin-bottom: 4px;">&ldquo;{{ $rating['latest'] }}&rdquo;</div>
+                                        <div style="font-size: 11.5px; color: var(--color-stone);">
+                                            {{ $rating['reviewer'] }} • {{ $rating['date'] }}
+                                        </div>
+                                    </td>
+                                    <td style="padding: 16px 20px; text-align: right;">
+                                        <a href="{{ route('owner.kos.show', $rating['slug']) }}" class="btn btn-sm" style="background-color: var(--surface-page-canvas); color: var(--color-midnight-ink); border: var(--border-hairline); font-weight: 600; font-size: 12px; border-radius: var(--radius-buttons); padding: 6px 14px;">
+                                            Detail Kos
+                                        </a>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
 @endsection

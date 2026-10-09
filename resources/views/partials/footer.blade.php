@@ -6,8 +6,8 @@
 
             <!-- Brand and description -->
             <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
-                <a href="{{ route('home') }}" class="d-inline-flex align-items-center mb-3 text-decoration-none">
-                    <span class="pk-logo"><i class="fa fa-home mr-2"></i>TEMPATIN</span>
+                <a href="{{ route('home') }}" class="d-inline-flex align-items-center mb-3 text-decoration-none" aria-label="TEMPATIN Beranda">
+                    <img src="{{ asset('assets/img/logo.png') }}" alt="TEMPATIN" style="height: 30px; width: auto; object-fit: contain;">
                 </a>
                 <p class="text-muted mb-4" style="max-width: 320px; font-size: 14px; line-height: 1.6;">
                     Ruang kerja dan platform terpercaya untuk menemukan serta menyewa kos impian di seluruh kota di Indonesia dengan kurasi transparan dan proses instan.
@@ -57,7 +57,7 @@
                     Jawa Timur, Indonesia<br>
                     <span class="d-block mt-2">
                         <strong class="text-dark">Email:</strong>
-                        <a href="mailto:hello@tempatin.id" class="text-primary text-decoration-none">hello@tempatin.id</a>
+                        <a href="mailto:hello@tempatin.id" class="text-decoration-none" style="color: var(--color-notion-blue); font-weight: 500;">hello@tempatin.id</a>
                     </span>
                     <span>
                         <strong class="text-dark">Hotline:</strong> 0800-1-TEMPATIN

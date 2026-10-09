@@ -19,7 +19,35 @@
     <link rel="stylesheet" href="{{ asset('assets/css/owl.carousel.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/css/tempatin.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/tempatin.css') }}?v={{ filemtime(public_path('assets/css/tempatin.css')) }}">
+    <style>
+        html { margin: 0 !important; padding: 0 !important; }
+        body { margin: 0 !important; padding: 0 !important; padding-top: 68px !important; }
+        #ts-header, header#ts-header, .card-nav-wrapper {
+            position: fixed !important;
+            top: 0 !important;
+            left: 0 !important;
+            right: 0 !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            border-radius: 0 !important;
+            z-index: 1040 !important;
+        }
+        .card-nav-container {
+            width: 100% !important;
+            max-width: 100% !important;
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+        .card-nav {
+            border-radius: 0 !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            margin: 0 !important;
+        }
+    </style>
     @stack('styles')
 
     <title>@yield('title', 'TEMPATIN - Temukan Kos Impianmu dengan Mudah')</title>
@@ -36,6 +64,7 @@
 <script src="{{ asset('assets/js/jquery-3.3.1.min.js') }}"></script>
 <script src="{{ asset('assets/js/popper.min.js') }}"></script>
 <script src="{{ asset('assets/bootstrap/js/bootstrap.min.js') }}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="{{ asset('assets/js/owl.carousel.min.js') }}"></script>
 <script src="{{ asset('assets/js/jquery.scrollbar.min.js') }}"></script>
 <script src="{{ asset('assets/js/custom.js') }}"></script>

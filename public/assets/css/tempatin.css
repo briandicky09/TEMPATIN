@@ -6,7 +6,7 @@
 
 :root {
     /* ---------------------------------------------------------------------
-       1. COLOR TOKENS
+       1. COLOR TOKENS (BALANCED & PROFESSIONAL NOTION PALETTE)
        --------------------------------------------------------------------- */
     --color-notion-blue: #0075de;
     --color-paper-warmth: #f6f5f4;
@@ -25,6 +25,9 @@
     --color-signal-blue: #097fe8;
     --color-sky-wash: #62aef0;
     --color-midnight-ink: #02093a;
+    --color-marigold-tint: #fef9c3;
+    --color-coral-tint: #fee2e2;
+    --color-emerald-tint: #edf7ee;
 
     /* ---------------------------------------------------------------------
        2. TYPOGRAPHY TOKENS
@@ -115,19 +118,19 @@
        --------------------------------------------------------------------- */
     --surface-page-canvas: #f6f5f4;
     --surface-card-surface: #ffffff;
-    --surface-accent-card-surface: #ffb110;
-    --surface-dark-card-surface: #02093a;
+    --surface-accent-card-surface: #ffffff;
+    --surface-dark-card-surface: #191919;
 
     --border-hairline: 1px solid rgba(0, 0, 0, 0.08);
     --border-hairline-hover: 1px solid rgba(0, 0, 0, 0.18);
     --border-hairline-dark: 1px solid rgba(255, 255, 255, 0.12);
 
     --shadow-sticky-nav: 0px 1px 3px rgba(0, 0, 0, 0.03), 0px 2px 8px rgba(0, 0, 0, 0.02);
-    --shadow-product-mockup: 0px 4px 12px rgba(0, 0, 0, 0.08);
+    --shadow-product-mockup: 0px 4px 12px rgba(0, 0, 0, 0.05);
 
     /* Mapping to legacy template variable names */
-    --color-primary: #0075de;
-    --color-black: #000000;
+    --color-primary: var(--color-notion-blue);
+    --color-black: #111111;
     --color-white: #ffffff;
     --color-grey: #615d59;
     --color-grey-light: #f6f5f4;
@@ -246,31 +249,35 @@ p {
 .notion-pill-highlight,
 .hero-pill-highlight {
     display: inline-block;
-    background-color: #f6d5b8;
-    color: var(--color-ink-black);
+    background-color: #fef08a;
+    color: #713f12;
     border-radius: var(--radius-pills);
-    padding: 2px 16px;
+    padding: 2px 14px;
     margin: 0 4px;
     font-weight: 600;
     letter-spacing: -0.01em;
     vertical-align: baseline;
     box-shadow: none;
+    border: 1px solid rgba(0, 0, 0, 0.08);
     transition: transform 0.2s ease;
 }
 
 .notion-pill-highlight--yellow {
-    background-color: var(--color-marigold);
-    color: #000000;
+    background-color: #fef3c7;
+    color: #854d0e;
+    border: 1px solid rgba(133, 77, 14, 0.15);
 }
 
 .notion-pill-highlight--blue {
     background-color: var(--color-sky-tint);
     color: var(--color-notion-blue);
+    border: 1px solid rgba(0, 117, 222, 0.15);
 }
 
 .notion-pill-highlight--coral {
-    background-color: #fdd5ce;
-    color: var(--color-coral);
+    background-color: #fee2e2;
+    color: #991b1b;
+    border: 1px solid rgba(153, 27, 27, 0.15);
 }
 
 /* Hairline Card Surface (No heavy shadows, tactile analog paper) */
@@ -294,17 +301,19 @@ p {
     border-color: rgba(0, 0, 0, 0.16) !important;
 }
 
-/* Feature Accent Panels (Section variety) */
+/* Feature Accent Panels (Refined & subtle, not garish) */
 .notion-panel-marigold {
-    background-color: var(--color-marigold) !important;
+    background-color: #fffbeb !important;
     color: var(--color-ink-black) !important;
+    border: 1px solid #fef3c7 !important;
     border-radius: var(--radius-cards);
     padding: var(--card-padding);
 }
 
 .notion-panel-coral {
-    background-color: var(--color-coral) !important;
-    color: #ffffff !important;
+    background-color: #fff1f2 !important;
+    color: var(--color-ink-black) !important;
+    border: 1px solid #ffe4e6 !important;
     border-radius: var(--radius-cards);
     padding: var(--card-padding);
 }
@@ -325,7 +334,7 @@ p {
 }
 
 /* =========================================================================
-   BUTTON SYSTEM (SINGLE CHROMATIC COMMITMENT)
+   BUTTON SYSTEM (PROFESSIONAL WITH NOTION BLUE ANCHOR)
    ========================================================================= */
 .btn {
     font-family: var(--font-notioninter) !important;
@@ -371,16 +380,87 @@ p {
 .btn-secondary,
 .ts-btn-ghost {
     background-color: var(--color-sky-tint) !important;
-    border-color: transparent !important;
+    border: 1px solid rgba(0, 117, 222, 0.12) !important;
     color: var(--color-notion-blue) !important;
 }
 
 .btn-ghost:hover,
 .btn-light:hover,
 .btn-secondary:hover {
-    background-color: #d4ebfd !important;
-    color: #0066c4 !important;
-    border-color: transparent !important;
+    background-color: #d8ecfd !important;
+    color: #005ebd !important;
+    border-color: rgba(0, 117, 222, 0.25) !important;
+}
+
+/* Professional SaaS Status Badges & Pills */
+.badge {
+    font-family: var(--font-notioninter) !important;
+    font-size: 11px !important;
+    font-weight: 600 !important;
+    border-radius: var(--radius-pills) !important;
+    padding: 3px 10px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 4px !important;
+    box-shadow: none !important;
+}
+
+.badge-primary,
+.badge-info {
+    background-color: var(--color-sky-tint) !important;
+    color: var(--color-notion-blue) !important;
+    border: 1px solid rgba(0, 117, 222, 0.18) !important;
+}
+
+.badge-success {
+    background-color: #edf7ee !important;
+    color: #166534 !important;
+    border: 1px solid rgba(22, 101, 52, 0.18) !important;
+}
+
+.badge-warning {
+    background-color: #fef9c3 !important;
+    color: #854d0e !important;
+    border: 1px solid rgba(133, 77, 14, 0.18) !important;
+}
+
+.badge-danger {
+    background-color: #fee2e2 !important;
+    color: #991b1b !important;
+    border: 1px solid rgba(153, 27, 27, 0.18) !important;
+}
+
+.badge-secondary,
+.badge-light {
+    background-color: #f1f1ef !important;
+    color: #37352f !important;
+    border: 1px solid rgba(0, 0, 0, 0.08) !important;
+}
+
+.badge-dark {
+    background-color: var(--color-charcoal) !important;
+    color: #ffffff !important;
+    border: 1px solid var(--color-charcoal) !important;
+}
+
+/* Professional Text Utility Colors */
+.text-primary {
+    color: var(--color-notion-blue) !important;
+}
+.text-secondary {
+    color: var(--color-stone) !important;
+}
+.text-danger {
+    color: #d44c47 !important;
+}
+.text-warning {
+    color: #b45309 !important;
+}
+.text-success {
+    color: #0f7b55 !important;
+}
+.text-info {
+    color: var(--color-notion-blue) !important;
 }
 
 /* Outlined Text Button (Hairline border, dark text) */
@@ -428,19 +508,7 @@ p {
     width: 100%;
 }
 
-/* =========================================================================
-   NAVIGATION (NOTION FIXED TOP BAR 64PX)
-   ========================================================================= */
-#ts-header {
-    background-color: var(--surface-card-surface) !important;
-    border-bottom: var(--border-hairline) !important;
-    box-shadow: var(--shadow-sticky-nav) !important;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 1030;
-}
+
 
 #ts-secondary-navigation {
     background-color: var(--surface-page-canvas) !important;
@@ -529,10 +597,7 @@ p {
     margin: 4px 0;
 }
 
-/* Adjust page offset for fixed header */
-body {
-    padding-top: 104px;
-}
+
 
 /* =========================================================================
    HERO & SEARCH SECTION
@@ -1262,29 +1327,31 @@ div[style*="position: sticky"] {
 }
 
 .notion-character-mark {
-    width: 44px;
-    height: 44px;
+    width: 42px;
+    height: 42px;
     border-radius: 50%;
     background-color: #ffffff;
-    border: 2px solid #0075de;
+    border: 1.5px solid var(--color-notion-blue);
+    color: var(--color-notion-blue);
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    font-size: 20px;
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
-    transition: transform 0.2s ease;
+    font-size: 15px;
+    box-shadow: none;
+    transition: transform 0.2s ease, border-color 0.2s ease;
     user-select: none;
 }
 
 .notion-character-mark:hover {
-    transform: translateY(-3px) scale(1.08);
+    transform: translateY(-2px);
+    border-color: var(--color-notion-blue);
 }
 
-.notion-character-mark--coral { border-color: var(--color-coral); }
-.notion-character-mark--yellow { border-color: var(--color-marigold); }
-.notion-character-mark--blue { border-color: var(--color-signal-blue); }
-.notion-character-mark--sky { border-color: var(--color-sky-wash); }
-.notion-character-mark--mocha { border-color: var(--color-mocha); }
+.notion-character-mark--coral { border-color: #fca5a5 !important; color: #dc2626 !important; background-color: #fef2f2 !important; }
+.notion-character-mark--yellow { border-color: #fde68a !important; color: #b45309 !important; background-color: #fffbeb !important; }
+.notion-character-mark--blue { border-color: #bae6fd !important; color: var(--color-notion-blue) !important; background-color: var(--color-sky-tint) !important; }
+.notion-character-mark--sky { border-color: #bae6fd !important; color: #0284c7 !important; background-color: #f0f9ff !important; }
+.notion-character-mark--mocha { border-color: #e5e7eb !important; color: #4b5563 !important; background-color: #f9fafb !important; }
 
 /* 2. Notion App Window Mockup */
 .notion-app-mockup {
@@ -1312,15 +1379,14 @@ div[style*="position: sticky"] {
 }
 
 .notion-app-mockup__dot {
-    width: 10px;
-    height: 10px;
+    width: 9px;
+    height: 9px;
     border-radius: 50%;
-    background-color: #e5e5e5;
 }
 
-.notion-app-mockup__dot--red { background-color: #ff5f56; }
-.notion-app-mockup__dot--yellow { background-color: #ffbd2e; }
-.notion-app-mockup__dot--green { background-color: #27c93f; }
+.notion-app-mockup__dot--red { background-color: #ff5f56 !important; }
+.notion-app-mockup__dot--yellow { background-color: #ffbd2e !important; }
+.notion-app-mockup__dot--green { background-color: #27c93f !important; }
 
 .notion-app-mockup__title {
     font-size: 12px;
@@ -1413,24 +1479,30 @@ div[style*="position: sticky"] {
 }
 
 .notion-feature-box--marigold {
-    background-color: var(--color-marigold) !important;
-    color: var(--color-ink-black) !important;
-    border: none !important;
-}
-
-.notion-feature-box--marigold h3,
-.notion-feature-box--marigold p {
+    background-color: #fffbeb !important;
+    border: 1px solid #fef3c7 !important;
     color: var(--color-ink-black) !important;
 }
 
 .notion-feature-box--coral {
-    background-color: #fff4f2 !important;
-    border-color: #ffd8d3 !important;
+    background-color: #fff1f2 !important;
+    border: 1px solid #ffe4e6 !important;
+    color: var(--color-ink-black) !important;
 }
 
 .notion-feature-box--sky {
     background-color: var(--color-sky-tint) !important;
-    border-color: #d4ebfd !important;
+    border: 1px solid #d4ebfd !important;
+    color: var(--color-ink-black) !important;
+}
+
+.notion-feature-box--marigold h3,
+.notion-feature-box--marigold p,
+.notion-feature-box--coral h3,
+.notion-feature-box--coral p,
+.notion-feature-box--sky h3,
+.notion-feature-box--sky p {
+    color: var(--color-ink-black) !important;
 }
 
 /* 5. Kanban Task Cards (Product Mockup) */
@@ -1499,12 +1571,15 @@ div[style*="position: sticky"] {
 }
 
 .notion-kanban-card__tag {
-    font-size: 10px;
+    font-size: 11px;
     font-weight: 600;
     padding: 2px 8px;
     border-radius: var(--radius-pills);
     display: inline-block;
     margin-bottom: 6px;
+    background-color: #f1f1ef !important;
+    color: var(--color-charcoal) !important;
+    border: 1px solid rgba(0, 0, 0, 0.08) !important;
 }
 
 .notion-kanban-card__text {
@@ -1535,9 +1610,10 @@ div[style*="position: sticky"] {
 }
 
 .notion-doc-card__emoji {
-    font-size: 28px;
+    font-size: 20px;
     margin-bottom: 14px;
     display: inline-block;
+    color: var(--color-charcoal);
 }
 
 .notion-doc-card__title {
@@ -1582,4 +1658,1072 @@ div[style*="position: sticky"] {
 .notion-dark-island p {
     color: rgba(255, 255, 255, 0.7) !important;
 }
+
+/* =========================================================================
+   8. CARDNAV NAVIGATION COMPONENT (FULL-WIDTH EXPANDABLE NAV)
+   ========================================================================= */
+#ts-header,
+header#ts-header,
+#ts-header.card-nav-wrapper,
+#ts-header.fixed-top,
+#ts-header:not(.fixed-top),
+.card-nav-wrapper {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border-radius: 0 !important;
+    z-index: 1040 !important;
+    background-color: transparent !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    border-bottom: 1px solid transparent !important;
+    box-shadow: none !important;
+    transition: background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+                backdrop-filter 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+                -webkit-backdrop-filter 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+                border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+                box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+/* Shrinking Sticky Header with Glassmorphism (>100px scroll: shrink height by 20% & blurred glass) */
+#ts-header.is-shrunk,
+header#ts-header.is-shrunk,
+.card-nav-wrapper.is-shrunk {
+    background-color: rgba(255, 255, 255, 0.82) !important;
+    backdrop-filter: blur(16px) saturate(180%) !important;
+    -webkit-backdrop-filter: blur(16px) saturate(180%) !important;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08) !important;
+    box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.06) !important;
+}
+
+#ts-header.open,
+.card-nav-wrapper.open {
+    box-shadow: 0 20px 48px rgba(0, 0, 0, 0.16) !important;
+    background-color: #ffffff !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08) !important;
+}
+
+.card-nav-container {
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    padding: 0;
+    position: relative;
+}
+
+.card-nav {
+    display: block;
+    width: 100%;
+    height: 68px;
+    padding: 0;
+    border-radius: 0;
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
+    position: relative;
+    overflow: hidden;
+    will-change: height;
+}
+
+.card-nav-top {
+    position: absolute;
+    inset: 0 0 auto 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 68px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 24px;
+    z-index: 3;
+    background: transparent;
+    box-sizing: border-box;
+    transition: height 0.3s cubic-bezier(0.4, 0, 0.2, 1), padding 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Height shrunk by 20%: 68px * 0.80 = ~54px */
+#ts-header.is-shrunk:not(.open) .card-nav {
+    height: 54px;
+}
+
+#ts-header.is-shrunk .card-nav-top {
+    height: 54px;
+}
+
+#ts-header.is-shrunk .card-nav-toggle {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+}
+
+#ts-header.is-shrunk .card-nav-logo-badge {
+    width: 28px;
+    height: 28px;
+    font-size: 13px;
+}
+
+#ts-header.is-shrunk .card-nav-brand-text {
+    font-size: 15px;
+}
+
+#ts-header.is-shrunk .card-nav-cta-btn {
+    padding: 6px 14px;
+    font-size: 13px;
+}
+
+@media (min-width: 992px) {
+    .card-nav-top {
+        padding: 0 36px;
+    }
+}
+
+.card-nav-toggle {
+    width: 42px;
+    height: 42px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    background-color: var(--surface-page-canvas, #f6f5f4);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    color: var(--color-midnight-ink);
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    padding: 0;
+    flex-shrink: 0;
+}
+
+.card-nav-toggle:hover {
+    background-color: #ebeae8;
+    color: #000000;
+    transform: scale(1.03);
+}
+
+.card-nav-toggle:active {
+    transform: scale(0.96);
+}
+
+.card-nav-toggle-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    width: 20px;
+    height: 20px;
+}
+
+.card-nav-wrapper.open .card-nav-toggle-icon {
+    transform: rotate(90deg);
+}
+
+.card-nav-brand {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none !important;
+    user-select: none;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.card-nav-brand:hover {
+    text-decoration: none !important;
+}
+
+.card-nav-logo-img {
+    height: 32px;
+    width: auto;
+    max-width: 165px;
+    object-fit: contain;
+    display: block;
+    transition: height 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+#ts-header.is-shrunk .card-nav-logo-img {
+    height: 25px;
+}
+
+.card-nav-right-group {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-left: auto;
+    flex-shrink: 0;
+}
+
+@media (max-width: 575.98px) {
+    .card-nav-logo-img {
+        height: 24px;
+        max-width: 120px;
+    }
+}
+
+.card-nav-logo-badge {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    background-color: var(--color-notion-blue, #0075de);
+    color: #ffffff;
+    font-weight: 800;
+    font-size: 15px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    box-shadow: 0 2px 6px rgba(0, 117, 222, 0.28);
+    transition: transform 0.2s ease;
+}
+
+.card-nav-brand:hover .card-nav-logo-badge {
+    transform: rotate(8deg) scale(1.05);
+}
+
+.card-nav-brand-text {
+    font-weight: 800;
+    font-size: 1.2rem;
+    letter-spacing: -0.035em;
+    color: var(--color-midnight-ink);
+}
+
+.card-nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+}
+
+.card-nav-cta-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+    padding: 0 20px;
+    border-radius: 12px;
+    font-size: 13.5px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    text-decoration: none !important;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    white-space: nowrap;
+    background-color: var(--color-notion-blue, #0075de);
+    color: #ffffff !important;
+    border: none;
+    box-shadow: 0 2px 8px rgba(0, 117, 222, 0.25);
+    cursor: pointer;
+}
+
+.card-nav-cta-btn:hover {
+    background-color: #0060b8;
+    color: #ffffff !important;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 117, 222, 0.35);
+}
+
+.card-nav-cta-btn:active {
+    transform: translateY(0);
+}
+
+.card-nav-cta-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+    padding: 0 16px;
+    border-radius: 12px;
+    font-size: 13.5px;
+    font-weight: 600;
+    color: var(--color-graphite, #615d59);
+    text-decoration: none !important;
+    background-color: transparent;
+    transition: all 0.2s ease;
+    margin-right: 4px;
+}
+
+.card-nav-cta-secondary:hover {
+    background-color: var(--surface-page-canvas, #f6f5f4);
+    color: var(--color-midnight-ink);
+}
+
+/* Content cards reveal */
+.card-nav-content {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 64px;
+    bottom: 0;
+    padding: 16px 24px 24px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    justify-content: flex-start;
+    z-index: 1;
+    visibility: hidden;
+    pointer-events: none;
+    box-sizing: border-box;
+    background: #ffffff;
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+@media (min-width: 768px) {
+    .card-nav-content {
+        flex-direction: row;
+        align-items: stretch;
+        gap: 16px;
+        padding: 16px 36px 24px 36px;
+        max-width: 1280px;
+        margin: 0 auto;
+    }
+}
+
+.nav-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 20px;
+    border-radius: 14px;
+    min-width: 0;
+    flex: 1 1 auto;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    box-sizing: border-box;
+    user-select: none;
+}
+
+.nav-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.16);
+}
+
+.nav-card-label {
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    font-size: 1.15rem;
+    line-height: 1.25;
+}
+
+.nav-card-links {
+    margin-top: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.nav-card-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none !important;
+    color: inherit;
+    font-size: 13.5px;
+    font-weight: 500;
+    opacity: 0.85;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    cursor: pointer;
+}
+
+.nav-card-link:hover {
+    opacity: 1;
+    color: inherit;
+    transform: translateX(4px);
+}
+
+.nav-card-link svg {
+    flex-shrink: 0;
+    transition: transform 0.2s ease;
+}
+
+.nav-card-link:hover svg {
+    transform: translate(2px, -2px);
+}
+
+/* Spacer for fixed card nav so content is not obscured */
+body {
+    padding-top: 64px !important;
+}
+
+/* =========================================================================
+   9. TESTIMONIALS INFINITE MARQUEE (SLOW LOOP WITH DUAL ALPHA MASKS)
+   ========================================================================= */
+.ts-marquee-container {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    padding: 12px 0 24px 0;
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+    mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+}
+
+.ts-marquee-track {
+    display: flex;
+    width: max-content;
+    will-change: transform;
+    animation: ts-marquee-scroll 55s linear infinite;
+}
+
+.ts-marquee-container:hover .ts-marquee-track {
+    animation-play-state: paused;
+}
+
+@keyframes ts-marquee-scroll {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+.ts-marquee-card {
+    width: 380px;
+    min-width: 380px;
+    margin-right: 20px;
+    background: #ffffff;
+    border: var(--border-hairline);
+    border-radius: var(--radius-cards);
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease;
+    user-select: none;
+}
+
+.ts-marquee-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.07);
+}
+
+@media (max-width: 575.98px) {
+    .ts-marquee-card {
+        width: 300px;
+        min-width: 300px;
+        padding: 18px;
+    }
+}
+
+/* =========================================================================
+   10. PHYSICAL SLOT MACHINE / ROLODEX 3D TEXT ANIMATOR
+   ========================================================================= */
+.ts-rolodex-container {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    vertical-align: middle;
+    margin: 0;
+    padding: 0;
+}
+
+.ts-rolodex-slot {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    height: 1.3em;
+    line-height: 1.3em;
+    text-align: center;
+    white-space: nowrap;
+    will-change: width;
+}
+
+.ts-rolodex-word {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    white-space: nowrap;
+    text-align: center;
+    color: var(--color-notion-blue);
+    font-weight: 700;
+    line-height: 1.3em;
+    will-change: transform, opacity;
+}
+
+.ts-rolodex-word.is-active {
+    opacity: 1;
+    transform: none;
+}
+
+/* =========================================================================
+   NEW LANDING PAGE COMPONENTS (NOTION DESIGN SYSTEM INTEGRATION)
+   ========================================================================= */
+
+/* -------------------------------------------------------------------------
+   A. HORIZONTALLY SCROLLING TICKER (PARTNER & CAMPUS TICKER)
+   ------------------------------------------------------------------------- */
+.ts-ticker-wrapper {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    padding: 24px 0;
+    background-color: var(--surface-page-canvas);
+    border-top: var(--border-hairline);
+    border-bottom: var(--border-hairline);
+}
+
+.ts-ticker-fade-left,
+.ts-ticker-fade-right {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 120px;
+    z-index: 5;
+    pointer-events: none;
+}
+
+.ts-ticker-fade-left {
+    left: 0;
+    background: linear-gradient(to right, var(--surface-page-canvas) 15%, rgba(246, 245, 244, 0) 100%);
+}
+
+.ts-ticker-fade-right {
+    right: 0;
+    background: linear-gradient(to left, var(--surface-page-canvas) 15%, rgba(246, 245, 244, 0) 100%);
+}
+
+.ts-ticker-track {
+    display: flex;
+    width: max-content;
+    animation: tsTickerScroll 36s linear infinite;
+    will-change: transform;
+}
+
+.ts-ticker-wrapper:hover .ts-ticker-track {
+    animation-play-state: paused;
+}
+
+@keyframes tsTickerScroll {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+.ts-ticker-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 22px;
+    margin: 0 8px;
+    background-color: var(--color-pure-white);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: var(--radius-pills);
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--color-charcoal);
+    white-space: nowrap;
+    text-decoration: none !important;
+    transition: all 0.2s ease;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+}
+
+.ts-ticker-item:hover {
+    border-color: rgba(0, 117, 222, 0.4);
+    color: var(--color-notion-blue);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 117, 222, 0.08);
+}
+
+.ts-ticker-item i {
+    color: var(--color-notion-blue);
+    font-size: 14px;
+}
+
+/* -------------------------------------------------------------------------
+   B. MAGIC BENTO GRID (NILAI UTAMA - NOTION THEMED)
+   ------------------------------------------------------------------------- */
+.ts-magic-bento-grid {
+    display: grid;
+    gap: 16px;
+    width: 100%;
+    grid-template-columns: 1fr;
+}
+
+@media (min-width: 640px) {
+    .ts-magic-bento-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 992px) {
+    .ts-magic-bento-grid {
+        grid-template-columns: repeat(4, 1fr);
+        grid-template-rows: repeat(2, minmax(210px, auto));
+    }
+    .ts-bento-card-0 { grid-column: span 2; grid-row: span 1; }
+    .ts-bento-card-1 { grid-column: span 1; grid-row: span 1; }
+    .ts-bento-card-2 { grid-column: span 1; grid-row: span 2; }
+    .ts-bento-card-3 { grid-column: span 1; grid-row: span 1; }
+    .ts-bento-card-4 { grid-column: span 2; grid-row: span 1; }
+    .ts-bento-card-5 { grid-column: span 1; grid-row: span 1; }
+}
+
+.ts-bento-card {
+    background: var(--color-pure-white);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: var(--radius-cards);
+    position: relative;
+    overflow: hidden;
+    padding: 28px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    cursor: default;
+    transform-style: preserve-3d;
+    -webkit-transform-style: preserve-3d;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+}
+
+.ts-bento-card:hover {
+    border-color: rgba(0, 0, 0, 0.22);
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+}
+
+.ts-bento-spotlight {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    border-radius: inherit;
+    background: radial-gradient(
+        var(--spotlight-radius, 300px) circle at var(--mouse-x, -500px) var(--mouse-y, -500px),
+        var(--glow-color, rgba(0, 117, 222, 0.12)),
+        transparent 75%
+    );
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 1;
+}
+
+.ts-bento-card:hover .ts-bento-spotlight {
+    opacity: 1;
+}
+
+.ts-bento-border-glow {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    border-radius: inherit;
+    padding: 1.5px;
+    background: radial-gradient(
+        var(--spotlight-radius, 280px) circle at var(--mouse-x, -500px) var(--mouse-y, -500px),
+        var(--border-glow-color, rgba(0, 117, 222, 0.7)),
+        transparent 45%
+    );
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 2;
+}
+
+.ts-bento-card:hover .ts-bento-border-glow {
+    opacity: 1;
+}
+
+.ts-bento-particle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 15;
+}
+
+.ts-bento-ripple {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 20;
+}
+
+.ts-bento-content {
+    position: relative;
+    z-index: 5;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.ts-bento-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 14px;
+}
+
+.ts-bento-icon-wrapper {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--color-sky-tint);
+    color: var(--color-notion-blue);
+    font-size: 16px;
+    margin-bottom: 0;
+    border: 1px solid rgba(0, 117, 222, 0.15);
+}
+
+.ts-bento-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--color-notion-blue);
+    margin-bottom: 8px;
+    height: 18px;
+    line-height: 18px;
+}
+
+.ts-bento-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--color-ink-black);
+    letter-spacing: -0.02em;
+    line-height: 1.3;
+    margin-bottom: 10px;
+}
+
+.ts-bento-desc {
+    font-size: 0.95rem;
+    color: var(--color-graphite);
+    line-height: 1.55;
+    margin: 0;
+}
+
+/* -------------------------------------------------------------------------
+   C. ANIMATED STEPPER (ALUR CARA BOOKING KOS)
+   ------------------------------------------------------------------------- */
+.ts-stepper-container {
+    width: 100%;
+    max-width: 880px;
+    margin: 0 auto;
+    background-color: var(--color-pure-white);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 24px;
+    box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.04);
+    overflow: hidden;
+}
+
+.ts-stepper-header {
+    display: flex;
+    align-items: center;
+    padding: 32px 32px 16px 32px;
+}
+
+.ts-stepper-indicator {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    user-select: none;
+    z-index: 2;
+}
+
+.ts-stepper-circle {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 15px;
+    border: 2px solid rgba(0, 0, 0, 0.1);
+    background-color: var(--surface-page-canvas);
+    color: var(--color-stone);
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.ts-stepper-indicator.is-active .ts-stepper-circle {
+    border-color: var(--color-notion-blue);
+    background-color: var(--color-pure-white);
+    color: var(--color-notion-blue);
+    box-shadow: 0 0 0 5px rgba(0, 117, 222, 0.15);
+}
+
+.ts-stepper-indicator.is-complete .ts-stepper-circle {
+    border-color: var(--color-notion-blue);
+    background-color: var(--color-notion-blue);
+    color: var(--color-pure-white);
+}
+
+.ts-stepper-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--color-stone);
+    margin-top: 8px;
+    text-align: center;
+    white-space: nowrap;
+    transition: color 0.3s ease;
+}
+
+.ts-stepper-indicator.is-active .ts-stepper-label {
+    color: var(--color-notion-blue);
+    font-weight: 700;
+}
+
+.ts-stepper-indicator.is-complete .ts-stepper-label {
+    color: var(--color-ink-black);
+}
+
+.ts-stepper-connector {
+    flex: 1;
+    height: 2px;
+    margin: 0 12px 24px 12px;
+    background-color: rgba(0, 0, 0, 0.08);
+    position: relative;
+    border-radius: 9999px;
+    overflow: hidden;
+}
+
+.ts-stepper-connector-fill {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 0%;
+    background-color: var(--color-notion-blue);
+    transition: width 0.4s cubic-bezier(0.33, 1, 0.68, 1);
+}
+
+.ts-stepper-content-wrapper {
+    position: relative;
+    overflow: hidden;
+    padding: 0 32px;
+    transition: height 0.35s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.ts-step-pane {
+    display: none;
+    width: 100%;
+}
+
+.ts-step-pane.is-active {
+    display: block;
+}
+
+.ts-step-card-box {
+    background: #fbfbfa;
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    border-radius: var(--radius-cards);
+    padding: 24px;
+}
+
+.ts-stepper-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 24px 32px 32px 32px;
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
+    margin-top: 8px;
+}
+
+/* -------------------------------------------------------------------------
+   D. MASONRY GALLERY (KOS POPULER MINGGU INI)
+   ------------------------------------------------------------------------- */
+.ts-masonry-container {
+    position: relative;
+    width: 100%;
+    min-height: 480px;
+    margin-top: 16px;
+    transition: height 0.4s ease;
+}
+
+.ts-masonry-item {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: var(--color-pure-white);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: var(--radius-cards);
+    overflow: hidden;
+    transition: box-shadow 0.35s ease;
+    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.08);
+    will-change: transform, width, height, opacity, filter;
+    cursor: pointer;
+}
+
+.ts-masonry-item:hover {
+    box-shadow: 0 20px 45px -12px rgba(0, 0, 0, 0.15);
+}
+
+.ts-masonry-color-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(0, 117, 222, 0.4), rgba(255, 177, 16, 0.3));
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+    z-index: 5;
+}
+
+.ts-masonry-img-box {
+    position: relative;
+    overflow: hidden;
+    display: block;
+    width: 100%;
+}
+
+.ts-masonry-img-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.ts-masonry-item:hover .ts-masonry-img-box img {
+    transform: scale(1.05);
+}
+
+.ts-masonry-refresh-floating {
+    position: fixed;
+    bottom: 28px;
+    right: 28px;
+    z-index: 1050;
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background-color: var(--color-notion-blue);
+    color: #ffffff;
+    border: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 12px 30px -5px rgba(0, 117, 222, 0.5);
+    cursor: pointer;
+    transition: transform 0.25s ease, background-color 0.2s ease;
+}
+
+.ts-masonry-refresh-floating:hover {
+    transform: scale(1.1);
+    background-color: #0060b8;
+}
+
+.ts-masonry-refresh-floating:active {
+    transform: scale(0.95);
+}
+
+.ts-masonry-refresh-floating i {
+    font-size: 18px;
+    transition: transform 0.5s ease;
+}
+
+/* -------------------------------------------------------------------------
+   E. NOTION DOCUMENT CARDS (PUSAT BACAAN & ARTIKEL)
+   ------------------------------------------------------------------------- */
+.ts-notion-doc-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    background-color: var(--color-pure-white);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: var(--radius-cards);
+    padding: 24px;
+    text-decoration: none !important;
+    color: inherit;
+    transition: all 0.25s ease;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+}
+
+.ts-notion-doc-card:hover {
+    border-color: rgba(0, 0, 0, 0.22);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px -6px rgba(0, 0, 0, 0.06);
+}
+
+.ts-notion-doc-card__badge {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 3px 10px;
+    border-radius: 9999px;
+    background-color: var(--surface-page-canvas);
+    color: var(--color-charcoal);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    display: inline-flex;
+    align-items: center;
+}
+
+.ts-notion-doc-card__title {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--color-ink-black);
+    letter-spacing: -0.015em;
+    line-height: 1.35;
+    margin-top: 14px;
+    margin-bottom: 8px;
+    transition: color 0.2s ease;
+}
+
+.ts-notion-doc-card:hover .ts-notion-doc-card__title {
+    color: var(--color-notion-blue);
+}
+
+.ts-notion-doc-card__desc {
+    font-size: 14px;
+    color: var(--color-graphite);
+    line-height: 1.55;
+    margin-bottom: 18px;
+}
+
+.ts-notion-doc-card__meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 14px;
+    border-top: var(--border-hairline);
+    font-size: 12px;
+    color: var(--color-stone);
+}
+
+.ts-notion-doc-card__arrow {
+    color: var(--color-notion-blue);
+    font-weight: 600;
+    font-size: 12px;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    transition: transform 0.2s ease;
+}
+
+.ts-notion-doc-card:hover .ts-notion-doc-card__arrow {
+    transform: translateX(3px);
+}
+
+
 

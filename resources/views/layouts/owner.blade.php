@@ -1,13 +1,14 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="ts-page-wrapper ts-has-bokeh-bg" id="page-top">
+<div class="ts-page-wrapper" style="background-color: var(--surface-page-canvas); min-height: 100vh;">
 
     @include('partials.owner-navbar')
-
     @include('partials.alert')
 
-    @yield('owner-content')
+    <main style="padding-top: 84px; padding-bottom: 80px;">
+        @yield('owner-content')
+    </main>
 
     @include('partials.footer')
 

@@ -3,7 +3,7 @@
 @section('title', $kos['title'] . ' - TEMPATIN')
 
 @section('content')
-<div class="ts-page-wrapper ts-has-bokeh-bg" id="page-top">
+<div class="ts-page-wrapper" id="page-top" style="background-color: var(--surface-page-canvas); min-height: 100vh;">
 
     @include('partials.navbar')
 
@@ -79,8 +79,8 @@
                         <!--NAMA KOS & BADGES-->
                         <div id="page-title" class="mb-4">
                             <div class="mb-2">
-                                <span class="badge badge-success px-3 py-1 font-weight-normal" style="border-radius: 9999px; background-color: #edf7ee; color: #2e7d32; border: 1px solid #c8e6c9;">
-                                    <i class="fa fa-check-circle mr-1"></i>TEMPATIN Verified
+                                <span class="badge px-3 py-1 font-weight-normal" style="border-radius: 9999px; background-color: #edf7ee; color: #166534; border: 1px solid rgba(22, 101, 52, 0.18);">
+                                    <i class="fa fa-check-circle mr-1" style="color: #166534;"></i>TEMPATIN Verified
                                 </span>
                             </div>
 
@@ -94,17 +94,17 @@
                                 </span>
                                 <span>&bull;</span>
                                 <span>
-                                    <i class="fa fa-map-marker-alt text-primary mr-1"></i>
+                                    <i class="fa fa-map-marker-alt mr-1" style="color: var(--color-notion-blue);"></i>
                                     {{ $kos['address'] ?? $kos['city'] }}
                                 </span>
                                 @if(!empty($kos['rating']))
                                     <span>&bull;</span>
                                     <span>
-                                        <i class="fa fa-star text-warning mr-1"></i>
+                                        <i class="fa fa-star mr-1" style="color: var(--color-marigold);"></i>
                                         <strong class="text-dark">{{ number_format($kos['rating'], 1) }}</strong> ({{ $kos['review_count'] ?? 0 }} ulasan)
                                     </span>
                                 @endif
-                                <span class="badge badge-{{ ($kos['status'] ?? 'active') === 'active' ? 'success' : 'secondary' }} ml-auto py-1 px-3" style="border-radius: 9999px;">
+                                <span class="badge ml-auto py-1 px-3" style="border-radius: 9999px; background-color: {{ ($kos['status'] ?? 'active') === 'active' ? '#edf7ee' : '#fee2e2' }}; color: {{ ($kos['status'] ?? 'active') === 'active' ? '#166534' : '#991b1b' }}; border: 1px solid {{ ($kos['status'] ?? 'active') === 'active' ? 'rgba(22, 101, 52, 0.18)' : 'rgba(153, 27, 27, 0.18)' }};">
                                     {{ ($kos['status'] ?? 'active') === 'active' ? 'Tersedia' : 'Penuh' }}
                                 </span>
                             </div>
@@ -206,7 +206,7 @@
                                 <div class="d-flex flex-wrap mb-4">
                                     @foreach($kos->facilities as $facility)
                                         <span class="badge badge-light border text-dark mr-2 mb-2 p-2" style="font-size: 0.9rem; font-weight: 500;">
-                                            <i class="fa fa-check-circle text-primary mr-1"></i>{{ $facility->name }}
+                                            <i class="fa fa-check-circle mr-1" style="color: var(--color-charcoal);"></i>{{ $facility->name }}
                                         </span>
                                     @endforeach
                                 </div>
@@ -307,13 +307,13 @@
                             <div>
                                 <div class="d-flex justify-content-between align-items-center mb-1">
                                     <span class="text-muted small font-weight-bold">
-                                        <i class="fa fa-tag text-primary mr-1"></i>Harga Sewa Resmi
+                                        <i class="fa fa-tag mr-1" style="color: var(--color-stone);"></i>Harga Sewa Resmi
                                     </span>
                                     <span class="badge badge-light border text-muted small">Per Bulan</span>
                                 </div>
 
                                 <div class="d-flex align-items-baseline mb-3">
-                                    <h2 class="text-primary font-weight-bold mb-0" style="font-size: 1.85rem; letter-spacing: -0.02em;">
+                                    <h2 class="font-weight-bold mb-0" style="color: var(--color-midnight-ink); font-size: 1.85rem; letter-spacing: -0.02em;">
                                         Rp {{ number_format($kos['price'], 0, ',', '.') }}
                                     </h2>
                                     <span class="text-muted ml-2">/bln</span>
@@ -329,7 +329,7 @@
 
                                     <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $kos['owner_phone'] ?? '6280286216730') }}?text=Halo, saya tertarik dengan {{ urlencode($kos['title']) }}"
                                         target="_blank" class="btn btn-outline-dark btn-block py-2 font-weight-bold">
-                                        <i class="fab fa-whatsapp text-success mr-2"></i>Tanya Pemilik Langsung
+                                        <i class="fab fa-whatsapp mr-2" style="color: var(--color-midnight-ink);"></i>Tanya Pemilik Langsung
                                     </a>
                                 </div>
                             </div>
@@ -377,20 +377,21 @@
                             <div class="ts-box">
 
                                 <!--Agent Image & Phone-->
-                                <div class="ts-center__vertical mb-4">
+                                <div class="d-flex align-items-center mb-4">
 
-                                    <!--Image-->
-                                    <a href="#" class="ts-circle p-5 mr-4 ts-shadow__sm"
-                                        data-bg-image="{{ asset($kos['owner_photo'] ?? 'assets/img/img-person-05.jpg') }}"></a>
+                                    <!--Image / Avatar-->
+                                    <div class="d-inline-flex align-items-center justify-content-center rounded-circle mr-3" style="width: 56px; height: 56px; background-color: var(--surface-page-canvas); color: var(--color-midnight-ink); border: var(--border-hairline); font-size: 22px; font-weight: 700; flex-shrink: 0;">
+                                        {{ strtoupper(substr($kos['owner_name'] ?? 'P', 0, 1)) }}
+                                    </div>
 
                                     <!--Phone contact-->
-                                    <figure class="mb-0">
-                                        <h5 class="mb-0">{{ $kos['owner_name'] ?? 'Pemilik Kos' }}</h5>
-                                        <p class="mb-0">
-                                            <i class="fa fa-phone-square ts-opacity__50 mr-2"></i>
+                                    <div>
+                                        <h5 class="mb-1 font-weight-bold" style="color: var(--color-midnight-ink);">{{ $kos['owner_name'] ?? 'Pemilik Kos' }}</h5>
+                                        <p class="mb-0 text-muted" style="font-size: 13.5px;">
+                                            <i class="fa fa-phone-alt mr-2" style="color: var(--color-stone);"></i>
                                             {{ $kos['owner_phone'] ?? '-' }}
                                         </p>
-                                    </figure>
+                                    </div>
                                 </div>
 
                                 <!--Agent contact form-->
@@ -520,12 +521,12 @@
                                 <figure class="ts-item__info mb-2">
                                     <h5 class="mb-1"><a href="{{ route('kos.show', $similar['slug']) }}">{{ $similar['title'] }}</a></h5>
                                     <aside class="text-muted small">
-                                        <i class="fa fa-map-marker-alt mr-1 text-primary"></i>
+                                        <i class="fa fa-map-marker-alt mr-1" style="color: var(--color-stone);"></i>
                                         {{ $similar['city'] }}
                                     </aside>
                                 </figure>
 
-                                <div class="text-primary font-weight-bold mb-2">Rp {{ number_format($similar['price'], 0, ',', '.') }} <small class="text-muted">/bln</small></div>
+                                <div class="font-weight-bold mb-2" style="color: var(--color-midnight-ink);">Rp {{ number_format($similar['price'], 0, ',', '.') }} <small class="text-muted">/bln</small></div>
 
                                 <div class="d-flex justify-content-between text-muted small border-top pt-2">
                                     <span><i class="fa fa-ruler-combined mr-1"></i>{{ $similar['area'] ?? '12' }}m²</span>

@@ -1,89 +1,88 @@
-{{-- Navbar khusus area owner --}}
+{{-- Navbar Khusus Area Owner - Notion Design System --}}
 <header id="ts-header" class="fixed-top">
-
-    <nav id="ts-secondary-navigation" class="navbar p-0">
-        <div class="container justify-content-end justify-content-sm-between">
-            <div class="navbar-nav d-none d-sm-block">
-                <span class="mr-4">
-                    <i class="fa fa-briefcase mr-1"></i>
-                    Owner Center
-                </span>
-                <a href="mailto:owner@tempatin.id">
-                    <i class="fa fa-envelope mr-1"></i>
-                    owner@tempatin.id
-                </a>
-            </div>
-
-            <div class="navbar-nav flex-row align-items-center">
-                <span class="nav-link px-3 d-none d-md-inline text-muted">Mode Owner</span>
-                <a href="{{ route('home') }}" class="nav-link px-3 border-left">Lihat Halaman Publik</a>
-            </div>
-        </div>
-    </nav>
-
-    <nav id="ts-primary-navigation" class="navbar navbar-expand-md navbar-light">
+    <nav id="ts-primary-navigation" class="navbar navbar-expand-lg navbar-light">
         <div class="container">
-            <a class="navbar-brand" href="{{ route('owner.dashboard') }}">
-                <span class="pk-logo"><i class="fa fa-building mr-2"></i>TEMPATIN Owner</span>
+            <!-- Brand Logo -->
+            <a class="navbar-brand d-inline-flex align-items-center" href="{{ route('owner.dashboard') }}">
+                <img src="{{ asset('assets/img/logo.png') }}" alt="TEMPATIN" style="height: 28px; width: auto; object-fit: contain;">
+                <span class="badge ml-2 font-weight-bold" style="font-size: 11px; background-color: var(--color-sky-tint); color: var(--color-notion-blue); border: 1px solid rgba(0, 117, 222, 0.2);">Owner</span>
             </a>
 
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarOwner" aria-controls="navbarOwner" aria-expanded="false" aria-label="Toggle navigation">
+            <!-- Mobile Toggle -->
+            <button class="navbar-toggler border-0" type="button" data-toggle="collapse" data-target="#navbarOwner" aria-controls="navbarOwner" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
+            <!-- Navigation Links -->
             <div class="collapse navbar-collapse" id="navbarOwner">
-                <ul class="navbar-nav">
+                <ul class="navbar-nav mr-auto">
                     <li class="nav-item {{ request()->routeIs('owner.dashboard') ? 'active' : '' }}">
-                        <a class="nav-link {{ request()->routeIs('owner.dashboard') ? 'active' : '' }}" href="{{ route('owner.dashboard') }}">Dashboard</a>
-                    </li>
-                    <li class="nav-item dropdown {{ request()->routeIs('owner.kos.*') ? 'active' : '' }}">
-                        <a class="nav-link dropdown-toggle {{ request()->routeIs('owner.kos.*') ? 'active' : '' }}" href="#" id="ownerKosDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Manajemen Kos
+                        <a class="nav-link" href="{{ route('owner.dashboard') }}">
+                            <i class="fa fa-tachometer-alt mr-1"></i> Dashboard
                         </a>
-                        <div class="dropdown-menu shadow-sm border-0" aria-labelledby="ownerKosDropdown">
-                            <a class="dropdown-item {{ request()->routeIs('owner.kos.my') ? 'active' : '' }}" href="{{ route('owner.kos.my') }}"><i class="fa fa-home fa-fw mr-2"></i>Kos Saya</a>
-                            <a class="dropdown-item {{ request()->routeIs('owner.kos.create') ? 'active' : '' }}" href="{{ route('owner.kos.create') }}"><i class="fa fa-plus fa-fw mr-2"></i>Tambah Kos</a>
-                            <a class="dropdown-item {{ request()->routeIs('owner.kos.penilaian') ? 'active' : '' }}" href="{{ route('owner.kos.penilaian') }}"><i class="fa fa-star fa-fw mr-2"></i>Penilaian Kos</a>
-                        </div>
+                    </li>
+                    <li class="nav-item {{ request()->routeIs('owner.kos.my') ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('owner.kos.my') }}">
+                            <i class="fa fa-home mr-1"></i> Kos Saya
+                        </a>
+                    </li>
+                    <li class="nav-item {{ request()->routeIs('owner.kos.create') ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('owner.kos.create') }}">
+                            <i class="fa fa-plus-circle mr-1"></i> Tambah Kos
+                        </a>
+                    </li>
+                    <li class="nav-item {{ request()->routeIs('owner.kos.penilaian') ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('owner.kos.penilaian') }}">
+                            <i class="fa fa-star mr-1"></i> Penilaian
+                        </a>
+                    </li>
+                    <li class="nav-item {{ request()->routeIs('owner.statistik') ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('owner.statistik') }}">
+                            <i class="fa fa-chart-bar mr-1"></i> Statistik
+                        </a>
                     </li>
                 </ul>
 
-                <ul class="navbar-nav ml-auto d-flex flex-row align-items-center">
-                    <!-- Notification Dropdown -->
-                    <li class="nav-item dropdown mr-3">
-                        <a class="nav-link" href="#" id="notificationOwnerDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fa fa-bell fa-lg text-dark"></i>
-                            <span class="badge badge-danger badge-pill position-absolute" style="top: 5px; right: 0; font-size: 0.6rem;">0</span>
+                <ul class="navbar-nav ml-auto d-flex flex-row align-items-center" style="gap: 10px;">
+                    <!-- Public Switch Button -->
+                    <li class="nav-item">
+                        <a href="{{ route('home') }}" class="btn btn-ghost btn-sm">
+                            <i class="fa fa-globe mr-1"></i> Halaman Publik
                         </a>
-                        <div class="dropdown-menu dropdown-menu-right shadow-sm border-0" aria-labelledby="notificationOwnerDropdown" style="width: 320px; padding: 0; border-radius: 8px;">
-                            <div class="d-flex justify-content-between align-items-center p-3 border-bottom">
-                                <h6 class="mb-0 font-weight-bold">Notifikasi</h6>
-                                <a href="#" class="text-dark" onclick="event.stopPropagation(); $(this).closest('.dropdown-menu').removeClass('show');"><i class="fa fa-times"></i></a>
+                    </li>
+
+                    <!-- Notification -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link p-2" href="#" id="ownerNotificationDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fa fa-bell text-muted"></i>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="ownerNotificationDropdown" style="width: 300px;">
+                            <div class="p-3 border-bottom d-flex justify-content-between align-items-center">
+                                <h6 class="mb-0 font-weight-bold">Notifikasi Owner</h6>
+                                <span class="badge badge-light border">0 Baru</span>
                             </div>
-                            <div class="p-2 border-bottom bg-light">
-                                <span class="badge badge-pill border px-3 py-2 bg-white text-dark"><i class="fa fa-info-circle mr-1"></i> Utama</span>
-                            </div>
-                            <div class="text-center py-5">
-                                <i class="fa fa-envelope-open-text fa-4x mb-3" style="color: #dee2e6 !important;"></i>
-                                <h6 class="font-weight-bold text-dark mt-2">Belum ada notifikasi...</h6>
-                                <p class="text-muted small mb-0 px-4">Belum ada notifikasi. Ketika ada notifikasi baru, akan muncul di halaman ini.</p>
+                            <div class="p-4 text-center text-muted small">
+                                <i class="fa fa-inbox fa-2x mb-2 text-muted opacity-50"></i>
+                                <p class="mb-0">Belum ada notifikasi baru saat ini.</p>
                             </div>
                         </div>
                     </li>
-                    
+
                     <!-- Profile Dropdown -->
                     <li class="nav-item dropdown">
-                        <a class="nav-link member-profile-toggle dropdown-toggle p-0" href="#" id="ownerProfileDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" aria-label="Menu profil">
-                            <img src="{{ asset('assets/svg/logo-profil.png') }}" alt="Profil" class="member-profile__logo" style="width: 40px; height: 40px; object-fit: cover; border-radius: 50%;">
+                        <a class="nav-link dropdown-toggle d-flex align-items-center p-1" href="#" id="ownerUserDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="notion-character-mark mr-2" style="width: 32px; height: 32px; font-size: 13px; color: var(--color-notion-blue); border-color: var(--color-notion-blue);"><i class="fa fa-user"></i></span>
+                            <span class="d-none d-md-inline font-weight-bold text-dark small">{{ Auth::user()->name ?? 'Pemilik' }}</span>
                         </a>
-                        <div class="dropdown-menu dropdown-menu-right member-profile-menu shadow-sm border-0 mt-2" aria-labelledby="ownerProfileDropdown" style="border-radius: 8px;">
-                            <a class="dropdown-item py-2" href="{{ route('owner.dashboard') }}">Profil saya</a>
-                            <a class="dropdown-item py-2" href="{{ route('owner.statistik') }}">Laporan Statistik</a>
-                            <a class="dropdown-item py-2" href="{{ route('contact') }}">Pusat bantuan</a>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="ownerUserDropdown">
+                            <a class="dropdown-item" href="{{ route('owner.dashboard') }}"><i class="fa fa-user mr-2 text-muted"></i> Profil Pemilik</a>
+                            <a class="dropdown-item" href="{{ route('owner.kos.my') }}"><i class="fa fa-home mr-2 text-muted"></i> Kelola Properti</a>
                             <div class="dropdown-divider"></div>
-                            <form id="owner-form-logout" action="{{ route('owner.logout') }}" method="POST">
+                            <form action="{{ route('owner.logout') }}" method="POST">
                                 @csrf
-                                <button type="submit" class="dropdown-item text-danger py-2">Logout</button>
+                                <button type="submit" class="dropdown-item text-danger">
+                                    <i class="fa fa-sign-out-alt mr-2"></i> Logout
+                                </button>
                             </form>
                         </div>
                     </li>

@@ -1,102 +1,75 @@
 @extends('layouts.owner')
 
-@section('title', 'Notifikasi Owner - TEMPATIN')
-
-@push('styles')
-<style>
-    .notification-item {
-        transition: all 0.2s;
-    }
-    .notification-item:hover {
-        background-color: #f8f9fa;
-    }
-    .notification-icon-wrapper {
-        width: 48px;
-        height: 48px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background-color: #e9ecef;
-    }
-    .nav-pills-custom .nav-link {
-        color: #495057;
-        background-color: #fff;
-        border: 1px solid #dee2e6;
-        border-radius: 50rem;
-        padding: 8px 20px;
-        font-weight: 600;
-        margin-right: 10px;
-    }
-    .nav-pills-custom .nav-link.active {
-        color: #000;
-        background-color: #f8f9fa;
-        border-color: #dee2e6;
-    }
-</style>
-@endpush
+@section('title', 'Notifikasi Properti - TEMPATIN')
 
 @section('owner-content')
-<main id="ts-main">
-    <section class="py-5">
-        <div class="container">
-            <div class="d-flex justify-content-between align-items-start mb-4">
-                <div>
-                    <h2 class="mb-1">Notifikasi</h2>
-                    <p class="text-muted mb-0">Pusat pemberitahuan aktivitas kos Anda.</p>
+<div class="container">
+    <div class="row">
+
+        <!-- OWNER SIDEBAR -->
+        <div class="col-lg-3 mb-4 mb-lg-0">
+            @include('partials.owner-sidebar')
+        </div>
+
+        <!-- MAIN CONTENT -->
+        <div class="col-lg-9">
+
+            <!-- HEADER -->
+            <div class="mb-4">
+                <div class="d-inline-flex align-items-center mb-2 px-2 py-1 rounded" style="background-color: var(--color-sky-tint); color: var(--color-notion-blue); font-size: 11px; font-weight: 600;">
+                    <i class="fa fa-bell mr-1"></i> AKTIVITAS PROPERTI
                 </div>
+                <h1 style="font-family: var(--font-serif); font-size: 1.85rem; font-weight: 700; color: var(--color-midnight-ink); margin-bottom: 4px;">
+                    Notifikasi Properti
+                </h1>
+                <p style="font-size: 14px; color: var(--color-stone); margin-bottom: 0;">
+                    Pemberitahuan masuk seputar pesanan sewa baru, pelunasan invoice, dan pertanyaan calon penghuni.
+                </p>
             </div>
 
-            <div class="card border-0 shadow-sm" style="border-radius: 8px; overflow: hidden;">
-                <div class="card-header bg-white border-bottom p-4">
-                    <ul class="nav nav-pills nav-pills-custom" id="notificationTab" role="tablist">
-                        <li class="nav-item" role="presentation">
-                            <a class="nav-link active d-flex align-items-center" id="utama-tab" data-toggle="pill" href="#utama" role="tab" aria-controls="utama" aria-selected="true">
-                                <i class="fa fa-info-circle mr-2"></i> Utama
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-                
-                <div class="card-body p-0">
-                    <div class="tab-content" id="notificationTabContent">
-                        <div class="tab-pane fade show active" id="utama" role="tabpanel" aria-labelledby="utama-tab">
-                            @if(count($notifications) > 0)
-                                <div class="list-group list-group-flush">
-                                    @foreach($notifications as $notif)
-                                        <a href="#" class="list-group-item list-group-item-action notification-item border-0 border-bottom py-4 {{ !$notif['is_read'] ? 'bg-light' : '' }}">
-                                            <div class="d-flex align-items-start px-3">
-                                                <div class="notification-icon-wrapper mr-3 flex-shrink-0">
-                                                    <i class="fa {{ $notif['icon'] }} fa-lg"></i>
-                                                </div>
-                                                <div class="flex-grow-1">
-                                                    <div class="d-flex w-100 justify-content-between align-items-center mb-1">
-                                                        <h6 class="mb-0 font-weight-bold {{ !$notif['is_read'] ? 'text-dark' : 'text-secondary' }}">{{ $notif['title'] }}</h6>
-                                                        <small class="text-muted">{{ $notif['time'] }}</small>
-                                                    </div>
-                                                    <p class="mb-0 {{ !$notif['is_read'] ? 'text-dark' : 'text-muted' }}">{{ $notif['message'] }}</p>
-                                                </div>
-                                                @if(!$notif['is_read'])
-                                                    <div class="ml-3 mt-2">
-                                                        <span class="badge badge-primary badge-pill p-1"> </span>
-                                                    </div>
-                                                @endif
-                                            </div>
-                                        </a>
-                                    @endforeach
+            <!-- NOTIFICATIONS LIST -->
+            <div class="rounded overflow-hidden" style="background-color: #ffffff; border: var(--border-hairline); border-radius: var(--radius-cards);">
+                @if(isset($notifications) && count($notifications) > 0)
+                    <div class="d-flex flex-column">
+                        @foreach($notifications as $notif)
+                            <div class="p-4 d-flex align-items-start border-bottom position-relative" style="border-color: rgba(0,0,0,0.06) !important; background-color: {{ !$notif['is_read'] ? 'rgba(0, 117, 222, 0.02)' : '#ffffff' }}; transition: background 0.15s ease;">
+                                <div class="d-inline-flex align-items-center justify-content-center rounded-circle mr-3 flex-shrink-0" style="width: 40px; height: 40px; background-color: var(--surface-page-canvas); color: var(--color-notion-blue); font-size: 16px;">
+                                    <i class="fa {{ $notif['icon'] }}"></i>
                                 </div>
-                            @else
-                                <div class="text-center py-5">
-                                    <i class="fa fa-envelope-open-text fa-5x text-light mb-4" style="color: #dee2e6 !important;"></i>
-                                    <h4 class="font-weight-bold text-dark mt-3">Belum ada notifikasi...</h4>
-                                    <p class="text-muted mb-0">Belum ada notifikasi. Ketika ada notifikasi baru, akan muncul di halaman ini.</p>
+                                <div class="flex-grow-1">
+                                    <div class="d-flex justify-content-between align-items-center mb-1">
+                                        <h3 style="font-size: 14.5px; font-weight: {{ !$notif['is_read'] ? '700' : '600' }}; color: var(--color-midnight-ink); margin-bottom: 0;">
+                                            {{ $notif['title'] }}
+                                        </h3>
+                                        <span style="font-size: 12px; color: var(--color-stone);">{{ $notif['time'] }}</span>
+                                    </div>
+                                    <p style="font-size: 13.5px; color: {{ !$notif['is_read'] ? 'var(--color-charcoal)' : 'var(--color-stone)' }}; line-height: 1.5; margin-bottom: 0;">
+                                        {{ $notif['message'] }}
+                                    </p>
                                 </div>
-                            @endif
-                        </div>
+                                @if(!$notif['is_read'])
+                                    <span class="rounded-circle ml-2" style="width: 8px; height: 8px; background-color: var(--color-notion-blue); flex-shrink: 0; margin-top: 6px;"></span>
+                                @endif
+                            </div>
+                        @endforeach
                     </div>
-                </div>
+                @else
+                    <div class="p-5 text-center">
+                        <div class="d-inline-flex align-items-center justify-content-center mb-3" style="width: 54px; height: 54px; border-radius: 50%; background-color: var(--surface-page-canvas); color: var(--color-stone); font-size: 24px;">
+                            <i class="fa fa-envelope-open"></i>
+                        </div>
+                        <h3 style="font-size: 1.15rem; font-weight: 700; color: var(--color-midnight-ink); margin-bottom: 6px;">
+                            Belum Ada Notifikasi Baru
+                        </h3>
+                        <p style="font-size: 13.5px; color: var(--color-stone); max-width: 440px; margin: 0 auto;">
+                            Setiap ada booking atau pembayaran baru untuk kos Anda, notifikasi akan langsung muncul di sini.
+                        </p>
+                    </div>
+                @endif
             </div>
+
         </div>
-    </section>
-</main>
+
+    </div>
+</div>
 @endsection
