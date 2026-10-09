@@ -112,8 +112,8 @@
                                     @enderror
                                 </div>
 
-                                <!-- TOMBOL DAFTAR (Warna Biru Muda) -->
-                                <button type="submit" class="btn text-white w-100 mb-3 font-weight-bold" style="background-color: #38b6ff; border-color: #38b6ff;">
+                                <!-- TOMBOL DAFTAR -->
+                                <button type="submit" class="btn btn-primary w-100 mb-3 font-weight-bold py-2">
                                     DAFTAR
                                 </button>
 
@@ -140,7 +140,7 @@
                                 <!-- Link Masuk -->
                                 <div class="text-center mt-4 ts-text-small">
                                     <p class="mb-0 text-muted">
-                                        Sudah punya akun? <a href="{{ route('login') }}" class="font-weight-bold" style="color: #007bff; text-decoration: underline;">Masuk di sini</a>
+                                        Sudah punya akun? <a href="{{ route('login') }}" class="font-weight-bold text-primary">Masuk di sini</a>
                                     </p>
                                 </div>
 

@@ -63,11 +63,11 @@
                                         <input type="checkbox" class="custom-control-input" id="remember-me" name="remember" {{ old('remember') ? 'checked' : '' }}>
                                         <label class="custom-control-label ts-text-small text-muted" for="remember-me">Ingat saya</label>
                                     </div>
-                                    <a href="{{ route('password.request') }}" class="ts-text-small font-weight-bold" style="color: #007bff;">Lupa kata sandi?</a>
+                                    <a href="{{ route('password.request') }}" class="ts-text-small font-weight-bold text-primary">Lupa kata sandi?</a>
                                 </div>
 
-                                <!-- TOMBOL MASUK (Warna Biru Muda) -->
-                                <button type="submit" class="btn text-white w-100 mb-3 font-weight-bold" style="background-color: #38b6ff; border-color: #38b6ff;">
+                                <!-- TOMBOL MASUK -->
+                                <button type="submit" class="btn btn-primary w-100 mb-3 font-weight-bold py-2">
                                     MASUK
                                 </button>
 
@@ -91,10 +91,10 @@
                                     </div>
                                 </div>
 
-                                <!-- Link Daftar (Biru Link) -->
+                                <!-- Link Daftar -->
                                 <div class="text-center mt-4 ts-text-small">
                                     <p class="mb-0 text-muted">
-                                        Belum punya akun? <a href="{{ route('register') }}" class="font-weight-bold" style="color: #007bff; text-decoration: underline;">Daftar di sini</a>
+                                        Belum punya akun? <a href="{{ route('register') }}" class="font-weight-bold text-primary">Daftar di sini</a>
                                     </p>
                                 </div>
 

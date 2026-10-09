@@ -76,20 +76,20 @@
                     =============================================================================================-->
                     <div class="col-md-7 col-lg-8">
 
-                        <!--NAMA KOS & BADGES (Di bawah gambar album sesuai referensi)-->
+                        <!--NAMA KOS & BADGES-->
                         <div id="page-title" class="mb-4">
                             <div class="mb-2">
-                                <span class="badge badge-primary px-3 py-1 font-weight-normal" style="border-radius: 4px;">
+                                <span class="badge badge-success px-3 py-1 font-weight-normal" style="border-radius: 9999px; background-color: #edf7ee; color: #2e7d32; border: 1px solid #c8e6c9;">
                                     <i class="fa fa-check-circle mr-1"></i>TEMPATIN Verified
                                 </span>
                             </div>
 
-                            <h1 class="font-weight-bold text-dark mb-2" style="font-size: 2rem; line-height: 1.3;">
+                            <h1 class="font-weight-bold text-dark mb-2" style="font-size: 2.2rem; line-height: 1.25; letter-spacing: -0.03em;">
                                 {{ $kos['title'] }}
                             </h1>
 
                             <div class="d-flex flex-wrap align-items-center text-muted" style="gap: 10px; font-size: 0.95rem;">
-                                <span class="badge badge-light border text-dark px-2 py-1 font-weight-normal" style="border-radius: 4px;">
+                                <span class="badge badge-light border text-dark px-3 py-1 font-weight-normal" style="border-radius: 9999px;">
                                     Kos {{ $kos['type'] ?? 'Campur' }}
                                 </span>
                                 <span>&bull;</span>
@@ -101,16 +101,16 @@
                                     <span>&bull;</span>
                                     <span>
                                         <i class="fa fa-star text-warning mr-1"></i>
-                                        <strong>{{ number_format($kos['rating'], 1) }}</strong> ({{ $kos['review_count'] ?? 0 }} ulasan)
+                                        <strong class="text-dark">{{ number_format($kos['rating'], 1) }}</strong> ({{ $kos['review_count'] ?? 0 }} ulasan)
                                     </span>
                                 @endif
-                                <span class="badge badge-{{ ($kos['status'] ?? 'active') === 'active' ? 'success' : 'secondary' }} ml-auto py-1 px-2" style="border-radius: 4px;">
+                                <span class="badge badge-{{ ($kos['status'] ?? 'active') === 'active' ? 'success' : 'secondary' }} ml-auto py-1 px-3" style="border-radius: 9999px;">
                                     {{ ($kos['status'] ?? 'active') === 'active' ? 'Tersedia' : 'Penuh' }}
                                 </span>
                             </div>
                         </div>
 
-                        <hr class="mb-4">
+                        <hr class="mb-4" style="border-top: var(--border-hairline);">
 
                         <!--QUICK INFO
                         =========================================================================================-->
@@ -302,34 +302,34 @@
                     =============================================================================================-->
                     <div class="col-md-5 col-lg-4">
 
-                        <!--STICKY BOOKING CARD (Sesuai Referensi Gambar 2)-->
-                        <div class="ts-box ts-shadow__sm mb-4" style="position: sticky; top: 100px; z-index: 10; border-radius: 8px;">
-                            <div class="p-3">
+                        <!--STICKY BOOKING CARD (Notion Pure White Card)-->
+                        <div class="card p-4 mb-4" style="position: sticky; top: 110px; z-index: 10; border-radius: 12px; border: var(--border-hairline);">
+                            <div>
                                 <div class="d-flex justify-content-between align-items-center mb-1">
-                                    <span class="text-danger small font-weight-bold">
-                                        <i class="fa fa-bolt mr-1"></i>Harga Sewa
+                                    <span class="text-muted small font-weight-bold">
+                                        <i class="fa fa-tag text-primary mr-1"></i>Harga Sewa Resmi
                                     </span>
                                     <span class="badge badge-light border text-muted small">Per Bulan</span>
                                 </div>
 
                                 <div class="d-flex align-items-baseline mb-3">
-                                    <h2 class="text-primary font-weight-bold mb-0">
+                                    <h2 class="text-primary font-weight-bold mb-0" style="font-size: 1.85rem; letter-spacing: -0.02em;">
                                         Rp {{ number_format($kos['price'], 0, ',', '.') }}
                                     </h2>
                                     <span class="text-muted ml-2">/bln</span>
                                 </div>
 
-                                <hr class="my-3">
+                                <hr class="my-3" style="border-top: var(--border-hairline);">
 
                                 <div class="d-flex flex-column" style="gap: 10px;">
                                     <a href="{{ route('member.booking.create', $kos['slug']) }}"
-                                        class="btn btn-primary btn-block btn-lg font-weight-bold py-3 shadow-sm">
-                                        <i class="fa fa-calendar-check mr-2"></i>Ajukan Sewa
+                                        class="btn btn-primary btn-block btn-lg font-weight-bold py-3">
+                                        <i class="fa fa-calendar-check mr-2"></i>Ajukan Sewa Sekarang
                                     </a>
 
                                     <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $kos['owner_phone'] ?? '6280286216730') }}?text=Halo, saya tertarik dengan {{ urlencode($kos['title']) }}"
-                                        target="_blank" class="btn btn-outline-success btn-block py-2 font-weight-bold">
-                                        <i class="fab fa-whatsapp mr-2"></i>Tanya Pemilik
+                                        target="_blank" class="btn btn-outline-dark btn-block py-2 font-weight-bold">
+                                        <i class="fab fa-whatsapp text-success mr-2"></i>Tanya Pemilik Langsung
                                     </a>
                                 </div>
                             </div>
