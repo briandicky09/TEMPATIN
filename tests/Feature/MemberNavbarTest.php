@@ -49,7 +49,11 @@ class MemberNavbarTest extends TestCase
         $response->assertSee('Lainnya');
         // Profile dropdown items
         $response->assertSee('Edit Profil');
+        $response->assertSee('Tagihan & Invoice');
         $response->assertSee('Keluar');
+        // Notification popover
+        $response->assertSee('memberNotificationPopover');
+        $response->assertSee('Belum ada notifikasi...');
         // Empty profile avatar trigger
         $response->assertSee('member-avatar-btn');
         $response->assertSee('member-avatar-circle');
@@ -153,5 +157,45 @@ class MemberNavbarTest extends TestCase
         $pageResponse->assertSee($kos->title);
         $pageResponse->assertSee('ts-card-badge-type');
     }
+
+    /**
+     * Test member can upload profile photo and navbar shows the photo.
+     */
+    public function test_member_can_upload_avatar_and_navbar_shows_avatar_image(): void
+    {
+        \Illuminate\Support\Facades\Storage::fake('public');
+
+        $member = User::where('role', 'customer')->first();
+        if (!$member) {
+            $member = User::create([
+                'name' => 'Reinald Oryza Test',
+                'email' => 'reinald.test@example.com',
+                'phone' => '081234567890',
+                'password' => bcrypt('password123'),
+                'role' => 'customer',
+            ]);
+        }
+
+        $file = \Illuminate\Http\UploadedFile::fake()->create('my-photo.jpg', 100, 'image/jpeg');
+
+        $response = $this->actingAs($member)->put('/member/profil', [
+            'name' => 'Reinald With Photo',
+            'avatar' => $file,
+        ]);
+
+        $response->assertRedirect(route('member.profile'));
+        $response->assertSessionHas('success');
+
+        $member->refresh();
+        $this->assertNotNull($member->avatar);
+        \Illuminate\Support\Facades\Storage::disk('public')->assertExists($member->avatar);
+
+        // Navbar now shows the uploaded image
+        $navResponse = $this->actingAs($member)->get('/member');
+        $navResponse->assertStatus(200);
+        $navResponse->assertSee('navAvatarImg');
+        $navResponse->assertSee($member->avatar);
+    }
 }
+
 

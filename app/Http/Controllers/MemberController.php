@@ -164,9 +164,13 @@ class MemberController extends Controller
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'phone' => ['nullable', 'string', 'max:20'],
+            'avatar' => ['nullable', 'image', 'mimes:jpeg,png,jpg,webp,svg', 'max:2048'],
             'password' => ['nullable', 'string', 'min:6', 'confirmed'],
         ], [
             'name.required' => 'Nama lengkap wajib diisi.',
+            'avatar.image' => 'File foto profil harus berupa gambar.',
+            'avatar.mimes' => 'Format foto profil harus jpeg, png, jpg, webp, atau svg.',
+            'avatar.max' => 'Ukuran foto profil maksimal 2MB.',
             'password.min' => 'Password minimal 6 karakter.',
             'password.confirmed' => 'Konfirmasi kata sandi tidak cocok.',
         ]);
@@ -175,6 +179,15 @@ class MemberController extends Controller
         if (isset($validated['phone'])) {
             $user->phone = $validated['phone'];
         }
+
+        if ($request->hasFile('avatar')) {
+            if ($user->avatar && \Illuminate\Support\Facades\Storage::disk('public')->exists($user->avatar)) {
+                \Illuminate\Support\Facades\Storage::disk('public')->delete($user->avatar);
+            }
+            $avatarPath = $request->file('avatar')->store('avatars', 'public');
+            $user->avatar = $avatarPath;
+        }
+
         if (!empty($validated['password'])) {
             $user->password = \Illuminate\Support\Facades\Hash::make($validated['password']);
         }

@@ -47,6 +47,22 @@
             max-width: 100% !important;
             margin: 0 !important;
         }
+        /* Penyesuaian jarak rapat navbar ke content untuk semua halaman */
+        #ts-main {
+            padding-top: 6px !important;
+        }
+        .ts-homepage #ts-main {
+            padding-top: 0 !important;
+        }
+        #ts-main > .container:first-child,
+        #ts-main > section:first-child {
+            padding-top: 2px !important;
+            margin-top: 0 !important;
+        }
+        #ts-main .breadcrumb {
+            margin-bottom: 6px !important;
+            padding-top: 0 !important;
+        }
     </style>
     @stack('styles')
 

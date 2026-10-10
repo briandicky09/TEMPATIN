@@ -93,12 +93,77 @@
                                 Chat
                             </a>
 
-                            {{-- 4. Notifikasi --}}
-                            <a href="{{ route('member.notifikasi') }}" class="member-nav-link {{ request()->routeIs('member.notifikasi') ? 'active' : '' }}">
-                                Notifikasi
-                            </a>
+                            {{-- 4. Notifikasi (Floating Popover - Reference Image 2) --}}
+                            <div class="member-nav-dropdown dropdown notification-dropdown position-relative">
+                                <a href="javascript:void(0)" class="member-nav-link d-inline-flex align-items-center" id="memberNotificationToggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <span>Notifikasi</span>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right shadow notification-popover-card" id="memberNotificationPopover" aria-labelledby="memberNotificationToggle" style="width: 340px; max-width: 90vw; border-radius: 16px; border: 1px solid rgba(0,0,0,0.08); box-shadow: 0 16px 40px rgba(0,0,0,0.12), 0 2px 8px rgba(0,0,0,0.04) !important; padding: 0; margin-top: 10px; overflow: hidden; background: #ffffff;">
+                                    <!-- Header -->
+                                    <div class="d-flex align-items-center justify-content-between px-4 py-3 border-bottom" style="border-color: rgba(0,0,0,0.06) !important;">
+                                        <h5 class="mb-0 font-weight-bold text-dark" style="font-size: 16px; font-family: var(--font-notioninter);">
+                                            Notifikasi
+                                        </h5>
+                                        <button type="button" class="close p-0 text-muted" id="btnCloseNotification" style="font-size: 20px; line-height: 1; opacity: 0.6;" aria-label="Tutup notifikasi">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
 
-                            {{-- 5. Lainnya Dropdown --}}
+                                    <!-- Filter Pill -->
+                                    <div class="px-4 pt-3 pb-2">
+                                        <span class="d-inline-flex align-items-center px-3 py-1 rounded-pill" style="border: 1.5px solid #111827; font-size: 12px; font-weight: 600; color: #111827; background: #ffffff;">
+                                            <i class="fa fa-info-circle mr-1" style="font-size: 11px;"></i> Utama
+                                        </span>
+                                    </div>
+
+                                    <!-- Body: Empty State with Illustration -->
+                                    <div class="px-4 py-4 text-center">
+                                        <div class="mb-3 d-flex justify-content-center">
+                                            <svg width="170" height="120" viewBox="0 0 200 150" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <ellipse cx="100" cy="85" rx="85" ry="50" fill="#f0fdf4"/>
+                                                <circle cx="110" cy="25" r="2.5" fill="#22c55e" opacity="0.6"/>
+                                                <circle cx="95" cy="28" r="1.5" fill="#22c55e" opacity="0.6"/>
+                                                <circle cx="145" cy="35" r="2" fill="#22c55e" opacity="0.6"/>
+                                                <rect x="35" y="70" width="8" height="35" rx="2" fill="#bbf7d0" opacity="0.7"/>
+                                                <rect x="50" y="65" width="8" height="40" rx="2" fill="#bbf7d0" opacity="0.7"/>
+                                                <rect x="65" y="70" width="8" height="35" rx="2" fill="#bbf7d0" opacity="0.7"/>
+                                                <rect x="125" y="70" width="8" height="35" rx="2" fill="#bbf7d0" opacity="0.7"/>
+                                                <rect x="140" y="65" width="8" height="40" rx="2" fill="#bbf7d0" opacity="0.7"/>
+                                                <rect x="155" y="70" width="8" height="35" rx="2" fill="#bbf7d0" opacity="0.7"/>
+                                                <rect x="30" y="80" width="140" height="4" rx="2" fill="#86efac" opacity="0.6"/>
+                                                <rect x="114" y="75" width="12" height="45" rx="2" fill="#78350f"/>
+                                                <path d="M100 65 L128 65 Q135 65 135 73 L135 88 Q135 94 128 94 L100 94 Q93 94 93 88 L93 73 Q93 65 100 65 Z" fill="#facc15" stroke="#ca8a04" stroke-width="1.5"/>
+                                                <ellipse cx="98" cy="80" rx="9" ry="14" fill="#eab308"/>
+                                                <rect x="118" y="55" width="3" height="15" fill="#64748b"/>
+                                                <polygon points="121,55 133,59 121,63" fill="#facc15"/>
+                                                <path d="M58 80 C58 68, 72 68, 72 80 L76 102 C76 104, 60 106, 56 102 Z" fill="#16a34a"/>
+                                                <path d="M68 76 C76 74, 88 78, 104 82" stroke="#fed7aa" stroke-width="7" stroke-linecap="round"/>
+                                                <circle cx="104" cy="82" r="3.5" fill="#fbcfe8"/>
+                                                <circle cx="75" cy="55" r="14" fill="#fed7aa"/>
+                                                <ellipse cx="71" cy="59" rx="2.5" ry="1.5" fill="#f87171" opacity="0.6"/>
+                                                <ellipse cx="81" cy="59" rx="2.5" ry="1.5" fill="#f87171" opacity="0.6"/>
+                                                <circle cx="72" cy="54" r="1.5" fill="#1e293b"/>
+                                                <circle cx="80" cy="54" r="1.5" fill="#1e293b"/>
+                                                <path d="M74 61 Q77 59 80 61" stroke="#475569" stroke-width="1" stroke-linecap="round" fill="none"/>
+                                                <ellipse cx="75" cy="45" rx="14" ry="10" fill="#1e293b"/>
+                                                <circle cx="63" cy="50" r="6" fill="#1e293b"/>
+                                                <circle cx="87" cy="50" r="6" fill="#1e293b"/>
+                                                <circle cx="67" cy="40" r="5" fill="#1e293b"/>
+                                                <circle cx="83" cy="40" r="5" fill="#1e293b"/>
+                                                <ellipse cx="100" cy="118" rx="65" ry="4" fill="#e2e8f0"/>
+                                            </svg>
+                                        </div>
+                                        <h4 class="font-weight-bold mb-2 text-dark" style="font-size: 15px; font-family: var(--font-notioninter);">
+                                            Belum ada notifikasi...
+                                        </h4>
+                                        <p class="text-muted mb-0 mx-auto" style="font-size: 12.5px; line-height: 1.55; max-width: 270px;">
+                                            Belum ada notifikasi. Ketika ada notifikasi baru, akan muncul di halaman ini.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {{-- 5. Lainnya Dropdown (Menu Tagihan & Invoice Dipindahkan ke Profil) --}}
                             <div class="member-nav-dropdown dropdown">
                                 <a href="javascript:void(0)" class="member-nav-link dropdown-toggle d-inline-flex align-items-center" id="memberNavLainnyaToggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <span>Lainnya</span>
@@ -107,9 +172,6 @@
                                     </svg>
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right member-custom-dropdown shadow" id="memberNavLainnyaMenu" aria-labelledby="memberNavLainnyaToggle">
-                                    <a class="dropdown-item py-2" href="{{ route('member.invoice.index') }}">
-                                        <i class="fa fa-file-invoice mr-2 text-muted" style="width: 16px;"></i> Tagihan &amp; Invoice
-                                    </a>
                                     <a class="dropdown-item py-2" href="{{ $promoUrl }}">
                                         <i class="fa fa-tag mr-2 text-muted" style="width: 16px;"></i> Voucher &amp; Promo
                                     </a>
@@ -127,16 +189,20 @@
                             </div>
                         </div>
 
-                        {{-- 6. Profile Avatar Icon (Empty Profile Logo with Red Badge) + Dropdown (Edit Profil & Keluar) --}}
+                        {{-- 6. Profile Avatar Icon (Avatar Foto / Kosong + Dot) + Dropdown (Edit Profil, Tagihan & Invoice, Keluar) --}}
                         <div class="member-profile-dropdown dropdown">
                             <a href="javascript:void(0)" class="member-avatar-btn d-inline-flex align-items-center justify-content-center" id="memberProfileToggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="Profil Akun">
                                 <span class="member-avatar-circle">
-                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#525252" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                                        <circle cx="12" cy="7" r="4"></circle>
-                                    </svg>
-                                    <span class="member-avatar-dot" aria-hidden="true"></span>
+                                    @if(Auth::user()->avatar)
+                                        <img src="{{ asset('storage/' . Auth::user()->avatar) }}" alt="{{ Auth::user()->name }}" class="member-avatar-img" id="navAvatarImg">
+                                    @else
+                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#525252" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" id="navAvatarSvg">
+                                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                            <circle cx="12" cy="7" r="4"></circle>
+                                        </svg>
+                                    @endif
                                 </span>
+                                <span class="member-avatar-dot" aria-hidden="true"></span>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right member-custom-dropdown member-profile-menu shadow" id="memberProfileMenu" aria-labelledby="memberProfileToggle">
                                 <div class="px-3 py-2 border-bottom bg-light mb-1">
@@ -146,6 +212,10 @@
                                 <a class="dropdown-item py-2 d-flex align-items-center" href="{{ route('member.profile') }}">
                                     <i class="fa fa-user-edit mr-2 text-muted" style="width: 16px;"></i>
                                     <span>Edit Profil</span>
+                                </a>
+                                <a class="dropdown-item py-2 d-flex align-items-center" href="{{ route('member.invoice.index') }}">
+                                    <i class="fa fa-file-invoice mr-2 text-muted" style="width: 16px;"></i>
+                                    <span>Tagihan &amp; Invoice</span>
                                 </a>
                                 <div class="dropdown-divider my-1"></div>
                                 <form action="{{ route('member.logout') }}" method="POST" class="m-0 p-0">
@@ -409,11 +479,14 @@ document.addEventListener('DOMContentLoaded', function () {
         gsap.to(navEl, { height: newHeight, duration: 0.3, ease: 'power3.out' });
     });
 
-    // Member Custom Dropdowns (Lainnya & Profile Dropdown)
+    // Member Custom Dropdowns (Lainnya, Notifikasi & Profile Dropdown)
     const profileToggle = document.getElementById('memberProfileToggle');
     const profileMenu = document.getElementById('memberProfileMenu');
     const lainnyaToggle = document.getElementById('memberNavLainnyaToggle');
     const lainnyaMenu = document.getElementById('memberNavLainnyaMenu');
+    const notificationToggle = document.getElementById('memberNotificationToggle');
+    const notificationPopover = document.getElementById('memberNotificationPopover');
+    const closeNotificationBtn = document.getElementById('btnCloseNotification');
 
     function closeAllMemberDropdowns() {
         if (profileMenu) {
@@ -425,6 +498,11 @@ document.addEventListener('DOMContentLoaded', function () {
             lainnyaMenu.classList.remove('show');
             if (lainnyaToggle) lainnyaToggle.setAttribute('aria-expanded', 'false');
             if (lainnyaToggle && lainnyaToggle.parentElement) lainnyaToggle.parentElement.classList.remove('show');
+        }
+        if (notificationPopover) {
+            notificationPopover.classList.remove('show');
+            if (notificationToggle) notificationToggle.setAttribute('aria-expanded', 'false');
+            if (notificationToggle && notificationToggle.parentElement) notificationToggle.parentElement.classList.remove('show');
         }
     }
 
@@ -456,8 +534,30 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
+    if (notificationToggle && notificationPopover) {
+        notificationToggle.addEventListener('click', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            const isOpen = notificationPopover.classList.contains('show');
+            closeAllMemberDropdowns();
+            if (!isOpen) {
+                notificationPopover.classList.add('show');
+                notificationToggle.setAttribute('aria-expanded', 'true');
+                if (notificationToggle.parentElement) notificationToggle.parentElement.classList.add('show');
+            }
+        });
+    }
+
+    if (closeNotificationBtn) {
+        closeNotificationBtn.addEventListener('click', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            closeAllMemberDropdowns();
+        });
+    }
+
     document.addEventListener('click', function (e) {
-        if (!e.target.closest('.member-profile-dropdown') && !e.target.closest('.member-nav-dropdown')) {
+        if (!e.target.closest('.member-profile-dropdown') && !e.target.closest('.member-nav-dropdown') && !e.target.closest('.notification-dropdown')) {
             closeAllMemberDropdowns();
         }
     });

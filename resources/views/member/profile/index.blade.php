@@ -15,10 +15,10 @@
         $displayRole = ucfirst($user?->role ?? 'member');
     @endphp
 
-    <main id="ts-main" style="padding-top: 20px; padding-bottom: 80px;">
+    <main id="ts-main" style="padding-top: 6px; padding-bottom: 80px;">
 
         <!-- BREADCRUMB -->
-        <div class="container mb-4">
+        <div class="container mb-3">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb bg-transparent p-0 mb-0" style="font-size: 13px;">
                     <li class="breadcrumb-item"><a href="{{ route('member.home') }}" style="color: var(--color-stone); text-decoration: none;">Beranda</a></li>
@@ -36,9 +36,13 @@
 
                         <!-- Avatar & Identity -->
                         <div class="d-flex align-items-center pb-4 mb-4 border-bottom" style="border-color: rgba(0,0,0,0.06) !important;">
-                            <div class="d-inline-flex align-items-center justify-content-center rounded-circle mr-3" style="width: 68px; height: 68px; background-color: var(--surface-page-canvas); color: var(--color-midnight-ink); border: var(--border-hairline); font-size: 26px; font-weight: 700;">
-                                {{ strtoupper(substr($displayName, 0, 1)) }}
-                            </div>
+                            @if($user->avatar)
+                                <img src="{{ asset('storage/' . $user->avatar) }}" alt="{{ $displayName }}" class="rounded-circle mr-3" style="width: 68px; height: 68px; object-fit: cover; border: var(--border-hairline); box-shadow: 0 2px 8px rgba(0,0,0,0.08);">
+                            @else
+                                <div class="d-inline-flex align-items-center justify-content-center rounded-circle mr-3" style="width: 68px; height: 68px; background-color: var(--surface-page-canvas); color: var(--color-midnight-ink); border: var(--border-hairline); font-size: 26px; font-weight: 700;">
+                                    {{ strtoupper(substr($displayName, 0, 1)) }}
+                                </div>
+                            @endif
                             <div>
                                 <h1 style="font-family: var(--font-serif); font-size: 1.5rem; font-weight: 700; color: var(--color-midnight-ink); margin-bottom: 2px;">
                                     {{ $displayName }}
@@ -104,10 +108,33 @@
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
-                                <form action="{{ route('member.profile.update') }}" method="POST">
+                                <form action="{{ route('member.profile.update') }}" method="POST" enctype="multipart/form-data">
                                     @csrf
                                     @method('PUT')
                                     <div class="modal-body p-4">
+                                        <!-- Upload Foto Profil -->
+                                        <div class="form-group mb-4 text-center">
+                                            <label class="d-block font-weight-600 text-dark small mb-2 text-left">Foto Profil</label>
+                                            <div class="d-inline-block position-relative">
+                                                @if($user->avatar)
+                                                    <img id="avatarPreviewImg" src="{{ asset('storage/' . $user->avatar) }}" alt="{{ $displayName }}" class="rounded-circle shadow-sm" style="width: 86px; height: 86px; object-fit: cover; border: 2px solid #ffffff; box-shadow: 0 4px 12px rgba(0,0,0,0.12) !important;">
+                                                    <div id="avatarFallbackBox" class="rounded-circle d-none align-items-center justify-content-center shadow-sm" style="width: 86px; height: 86px; background-color: #f1f5f9; color: var(--color-midnight-ink); font-size: 30px; font-weight: 700; border: 2px solid #ffffff;">
+                                                        {{ strtoupper(substr($displayName, 0, 1)) }}
+                                                    </div>
+                                                @else
+                                                    <img id="avatarPreviewImg" src="" alt="Preview" class="rounded-circle shadow-sm d-none" style="width: 86px; height: 86px; object-fit: cover; border: 2px solid #ffffff; box-shadow: 0 4px 12px rgba(0,0,0,0.12) !important;">
+                                                    <div id="avatarFallbackBox" class="rounded-circle d-inline-flex align-items-center justify-content-center shadow-sm" style="width: 86px; height: 86px; background-color: #f1f5f9; color: var(--color-midnight-ink); font-size: 30px; font-weight: 700; border: 2px solid #ffffff;">
+                                                        {{ strtoupper(substr($displayName, 0, 1)) }}
+                                                    </div>
+                                                @endif
+                                                <label for="inputAvatar" class="position-absolute d-inline-flex align-items-center justify-content-center" style="bottom: 0; right: 0; width: 30px; height: 30px; border-radius: 50%; background-color: var(--color-notion-blue); color: #ffffff; cursor: pointer; box-shadow: 0 2px 6px rgba(0,0,0,0.25); margin: 0;" title="Pilih Foto Profil">
+                                                    <i class="fa fa-camera" style="font-size: 13px;"></i>
+                                                </label>
+                                            </div>
+                                            <input type="file" class="d-none" id="inputAvatar" name="avatar" accept="image/jpeg,image/png,image/jpg,image/webp">
+                                            <div class="small text-muted mt-2" style="font-size: 11.5px;">Klik ikon kamera untuk memilih foto profil (Maks 2MB)</div>
+                                        </div>
+
                                         <div class="form-group mb-3">
                                             <label for="inputName" class="font-weight-600 text-dark small mb-1">Nama Lengkap <span class="text-danger">*</span></label>
                                             <input type="text" class="form-control" id="inputName" name="name" value="{{ old('name', $user->name) }}" required style="border-radius: 8px; font-size: 14px;">
@@ -155,6 +182,15 @@
 @push('scripts')
 <script>
 $(document).ready(function() {
+    $('#inputAvatar').on('change', function(e) {
+        const file = e.target.files[0];
+        if (file) {
+            const url = URL.createObjectURL(file);
+            $('#avatarPreviewImg').attr('src', url).removeClass('d-none');
+            $('#avatarFallbackBox').addClass('d-none');
+        }
+    });
+
     if (window.location.hash === '#edit' || window.location.search.indexOf('edit=1') !== -1 || {{ $errors->any() ? 'true' : 'false' }}) {
         $('#editProfileModal').modal('show');
     }

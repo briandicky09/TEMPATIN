@@ -11,10 +11,10 @@
     <main id="ts-main" class="pt-0 pb-4">
 
         <!-- Breadcrumb & Page Title -->
-        <section class="pt-2 pb-3" style="border-bottom: var(--border-hairline);">
+        <section class="pt-1 pb-3" style="border-bottom: var(--border-hairline);">
             <div class="container">
                 <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb bg-transparent p-0 mb-2" style="font-size: 13px;">
+                    <ol class="breadcrumb bg-transparent p-0 mb-1" style="font-size: 13px;">
                         <li class="breadcrumb-item"><a href="{{ route('home') }}" class="text-muted text-decoration-none">Home</a></li>
                         <li class="breadcrumb-item active text-dark font-weight-bold" aria-current="page">Pencarian Kos</li>
                     </ol>

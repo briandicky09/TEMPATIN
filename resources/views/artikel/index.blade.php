@@ -8,10 +8,10 @@
     @include('partials.navbar')
     @include('partials.alert')
 
-    <main id="ts-main" style="padding-top: 36px; padding-bottom: 80px;">
+    <main id="ts-main" style="padding-top: 6px; padding-bottom: 80px;">
 
         <!-- BREADCRUMB -->
-        <div class="container mb-4">
+        <div class="container mb-3">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb bg-transparent p-0 mb-0" style="font-size: 13px;">
                     <li class="breadcrumb-item">

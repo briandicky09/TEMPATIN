@@ -2106,6 +2106,7 @@ header#ts-header.is-shrunk,
 }
 
 .member-avatar-btn {
+    position: relative;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -2138,6 +2139,22 @@ header#ts-header.is-shrunk,
     border-color: var(--color-notion-blue, #0075de);
     box-shadow: 0 0 0 3px rgba(0, 117, 222, 0.18);
     transform: scale(1.04);
+}
+
+.member-avatar-circle {
+    overflow: hidden;
+}
+
+.member-avatar-img {
+    width: 38px;
+    height: 38px;
+    min-width: 38px;
+    min-height: 38px;
+    max-width: 38px;
+    max-height: 38px;
+    object-fit: cover;
+    border-radius: 50%;
+    display: block;
 }
 
 .member-avatar-dot {
