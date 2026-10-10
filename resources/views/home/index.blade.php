@@ -49,8 +49,8 @@
                 </a>
             </div>
 
-            <!-- Centered Product UI Mockup (Search & Workspace Window) -->
-            <div class="notion-app-mockup text-left mx-auto" id="cari-kos-mockup" style="max-width: 1040px;">
+            <!-- Centered Product UI Mockup (Search & Workspace Window - Prompt 6 Refined Combobox/Dropdown) -->
+            <div class="notion-app-mockup text-left mx-auto" id="cari-kos-mockup" style="max-width: 1040px; overflow: visible;">
                 
                 <!-- Mockup Chrome Header -->
                 <div class="notion-app-mockup__chrome">
@@ -60,70 +60,209 @@
                         <span class="notion-app-mockup__dot notion-app-mockup__dot--green"></span>
                     </div>
                     <div class="notion-app-mockup__title">
-                        <i class="fa fa-search text-muted mr-1"></i>
+                        <iconify-icon icon="lucide:search" class="text-muted mr-1" style="font-size: 13px;"></iconify-icon>
                         <span>tempatin.id / workspace / cari-kos</span>
                     </div>
                 </div>
 
-                <!-- Mockup Body (Interactive Search Form) -->
-                <div class="notion-app-mockup__body">
-                    <form action="{{ route('search.kos') }}" method="GET" class="ts-form">
+                <!-- Mockup Body (Refined Dropdown & Combobox Form) -->
+                <div class="notion-app-mockup__body" style="padding: 28px 32px; background: #ffffff; overflow: visible; border-bottom-left-radius: 16px; border-bottom-right-radius: 16px;">
+                    
+                    <!-- Header Section inside Mockup -->
+                    <div class="d-flex align-items-center mb-4 pb-2" style="gap: 16px; border-bottom: 1px solid #f1f5f9;">
+                        <div style="width: 46px; height: 46px; background-color: #38bdf8; border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; box-shadow: 0 4px 12px rgba(56, 189, 248, 0.25);">
+                            <iconify-icon icon="lucide:compass" class="text-white" style="font-size: 24px;"></iconify-icon>
+                        </div>
+                        <div>
+                            <h3 class="mb-0 font-weight-bold text-dark" style="font-size: 1.25rem; letter-spacing: -0.02em;">Eksplorasi Kos Terverifikasi</h3>
+                            <p class="text-muted small mb-0" style="margin-top: 2px;">Gunakan filter pintar untuk menemukan hunian ideal sesuai kriteria Anda</p>
+                        </div>
+                    </div>
+
+                    <form action="{{ route('search.kos') }}" method="GET" class="ts-form" id="workspaceSearchForm">
                         <div class="row">
-                            <!-- Kota -->
-                            <div class="col-md-3 form-group mb-3">
-                                <label><i class="fa fa-map-marker-alt text-primary mr-1"></i> Kota Pilihan</label>
-                                <select class="custom-select" id="city" name="city">
-                                    <option value="">Semua Kota</option>
-                                    <option value="jakarta">Jakarta</option>
-                                    <option value="bandung">Bandung</option>
-                                    <option value="yogyakarta">Yogyakarta</option>
-                                    <option value="surabaya">Surabaya</option>
-                                    <option value="malang">Malang</option>
-                                    <option value="semarang">Semarang</option>
-                                </select>
+                            
+                            <!-- 1. Pencarian Kata Kunci / Kampus -->
+                            <div class="col-md-6 mb-4">
+                                <div class="d-flex align-items-center mb-2" style="gap: 8px;">
+                                    <iconify-icon icon="lucide:search" style="color: #4B7EFC; font-size: 18px;"></iconify-icon>
+                                    <label class="mb-0 font-weight-medium text-dark" style="font-size: 15px;">Cari Nama Kos / Kampus</label>
+                                </div>
+                                <div class="position-relative workspace-input-ring">
+                                    <span class="position-absolute" style="left: 14px; top: 50%; transform: translateY(-50%); color: #94a3b8; pointer-events: none; display: flex; align-items: center;">
+                                        <iconify-icon icon="lucide:search" style="font-size: 18px;"></iconify-icon>
+                                    </span>
+                                    <input 
+                                        type="text" 
+                                        id="keyword" 
+                                        name="keyword" 
+                                        placeholder="Contoh: Dekat UGM, Melati, Pogung..."
+                                        class="w-100 py-3 bg-transparent border-0 text-dark outline-none"
+                                        style="padding-left: 44px; padding-right: 16px; font-size: 14.5px; border-radius: 12px;"
+                                    >
+                                </div>
                             </div>
 
-                            <!-- Tipe Kos -->
-                            <div class="col-md-3 form-group mb-3">
-                                <label><i class="fa fa-users text-primary mr-1"></i> Tipe Kos</label>
-                                <select class="custom-select" id="type" name="type">
-                                    <option value="">Semua Tipe</option>
-                                    <option value="putra">Kos Putra</option>
-                                    <option value="putri">Kos Putri</option>
-                                    <option value="campur">Kos Campur</option>
-                                    <option value="eksklusif">Kos Eksklusif</option>
-                                </select>
+                            <!-- 2. Kategori / Tipe Kos -->
+                            <div class="col-md-6 mb-4">
+                                <div class="workspace-combobox" id="workspaceTypeCombobox">
+                                    <div class="d-flex align-items-center mb-2" style="gap: 8px;">
+                                        <iconify-icon icon="lucide:folder" style="color: #f59e0b; font-size: 18px;"></iconify-icon>
+                                        <label class="mb-0 font-weight-medium text-dark" style="font-size: 15px;">Kategori / Tipe Kos</label>
+                                    </div>
+                                    <button 
+                                        type="button" 
+                                        class="workspace-combobox-btn" 
+                                        id="typeComboboxBtn"
+                                        aria-haspopup="listbox" 
+                                        aria-expanded="false"
+                                    >
+                                        <span id="typeSelectedLabel">Semua Tipe Kos</span>
+                                        <iconify-icon icon="lucide:chevron-down" class="workspace-combobox-chevron" style="font-size: 18px;"></iconify-icon>
+                                    </button>
+                                    
+                                    <!-- Dropdown Menu -->
+                                    <div class="workspace-dropdown-menu" id="typeDropdownMenu" role="listbox">
+                                        <div class="workspace-dropdown-heading">Pilihan Kategori</div>
+                                        <button type="button" class="workspace-dropdown-item is-selected" data-val="" data-label="Semua Tipe Kos">
+                                            <span>Semua Tipe Kos</span>
+                                            <iconify-icon icon="lucide:check" class="item-check" style="font-size: 16px;"></iconify-icon>
+                                        </button>
+                                        <button type="button" class="workspace-dropdown-item" data-val="putra" data-label="Kos Khusus Putra">
+                                            <span>Kos Khusus Putra</span>
+                                            <iconify-icon icon="lucide:check" class="item-check d-none" style="font-size: 16px;"></iconify-icon>
+                                        </button>
+                                        <button type="button" class="workspace-dropdown-item" data-val="putri" data-label="Kos Khusus Putri">
+                                            <span>Kos Khusus Putri</span>
+                                            <iconify-icon icon="lucide:check" class="item-check d-none" style="font-size: 16px;"></iconify-icon>
+                                        </button>
+                                        <button type="button" class="workspace-dropdown-item" data-val="campur" data-label="Kos Campur">
+                                            <span>Kos Campur</span>
+                                            <iconify-icon icon="lucide:check" class="item-check d-none" style="font-size: 16px;"></iconify-icon>
+                                        </button>
+                                        <button type="button" class="workspace-dropdown-item" data-val="eksklusif" data-label="Kos Eksklusif">
+                                            <span>Kos Eksklusif</span>
+                                            <iconify-icon icon="lucide:check" class="item-check d-none" style="font-size: 16px;"></iconify-icon>
+                                        </button>
+                                    </div>
+                                    <input type="hidden" name="type" id="typeHiddenInput" value="">
+                                </div>
                             </div>
 
-                            <!-- Kata Kunci -->
-                            <div class="col-md-3 form-group mb-3">
-                                <label><i class="fa fa-tag text-primary mr-1"></i> Nama / Kampus</label>
-                                <input type="text" class="form-control" id="keyword" name="keyword" placeholder="Contoh: Dekat UGM, Melati">
+                            <!-- 3. Kota / Wilayah -->
+                            <div class="col-md-4 mb-4">
+                                <div class="workspace-combobox" id="workspaceCityCombobox">
+                                    <div class="d-flex align-items-center mb-2" style="gap: 8px;">
+                                        <iconify-icon icon="lucide:map-pin" style="color: #3b82f6; font-size: 18px;"></iconify-icon>
+                                        <label class="mb-0 font-weight-medium text-dark" style="font-size: 15px;">Kota / Wilayah</label>
+                                    </div>
+                                    <button 
+                                        type="button" 
+                                        class="workspace-combobox-btn" 
+                                        id="cityComboboxBtn"
+                                        aria-haspopup="listbox" 
+                                        aria-expanded="false"
+                                    >
+                                        <span id="citySelectedLabel">Semua Kota</span>
+                                        <iconify-icon icon="lucide:chevron-down" class="workspace-combobox-chevron" style="font-size: 18px;"></iconify-icon>
+                                    </button>
+
+                                    <!-- Dropdown Menu -->
+                                    <div class="workspace-dropdown-menu" id="cityDropdownMenu" role="listbox">
+                                        <div class="workspace-dropdown-heading">Kota Populer</div>
+                                        <button type="button" class="workspace-dropdown-item is-selected" data-val="" data-label="Semua Kota">
+                                            <span>Semua Kota</span>
+                                            <iconify-icon icon="lucide:check" class="item-check" style="font-size: 16px;"></iconify-icon>
+                                        </button>
+                                        <button type="button" class="workspace-dropdown-item" data-val="jakarta" data-label="DKI Jakarta">
+                                            <span>DKI Jakarta</span>
+                                            <iconify-icon icon="lucide:check" class="item-check d-none" style="font-size: 16px;"></iconify-icon>
+                                        </button>
+                                        <button type="button" class="workspace-dropdown-item" data-val="yogyakarta" data-label="DI Yogyakarta">
+                                            <span>DI Yogyakarta</span>
+                                            <iconify-icon icon="lucide:check" class="item-check d-none" style="font-size: 16px;"></iconify-icon>
+                                        </button>
+                                        <button type="button" class="workspace-dropdown-item" data-val="bandung" data-label="Bandung">
+                                            <span>Bandung</span>
+                                            <iconify-icon icon="lucide:check" class="item-check d-none" style="font-size: 16px;"></iconify-icon>
+                                        </button>
+                                        <button type="button" class="workspace-dropdown-item" data-val="surabaya" data-label="Surabaya">
+                                            <span>Surabaya</span>
+                                            <iconify-icon icon="lucide:check" class="item-check d-none" style="font-size: 16px;"></iconify-icon>
+                                        </button>
+                                        <button type="button" class="workspace-dropdown-item" data-val="malang" data-label="Malang">
+                                            <span>Malang</span>
+                                            <iconify-icon icon="lucide:check" class="item-check d-none" style="font-size: 16px;"></iconify-icon>
+                                        </button>
+                                        <button type="button" class="workspace-dropdown-item" data-val="semarang" data-label="Semarang">
+                                            <span>Semarang</span>
+                                            <iconify-icon icon="lucide:check" class="item-check d-none" style="font-size: 16px;"></iconify-icon>
+                                        </button>
+                                    </div>
+                                    <input type="hidden" name="city" id="cityHiddenInput" value="">
+                                </div>
                             </div>
 
-                            <!-- Rentang Harga Maksimal -->
-                            <div class="col-md-3 form-group mb-3">
-                                <label><i class="fa fa-wallet text-primary mr-1"></i> Harga Maksimal</label>
-                                <input type="number" class="form-control" id="max_price" name="max_price" placeholder="Contoh: 1500000">
+                            <!-- 4. Estimasi Budget Maksimal -->
+                            <div class="col-md-4 mb-4">
+                                <div class="d-flex align-items-center mb-2" style="gap: 8px;">
+                                    <iconify-icon icon="lucide:hash" style="color: #2563eb; font-size: 18px;"></iconify-icon>
+                                    <label class="mb-0 font-weight-medium text-dark" style="font-size: 15px;">Budget Maksimal (Rp)</label>
+                                </div>
+                                <div class="workspace-input-ring">
+                                    <input 
+                                        type="number" 
+                                        id="max_price" 
+                                        name="max_price" 
+                                        placeholder="Contoh: 1500000"
+                                        class="w-100 py-3 px-3 bg-transparent border-0 text-dark outline-none"
+                                        style="font-size: 14.5px; border-radius: 12px;"
+                                    >
+                                </div>
                             </div>
+
+                            <!-- 5. Tautan Referensi -->
+                            <div class="col-md-4 mb-4">
+                                <div class="d-flex align-items-center mb-2" style="gap: 8px;">
+                                    <iconify-icon icon="lucide:link" style="color: #9333ea; font-size: 18px;"></iconify-icon>
+                                    <label class="mb-0 font-weight-medium text-dark" style="font-size: 15px;">Tautan Referensi</label>
+                                </div>
+                                <div class="workspace-input-ring">
+                                    <input 
+                                        type="url" 
+                                        placeholder="https://tempatin.id/workspace/cari-kos"
+                                        class="w-100 py-3 px-3 bg-transparent border-0 text-dark outline-none"
+                                        style="font-size: 14.5px; border-radius: 12px;"
+                                    >
+                                </div>
+                            </div>
+
                         </div>
 
                         <!-- Action Bar inside Mockup -->
-                        <div class="d-flex flex-column flex-md-row justify-content-between align-items-center pt-2" style="border-top: var(--border-hairline); gap: 12px;">
-                            <!-- Quick Filter Pills -->
+                        <div class="d-flex flex-column flex-md-row justify-content-between align-items-center pt-3" style="border-top: 1px solid #f1f5f9; gap: 14px;">
+                            
+                            <!-- Quick Filter Tags -->
                             <div class="d-flex flex-wrap align-items-center" style="gap: 6px;">
-                                <span class="text-muted small mr-2">Paling Dicari:</span>
-                                <a href="{{ route('search.kos', ['city' => 'yogyakarta']) }}" class="badge badge-light border text-dark text-decoration-none"><i class="fa fa-map-marker-alt mr-1 text-muted"></i> Yogyakarta</a>
-                                <a href="{{ route('search.kos', ['city' => 'surabaya']) }}" class="badge badge-light border text-dark text-decoration-none"><i class="fa fa-map-marker-alt mr-1 text-muted"></i> Surabaya</a>
-                                <a href="{{ route('search.kos', ['city' => 'bandung']) }}" class="badge badge-light border text-dark text-decoration-none"><i class="fa fa-map-marker-alt mr-1 text-muted"></i> Bandung</a>
-                                <a href="{{ route('search.kos', ['type' => 'putri']) }}" class="badge badge-light border text-dark text-decoration-none">Kos Putri</a>
-                                <a href="{{ route('search.kos', ['type' => 'putra']) }}" class="badge badge-light border text-dark text-decoration-none">Kos Putra</a>
+                                <span class="text-muted small mr-1 font-weight-medium">Paling Dicari:</span>
+                                <a href="{{ route('search.kos', ['city' => 'yogyakarta']) }}" class="badge badge-light border text-dark text-decoration-none py-1 px-2" style="border-radius: 6px;">
+                                    <iconify-icon icon="lucide:map-pin" class="mr-1 text-muted" style="font-size: 12px;"></iconify-icon> Yogyakarta
+                                </a>
+                                <a href="{{ route('search.kos', ['city' => 'surabaya']) }}" class="badge badge-light border text-dark text-decoration-none py-1 px-2" style="border-radius: 6px;">
+                                    <iconify-icon icon="lucide:map-pin" class="mr-1 text-muted" style="font-size: 12px;"></iconify-icon> Surabaya
+                                </a>
+                                <a href="{{ route('search.kos', ['city' => 'bandung']) }}" class="badge badge-light border text-dark text-decoration-none py-1 px-2" style="border-radius: 6px;">
+                                    <iconify-icon icon="lucide:map-pin" class="mr-1 text-muted" style="font-size: 12px;"></iconify-icon> Bandung
+                                </a>
+                                <a href="{{ route('search.kos', ['type' => 'putri']) }}" class="badge badge-light border text-dark text-decoration-none py-1 px-2" style="border-radius: 6px;">Kos Putri</a>
+                                <a href="{{ route('search.kos', ['type' => 'putra']) }}" class="badge badge-light border text-dark text-decoration-none py-1 px-2" style="border-radius: 6px;">Kos Putra</a>
                             </div>
 
-                            <!-- Submit Button -->
-                            <button type="submit" class="btn btn-primary px-4 py-2 font-weight-bold w-100 w-md-auto">
-                                <i class="fa fa-search mr-1"></i> Cari Kos Sekarang
+                            <!-- Clean Cari Button (No icon / sparkles logo, text 'Cari') -->
+                            <button type="submit" class="ts-btn-cari w-100 w-md-auto" id="btnWorkspaceSubmit">
+                                Cari
                             </button>
+
                         </div>
                     </form>
                 </div>
@@ -181,176 +320,154 @@
     </section>
 
     <!-- =========================================================================
-         3. NILAI UTAMA (INTERACTIVE MAGIC BENTO GRID)
+         3. NILAI UTAMA (SELF-CONTAINED SHADCN TIMELINE COMPONENT)
+         Spec: Ground #FAFAFA, Card #FFFFFF, Ink #09090B, Muted #71717A, Border #E4E4E7, Accent #4F46E5
+         Strictly monochromatic + single indigo accent, no rainbow colors.
+         Vertical spine fills dynamically via single IntersectionObserver.
          ========================================================================= -->
-    <section class="py-5" style="background-color: var(--surface-page-canvas); border-top: var(--border-hairline);">
+    <section class="shadcn-timeline-section py-5" id="nilai-utama" style="background-color: var(--surface-page-canvas); border-top: var(--border-hairline);">
         <div class="container py-4">
 
             <!-- Section Header -->
             <div class="text-center mx-auto mb-4" style="max-width: 640px;">
-                <span class="badge badge-primary mb-2">Nilai Utama</span>
-                <h2 style="letter-spacing: -0.03em;">Dibuat untuk Pengalaman Sewa Tanpa Cemas</h2>
-                <p class="font-editorial" style="font-size: 1.15rem; color: var(--color-graphite);">
-                    Standar baru menyewa kos: transparan, terjamin, dan didukung teknologi modern.
+                <span class="notion-pill-badge mb-2">Nilai Utama</span>
+                <h2 style="font-size: clamp(2rem, 3.2vw, 2.75rem); font-weight: 700; letter-spacing: -0.035em; color: var(--color-ink-black); line-height: 1.15;">
+                    Dibuat untuk Pengalaman Sewa Tanpa Cemas
+                </h2>
+                <p class="font-editorial mx-auto mb-0" style="font-size: 1.15rem; color: var(--color-graphite); line-height: 1.6; max-width: 640px;">
+                    Standar baru menyewa kos di Indonesia: transparan, terjamin, dan didukung kurasi lapangan langsung.
                 </p>
             </div>
 
-            <!-- Magic Bento Grid (6 Asymmetric Responsive Bento Cards) -->
-            <div class="ts-magic-bento-grid" id="tsMagicBentoGrid">
+            <!-- Self-Contained Timeline Root -->
+            <div class="shadcn-timeline-root" id="shadcnTimeline">
 
-                <!-- Card 0: Col Span 2 (Verifikasi Fisik 100%) -->
-                <div class="ts-bento-card ts-bento-card-0" data-bento="card">
-                    <div class="ts-bento-spotlight"></div>
-                    <div class="ts-bento-border-glow"></div>
-                    <div class="ts-bento-content">
-                        <div>
-                            <div class="ts-bento-header">
-                                <div class="ts-bento-icon-wrapper">
-                                    <i class="fa fa-shield-alt"></i>
-                                </div>
-                                <span class="badge badge-light border text-primary font-weight-bold">100% Bebas Fiktif</span>
-                            </div>
-                            <span class="ts-bento-label">Inspeksi Resmi</span>
-                            <h3 class="ts-bento-title">Setiap Kamar Diinspeksi Langsung &amp; Terverifikasi</h3>
-                            <p class="ts-bento-desc">
-                                Kami tidak mengizinkan manipulasi sudut pandang kamera maupun kos fiktif. Setiap fasilitas, harga, dan lokasi dicek langsung oleh tim lapangan TEMPATIN agar Anda menyewa dengan tenang.
-                            </p>
-                        </div>
-                        <div class="d-flex flex-wrap pt-3 mt-3" style="border-top: var(--border-hairline); gap: 10px;">
-                            <span class="badge badge-light border text-dark"><i class="fa fa-check text-success mr-1"></i> Foto Realistis</span>
-                            <span class="badge badge-light border text-dark"><i class="fa fa-check text-success mr-1"></i> Pemilik Resmi</span>
-                            <span class="badge badge-light border text-dark"><i class="fa fa-check text-success mr-1"></i> Tagihan Transparan</span>
-                        </div>
-                    </div>
+                <!-- Vertical Spine Rail -->
+                <div class="timeline-spine-rail" aria-hidden="true">
+                    <div class="timeline-spine-track"></div>
+                    <div class="timeline-spine-fill" id="timelineSpineFill"></div>
                 </div>
 
-                <!-- Card 1: Col Span 1 (Booking Instan 3 Menit) -->
-                <div class="ts-bento-card ts-bento-card-1" data-bento="card">
-                    <div class="ts-bento-spotlight"></div>
-                    <div class="ts-bento-border-glow"></div>
-                    <div class="ts-bento-content">
-                        <div>
-                            <div class="ts-bento-header">
-                                <div class="ts-bento-icon-wrapper">
-                                    <i class="fa fa-bolt"></i>
-                                </div>
-                                <span class="badge badge-light border text-muted">Paperless</span>
-                            </div>
-                            <span class="ts-bento-label">Efisiensi Waktu</span>
-                            <h3 class="ts-bento-title">Booking Instan 3 Menit</h3>
-                            <p class="ts-bento-desc">
-                                Ajukan sewa langsung dari smartphone Anda tanpa perlu mondar-mandir survei manual di tengah terik matahari.
-                            </p>
+                <!-- Entries List -->
+                <div class="timeline-entries-list" role="list">
+
+                    <!-- Entry 01: Verifikasi Lapangan -->
+                    <div class="timeline-entry" data-index="0" role="listitem">
+                        <div class="timeline-year-col">
+                            <span class="timeline-year-text">2026 / 01</span>
                         </div>
-                        <div class="pt-2">
-                            <span class="small font-weight-bold text-muted"><i class="fa fa-clock mr-1 text-primary"></i> Paperless &amp; Cepat</span>
+                        <div class="timeline-dot-col" aria-hidden="true">
+                            <div class="timeline-dot"></div>
+                        </div>
+                        <div class="timeline-card-col">
+                            <span class="timeline-year-mobile">2026 / 01</span>
+                            <h3 class="timeline-entry-title">Inspeksi Fisik &amp; Kurasi 100% Bebas Fiktif</h3>
+                            <div class="timeline-card">
+                                <p class="timeline-card-body">
+                                    Setiap kos wajib lolos inspeksi kurasi lapangan langsung. Kami menguji sirkulasi ventilasi udara, kebersihan sanitasi kamar mandi, kelayakan kasur, dan memastikan foto 100% riil tanpa manipulasi sudut lensa.
+                                </p>
+                                <div class="timeline-card-footer">
+                                    <div class="timeline-avatar-group">
+                                        <div class="timeline-avatar-disc" aria-hidden="true">KL</div>
+                                        <div class="timeline-avatar-meta">
+                                            <span class="timeline-avatar-name">Tim Kurasi Lapangan</span>
+                                            <span class="timeline-avatar-role">Verifikasi Fisik Mandiri</span>
+                                        </div>
+                                    </div>
+                                    <span class="timeline-spec-pill">100% Bebas Fiktif</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <!-- Card 2: Col Span 1, Row Span 2 (Tall Feature Card: Proteksi Escrow & Transparansi) -->
-                <div class="ts-bento-card ts-bento-card-2" data-bento="card">
-                    <div class="ts-bento-spotlight"></div>
-                    <div class="ts-bento-border-glow"></div>
-                    <div class="ts-bento-content">
-                        <div>
-                            <div class="ts-bento-header">
-                                <div class="ts-bento-icon-wrapper">
-                                    <i class="fa fa-lock"></i>
-                                </div>
-                                <span class="badge badge-light border text-primary font-weight-bold">Garansi 100%</span>
-                            </div>
-                            <span class="ts-bento-label">Keamanan Dana</span>
-                            <h3 class="ts-bento-title">Proteksi Dana &amp; Garansi Uang Kembali</h3>
-                            <p class="ts-bento-desc mb-3">
-                                Pembayaran Anda diamankan dalam rekening escrow resmi TEMPATIN. Dana baru diteruskan ke pemilik setelah Anda memastikan kamar sesuai kesepakatan.
-                            </p>
-                            <div class="p-3 bg-white rounded border mb-3 small">
-                                <div class="font-weight-bold mb-1 text-dark"><i class="fa fa-shield-alt text-primary mr-1"></i> Escrow Protection:</div>
-                                <div class="text-muted">Jika kamar terbukti tidak sesuai dengan foto, dana sewa dijamin kembali 100%.</div>
-                            </div>
+                    <!-- Entry 02: Transparansi Biaya -->
+                    <div class="timeline-entry" data-index="1" role="listitem">
+                        <div class="timeline-year-col">
+                            <span class="timeline-year-text">2026 / 02</span>
                         </div>
-                        <div class="pt-2">
-                            <span class="badge badge-light border text-primary font-weight-bold px-3 py-1">
-                                Jaminan Proteksi 100%
-                            </span>
+                        <div class="timeline-dot-col" aria-hidden="true">
+                            <div class="timeline-dot"></div>
+                        </div>
+                        <div class="timeline-card-col">
+                            <span class="timeline-year-mobile">2026 / 02</span>
+                            <h3 class="timeline-entry-title">Harga Pasti &amp; Transparansi Biaya Riil</h3>
+                            <div class="timeline-card">
+                                <p class="timeline-card-body">
+                                    Tidak ada pungutan tersembunyi saat Anda tiba di lokasi. Rincian biaya sewa kamar bulanan, tagihan listrik, air, parkir, dan deposit jaminan dicantumkan secara terbuka dalam rincian invoice digital resmi.
+                                </p>
+                                <div class="timeline-card-footer">
+                                    <div class="timeline-avatar-group">
+                                        <div class="timeline-avatar-disc" aria-hidden="true">TB</div>
+                                        <div class="timeline-avatar-meta">
+                                            <span class="timeline-avatar-name">Sistem Transparansi Riil</span>
+                                            <span class="timeline-avatar-role">Pasti &amp; Terbuka</span>
+                                        </div>
+                                    </div>
+                                    <span class="timeline-spec-pill">Biaya Siluman Rp 0</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <!-- Card 3: Col Span 1 (Bebas Biaya Terselubung) -->
-                <div class="ts-bento-card ts-bento-card-3" data-bento="card">
-                    <div class="ts-bento-spotlight"></div>
-                    <div class="ts-bento-border-glow"></div>
-                    <div class="ts-bento-content">
-                        <div>
-                            <div class="ts-bento-header">
-                                <div class="ts-bento-icon-wrapper">
-                                    <i class="fa fa-file-invoice-dollar"></i>
-                                </div>
-                                <span class="badge badge-light border text-muted">Fixed Price</span>
-                            </div>
-                            <span class="ts-bento-label">Transparansi Harga</span>
-                            <h3 class="ts-bento-title">Tanpa Biaya Siluman</h3>
-                            <p class="ts-bento-desc">
-                                Rincian sewa, deposit, fasilitas listrik, dan air tercantum jelas dalam invoice digital sebelum Anda bayar.
-                            </p>
+                    <!-- Entry 03: Escrow & Garansi -->
+                    <div class="timeline-entry" data-index="2" role="listitem">
+                        <div class="timeline-year-col">
+                            <span class="timeline-year-text">2026 / 03</span>
                         </div>
-                        <div class="pt-2">
-                            <span class="small font-weight-bold text-muted"><i class="fa fa-check-circle mr-1 text-success"></i> Fixed Price Garansi</span>
+                        <div class="timeline-dot-col" aria-hidden="true">
+                            <div class="timeline-dot"></div>
+                        </div>
+                        <div class="timeline-card-col">
+                            <span class="timeline-year-mobile">2026 / 03</span>
+                            <h3 class="timeline-entry-title">Sistem Escrow &amp; Garansi Refund 100%</h3>
+                            <div class="timeline-card">
+                                <p class="timeline-card-body">
+                                    Dana sewa Anda terlindungi dalam sistem escrow resmi TEMPATIN. Pembayaran baru diteruskan ke pemilik setelah Anda tiba di kos dan mengonfirmasi kondisi kamar sesuai dengan kesepakatan tertulis.
+                                </p>
+                                <div class="timeline-card-footer">
+                                    <div class="timeline-avatar-group">
+                                        <div class="timeline-avatar-disc" aria-hidden="true">PE</div>
+                                        <div class="timeline-avatar-meta">
+                                            <span class="timeline-avatar-name">Proteksi Escrow TEMPATIN</span>
+                                            <span class="timeline-avatar-role">Rekening Bersama Aman</span>
+                                        </div>
+                                    </div>
+                                    <span class="timeline-spec-pill">100% Refund Terjamin</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <!-- Card 4: Col Span 2 (Dukungan Tim 24/7 & Konsultasi) -->
-                <div class="ts-bento-card ts-bento-card-4" data-bento="card">
-                    <div class="ts-bento-spotlight"></div>
-                    <div class="ts-bento-border-glow"></div>
-                    <div class="ts-bento-content">
-                        <div>
-                            <div class="ts-bento-header">
-                                <div class="ts-bento-icon-wrapper">
-                                    <i class="fa fa-headset"></i>
-                                </div>
-                                <span class="badge badge-light border text-muted">Respon &lt; 5 Menit</span>
-                            </div>
-                            <span class="ts-bento-label">Customer Support</span>
-                            <h3 class="ts-bento-title">Dukungan Pendampingan &amp; Bantuan 24/7</h3>
-                            <p class="ts-bento-desc">
-                                Punya pertanyaan seputar lingkungan sekitar kampus, ingin izin survei langsung, atau butuh bantuan pelunasan invoice? Tim konsultan TEMPATIN siap mendampingi setiap langkah Anda.
-                            </p>
+                    <!-- Entry 04: Booking Digital Paperless -->
+                    <div class="timeline-entry" data-index="3" role="listitem">
+                        <div class="timeline-year-col">
+                            <span class="timeline-year-text">2026 / 04</span>
                         </div>
-                        <div class="d-flex align-items-center justify-content-between pt-3 mt-3" style="border-top: var(--border-hairline);">
-                            <span class="small text-muted"><i class="fa fa-comments mr-1 text-primary"></i> Chat Langsung via WhatsApp &amp; Ticket</span>
-                            <a href="{{ route('contact') }}" class="btn btn-outline-dark btn-sm">Buka Pusat Bantuan &rarr;</a>
+                        <div class="timeline-dot-col" aria-hidden="true">
+                            <div class="timeline-dot"></div>
+                        </div>
+                        <div class="timeline-card-col">
+                            <span class="timeline-year-mobile">2026 / 04</span>
+                            <h3 class="timeline-entry-title">Booking Digital Terpadu &amp; Paperless</h3>
+                            <div class="timeline-card">
+                                <p class="timeline-card-body">
+                                    Proses sewa selesai dalam 3 menit langsung dari smartphone Anda tanpa harus survei manual di jalanan macet. Bukti reservasi digital resmi, kontrak sewa sah, dan instruksi serah terima kamar terbit instan.
+                                </p>
+                                <div class="timeline-card-footer">
+                                    <div class="timeline-avatar-group">
+                                        <div class="timeline-avatar-disc" aria-hidden="true">BD</div>
+                                        <div class="timeline-avatar-meta">
+                                            <span class="timeline-avatar-name">Layanan Booking Digital</span>
+                                            <span class="timeline-avatar-role">Paperless &amp; Sah Hukum</span>
+                                        </div>
+                                    </div>
+                                    <span class="timeline-spec-pill">Proses 3 Menit</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <!-- Card 5: Col Span 1 (Ulasan Objektif Komunitas) -->
-                <div class="ts-bento-card ts-bento-card-5" data-bento="card">
-                    <div class="ts-bento-spotlight"></div>
-                    <div class="ts-bento-border-glow"></div>
-                    <div class="ts-bento-content">
-                        <div>
-                            <div class="ts-bento-header">
-                                <div class="ts-bento-icon-wrapper">
-                                    <i class="fa fa-star"></i>
-                                </div>
-                                <span class="badge badge-light border text-muted">38.000+ Ulasan</span>
-                            </div>
-                            <span class="ts-bento-label">Ulasan Jujur</span>
-                            <h3 class="ts-bento-title">Komunitas Terpercaya</h3>
-                            <p class="ts-bento-desc">
-                                Baca review otentik dari mahasiswa dan pekerja yang pernah menyewa kamar kos yang sama.
-                            </p>
-                        </div>
-                        <div class="pt-2">
-                            <span class="small font-weight-bold text-muted"><i class="fa fa-users mr-1 text-primary"></i> 38.000+ Penghuni</span>
-                        </div>
-                    </div>
                 </div>
-
             </div>
 
         </div>
@@ -697,16 +814,16 @@
                 </p>
             </div>
 
-            <div class="row">
+            <div class="row" id="tsStatsRow">
                 <!-- Stat 1 -->
                 <div class="col-6 col-lg-3 mb-4 mb-lg-0">
-                    <div class="p-4 h-100 text-left d-flex flex-column justify-content-between" style="background-color: #ffffff; border: 1px solid rgba(0, 0, 0, 0.08); border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.02); transition: transform 0.2s ease, border-color 0.2s ease;">
+                    <div class="ts-stat-card h-100 text-left d-flex flex-column justify-content-between">
                         <div>
-                            <div class="d-inline-flex align-items-center justify-content-center mb-3" style="width: 42px; height: 42px; border-radius: 10px; background-color: var(--color-sky-tint); color: var(--color-notion-blue); font-size: 16px;">
-                                <i class="fa fa-home"></i>
+                            <div class="d-inline-flex align-items-center justify-content-center mb-3" style="width: 44px; height: 44px; border-radius: 12px; background-color: var(--color-sky-tint); color: var(--color-notion-blue); font-size: 18px;">
+                                <iconify-icon icon="lucide:home"></iconify-icon>
                             </div>
-                            <div style="font-size: 2.25rem; font-weight: 800; letter-spacing: -0.04em; color: var(--color-ink-black); line-height: 1.1; margin-bottom: 6px;">
-                                5.200+
+                            <div class="ts-stat-number stat-countup" data-target="5200" data-suffix="+">
+                                0
                             </div>
                             <div class="font-weight-bold text-dark mb-1" style="font-size: 15px;">
                                 Kos Terverifikasi
@@ -720,13 +837,13 @@
 
                 <!-- Stat 2 -->
                 <div class="col-6 col-lg-3 mb-4 mb-lg-0">
-                    <div class="p-4 h-100 text-left d-flex flex-column justify-content-between" style="background-color: #ffffff; border: 1px solid rgba(0, 0, 0, 0.08); border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.02); transition: transform 0.2s ease, border-color 0.2s ease;">
+                    <div class="ts-stat-card h-100 text-left d-flex flex-column justify-content-between">
                         <div>
-                            <div class="d-inline-flex align-items-center justify-content-center mb-3" style="width: 42px; height: 42px; border-radius: 10px; background-color: var(--color-sky-tint); color: var(--color-notion-blue); font-size: 16px;">
-                                <i class="fa fa-map-marked-alt"></i>
+                            <div class="d-inline-flex align-items-center justify-content-center mb-3" style="width: 44px; height: 44px; border-radius: 12px; background-color: var(--color-sky-tint); color: var(--color-notion-blue); font-size: 18px;">
+                                <iconify-icon icon="lucide:map-pin"></iconify-icon>
                             </div>
-                            <div style="font-size: 2.25rem; font-weight: 800; letter-spacing: -0.04em; color: var(--color-ink-black); line-height: 1.1; margin-bottom: 6px;">
-                                120+
+                            <div class="ts-stat-number stat-countup" data-target="120" data-suffix="+">
+                                0
                             </div>
                             <div class="font-weight-bold text-dark mb-1" style="font-size: 15px;">
                                 Kota &amp; Kabupaten
@@ -740,13 +857,13 @@
 
                 <!-- Stat 3 -->
                 <div class="col-6 col-lg-3 mb-4 mb-lg-0">
-                    <div class="p-4 h-100 text-left d-flex flex-column justify-content-between" style="background-color: #ffffff; border: 1px solid rgba(0, 0, 0, 0.08); border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.02); transition: transform 0.2s ease, border-color 0.2s ease;">
+                    <div class="ts-stat-card h-100 text-left d-flex flex-column justify-content-between">
                         <div>
-                            <div class="d-inline-flex align-items-center justify-content-center mb-3" style="width: 42px; height: 42px; border-radius: 10px; background-color: var(--color-sky-tint); color: var(--color-notion-blue); font-size: 16px;">
-                                <i class="fa fa-users"></i>
+                            <div class="d-inline-flex align-items-center justify-content-center mb-3" style="width: 44px; height: 44px; border-radius: 12px; background-color: var(--color-sky-tint); color: var(--color-notion-blue); font-size: 18px;">
+                                <iconify-icon icon="lucide:users"></iconify-icon>
                             </div>
-                            <div style="font-size: 2.25rem; font-weight: 800; letter-spacing: -0.04em; color: var(--color-ink-black); line-height: 1.1; margin-bottom: 6px;">
-                                38.000+
+                            <div class="ts-stat-number stat-countup" data-target="38000" data-suffix="+">
+                                0
                             </div>
                             <div class="font-weight-bold text-dark mb-1" style="font-size: 15px;">
                                 Penghuni Puas
@@ -760,13 +877,13 @@
 
                 <!-- Stat 4 -->
                 <div class="col-6 col-lg-3 mb-4 mb-lg-0">
-                    <div class="p-4 h-100 text-left d-flex flex-column justify-content-between" style="background-color: #ffffff; border: 1px solid rgba(0, 0, 0, 0.08); border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.02); transition: transform 0.2s ease, border-color 0.2s ease;">
+                    <div class="ts-stat-card h-100 text-left d-flex flex-column justify-content-between">
                         <div>
-                            <div class="d-inline-flex align-items-center justify-content-center mb-3" style="width: 42px; height: 42px; border-radius: 10px; background-color: var(--color-sky-tint); color: var(--color-notion-blue); font-size: 16px;">
-                                <i class="fa fa-handshake"></i>
+                            <div class="d-inline-flex align-items-center justify-content-center mb-3" style="width: 44px; height: 44px; border-radius: 12px; background-color: var(--color-sky-tint); color: var(--color-notion-blue); font-size: 18px;">
+                                <iconify-icon icon="lucide:handshake"></iconify-icon>
                             </div>
-                            <div style="font-size: 2.25rem; font-weight: 800; letter-spacing: -0.04em; color: var(--color-ink-black); line-height: 1.1; margin-bottom: 6px;">
-                                750+
+                            <div class="ts-stat-number stat-countup" data-target="750" data-suffix="+">
+                                0
                             </div>
                             <div class="font-weight-bold text-dark mb-1" style="font-size: 15px;">
                                 Mitra Pemilik Kos
@@ -783,116 +900,120 @@
     </section>
 
     <!-- =========================================================================
-         7. TESTIMONIALS (INFINITE MARQUEE WITH ALPHA MASK & PAUSE ON HOVER)
+         7. SHADCN TESTIMONIAL COMPONENT (PROMPT 3 SPEC)
+         Self-contained: Heading & lede left, quote card with star rating right, dot pagination
+         Ground #FAFAFA, Card #FFFFFF, Ink #09090B, Muted #71717A, Border #E4E4E7, Accent #4F46E5
          ========================================================================= -->
-    <section class="py-5" style="background-color: var(--surface-page-canvas); border-top: var(--border-hairline); overflow: hidden;">
-        <div class="container py-3">
+    @php
+        $shadcnTestimonials = [
+            [
+                'quote' => 'Cari kos dekat kampus UI Depok dulu makan waktu berhari-hari. Lewat TEMPATIN, saya booking kamar cuma dalam 15 menit dan kondisinya persis seperti di foto.',
+                'name' => 'Anisa Rahmawati',
+                'role' => 'Mahasiswi UI, Depok',
+                'initials' => 'AR',
+                'bg' => '#4F46E5'
+            ],
+            [
+                'quote' => 'Sebagai pemilik kos di Yogyakarta, kamar saya terisi penuh dalam 2 minggu setelah terdaftar. Dashboard pemiliknya simpel dan transaksinya transparan.',
+                'name' => 'Bagus Prasetyo',
+                'role' => 'Pemilik Kos Anggrek, Sleman',
+                'initials' => 'BP',
+                'bg' => '#0075DE'
+            ],
+            [
+                'quote' => 'Pindah kerja ke Surabaya tanpa kenalan satupun, untung ada TEMPATIN. Filter lokasi dan simulasi invoice sangat membantu budgeting bulanan saya.',
+                'name' => 'Dewi Lestari',
+                'role' => 'Software Engineer, Surabaya',
+                'initials' => 'DL',
+                'bg' => '#10B981'
+            ],
+            [
+                'quote' => 'Fitur verified room dan pembayaran otomatis bikin sewa kosan aman tanpa was-was penipuan. Customer support juga sangat responsif saat ada kendala.',
+                'name' => 'Rian Hidayat',
+                'role' => 'Mahasiswa ITB, Bandung',
+                'initials' => 'RH',
+                'bg' => '#F59E0B'
+            ],
+            [
+                'quote' => 'Pengelolaan tagihan dan konfirmasi bukti transfer jadi otomatis lewat sistem. Sangat menghemat waktu saya setiap awal bulan tanpa perlu mutasi manual.',
+                'name' => 'Siti Nurhaliza',
+                'role' => 'Pemilik Paviliun Melati, Jaksel',
+                'initials' => 'SN',
+                'bg' => '#EC4899'
+            ]
+        ];
+    @endphp
 
-            <div class="text-center mx-auto mb-4" style="max-width: 600px;">
-                <span class="badge badge-primary mb-2">Kata Mereka</span>
-                <h2 style="letter-spacing: -0.03em;">Cerita Dari Komunitas TEMPATIN</h2>
-                <p class="font-editorial" style="font-size: 1.15rem; color: var(--color-graphite);">
-                    Pengalaman nyata mahasiswa, pekerja, dan pemilik kos yang telah bergabung.
-                </p>
-            </div>
+    <section class="shadcn-testimonial-section" id="shadcnTestimonialsSection">
+        <div class="container">
+            <div class="row align-items-center">
+                
+                <!-- Left: Heading, Lede, & Dot Pagination -->
+                <div class="col-lg-5 mb-5 mb-lg-0 pr-lg-4">
+                    <div style="max-width: 440px;">
+                        <span class="badge mb-3" style="background-color: #EEF2FF; color: #4F46E5; border: 1px solid #E0E7FF; font-size: 12px; font-weight: 600; padding: 5px 12px; border-radius: 9999px;">
+                            Testimoni Komunitas
+                        </span>
+                        <h2 class="mb-3" style="font-size: 2.25rem; font-weight: 700; color: #09090B; letter-spacing: -0.03em; line-height: 1.25;">
+                            Dipercaya oleh Pencari &amp; Pemilik Kos
+                        </h2>
+                        <p style="font-size: 1.125rem; color: #71717A; line-height: 1.6; margin-bottom: 28px;">
+                            Cerita nyata mahasiswa, pekerja kantoran, dan mitra properti yang merasakan kemudahan sewa kos tanpa ribet di TEMPATIN.
+                        </p>
 
-        </div>
-
-        <!-- Marquee Scroller with Alpha Mask Gradient -->
-        <div class="ts-marquee-container" aria-label="Ulasan Komunitas">
-            <div class="ts-marquee-track">
-
-                @php
-                    $testimonials = [
-                        [
-                            'quote' => 'Cari kos dekat kampus UI Depok dulu makan waktu berhari-hari. Lewat TEMPATIN, saya booking kamar cuma dalam 15 menit dan kondisinya persis seperti di foto.',
-                            'name' => 'Anisa Rahmawati',
-                            'role' => 'Mahasiswi UI, Depok',
-                            'icon' => 'fa-user-graduate',
-                            'city' => 'Depok'
-                        ],
-                        [
-                            'quote' => 'Sebagai pemilik kos di Yogyakarta, kamar saya terisi penuh dalam 2 minggu setelah terdaftar. Dashboard pemiliknya simpel dan transaksinya transparan.',
-                            'name' => 'Bagus Prasetyo',
-                            'role' => 'Pemilik Kos Anggrek, Sleman',
-                            'icon' => 'fa-home',
-                            'city' => 'Yogyakarta'
-                        ],
-                        [
-                            'quote' => 'Pindah kerja ke Surabaya tanpa kenalan satupun, untung ada TEMPATIN. Filter lokasi dan simulasi invoice sangat membantu budgeting bulanan saya.',
-                            'name' => 'Dewi Lestari',
-                            'role' => 'Software Engineer, Surabaya',
-                            'icon' => 'fa-briefcase',
-                            'city' => 'Surabaya'
-                        ],
-                        [
-                            'quote' => 'Fitur verified room dan pembayaran otomatis bikin kosan langsung aman tanpa was-was penipuan. Customer support juga sangat responsif saat saya ada kendala.',
-                            'name' => 'Rian Hidayat',
-                            'role' => 'Mahasiswa ITB, Bandung',
-                            'icon' => 'fa-laptop-code',
-                            'city' => 'Bandung'
-                        ],
-                        [
-                            'quote' => 'Pengelolaan tagihan dan konfirmasi bukti transfer jadi otomatis lewat sistem. Sangat menghemat waktu saya setiap awal bulan tanpa perlu cek mutasi manual.',
-                            'name' => 'Siti Nurhaliza',
-                            'role' => 'Pemilik Paviliun Melati, Jaksel',
-                            'icon' => 'fa-building',
-                            'city' => 'Jakarta'
-                        ]
-                    ];
-                @endphp
-
-                {{-- Set 1 --}}
-                @foreach($testimonials as $t)
-                    <div class="ts-marquee-card">
-                        <div>
-                            <div class="d-flex align-items-center justify-content-between mb-3">
-                                <div class="text-warning" style="font-size: 12px; letter-spacing: 2px;">
-                                    <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i>
-                                </div>
-                                <span class="badge badge-secondary" style="font-size: 11px;">{{ $t['city'] }}</span>
-                            </div>
-                            <p class="font-editorial mb-4" style="font-size: 1.05rem; line-height: 1.6; color: var(--color-charcoal);">
-                                &ldquo;{{ $t['quote'] }}&rdquo;
-                            </p>
-                        </div>
-                        <div class="d-flex align-items-center pt-3" style="border-top: var(--border-hairline);">
-                            <span class="notion-character-mark mr-3" style="width: 38px; height: 38px; font-size: 14px;">
-                                <i class="fa {{ $t['icon'] }}"></i>
-                            </span>
-                            <div>
-                                <h6 class="mb-0 font-weight-bold" style="font-size: 14px;">{{ $t['name'] }}</h6>
-                                <small class="text-muted" style="font-size: 12px;">{{ $t['role'] }}</small>
-                            </div>
+                        <!-- Dot Pagination (Real buttons with aria-current) -->
+                        <div class="shadcn-dots" role="tablist" aria-label="Navigasi testimoni">
+                            @foreach($shadcnTestimonials as $idx => $st)
+                                <button 
+                                    type="button" 
+                                    class="shadcn-dot {{ $idx === 0 ? 'active' : '' }}" 
+                                    role="tab" 
+                                    aria-label="Testimoni {{ $idx + 1 }} dari {{ count($shadcnTestimonials) }}" 
+                                    aria-current="{{ $idx === 0 ? 'true' : 'false' }}" 
+                                    data-index="{{ $idx }}"
+                                ></button>
+                            @endforeach
                         </div>
                     </div>
-                @endforeach
+                </div>
 
-                {{-- Set 2 (Duplicate for Seamless Infinite Marquee Loop) --}}
-                @foreach($testimonials as $t)
-                    <div class="ts-marquee-card" aria-hidden="true">
-                        <div>
-                            <div class="d-flex align-items-center justify-content-between mb-3">
-                                <div class="text-warning" style="font-size: 12px; letter-spacing: 2px;">
-                                    <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i>
+                <!-- Right: Self-Contained Quote Card with Star Rating & Initial Avatar -->
+                <div class="col-lg-7">
+                    <div class="shadcn-testimonial-card" id="shadcnTestimonialCard">
+                        @foreach($shadcnTestimonials as $idx => $st)
+                            <div class="shadcn-testimonial-item {{ $idx === 0 ? 'is-active' : '' }}" data-index="{{ $idx }}" role="tabpanel">
+                                <!-- 5 Star Rating -->
+                                <div class="shadcn-stars">
+                                    <iconify-icon icon="lucide:star" class="text-[#4F46E5]" style="font-size: 18px; fill: currentColor;"></iconify-icon>
+                                    <iconify-icon icon="lucide:star" class="text-[#4F46E5]" style="font-size: 18px; fill: currentColor;"></iconify-icon>
+                                    <iconify-icon icon="lucide:star" class="text-[#4F46E5]" style="font-size: 18px; fill: currentColor;"></iconify-icon>
+                                    <iconify-icon icon="lucide:star" class="text-[#4F46E5]" style="font-size: 18px; fill: currentColor;"></iconify-icon>
+                                    <iconify-icon icon="lucide:star" class="text-[#4F46E5]" style="font-size: 18px; fill: currentColor;"></iconify-icon>
                                 </div>
-                                <span class="badge badge-secondary" style="font-size: 11px;">{{ $t['city'] }}</span>
+
+                                <!-- Quote -->
+                                <p class="shadcn-quote">
+                                    &ldquo;{{ $st['quote'] }}&rdquo;
+                                </p>
+
+                                <!-- Author Info with Initial-Based Avatar -->
+                                <div class="d-flex align-items-center" style="gap: 14px; margin-top: auto;">
+                                    <div class="shadcn-avatar" style="background-color: {{ $st['bg'] }};">
+                                        {{ $st['initials'] }}
+                                    </div>
+                                    <div>
+                                        <div style="font-weight: 600; font-size: 15px; color: #09090B;">
+                                            {{ $st['name'] }}
+                                        </div>
+                                        <div style="font-size: 13px; color: #71717A;">
+                                            {{ $st['role'] }}
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <p class="font-editorial mb-4" style="font-size: 1.05rem; line-height: 1.6; color: var(--color-charcoal);">
-                                &ldquo;{{ $t['quote'] }}&rdquo;
-                            </p>
-                        </div>
-                        <div class="d-flex align-items-center pt-3" style="border-top: var(--border-hairline);">
-                            <span class="notion-character-mark mr-3" style="width: 38px; height: 38px; font-size: 14px;">
-                                <i class="fa {{ $t['icon'] }}"></i>
-                            </span>
-                            <div>
-                                <h6 class="mb-0 font-weight-bold" style="font-size: 14px;">{{ $t['name'] }}</h6>
-                                <small class="text-muted" style="font-size: 12px;">{{ $t['role'] }}</small>
-                            </div>
-                        </div>
+                        @endforeach
                     </div>
-                @endforeach
+                </div>
 
             </div>
         </div>
@@ -1327,128 +1448,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     /* =========================================================================
-       2. MAGIC BENTO CONTROLLER (SPOTLIGHT, BORDER GLOW, STARS & 3D TILT)
-       ========================================================================= */
-    const bentoCards = document.querySelectorAll('.ts-bento-card[data-bento="card"]');
-    if (bentoCards.length > 0) {
-        bentoCards.forEach(card => {
-            let activeParticles = [];
-
-            // Mouse Move: Spotlight, Border Glow, 3D Tilt & Magnetism
-            card.addEventListener('mousemove', function (e) {
-                const rect = card.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-
-                card.style.setProperty('--mouse-x', x + 'px');
-                card.style.setProperty('--mouse-y', y + 'px');
-
-                if (window.innerWidth >= 768 && typeof gsap !== 'undefined') {
-                    const centerX = rect.width / 2;
-                    const centerY = rect.height / 2;
-                    const rotateX = ((y - centerY) / centerY) * -6;
-                    const rotateY = ((x - centerX) / centerX) * 6;
-                    const magnetX = (x - centerX) * 0.035;
-                    const magnetY = (y - centerY) * 0.035;
-
-                    gsap.to(card, {
-                        rotateX: rotateX,
-                        rotateY: rotateY,
-                        x: magnetX,
-                        y: magnetY,
-                        duration: 0.15,
-                        ease: 'power2.out',
-                        transformPerspective: 1000
-                    });
-                }
-            });
-
-            // Mouse Enter: Star particles shimmer
-            card.addEventListener('mouseenter', function () {
-                if (typeof gsap === 'undefined' || window.innerWidth < 768) return;
-                const rect = card.getBoundingClientRect();
-                const particleCount = 8;
-                const isMarigold = card.classList.contains('is-accent-marigold');
-                const particleColor = isMarigold ? 'rgba(245, 158, 11, 0.7)' : 'rgba(0, 117, 222, 0.7)';
-
-                for (let i = 0; i < particleCount; i++) {
-                    const p = document.createElement('div');
-                    p.className = 'ts-bento-particle';
-                    p.style.backgroundColor = particleColor;
-                    p.style.boxShadow = `0 0 6px ${particleColor}`;
-                    p.style.left = Math.random() * (rect.width - 20) + 10 + 'px';
-                    p.style.top = Math.random() * (rect.height - 20) + 10 + 'px';
-                    card.appendChild(p);
-                    activeParticles.push(p);
-
-                    gsap.fromTo(p, 
-                        { scale: 0, opacity: 0 },
-                        { scale: 1, opacity: 1, duration: 0.3, ease: 'back.out(1.7)' }
-                    );
-
-                    gsap.to(p, {
-                        x: (Math.random() - 0.5) * 40,
-                        y: (Math.random() - 0.5) * 40,
-                        duration: 1.8 + Math.random(),
-                        ease: 'sine.inOut',
-                        repeat: -1,
-                        yoyo: true
-                    });
-                }
-            });
-
-            // Mouse Leave: Clean up particles & reset tilt
-            card.addEventListener('mouseleave', function () {
-                if (typeof gsap !== 'undefined') {
-                    gsap.to(card, {
-                        rotateX: 0,
-                        rotateY: 0,
-                        x: 0,
-                        y: 0,
-                        duration: 0.35,
-                        ease: 'power2.out'
-                    });
-
-                    activeParticles.forEach(p => {
-                        gsap.to(p, {
-                            scale: 0,
-                            opacity: 0,
-                            duration: 0.25,
-                            onComplete: () => p.remove()
-                        });
-                    });
-                    activeParticles = [];
-                }
-            });
-
-            // Click Ripple Effect
-            card.addEventListener('click', function (e) {
-                const rect = card.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-                const ripple = document.createElement('div');
-                ripple.className = 'ts-bento-ripple';
-                ripple.style.left = x + 'px';
-                ripple.style.top = y + 'px';
-                ripple.style.backgroundColor = card.classList.contains('is-accent-marigold') 
-                    ? 'rgba(245, 158, 11, 0.35)' 
-                    : 'rgba(0, 117, 222, 0.3)';
-                card.appendChild(ripple);
-
-                if (typeof gsap !== 'undefined') {
-                    gsap.fromTo(ripple, 
-                        { scale: 0, opacity: 0.9 },
-                        { scale: 50, opacity: 0, duration: 0.7, ease: 'power2.out', onComplete: () => ripple.remove() }
-                    );
-                } else {
-                    setTimeout(() => ripple.remove(), 600);
-                }
-            });
-        });
-    }
-
-    /* =========================================================================
-       3. MASONRY GALLERY CONTROLLER (KOS POPULER MINGGU INI - PROMPT ADAPTATION)
+       2. MASONRY GALLERY CONTROLLER (KOS POPULER MINGGU INI - PROMPT ADAPTATION)
        ========================================================================= */
     const galleryContainer = document.getElementById('tsMasonryGallery');
     const masonryItems = galleryContainer ? galleryContainer.querySelectorAll('.ts-masonry-item') : [];
@@ -1597,6 +1597,323 @@ document.addEventListener('DOMContentLoaded', function () {
         if (btnRefresh) btnRefresh.addEventListener('click', handleRefresh);
         const btnFloating = document.getElementById('btnRefreshMasonryFloating');
         if (btnFloating) btnFloating.addEventListener('click', handleRefresh);
+    }
+
+    /* =========================================================================
+       4. DAMPAK NYATA: COUNT-UP ANIMATION ON VIEWPORT SCROLL (PROMPT 1)
+       Numbers displayed in large font with dynamic count-up dynamic increase
+       ========================================================================= */
+    const statElements = document.querySelectorAll('.stat-countup');
+    if (statElements.length > 0) {
+        let statsDone = false;
+
+        function runDynamicCountUp(el) {
+            const targetVal = parseInt(el.getAttribute('data-target') || '0', 10);
+            const suffix = el.getAttribute('data-suffix') || '';
+            const duration = 2000;
+            const startTime = performance.now();
+
+            function tick(now) {
+                const elapsed = now - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                // Ease out cubic
+                const easeOut = 1 - Math.pow(1 - progress, 3);
+                const current = Math.floor(easeOut * targetVal);
+                el.textContent = current.toLocaleString('id-ID') + suffix;
+
+                if (progress < 1) {
+                    requestAnimationFrame(tick);
+                } else {
+                    el.textContent = targetVal.toLocaleString('id-ID') + suffix;
+                }
+            }
+            requestAnimationFrame(tick);
+        }
+
+        if ('IntersectionObserver' in window) {
+            const statsObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting && !statsDone) {
+                        statsDone = true;
+                        statElements.forEach(runDynamicCountUp);
+                        statsObserver.disconnect();
+                    }
+                });
+            }, { threshold: 0.25 });
+
+            const statsRow = document.getElementById('tsStatsRow');
+            if (statsRow) {
+                statsObserver.observe(statsRow);
+            } else {
+                statElements.forEach(el => statsObserver.observe(el));
+            }
+        } else {
+            statElements.forEach(runDynamicCountUp);
+        }
+    }
+
+    /* =========================================================================
+       5. REFINED CARI KOS COMBOBOX / DROPDOWN CONTROLLER (PROMPT 6)
+       tempatin.id / workspace / cari-kos
+       ========================================================================= */
+    function setupCombobox(comboboxId, btnId, labelId, hiddenInputId) {
+        const combobox = document.getElementById(comboboxId);
+        if (!combobox) return;
+
+        const btn = document.getElementById(btnId);
+        const label = document.getElementById(labelId);
+        const hiddenInput = document.getElementById(hiddenInputId);
+        const items = combobox.querySelectorAll('.workspace-dropdown-item');
+        const dropdownMenu = combobox.querySelector('.workspace-dropdown-menu');
+        const parentCol = combobox.closest('.col-md-6, .col-md-4');
+
+        if (dropdownMenu) {
+            // Prevent clicks on the scrollbar or menu header from bubbling up to document and closing the menu
+            dropdownMenu.addEventListener('click', function (e) {
+                if (!e.target.closest('.workspace-dropdown-item')) {
+                    e.stopPropagation();
+                }
+            });
+        }
+
+        if (btn) {
+            btn.addEventListener('click', function (e) {
+                e.stopPropagation();
+                const isOpen = combobox.classList.contains('open');
+                // Close any other open comboboxes
+                document.querySelectorAll('.workspace-combobox.open').forEach(cb => {
+                    if (cb !== combobox) {
+                        cb.classList.remove('open');
+                        const pCol = cb.closest('.col-md-6, .col-md-4');
+                        if (pCol) pCol.style.removeProperty('z-index');
+                        const otherBtn = cb.querySelector('.workspace-combobox-btn');
+                        if (otherBtn) otherBtn.setAttribute('aria-expanded', 'false');
+                    }
+                });
+                if (isOpen) {
+                    combobox.classList.remove('open');
+                    if (parentCol) parentCol.style.removeProperty('z-index');
+                    btn.setAttribute('aria-expanded', 'false');
+                } else {
+                    combobox.classList.add('open');
+                    if (parentCol) parentCol.style.zIndex = '1050';
+                    btn.setAttribute('aria-expanded', 'true');
+                }
+            });
+        }
+
+        items.forEach(item => {
+            item.addEventListener('click', function (e) {
+                e.stopPropagation();
+                const val = this.getAttribute('data-val');
+                const itemLabel = this.getAttribute('data-label');
+
+                if (hiddenInput) hiddenInput.value = val;
+                if (label) label.textContent = itemLabel;
+
+                // Update visual selection
+                items.forEach(it => {
+                    it.classList.remove('is-selected');
+                    const check = it.querySelector('.item-check');
+                    if (check) check.classList.add('d-none');
+                });
+                this.classList.add('is-selected');
+                const check = this.querySelector('.item-check');
+                if (check) check.classList.remove('d-none');
+
+                combobox.classList.remove('open');
+                if (parentCol) parentCol.style.removeProperty('z-index');
+                if (btn) btn.setAttribute('aria-expanded', 'false');
+            });
+        });
+    }
+
+    setupCombobox('workspaceTypeCombobox', 'typeComboboxBtn', 'typeSelectedLabel', 'typeHiddenInput');
+    setupCombobox('workspaceCityCombobox', 'cityComboboxBtn', 'citySelectedLabel', 'cityHiddenInput');
+
+    // Close on click outside (only if click is outside of combobox)
+    document.addEventListener('click', function (e) {
+        if (!e.target.closest('.workspace-combobox')) {
+            document.querySelectorAll('.workspace-combobox.open').forEach(cb => {
+                cb.classList.remove('open');
+                const pCol = cb.closest('.col-md-6, .col-md-4');
+                if (pCol) pCol.style.removeProperty('z-index');
+                const b = cb.querySelector('.workspace-combobox-btn');
+                if (b) b.setAttribute('aria-expanded', 'false');
+            });
+        }
+    });
+
+    // Close on Escape key
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') {
+            document.querySelectorAll('.workspace-combobox.open').forEach(cb => {
+                cb.classList.remove('open');
+                const pCol = cb.closest('.col-md-6, .col-md-4');
+                if (pCol) pCol.style.removeProperty('z-index');
+                const b = cb.querySelector('.workspace-combobox-btn');
+                if (b) b.setAttribute('aria-expanded', 'false');
+            });
+        }
+    });
+
+    /* =========================================================================
+       6. SHADCN TESTIMONIAL COMPONENT (PROMPT 3)
+       Heading and lede left, quote card with star rating right, dot pagination,
+       aria-current, cross-fade rather than snapping, initial-based avatar
+       ========================================================================= */
+    const testimonialCard = document.getElementById('shadcnTestimonialCard');
+    const testimonialDots = document.querySelectorAll('.shadcn-dot');
+    if (testimonialCard && testimonialDots.length > 0) {
+        const items = testimonialCard.querySelectorAll('.shadcn-testimonial-item');
+        let activeIdx = 0;
+        let autoPlayTimer = null;
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        function goToTestimonial(newIdx) {
+            if (newIdx === activeIdx || newIdx < 0 || newIdx >= items.length) return;
+
+            // Update dots
+            testimonialDots.forEach((dot, idx) => {
+                const isActive = idx === newIdx;
+                dot.classList.toggle('active', isActive);
+                dot.setAttribute('aria-current', isActive ? 'true' : 'false');
+            });
+
+            // Cross-fade items
+            items.forEach((item, idx) => {
+                item.classList.toggle('is-active', idx === newIdx);
+            });
+
+            activeIdx = newIdx;
+        }
+
+        testimonialDots.forEach(dot => {
+            dot.addEventListener('click', function () {
+                const targetIdx = parseInt(this.getAttribute('data-index'), 10);
+                goToTestimonial(targetIdx);
+                resetAutoPlay();
+            });
+        });
+
+        function startAutoPlay() {
+            if (prefersReducedMotion) return;
+            stopAutoPlay();
+            autoPlayTimer = setInterval(() => {
+                const nextIdx = (activeIdx + 1) % items.length;
+                goToTestimonial(nextIdx);
+            }, 6500);
+        }
+
+        function stopAutoPlay() {
+            if (autoPlayTimer) {
+                clearInterval(autoPlayTimer);
+                autoPlayTimer = null;
+            }
+        }
+
+        function resetAutoPlay() {
+            stopAutoPlay();
+            startAutoPlay();
+        }
+
+        // Pause on mouse hover or focus
+        testimonialCard.addEventListener('mouseenter', stopAutoPlay);
+        testimonialCard.addEventListener('mouseleave', startAutoPlay);
+        const dotsWrap = document.querySelector('.shadcn-dots');
+        if (dotsWrap) {
+            dotsWrap.addEventListener('mouseenter', stopAutoPlay);
+            dotsWrap.addEventListener('mouseleave', startAutoPlay);
+        }
+
+        startAutoPlay();
+    }
+
+    // =========================================================================
+    // Self-Contained Shadcn Timeline Component Logic (Nilai Utama)
+    // Vertical spine fills dynamically based on entries revealed by one IntersectionObserver.
+    // Spec: Reduced-motion fallback removes motion mechanic entirely.
+    // =========================================================================
+    const timelineRoot = document.getElementById('shadcnTimeline');
+    if (timelineRoot) {
+        const entries = Array.from(timelineRoot.querySelectorAll('.timeline-entry'));
+        const spineRail = timelineRoot.querySelector('.timeline-spine-rail');
+        const spineFill = document.getElementById('timelineSpineFill');
+        const total = entries.length;
+
+        function alignSpine() {
+            if (entries.length === 0 || !spineRail) return;
+            const firstDot = entries[0].querySelector('.timeline-dot');
+            const lastDot = entries[entries.length - 1].querySelector('.timeline-dot');
+            if (firstDot && lastDot) {
+                const rootRect = timelineRoot.getBoundingClientRect();
+                const firstRect = firstDot.getBoundingClientRect();
+                const lastRect = lastDot.getBoundingClientRect();
+
+                const top = (firstRect.top - rootRect.top) + (firstRect.height / 2);
+                const height = lastRect.top - firstRect.top;
+                const left = (firstRect.left - rootRect.left) + (firstRect.width / 2) - 1;
+
+                spineRail.style.top = `${top}px`;
+                spineRail.style.height = `${height}px`;
+                spineRail.style.left = `${left}px`;
+            }
+        }
+
+        alignSpine();
+        window.addEventListener('resize', alignSpine, { passive: true });
+
+        const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (prefersReduced) {
+            entries.forEach(e => e.classList.add('is-revealed'));
+            if (spineFill) spineFill.style.height = '100%';
+        } else {
+            function updateSpineFill() {
+                if (!spineFill || total <= 1) return;
+                let maxRevealed = -1;
+                entries.forEach((entry, idx) => {
+                    if (entry.classList.contains('is-revealed')) {
+                        maxRevealed = idx;
+                    }
+                });
+
+                if (maxRevealed <= 0) {
+                    spineFill.style.height = '0%';
+                } else {
+                    const pct = (maxRevealed / (total - 1)) * 100;
+                    spineFill.style.height = `${pct}%`;
+                }
+            }
+
+            // Single IntersectionObserver observing all entries
+            const timelineObserver = new IntersectionObserver((obsEntries) => {
+                obsEntries.forEach(obsEntry => {
+                    const el = obsEntry.target;
+                    const idx = parseInt(el.getAttribute('data-index'), 10);
+                    if (obsEntry.isIntersecting) {
+                        el.classList.add('is-revealed');
+                        for (let i = 0; i <= idx; i++) {
+                            entries[i].classList.add('is-revealed');
+                        }
+                    } else {
+                        const rect = obsEntry.boundingClientRect;
+                        const vh = window.innerHeight || document.documentElement.clientHeight;
+                        if (rect.top > vh * 0.75) {
+                            el.classList.remove('is-revealed');
+                            for (let i = idx; i < total; i++) {
+                                entries[i].classList.remove('is-revealed');
+                            }
+                        }
+                    }
+                });
+                updateSpineFill();
+            }, {
+                threshold: 0.2,
+                rootMargin: '0px 0px -10% 0px'
+            });
+
+            entries.forEach(entry => timelineObserver.observe(entry));
+        }
     }
 });
 </script>

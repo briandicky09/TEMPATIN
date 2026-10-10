@@ -20,10 +20,11 @@
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/tempatin.css') }}?v={{ filemtime(public_path('assets/css/tempatin.css')) }}">
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
     <style>
         html { margin: 0 !important; padding: 0 !important; }
-        body { margin: 0 !important; padding: 0 !important; padding-top: 68px !important; }
-        #ts-header, header#ts-header, .card-nav-wrapper {
+        body { margin: 0 !important; padding: 0 !important; padding-top: 64px !important; }
+        #ts-header, header#ts-header, .notion-navbar-wrapper, .card-nav-wrapper {
             position: fixed !important;
             top: 0 !important;
             left: 0 !important;
@@ -35,16 +36,23 @@
             border-radius: 0 !important;
             z-index: 1040 !important;
         }
+        .notion-navbar-container,
         .card-nav-container {
             width: 100% !important;
-            max-width: 100% !important;
-            margin: 0 !important;
-            padding: 0 !important;
+            max-width: 1440px !important;
+            margin: 0 auto !important;
+            padding: 0 20px !important;
         }
+        @media (min-width: 992px) {
+            .notion-navbar-container,
+            .card-nav-container {
+                padding: 0 36px !important;
+            }
+        }
+        .notion-navbar,
         .card-nav {
             border-radius: 0 !important;
             width: 100% !important;
-            max-width: 100% !important;
             margin: 0 !important;
         }
         /* Penyesuaian jarak rapat navbar ke content untuk semua halaman */

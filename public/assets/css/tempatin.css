@@ -1452,7 +1452,7 @@ div[style*="position: sticky"] {
     border: var(--border-hairline);
     border-radius: var(--radius-cards);
     box-shadow: var(--shadow-product-mockup);
-    overflow: hidden;
+    overflow: visible !important;
     margin-top: 32px;
 }
 
@@ -1463,6 +1463,8 @@ div[style*="position: sticky"] {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    border-top-left-radius: var(--radius-cards);
+    border-top-right-radius: var(--radius-cards);
 }
 
 .notion-app-mockup__dots {
@@ -1492,6 +1494,9 @@ div[style*="position: sticky"] {
 
 .notion-app-mockup__body {
     padding: 24px;
+    border-bottom-left-radius: var(--radius-cards);
+    border-bottom-right-radius: var(--radius-cards);
+    overflow: visible !important;
 }
 
 /* 3. Partner / Campus Logo Wall */
@@ -1753,13 +1758,13 @@ div[style*="position: sticky"] {
 }
 
 /* =========================================================================
-   8. CARDNAV NAVIGATION COMPONENT (FULL-WIDTH EXPANDABLE NAV)
+   8. NOTION NAVBAR COMPONENT (DESIGN.md COMPLIANT, LIGHT THEME)
+   Fixed 64px header: Left Brand Logo, Centered Navigation Links, Right CTAs
    ========================================================================= */
 #ts-header,
 header#ts-header,
-#ts-header.card-nav-wrapper,
-#ts-header.fixed-top,
-#ts-header:not(.fixed-top),
+#ts-header.notion-navbar-wrapper,
+.notion-navbar-wrapper,
 .card-nav-wrapper {
     position: fixed !important;
     top: 0 !important;
@@ -1776,16 +1781,18 @@ header#ts-header,
     -webkit-backdrop-filter: none !important;
     border-bottom: 1px solid transparent !important;
     box-shadow: none !important;
-    transition: background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-                backdrop-filter 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-                -webkit-backdrop-filter 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-                border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-                box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    transition: background-color 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+                backdrop-filter 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+                -webkit-backdrop-filter 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+                border-color 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+                box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+                height 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
 
-/* Shrinking Sticky Header with Glassmorphism (>100px scroll: shrink height by 20% & blurred glass) */
+/* Scrolled >= 100px: Shrink height by 20% (68px -> 54px) & blurred glassmorphism */
 #ts-header.is-shrunk,
 header#ts-header.is-shrunk,
+.notion-navbar-wrapper.is-shrunk,
 .card-nav-wrapper.is-shrunk {
     background-color: rgba(255, 255, 255, 0.82) !important;
     backdrop-filter: blur(16px) saturate(180%) !important;
@@ -1794,297 +1801,332 @@ header#ts-header.is-shrunk,
     box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.06) !important;
 }
 
-#ts-header.open,
-.card-nav-wrapper.open {
-    box-shadow: 0 20px 48px rgba(0, 0, 0, 0.16) !important;
-    background-color: #ffffff !important;
-    backdrop-filter: none !important;
-    -webkit-backdrop-filter: none !important;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.08) !important;
-}
-
+.notion-navbar-container,
 .card-nav-container {
     width: 100%;
-    max-width: 100%;
-    margin: 0;
-    padding: 0;
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 0 20px;
     position: relative;
-}
-
-.card-nav {
-    display: block;
-    width: 100%;
-    height: 68px;
-    padding: 0;
-    border-radius: 0;
-    background-color: transparent;
-    border: none;
-    box-shadow: none;
-    position: relative;
-    overflow: hidden;
-    will-change: height;
-}
-
-.card-nav-top {
-    position: absolute;
-    inset: 0 0 auto 0;
-    top: 0;
-    left: 0;
-    right: 0;
-    width: 100%;
-    height: 68px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 24px;
-    z-index: 3;
-    background: transparent;
     box-sizing: border-box;
-    transition: height 0.3s cubic-bezier(0.4, 0, 0.2, 1), padding 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-/* Height shrunk by 20%: 68px * 0.80 = ~54px */
-#ts-header.is-shrunk:not(.open) .card-nav {
-    height: 54px;
-}
-
-#ts-header.is-shrunk .card-nav-top {
-    height: 54px;
-}
-
-#ts-header.is-shrunk .card-nav-toggle {
-    width: 36px;
-    height: 36px;
-    border-radius: 10px;
-}
-
-#ts-header.is-shrunk .card-nav-logo-badge {
-    width: 28px;
-    height: 28px;
-    font-size: 13px;
-}
-
-#ts-header.is-shrunk .card-nav-brand-text {
-    font-size: 15px;
-}
-
-#ts-header.is-shrunk .card-nav-cta-btn {
-    padding: 6px 14px;
-    font-size: 13px;
 }
 
 @media (min-width: 992px) {
-    .card-nav-top {
+    .notion-navbar-container,
+    .card-nav-container {
         padding: 0 36px;
     }
 }
 
-.card-nav-toggle {
-    width: 42px;
-    height: 42px;
-    display: inline-flex;
+.notion-navbar,
+.card-nav {
+    display: flex;
     align-items: center;
-    justify-content: center;
-    border-radius: 12px;
-    background-color: var(--surface-page-canvas, #f6f5f4);
-    border: 1px solid rgba(0, 0, 0, 0.08);
-    color: var(--color-midnight-ink);
-    cursor: pointer;
-    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    justify-content: space-between;
+    height: 68px;
+    width: 100%;
+    margin: 0;
     padding: 0;
-    flex-shrink: 0;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    transition: height 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.card-nav-toggle:hover {
-    background-color: #ebeae8;
-    color: #000000;
-    transform: scale(1.03);
+#ts-header.is-shrunk .notion-navbar,
+#ts-header.is-shrunk .card-nav {
+    height: 54px; /* 68px * 0.80 = ~54px (20% shrink) */
 }
 
-.card-nav-toggle:active {
-    transform: scale(0.96);
-}
-
-.card-nav-toggle-icon {
+/* --- Left Zone: Brand Logo --- */
+.notion-nav-left {
     display: inline-flex;
     align-items: center;
-    justify-content: center;
-    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-    width: 20px;
-    height: 20px;
+    flex-shrink: 0;
+    min-width: 140px;
 }
 
-.card-nav-wrapper.open .card-nav-toggle-icon {
-    transform: rotate(90deg);
-}
-
+.notion-nav-brand,
 .card-nav-brand {
-    position: relative;
     display: inline-flex;
     align-items: center;
-    gap: 10px;
     text-decoration: none !important;
-    user-select: none;
-    white-space: nowrap;
-    flex-shrink: 0;
+    outline: none !important;
 }
 
-.card-nav-brand:hover {
-    text-decoration: none !important;
-}
-
+.notion-nav-logo-img,
 .card-nav-logo-img {
-    height: 32px;
+    height: 30px;
     width: auto;
-    max-width: 165px;
+    max-width: 160px;
     object-fit: contain;
     display: block;
-    transition: height 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: height 0.25s ease;
 }
 
+#ts-header.is-shrunk .notion-nav-logo-img,
 #ts-header.is-shrunk .card-nav-logo-img {
     height: 25px;
 }
 
-.card-nav-right-group {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    margin-left: auto;
-    flex-shrink: 0;
-}
-
 @media (max-width: 575.98px) {
+    .notion-nav-logo-img,
     .card-nav-logo-img {
-        height: 24px;
-        max-width: 120px;
+        height: 25px;
+        max-width: 125px;
     }
 }
 
-.card-nav-logo-badge {
-    width: 32px;
-    height: 32px;
-    border-radius: 8px;
-    background-color: var(--color-notion-blue, #0075de);
-    color: #ffffff;
-    font-weight: 800;
-    font-size: 15px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    line-height: 1;
-    box-shadow: 0 2px 6px rgba(0, 117, 222, 0.28);
-    transition: transform 0.2s ease;
-}
-
-.card-nav-brand:hover .card-nav-logo-badge {
-    transform: rotate(8deg) scale(1.05);
-}
-
-.card-nav-brand-text {
-    font-weight: 800;
-    font-size: 1.2rem;
-    letter-spacing: -0.035em;
-    color: var(--color-midnight-ink);
-}
-
-.card-nav-actions {
+/* --- Center Zone: Navigation Links ("tulisan-tulisan") --- */
+.notion-nav-center {
     display: flex;
     align-items: center;
-    gap: 8px;
-    flex-shrink: 0;
+    justify-content: center;
+    flex: 1 1 auto;
+    text-align: center;
 }
 
-.card-nav-cta-btn {
+.notion-nav-links {
     display: inline-flex;
     align-items: center;
-    justify-content: center;
-    height: 40px;
-    padding: 0 20px;
-    border-radius: 12px;
-    font-size: 13.5px;
-    font-weight: 600;
+    gap: 4px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.notion-nav-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--font-notioninter, 'Inter', sans-serif);
+    font-size: 14px;
+    font-weight: 500;
     letter-spacing: -0.01em;
+    color: var(--color-graphite, #615d59) !important;
+    padding: 7px 14px;
+    border-radius: 8px;
     text-decoration: none !important;
-    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-    white-space: nowrap;
-    background-color: var(--color-notion-blue, #0075de);
-    color: #ffffff !important;
+    background: transparent;
     border: none;
-    box-shadow: 0 2px 8px rgba(0, 117, 222, 0.25);
     cursor: pointer;
+    white-space: nowrap;
+    transition: color 0.18s ease, background-color 0.18s ease;
+    line-height: 1.4;
 }
 
-.card-nav-cta-btn:hover {
-    background-color: #0060b8;
-    color: #ffffff !important;
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(0, 117, 222, 0.35);
+.notion-nav-link:hover,
+.notion-nav-link:focus {
+    color: var(--color-charcoal, #111111) !important;
+    background-color: rgba(0, 0, 0, 0.04);
+    text-decoration: none !important;
 }
 
-.card-nav-cta-btn:active {
-    transform: translateY(0);
+.notion-nav-link.active {
+    color: var(--color-notion-blue, #0075de) !important;
+    background-color: var(--color-sky-tint, #e6f3fe);
+    font-weight: 600;
 }
 
+/* --- Right Zone: Actions (Cari Kos & Masuk/Login) --- */
+.notion-nav-right,
+.card-nav-actions {
+    display: inline-flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
+    flex-shrink: 0;
+    min-width: 140px;
+}
+
+/* Ghost Action Button (Masuk) */
+.notion-btn-ghost,
 .card-nav-cta-secondary {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    height: 40px;
-    padding: 0 16px;
-    border-radius: 12px;
-    font-size: 13.5px;
-    font-weight: 600;
-    color: var(--color-graphite, #615d59);
+    font-family: var(--font-notioninter, 'Inter', sans-serif);
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--color-charcoal, #111111) !important;
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    padding: 7px 16px;
     text-decoration: none !important;
-    background-color: transparent;
-    transition: all 0.2s ease;
-    margin-right: 4px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background-color 0.18s ease, color 0.18s ease;
+    line-height: 1.4;
 }
 
+.notion-btn-ghost:hover,
 .card-nav-cta-secondary:hover {
-    background-color: var(--surface-page-canvas, #f6f5f4);
-    color: var(--color-midnight-ink);
+    background-color: rgba(0, 0, 0, 0.05);
+    color: #000000 !important;
+    text-decoration: none !important;
+}
+
+/* Primary Action Button (Cari Kos) */
+.notion-btn-primary,
+.card-nav-cta-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    font-family: var(--font-notioninter, 'Inter', sans-serif);
+    font-size: 14px;
+    font-weight: 500;
+    color: #ffffff !important;
+    background-color: var(--color-notion-blue, #0075de) !important;
+    border: 1px solid var(--color-notion-blue, #0075de);
+    border-radius: 8px;
+    padding: 7px 18px;
+    text-decoration: none !important;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background-color 0.2s cubic-bezier(0.16, 1, 0.3, 1), transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 1px 3px rgba(0, 117, 222, 0.2);
+    line-height: 1.4;
+}
+
+.notion-btn-primary:hover,
+.card-nav-cta-btn:hover {
+    background-color: #0060b8 !important;
+    border-color: #0060b8;
+    color: #ffffff !important;
+    transform: translateY(-1px);
+    box-shadow: 0 3px 8px rgba(0, 117, 222, 0.3);
+    text-decoration: none !important;
+}
+
+.notion-btn-primary:active,
+.card-nav-cta-btn:active {
+    transform: translateY(0);
+}
+
+.notion-btn-primary svg,
+.card-nav-cta-btn svg {
+    flex-shrink: 0;
+}
+
+/* Mobile Toggle Button */
+.notion-mobile-toggle,
+.card-nav-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    padding: 0;
+    border-radius: 8px;
+    background: transparent;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    color: var(--color-charcoal, #111111);
+    cursor: pointer;
+    transition: background-color 0.18s ease;
+}
+
+.notion-mobile-toggle:hover,
+.card-nav-toggle:hover {
+    background-color: rgba(0, 0, 0, 0.04);
+}
+
+/* Mobile Drawer (Sheet) */
+.notion-mobile-drawer {
+    display: none;
+    width: 100%;
+    background-color: #ffffff;
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+    padding: 16px 20px 24px 20px;
+    box-sizing: border-box;
+    animation: notionDrawerSlide 0.2s ease forwards;
+}
+
+.notion-mobile-drawer.show {
+    display: block;
+}
+
+@keyframes notionDrawerSlide {
+    from {
+        opacity: 0;
+        transform: translateY(-8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.notion-mobile-drawer-content {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.notion-mobile-group-title {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--color-stone, #757575);
+    margin-bottom: 6px;
+}
+
+.notion-mobile-nav-link {
+    display: flex;
+    align-items: center;
+    padding: 10px 12px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--color-charcoal, #111111) !important;
+    text-decoration: none !important;
+    border-radius: 8px;
+    transition: background-color 0.15s ease;
+}
+
+.notion-mobile-nav-link:hover {
+    background-color: var(--color-paper-warmth, #f6f5f4);
+    text-decoration: none !important;
 }
 
 /* ==========================================================================
-   MEMBER NAVBAR (MAMIKOS STYLE HORIZONTAL MENUS)
+   MEMBER NAVBAR & DROPDOWNS (NOTION STYLE)
    ========================================================================== */
-.card-nav:not(.open) {
-    overflow: visible !important;
-}
-
 .member-nav-items {
     display: inline-flex;
     align-items: center;
-    gap: 20px;
-    margin-right: 12px;
+    gap: 6px;
 }
 
 .member-nav-link {
-    font-size: 14.5px;
+    font-size: 14px;
     font-weight: 500;
-    color: #222222 !important;
+    color: var(--color-graphite, #615d59) !important;
     text-decoration: none !important;
-    padding: 6px 4px;
-    transition: color 0.18s ease, transform 0.18s ease;
+    padding: 7px 12px;
+    border-radius: 8px;
+    transition: color 0.18s ease, background-color 0.18s ease;
     white-space: nowrap;
     background: transparent;
     border: none;
     cursor: pointer;
     display: inline-flex;
     align-items: center;
-    line-height: 1;
+    line-height: 1.4;
 }
 
 .member-nav-link:hover,
 .member-nav-link:focus {
-    color: var(--color-notion-blue, #0075de) !important;
+    color: var(--color-charcoal, #111111) !important;
+    background-color: rgba(0, 0, 0, 0.04);
     text-decoration: none !important;
 }
 
 .member-nav-link.active {
     color: var(--color-notion-blue, #0075de) !important;
+    background-color: var(--color-sky-tint, #e6f3fe);
     font-weight: 600;
 }
 
@@ -2098,7 +2140,7 @@ header#ts-header.is-shrunk,
     display: none !important;
 }
 
-/* Profile Avatar Button */
+/* Profile Avatar */
 .member-profile-dropdown {
     position: relative;
     display: inline-flex;
@@ -2120,38 +2162,34 @@ header#ts-header.is-shrunk,
 
 .member-avatar-circle {
     position: relative;
-    width: 38px;
-    height: 38px;
+    width: 36px;
+    height: 36px;
     border-radius: 50%;
-    background-color: #e5e7eb;
-    border: 1.5px solid #d1d5db;
+    background-color: #f6f5f4;
+    border: 1.5px solid rgba(0, 0, 0, 0.1);
     display: inline-flex;
     align-items: center;
     justify-content: center;
     transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
     color: #4b5563;
+    overflow: hidden;
 }
 
 .member-avatar-btn:hover .member-avatar-circle,
 .member-avatar-btn:focus .member-avatar-circle,
 .member-profile-dropdown.show .member-avatar-circle {
-    background-color: #f3f4f6;
+    background-color: #ffffff;
     border-color: var(--color-notion-blue, #0075de);
-    box-shadow: 0 0 0 3px rgba(0, 117, 222, 0.18);
-    transform: scale(1.04);
-}
-
-.member-avatar-circle {
-    overflow: hidden;
+    box-shadow: 0 0 0 3px rgba(0, 117, 222, 0.15);
 }
 
 .member-avatar-img {
-    width: 38px;
-    height: 38px;
-    min-width: 38px;
-    min-height: 38px;
-    max-width: 38px;
-    max-height: 38px;
+    width: 36px;
+    height: 36px;
+    min-width: 36px;
+    min-height: 36px;
+    max-width: 36px;
+    max-height: 36px;
     object-fit: cover;
     border-radius: 50%;
     display: block;
@@ -2173,13 +2211,13 @@ header#ts-header.is-shrunk,
     position: absolute;
     top: 100%;
     right: 0;
-    min-width: 200px;
-    margin-top: 10px !important;
+    min-width: 210px;
+    margin-top: 8px !important;
     padding: 6px 0;
     background-color: #ffffff;
     border: 1px solid rgba(0, 0, 0, 0.08);
     border-radius: 12px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12), 0 2px 6px rgba(0, 0, 0, 0.04) !important;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.1), 0 2px 6px rgba(0, 0, 0, 0.04) !important;
     z-index: 1080 !important;
     display: none;
     animation: memberFadeIn 0.18s ease forwards;
@@ -2198,13 +2236,13 @@ header#ts-header.is-shrunk,
     font-size: 13.5px;
     font-weight: 500;
     color: #374151;
-    padding: 9px 18px;
+    padding: 8px 18px;
     transition: background-color 0.15s ease, color 0.15s ease;
 }
 
 .member-custom-dropdown .dropdown-item:hover,
 .member-custom-dropdown .dropdown-item:focus {
-    background-color: #f3f4f6;
+    background-color: var(--color-paper-warmth, #f6f5f4);
     color: var(--color-notion-blue, #0075de);
 }
 
@@ -2224,99 +2262,7 @@ header#ts-header.is-shrunk,
     }
 }
 
-/* Content cards reveal */
-.card-nav-content {
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 64px;
-    bottom: 0;
-    padding: 16px 24px 24px 24px;
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-    justify-content: flex-start;
-    z-index: 1;
-    visibility: hidden;
-    pointer-events: none;
-    box-sizing: border-box;
-    background: #ffffff;
-    border-top: 1px solid rgba(0, 0, 0, 0.06);
-}
-
-@media (min-width: 768px) {
-    .card-nav-content {
-        flex-direction: row;
-        align-items: stretch;
-        gap: 16px;
-        padding: 16px 36px 24px 36px;
-        max-width: 1280px;
-        margin: 0 auto;
-    }
-}
-
-.nav-card {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    padding: 20px;
-    border-radius: 14px;
-    min-width: 0;
-    flex: 1 1 auto;
-    transition: transform 0.25s ease, box-shadow 0.25s ease;
-    box-sizing: border-box;
-    user-select: none;
-}
-
-.nav-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.16);
-}
-
-.nav-card-label {
-    font-weight: 700;
-    letter-spacing: -0.025em;
-    font-size: 1.15rem;
-    line-height: 1.25;
-}
-
-.nav-card-links {
-    margin-top: auto;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-}
-
-.nav-card-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    text-decoration: none !important;
-    color: inherit;
-    font-size: 13.5px;
-    font-weight: 500;
-    opacity: 0.85;
-    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-    cursor: pointer;
-}
-
-.nav-card-link:hover {
-    opacity: 1;
-    color: inherit;
-    transform: translateX(4px);
-}
-
-.nav-card-link svg {
-    flex-shrink: 0;
-    transition: transform 0.2s ease;
-}
-
-.nav-card-link:hover svg {
-    transform: translate(2px, -2px);
-}
-
-/* Spacer for fixed card nav so content is not obscured */
+/* Spacer for fixed navbar so content is not obscured */
 body {
     padding-top: 64px !important;
 }
@@ -2520,175 +2466,108 @@ body {
 }
 
 /* -------------------------------------------------------------------------
-   B. MAGIC BENTO GRID (NILAI UTAMA - NOTION THEMED)
+   B. NOTION EDITORIAL FEATURE CARDS (NILAI UTAMA - DESIGN.MD SPEC)
+   Warm canvas, pure white card, hairline border, 12px corners, no shadows
    ------------------------------------------------------------------------- */
-.ts-magic-bento-grid {
-    display: grid;
-    gap: 16px;
-    width: 100%;
-    grid-template-columns: 1fr;
+.notion-pill-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background-color: var(--color-sky-tint);
+    color: var(--color-notion-blue);
+    font-size: 12px;
+    font-weight: 600;
+    padding: 4px 14px;
+    border-radius: 9999px;
+    letter-spacing: 0.02em;
 }
 
-@media (min-width: 640px) {
-    .ts-magic-bento-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
-
-@media (min-width: 992px) {
-    .ts-magic-bento-grid {
-        grid-template-columns: repeat(4, 1fr);
-        grid-template-rows: repeat(2, minmax(210px, auto));
-    }
-    .ts-bento-card-0 { grid-column: span 2; grid-row: span 1; }
-    .ts-bento-card-1 { grid-column: span 1; grid-row: span 1; }
-    .ts-bento-card-2 { grid-column: span 1; grid-row: span 2; }
-    .ts-bento-card-3 { grid-column: span 1; grid-row: span 1; }
-    .ts-bento-card-4 { grid-column: span 2; grid-row: span 1; }
-    .ts-bento-card-5 { grid-column: span 1; grid-row: span 1; }
-}
-
-.ts-bento-card {
-    background: var(--color-pure-white);
-    border: 1px solid rgba(0, 0, 0, 0.08);
+.notion-feature-card {
+    background-color: var(--color-pure-white);
+    border: var(--border-hairline);
     border-radius: var(--radius-cards);
-    position: relative;
-    overflow: hidden;
     padding: 28px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
-    cursor: default;
-    transform-style: preserve-3d;
-    -webkit-transform-style: preserve-3d;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+    transition: border-color 0.2s ease, transform 0.2s ease;
 }
 
-.ts-bento-card:hover {
-    border-color: rgba(0, 0, 0, 0.22);
-    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+.notion-feature-card:hover {
+    border-color: rgba(0, 0, 0, 0.18);
+    transform: translateY(-2px);
 }
 
-.ts-bento-spotlight {
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    border-radius: inherit;
-    background: radial-gradient(
-        var(--spotlight-radius, 300px) circle at var(--mouse-x, -500px) var(--mouse-y, -500px),
-        var(--glow-color, rgba(0, 117, 222, 0.12)),
-        transparent 75%
-    );
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    z-index: 1;
-}
-
-.ts-bento-card:hover .ts-bento-spotlight {
-    opacity: 1;
-}
-
-.ts-bento-border-glow {
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    border-radius: inherit;
-    padding: 1.5px;
-    background: radial-gradient(
-        var(--spotlight-radius, 280px) circle at var(--mouse-x, -500px) var(--mouse-y, -500px),
-        var(--border-glow-color, rgba(0, 117, 222, 0.7)),
-        transparent 45%
-    );
-    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    z-index: 2;
-}
-
-.ts-bento-card:hover .ts-bento-border-glow {
-    opacity: 1;
-}
-
-.ts-bento-particle {
-    position: absolute;
-    width: 4px;
-    height: 4px;
-    border-radius: 50%;
-    pointer-events: none;
-    z-index: 15;
-}
-
-.ts-bento-ripple {
-    position: absolute;
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    pointer-events: none;
-    z-index: 20;
-}
-
-.ts-bento-content {
-    position: relative;
-    z-index: 5;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-
-.ts-bento-header {
+.notion-feature-card__header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 14px;
+    margin-bottom: 18px;
 }
 
-.ts-bento-icon-wrapper {
-    width: 40px;
-    height: 40px;
-    border-radius: 10px;
+.notion-feature-card__icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    background-color: var(--color-sky-tint);
-    color: var(--color-notion-blue);
-    font-size: 16px;
-    margin-bottom: 0;
-    border: 1px solid rgba(0, 117, 222, 0.15);
+    flex-shrink: 0;
 }
 
-.ts-bento-label {
+.notion-status-pill {
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    font-size: 11px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    color: var(--color-notion-blue);
-    margin-bottom: 8px;
-    height: 18px;
-    line-height: 18px;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 4px 12px;
+    border-radius: 9999px;
+    line-height: 1;
 }
 
-.ts-bento-title {
+.notion-status-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.notion-feature-card__title {
     font-size: 1.25rem;
     font-weight: 700;
     color: var(--color-ink-black);
-    letter-spacing: -0.02em;
+    letter-spacing: -0.025em;
     line-height: 1.3;
     margin-bottom: 10px;
 }
 
-.ts-bento-desc {
+.notion-feature-card__desc {
     font-size: 0.95rem;
     color: var(--color-graphite);
-    line-height: 1.55;
-    margin: 0;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.notion-checklist-box {
+    background-color: #faf9f8;
+    border: var(--border-hairline);
+    border-radius: 10px;
+    padding: 14px 16px;
+    margin-top: auto;
+}
+
+.notion-checklist-item {
+    display: flex;
+    align-items: center;
+    font-size: 13.5px;
+    color: #374151;
+    font-weight: 500;
+    padding: 5px 0;
+}
+
+.notion-checklist-item:not(:last-child) {
+    border-bottom: 1px dashed rgba(0, 0, 0, 0.06);
 }
 
 /* -------------------------------------------------------------------------
@@ -2993,6 +2872,758 @@ body {
 
 .ts-notion-doc-card:hover .ts-notion-doc-card__arrow {
     transform: translateX(3px);
+}
+
+/* =========================================================================
+   10. DAMPAK NYATA: COUNT-UP ANIMATION NUMBERS (PROMPT 1)
+   ========================================================================= */
+.ts-stat-number {
+    font-size: clamp(2.35rem, 4.5vw, 3.25rem);
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    color: var(--color-ink-black, #000000);
+    line-height: 1.1;
+    margin-bottom: 6px;
+    font-variant-numeric: tabular-nums;
+    transition: transform 0.2s ease;
+}
+
+.ts-stat-card {
+    background-color: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 14px;
+    padding: 24px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+                box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+                border-color 0.25s ease;
+}
+
+.ts-stat-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+    border-color: rgba(0, 0, 0, 0.14);
+}
+
+/* =========================================================================
+   11. SHADCN TESTIMONIAL COMPONENT (PROMPT 3 SPEC)
+   Ground #FAFAFA, Card #FFFFFF, Ink #09090B, Muted #71717A, Border #E4E4E7, Accent #4F46E5
+   ========================================================================= */
+.shadcn-testimonial-section {
+    background-color: #FAFAFA;
+    border-top: 1px solid #E4E4E7;
+    border-bottom: 1px solid #E4E4E7;
+    padding: 80px 0;
+    position: relative;
+}
+
+.shadcn-testimonial-card {
+    background-color: #FFFFFF;
+    border: 1px solid #E4E4E7;
+    border-radius: 16px;
+    padding: 36px 32px;
+    box-shadow: 0 1px 2px rgba(9, 9, 11, 0.04);
+    position: relative;
+    min-height: 270px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.shadcn-testimonial-card:hover {
+    box-shadow: 0 4px 16px rgba(9, 9, 11, 0.06);
+    border-color: #d4d4d8;
+}
+
+.shadcn-testimonial-item {
+    transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    opacity: 0;
+    transform: translateY(10px);
+    pointer-events: none;
+    position: absolute;
+    inset: 36px 32px;
+}
+
+.shadcn-testimonial-item.is-active {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+    position: relative;
+    inset: auto;
+}
+
+.shadcn-stars {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    color: #4F46E5;
+    margin-bottom: 16px;
+}
+
+.shadcn-quote {
+    font-size: 1.125rem;
+    line-height: 1.65;
+    color: #09090B;
+    font-weight: 400;
+    margin-bottom: 24px;
+}
+
+.shadcn-avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 15px;
+    color: #ffffff;
+    flex-shrink: 0;
+}
+
+.shadcn-dots {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 24px;
+}
+
+.shadcn-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 9999px;
+    border: none;
+    background-color: #E4E4E7;
+    padding: 0;
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.shadcn-dot:hover {
+    background-color: #a1a1aa;
+}
+
+.shadcn-dot[aria-current="true"] {
+    width: 28px;
+    background-color: #4F46E5;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .shadcn-testimonial-item {
+        position: relative !important;
+        opacity: 1 !important;
+        transform: none !important;
+        margin-bottom: 24px;
+    }
+    .shadcn-dots {
+        display: none !important;
+    }
+}
+
+/* =========================================================================
+   13. INTERACTIVE CTA BUTTON: LETTER-BY-LETTER SWAP (PROMPT 5)
+   "Generate" <-> "Generating" text swap with star icon
+   ========================================================================= */
+.ts-btn-cari {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 13px 44px;
+    border-radius: 12px;
+    background-color: #4B7EFC;
+    color: #ffffff !important;
+    font-size: 15px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 4px 14px rgba(75, 126, 252, 0.28);
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    user-select: none;
+    text-decoration: none !important;
+}
+
+.ts-btn-cari:hover {
+    background-color: #3b6ee0;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(75, 126, 252, 0.38);
+    color: #ffffff !important;
+}
+
+.ts-btn-cari:active {
+    transform: scale(0.98);
+}
+
+.ts-btn-generate {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 24px;
+    border-radius: 12px;
+    background-color: #4B7EFC;
+    color: #ffffff !important;
+    font-size: 14.5px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 4px 14px rgba(75, 126, 252, 0.28);
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    overflow: hidden;
+    user-select: none;
+    text-decoration: none !important;
+}
+
+.ts-btn-generate:hover {
+    background-color: #3b6ee0;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(75, 126, 252, 0.38);
+    color: #ffffff !important;
+}
+
+.ts-btn-generate:active {
+    transform: scale(0.98);
+}
+
+.ts-btn-star-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease;
+    flex-shrink: 0;
+}
+
+.ts-btn-generate.is-generating .ts-btn-star-icon {
+    animation: tsStarSpin 1.2s infinite linear;
+}
+
+@keyframes tsStarSpin {
+    from { transform: rotate(0deg) scale(1.1); }
+    to { transform: rotate(360deg) scale(1.1); }
+}
+
+.ts-letter-swap-box {
+    display: inline-flex;
+    align-items: center;
+    position: relative;
+    height: 22px;
+    overflow: hidden;
+    min-width: 78px;
+    justify-content: center;
+}
+
+.ts-char {
+    display: inline-block;
+    transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.18s ease;
+}
+
+/* =========================================================================
+   14. REFINED WORKSPACE COMBOBOX / DROPDOWN (PROMPT 6 SPEC)
+   tempatin.id / workspace / cari-kos
+   ========================================================================= */
+.workspace-combobox-wrap {
+    background: #ffffff;
+    border-radius: 24px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
+    padding: 32px 28px;
+}
+
+.workspace-input-ring {
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    background-color: #ffffff;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.workspace-input-ring:focus-within {
+    border-color: #4B7EFC !important;
+    box-shadow: 0 0 0 3px rgba(75, 126, 252, 0.15) !important;
+}
+
+.workspace-combobox {
+    position: relative;
+    z-index: 20;
+}
+
+.workspace-combobox.open {
+    z-index: 1050 !important;
+}
+
+.workspace-combobox-btn {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 16px;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    text-align: left;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    cursor: pointer;
+    font-size: 14.5px;
+    color: #1e293b;
+    outline: none !important;
+}
+
+.workspace-combobox-btn:hover {
+    border-color: #cbd5e1;
+}
+
+.workspace-combobox.open .workspace-combobox-btn,
+.workspace-combobox-btn:focus {
+    border-color: #4B7EFC;
+    box-shadow: 0 0 0 3px rgba(75, 126, 252, 0.15);
+}
+
+.workspace-combobox-chevron {
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    color: #94a3b8;
+    flex-shrink: 0;
+}
+
+.workspace-combobox.open .workspace-combobox-chevron {
+    transform: rotate(180deg);
+}
+
+.workspace-dropdown-menu {
+    position: absolute;
+    top: calc(100% + 6px);
+    left: 0;
+    right: 0;
+    z-index: 1060;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    box-shadow: 0 16px 36px -4px rgba(0, 0, 0, 0.16), 0 4px 12px rgba(0, 0, 0, 0.05);
+    padding: 6px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-6px) scale(0.98);
+    pointer-events: none;
+    transition: opacity 0.18s cubic-bezier(0.16, 1, 0.3, 1), transform 0.18s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.18s;
+    max-height: 215px;
+    overflow-y: auto !important;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+    scrollbar-color: #cbd5e1 #f8fafc;
+}
+
+.workspace-combobox.open .workspace-dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0) scale(1);
+    pointer-events: auto;
+}
+
+/* Custom Scrollbar for Dropdown Menu */
+.workspace-dropdown-menu::-webkit-scrollbar {
+    width: 6px;
+}
+.workspace-dropdown-menu::-webkit-scrollbar-track {
+    background: #f8fafc;
+    border-radius: 8px;
+    margin: 4px 0;
+}
+.workspace-dropdown-menu::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 8px;
+}
+.workspace-dropdown-menu::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}
+
+.workspace-dropdown-heading {
+    padding: 6px 10px 4px 10px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #94a3b8;
+    position: sticky;
+    top: 0;
+    background: #ffffff;
+    z-index: 2;
+}
+
+.workspace-dropdown-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 9px 12px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #1e293b;
+    border: none;
+    background: transparent;
+    text-align: left;
+    cursor: pointer;
+    transition: background-color 0.12s ease, color 0.12s ease;
+}
+
+.workspace-dropdown-item:hover {
+    background-color: #4B7EFC;
+    color: #ffffff;
+}
+
+.workspace-dropdown-item.is-selected {
+    background-color: #eff6ff;
+    color: #4B7EFC;
+    font-weight: 600;
+}
+
+.workspace-dropdown-item.is-selected:hover {
+    background-color: #4B7EFC;
+    color: #ffffff;
+}
+
+/* ==========================================================================
+   SHADCN TIMELINE COMPONENT (NILAI UTAMA)
+   Harmonized with TEMPATIN Design System (DESIGN.md) & Subjacent Sections
+   Canvas: var(--surface-page-canvas, #f6f5f4)
+   Card: var(--color-pure-white, #ffffff)
+   Accent: var(--color-notion-blue, #0075de)
+   Border: var(--border-hairline, rgba(0, 0, 0, 0.08))
+   Typography: Inter & Source Serif, ink/graphite/stone
+   ========================================================================== */
+
+.shadcn-timeline-section {
+    background-color: var(--surface-page-canvas, #f6f5f4);
+    border-top: var(--border-hairline);
+    border-bottom: var(--border-hairline);
+    padding: 72px 0;
+    font-family: var(--font-notioninter, 'Inter', sans-serif);
+    color: var(--color-charcoal, #111111);
+}
+
+.shadcn-timeline-header {
+    text-align: center;
+    max-width: 640px;
+    margin: 0 auto 52px auto;
+    padding: 0 16px;
+}
+
+.shadcn-timeline-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background-color: var(--color-sky-tint, #e6f3fe);
+    border: 1px solid rgba(0, 117, 222, 0.15);
+    border-radius: var(--radius-pills, 9999px);
+    padding: 4px 14px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    color: var(--color-notion-blue, #0075de);
+    text-transform: uppercase;
+    margin-bottom: 14px;
+}
+
+.shadcn-timeline-heading {
+    font-size: clamp(2rem, 3.2vw, 2.75rem);
+    font-weight: 700;
+    letter-spacing: -0.035em;
+    color: var(--color-ink-black, #000000);
+    line-height: 1.15;
+    margin-bottom: 12px;
+}
+
+.shadcn-timeline-subheading {
+    font-family: var(--font-lyon-text, 'Source Serif 4', Georgia, serif);
+    font-size: 1.15rem;
+    font-weight: 400;
+    color: var(--color-graphite, #615d59);
+    line-height: 1.6;
+    margin: 0 auto;
+}
+
+.shadcn-timeline-root {
+    position: relative;
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 0 16px;
+}
+
+/* Vertical Spine Rail */
+.timeline-spine-rail {
+    position: absolute;
+    left: 127px;
+    width: 2px;
+    top: 8px;
+    bottom: 32px;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.timeline-spine-track {
+    position: absolute;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.09);
+    border-radius: 1px;
+}
+
+.timeline-spine-fill {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 0%;
+    background-color: var(--color-notion-blue, #0075de);
+    border-radius: 1px;
+    transition: height 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.timeline-entries-list {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    z-index: 2;
+}
+
+.timeline-entry {
+    display: grid;
+    grid-template-columns: 100px 16px 1fr;
+    column-gap: 24px;
+    position: relative;
+    padding-bottom: 44px;
+    opacity: 0.15;
+    transform: translateY(16px);
+    transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.timeline-entry:last-child {
+    padding-bottom: 0;
+}
+
+.timeline-entry.is-revealed {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.timeline-year-col {
+    text-align: right;
+    padding-top: 2px;
+}
+
+.timeline-year-text {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--color-stone, #757575);
+    letter-spacing: 0.03em;
+    font-variant-numeric: tabular-nums;
+}
+
+.timeline-dot-col {
+    display: flex;
+    justify-content: center;
+    position: relative;
+}
+
+.timeline-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: var(--surface-page-canvas, #f6f5f4);
+    border: 2px solid rgba(0, 0, 0, 0.16);
+    margin-top: 6px;
+    transition: background-color 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                border-color 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.timeline-entry.is-revealed .timeline-dot {
+    background-color: var(--color-notion-blue, #0075de);
+    border-color: var(--color-notion-blue, #0075de);
+    box-shadow: 0 0 0 4px rgba(0, 117, 222, 0.16);
+}
+
+.timeline-card-col {
+    min-width: 0;
+}
+
+.timeline-entry-title {
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--color-ink-black, #000000);
+    line-height: 1.35;
+    margin-bottom: 12px;
+    letter-spacing: -0.02em;
+}
+
+.timeline-year-mobile {
+    display: none;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--color-stone, #757575);
+    letter-spacing: 0.03em;
+    margin-bottom: 4px;
+}
+
+/* Bordered Body Card */
+.timeline-card {
+    background-color: var(--color-pure-white, #ffffff);
+    border: var(--border-hairline);
+    border-radius: var(--radius-cards, 12px);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+    padding: 22px 24px;
+    transition: border-color 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+                box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.timeline-card:hover {
+    border-color: rgba(0, 0, 0, 0.18);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+
+.timeline-card-body {
+    font-size: 14.5px;
+    font-weight: 400;
+    color: var(--color-graphite, #615d59);
+    line-height: 1.65;
+    margin-bottom: 18px;
+}
+
+.timeline-card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding-top: 16px;
+    border-top: var(--border-hairline);
+}
+
+.timeline-avatar-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+}
+
+/* Initial-based avatar on colored disc - zero image dependency */
+.timeline-avatar-disc {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-color: var(--color-notion-blue, #0075de);
+    color: #ffffff;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    flex-shrink: 0;
+}
+
+.timeline-avatar-meta {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.timeline-avatar-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--color-ink-black, #000000);
+    line-height: 1.3;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.timeline-avatar-role {
+    font-size: 12px;
+    font-weight: 400;
+    color: var(--color-stone, #757575);
+    line-height: 1.3;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.timeline-spec-pill {
+    display: inline-flex;
+    align-items: center;
+    font-size: 11.5px;
+    font-weight: 600;
+    color: var(--color-charcoal, #111111);
+    background-color: var(--surface-page-canvas, #f6f5f4);
+    border: var(--border-hairline);
+    border-radius: var(--radius-pills, 9999px);
+    padding: 4px 12px;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+/* Responsive: reflow rather than shrink */
+@media (max-width: 640px) {
+    .shadcn-timeline-section {
+        padding: 56px 0;
+    }
+
+    .shadcn-timeline-header {
+        margin-bottom: 36px;
+    }
+
+    .timeline-entry {
+        grid-template-columns: 16px 1fr;
+        column-gap: 16px;
+        padding-bottom: 32px;
+    }
+    
+    .timeline-year-col {
+        display: none;
+    }
+    
+    .timeline-year-mobile {
+        display: block;
+    }
+
+    .timeline-spine-rail {
+        left: 23px;
+    }
+
+    .timeline-card {
+        padding: 18px 18px;
+    }
+
+    .timeline-card-footer {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    .timeline-spec-pill {
+        align-self: flex-start;
+    }
+}
+
+/* Reduced Motion Fallback */
+@media (prefers-reduced-motion: reduce) {
+    .timeline-entry {
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
+    }
+
+    .timeline-spine-fill {
+        height: 100% !important;
+        transition: none !important;
+    }
+
+    .timeline-dot {
+        background-color: var(--color-notion-blue, #0075de) !important;
+        border-color: var(--color-notion-blue, #0075de) !important;
+        box-shadow: none !important;
+        transition: none !important;
+    }
 }
 
 
