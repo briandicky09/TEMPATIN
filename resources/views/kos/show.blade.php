@@ -79,8 +79,8 @@
                         <!--NAMA KOS & BADGES-->
                         <div id="page-title" class="mb-4">
                             <div class="d-flex justify-content-between align-items-center mb-2">
-                                <span class="badge px-3 py-1 font-weight-normal" style="border-radius: 9999px; background-color: #edf7ee; color: #166534; border: 1px solid rgba(22, 101, 52, 0.18);">
-                                    <i class="fa fa-check-circle mr-1" style="color: #166534;"></i>TEMPATIN Verified
+                                <span class="badge px-3 py-1 font-weight-normal" style="border-radius: 9999px; background-color: var(--color-sky-tint); color: var(--color-notion-blue); border: 1px solid rgba(0, 117, 222, 0.2);">
+                                    <i class="fa fa-check-circle mr-1" style="color: var(--color-notion-blue);"></i>TEMPATIN Verified
                                 </span>
 
                                 <!-- Tombol Simpan ke Favorit (Heart: outline hitam, isi putih, berubah merah saat diklik) -->
@@ -115,11 +115,11 @@
                                 @if(!empty($kos['rating']))
                                     <span>&bull;</span>
                                     <span>
-                                        <i class="fa fa-star mr-1" style="color: var(--color-marigold);"></i>
+                                        <i class="fa fa-star mr-1" style="color: var(--color-notion-blue);"></i>
                                         <strong class="text-dark">{{ number_format($kos['rating'], 1) }}</strong> ({{ $kos['review_count'] ?? 0 }} ulasan)
                                     </span>
                                 @endif
-                                <span class="badge ml-auto py-1 px-3" style="border-radius: 9999px; background-color: {{ ($kos['status'] ?? 'active') === 'active' ? '#edf7ee' : '#fee2e2' }}; color: {{ ($kos['status'] ?? 'active') === 'active' ? '#166534' : '#991b1b' }}; border: 1px solid {{ ($kos['status'] ?? 'active') === 'active' ? 'rgba(22, 101, 52, 0.18)' : 'rgba(153, 27, 27, 0.18)' }};">
+                                <span class="badge ml-auto py-1 px-3" style="border-radius: 9999px; background-color: {{ ($kos['status'] ?? 'active') === 'active' ? 'var(--color-sky-tint)' : '#ffffff' }}; color: {{ ($kos['status'] ?? 'active') === 'active' ? 'var(--color-notion-blue)' : 'var(--color-charcoal)' }}; border: 1px solid {{ ($kos['status'] ?? 'active') === 'active' ? 'rgba(0, 117, 222, 0.25)' : 'rgba(0, 0, 0, 0.2)' }};">
                                     {{ ($kos['status'] ?? 'active') === 'active' ? 'Tersedia' : 'Penuh' }}
                                 </span>
                             </div>
@@ -243,7 +243,7 @@
 
                             <h3>Peta Lokasi</h3>
 
-                            <div class="ts-box text-center py-5" style="background-color: #f5f7f9;">
+                            <div class="ts-box text-center py-5" style="background-color: var(--surface-page-canvas);">
                                 <i class="fa fa-map-marked-alt fa-3x text-muted mb-3"></i>
                                 <p class="text-muted mb-0">Peta lokasi akan segera tersedia.</p>
                                 <p class="text-muted mb-0"><small>{{ $kos['address'] ?? $kos['city'] }}</small></p>

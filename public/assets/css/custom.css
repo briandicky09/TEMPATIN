@@ -23,8 +23,8 @@
 
 /* Ribbon status pembayaran. Menggunakan komponen .ts-ribbon-corner dari
    style.css template, dengan warna kondisional via modifier class. */
-.ts-ribbon-corner.is-pending span{ background-color: #00f; }
-.ts-ribbon-corner.is-lunas span{ background-color: #17c964; }
+.ts-ribbon-corner.is-pending span{ background-color: var(--color-notion-blue, #0075de); }
+.ts-ribbon-corner.is-lunas span{ background-color: var(--color-notion-blue, #0075de); }
 .ts-ribbon-corner.is-lunas:before,
 .ts-ribbon-corner.is-lunas:after{ border-color: transparent transparent transparent #191919; }
 
@@ -41,7 +41,7 @@
     flex-wrap:wrap;
 }
 .ts-total-box .label{ opacity:.5; font-size:.8125rem; margin-bottom:.15rem; }
-.ts-total-box .amount{ font-size:1.5rem; color:#00f; }
+.ts-total-box .amount{ font-size:1.5rem; color:var(--color-notion-blue, #0075de); }
 
 .ts-kos-thumb{
     width:100%;
@@ -49,7 +49,7 @@
     border-radius:var(--ts-radius-sm);
     background-color:#f6f6f6;
     display:flex; align-items:center; justify-content:center;
-    color:#00f;
+    color:var(--color-notion-blue, #0075de);
     font-size:2.25rem;
     overflow:hidden;
 }
@@ -65,7 +65,7 @@
 .ts-cost-list .item-name{ display:block; }
 .ts-cost-list .item-desc{ display:block; font-size:.8125rem; opacity:.5; }
 .ts-cost-list .item-amount{ white-space:nowrap; }
-.ts-cost-list li.is-discount .item-amount{ color:#17c964; }
+.ts-cost-list li.is-discount .item-amount{ color:var(--color-notion-blue, #0075de); }
 .ts-cost-list li.is-total{
     border-top:.125rem solid #191919;
     border-bottom:none;
@@ -73,7 +73,7 @@
     padding-top:1rem;
 }
 .ts-cost-list li.is-total .item-name{ font-size:1.0625rem; }
-.ts-cost-list li.is-total .item-amount{ font-size:1.25rem; color:#00f; }
+.ts-cost-list li.is-total .item-amount{ font-size:1.25rem; color:var(--color-notion-blue, #0075de); }
 
 .ts-pay-method{ position:relative; margin-bottom:1rem; }
 .ts-pay-method input{
@@ -91,8 +91,8 @@
     background-color:#fff;
 }
 .ts-pay-method input:checked + label{
-    border-color:#00f;
-    background-color:#f2f2ff;
+    border-color:var(--color-notion-blue, #0075de);
+    background-color:var(--color-sky-tint, #e6f3fe);
     box-shadow:var(--ts-shadow-sm);
 }
 .ts-pay-method .ts-pay-icon{
@@ -100,7 +100,7 @@
     border-radius:var(--ts-radius-sm);
     background-color:#f6f6f6;
     display:flex; align-items:center; justify-content:center;
-    color:#00f;
+    color:var(--color-notion-blue, #0075de);
     font-size:1.125rem;
     flex-shrink:0;
 }
@@ -114,23 +114,23 @@
     flex-shrink:0;
     position:relative;
 }
-.ts-pay-method input:checked + label .ts-pay-check{ border-color:#00f; }
+.ts-pay-method input:checked + label .ts-pay-check{ border-color:var(--color-notion-blue, #0075de); }
 .ts-pay-method input:checked + label .ts-pay-check::after{
     content:""; position:absolute; top:.125rem; left:.125rem;
     width:.625rem; height:.625rem; border-radius:50%;
-    background-color:#00f;
+    background-color:var(--color-notion-blue, #0075de);
 }
 
 .ts-countdown{
-    background-color:#fff5f5;
-    border:.0625rem solid #ffd6d6;
+    background-color:#ffffff;
+    border:.0625rem solid rgba(0,0,0,0.12);
     border-radius:var(--ts-radius-sm);
     padding:1rem 1.1rem;
     display:flex; align-items:center; gap:.85rem;
 }
-.ts-countdown i{ color:#ff4757; font-size:1.375rem; }
+.ts-countdown i{ color:var(--color-notion-blue, #0075de); font-size:1.375rem; }
 .ts-countdown .label{ font-size:.75rem; opacity:.5; text-transform:uppercase; letter-spacing:.03em; }
-.ts-countdown .value{ color:#ff4757; }
+.ts-countdown .value{ color:var(--color-charcoal, #111111); font-weight:700; }
 
 .ts-va-box{
     background-color:#f6f6f6;
@@ -180,7 +180,7 @@
 }
 
 .breadcrumb-item a{ color: #2a2e31 !important; text-decoration: none; }
-.breadcrumb-item a:hover{ color: #0000ff !important; text-decoration: none; }
+.breadcrumb-item a:hover{ color: var(--color-notion-blue, #0075de) !important; text-decoration: none; }
 
 .ts-title h1{ margin-top: 0 !important; }
 
@@ -196,8 +196,8 @@ body{ background-color: #f6f6f6 !important; }
     align-items: center;
     justify-content: center;
     border-radius: 50%;
-    background: linear-gradient(135deg, #1f4ed8, #3b82f6);
-    box-shadow: 0 16px 30px rgba(31, 78, 216, 0.35);
+    background: var(--color-notion-blue, #0075de);
+    box-shadow: 0 14px 28px rgba(0, 117, 222, 0.35);
     z-index: 1050;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
     overflow: hidden;
@@ -215,7 +215,7 @@ body{ background-color: #f6f6f6 !important; }
 .member-floating-chat:focus {
     text-decoration: none;
     transform: translateY(-2px) scale(1.02);
-    box-shadow: 0 18px 34px rgba(31, 78, 216, 0.45);
+    box-shadow: 0 18px 34px rgba(0, 117, 222, 0.45);
 }
 
 @media (max-width:767px){

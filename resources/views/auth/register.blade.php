@@ -68,13 +68,13 @@
                                 <div class="row">
                                     <div class="col-6">
                                         <label class="p-2 rounded d-flex align-items-center mb-0 cursor-pointer" style="border: var(--border-hairline); background-color: var(--surface-page-canvas); font-size: 13px; font-weight: 500; cursor: pointer;">
-                                            <input type="radio" id="role-member" name="role" value="member" class="mr-2" {{ old('role', 'member') === 'member' ? 'checked' : '' }} required style="accent-color: var(--color-midnight-ink);">
+                                            <input type="radio" id="role-member" name="role" value="member" class="mr-2" {{ old('role', 'member') === 'member' ? 'checked' : '' }} required style="accent-color: var(--color-notion-blue);">
                                             <span>Pencari Kos</span>
                                         </label>
                                     </div>
                                     <div class="col-6">
                                         <label class="p-2 rounded d-flex align-items-center mb-0 cursor-pointer" style="border: var(--border-hairline); background-color: var(--surface-page-canvas); font-size: 13px; font-weight: 500; cursor: pointer;">
-                                            <input type="radio" id="role-owner" name="role" value="owner" class="mr-2" {{ old('role') === 'owner' ? 'checked' : '' }} required style="accent-color: var(--color-midnight-ink);">
+                                            <input type="radio" id="role-owner" name="role" value="owner" class="mr-2" {{ old('role') === 'owner' ? 'checked' : '' }} required style="accent-color: var(--color-notion-blue);">
                                             <span>Pemilik Kos</span>
                                         </label>
                                     </div>
@@ -104,8 +104,8 @@
                             <!-- Terms Checkbox -->
                             <div class="form-group mb-4">
                                 <label class="d-flex align-items-start mb-0 cursor-pointer" style="font-size: 12.5px; color: var(--color-stone); cursor: pointer;">
-                                    <input type="checkbox" id="agree-terms" name="agree" {{ old('agree') ? 'checked' : '' }} required class="mr-2 mt-1" style="accent-color: var(--color-midnight-ink);">
-                                    <span>Saya menyetujui <a href="#" style="color: var(--color-midnight-ink); font-weight: 600;">Syarat & Ketentuan</a> dan <a href="#" style="color: var(--color-midnight-ink); font-weight: 600;">Kebijakan Privasi</a> TEMPATIN.</span>
+                                    <input type="checkbox" id="agree-terms" name="agree" {{ old('agree') ? 'checked' : '' }} required class="mr-2 mt-1" style="accent-color: var(--color-notion-blue);">
+                                    <span>Saya menyetujui <a href="#" style="color: var(--color-notion-blue); font-weight: 600;">Syarat & Ketentuan</a> dan <a href="#" style="color: var(--color-notion-blue); font-weight: 600;">Kebijakan Privasi</a> TEMPATIN.</span>
                                 </label>
                                 @error('agree')
                                     <span class="invalid-feedback d-block" role="alert"><strong>{{ $message }}</strong></span>
@@ -113,14 +113,14 @@
                             </div>
 
                             <!-- Submit Button -->
-                            <button type="submit" class="btn btn-block" style="background-color: var(--color-midnight-ink); color: #ffffff; font-weight: 600; font-size: 14px; padding: 12px; border-radius: var(--radius-buttons); border: none;">
+                            <button type="submit" class="btn btn-block" style="background-color: var(--color-notion-blue); color: #ffffff; font-weight: 600; font-size: 14px; padding: 12px; border-radius: var(--radius-buttons); border: none;">
                                 Daftar Akun Sekarang
                             </button>
 
                             <!-- Login Link -->
                             <div class="text-center mt-4" style="font-size: 13px;">
                                 <span style="color: var(--color-stone);">Sudah memiliki akun?</span>
-                                <a href="{{ route('login') }}" style="color: var(--color-midnight-ink); font-weight: 600; text-decoration: none;" class="ml-1">
+                                <a href="{{ route('login') }}" style="color: var(--color-notion-blue); font-weight: 600; text-decoration: none;" class="ml-1">
                                     Masuk di sini
                                 </a>
                             </div>

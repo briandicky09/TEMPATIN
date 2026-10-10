@@ -34,10 +34,10 @@
                     {{ $kos['title'] }}
                 </h3>
                 <div class="d-flex align-items-center mb-2" style="font-size: 13px; color: var(--color-stone);">
-                    <i class="fa fa-map-marker-alt mr-2 text-danger"></i> {{ $kos['city'] }}
+                    <i class="fa fa-map-marker-alt mr-2" style="color: var(--color-notion-blue);"></i> {{ $kos['city'] }}
                 </div>
                 <div class="d-flex align-items-center mb-3" style="font-size: 13px; color: var(--color-stone);">
-                    <i class="fa fa-calendar-alt mr-2 text-primary"></i> Periode: {{ $kos['periode'] }}
+                    <i class="fa fa-calendar-alt mr-2" style="color: var(--color-notion-blue);"></i> Periode: {{ $kos['periode'] }}
                 </div>
             </div>
 

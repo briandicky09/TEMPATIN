@@ -48,13 +48,13 @@
 
                         <div class="row">
                             <div class="col-md-6 form-group mb-3">
-                                <label style="font-size: 13px; font-weight: 600; color: var(--color-midnight-ink);">Nama Kos <span class="text-danger">*</span></label>
+                                <label style="font-size: 13px; font-weight: 600; color: var(--color-midnight-ink);">Nama Kos <span style="color: var(--color-notion-blue);">*</span></label>
                                 <input type="text" class="form-control @error('title') is-invalid @enderror" name="title" value="{{ old('title') }}" placeholder="cth. Kos Putri Melati Kampus C" required style="border-radius: var(--radius-inputs); border: var(--border-hairline); font-size: 14px; padding: 10px 14px;">
                                 @error('title') <div class="invalid-feedback">{{ $message }}</div> @enderror
                             </div>
 
                             <div class="col-md-6 form-group mb-3">
-                                <label style="font-size: 13px; font-weight: 600; color: var(--color-midnight-ink);">Tipe Kos <span class="text-danger">*</span></label>
+                                <label style="font-size: 13px; font-weight: 600; color: var(--color-midnight-ink);">Tipe Kos <span style="color: var(--color-notion-blue);">*</span></label>
                                 <select class="form-control @error('type') is-invalid @enderror" name="type" required style="border-radius: var(--radius-inputs); border: var(--border-hairline); font-size: 14px; height: 44px; padding: 0 14px;">
                                     <option value="">Pilih Tipe Kos...</option>
                                     <option value="Putra" {{ old('type') === 'Putra' ? 'selected' : '' }}>Kos Putra</option>
@@ -66,13 +66,13 @@
                             </div>
 
                             <div class="col-md-6 form-group mb-3">
-                                <label style="font-size: 13px; font-weight: 600; color: var(--color-midnight-ink);">Kota / Kabupaten <span class="text-danger">*</span></label>
+                                <label style="font-size: 13px; font-weight: 600; color: var(--color-midnight-ink);">Kota / Kabupaten <span style="color: var(--color-notion-blue);">*</span></label>
                                 <input type="text" class="form-control @error('city') is-invalid @enderror" name="city" value="{{ old('city') }}" placeholder="cth. Surabaya" required style="border-radius: var(--radius-inputs); border: var(--border-hairline); font-size: 14px; padding: 10px 14px;">
                                 @error('city') <div class="invalid-feedback">{{ $message }}</div> @enderror
                             </div>
 
                             <div class="col-md-6 form-group mb-3">
-                                <label style="font-size: 13px; font-weight: 600; color: var(--color-midnight-ink);">Harga Sewa / Bulan (Rp) <span class="text-danger">*</span></label>
+                                <label style="font-size: 13px; font-weight: 600; color: var(--color-midnight-ink);">Harga Sewa / Bulan (Rp) <span style="color: var(--color-notion-blue);">*</span></label>
                                 <input type="number" class="form-control @error('price') is-invalid @enderror" name="price" value="{{ old('price') }}" placeholder="850000" required style="border-radius: var(--radius-inputs); border: var(--border-hairline); font-size: 14px; padding: 10px 14px;">
                                 @error('price') <div class="invalid-feedback">{{ $message }}</div> @enderror
                             </div>
@@ -220,7 +220,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             const btnRemove = document.createElement('button');
             btnRemove.type = 'button';
-            btnRemove.className = 'btn btn-sm btn-block text-danger';
+            btnRemove.className = 'btn btn-sm btn-block text-dark';
             btnRemove.style.backgroundColor = '#ffffff';
             btnRemove.style.border = 'var(--border-hairline)';
             btnRemove.style.fontSize = '11px';

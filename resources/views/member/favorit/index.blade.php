@@ -24,7 +24,7 @@
             <!-- HEADER -->
             <div class="d-flex justify-content-between align-items-center mb-4">
                 <div>
-                    <div class="d-inline-flex align-items-center mb-1 px-2 py-1 rounded" style="background-color: #fef2f2; color: #dc2626; font-size: 11px; font-weight: 600;">
+                    <div class="d-inline-flex align-items-center mb-1 px-2 py-1 rounded" style="background-color: var(--color-sky-tint); color: var(--color-notion-blue); font-size: 11px; font-weight: 600; border: 1px solid rgba(0, 117, 222, 0.2);">
                         <i class="fa fa-heart mr-1"></i> SIMPANAN KOS SAYA
                     </div>
                     <h1 style="font-family: var(--font-serif); font-size: 1.75rem; font-weight: 700; color: var(--color-midnight-ink); margin-bottom: 4px;">
@@ -84,7 +84,7 @@
                                 <div class="card-body p-3 p-md-4 d-flex flex-column justify-content-between">
                                     <div>
                                         <div class="text-muted small mb-1">
-                                            <i class="fa fa-map-marker-alt mr-1 text-danger"></i> {{ $kos->city ?? 'Indonesia' }}
+                                            <i class="fa fa-map-marker-alt mr-1" style="color: var(--color-notion-blue);"></i> {{ $kos->city ?? 'Indonesia' }}
                                         </div>
                                         <h3 class="h6 font-weight-bold mb-2 text-dark text-truncate" title="{{ $kos->title }}">
                                             <a href="{{ route('member.kos.show', $kos->slug) }}" class="text-dark text-decoration-none">
@@ -115,7 +115,7 @@
 
             <!-- EMPTY STATE CARD -->
             <div id="favoritEmptyStateCard" class="p-5 text-center rounded mb-5 {{ (isset($favoriteKos) && $favoriteKos->count() > 0) ? 'd-none' : '' }}" style="background-color: #ffffff; border: var(--border-hairline); border-radius: var(--radius-cards);">
-                <div class="d-inline-flex align-items-center justify-content-center mb-3" style="width: 64px; height: 64px; border-radius: 50%; background-color: #fee2e2; color: #ef4444; font-size: 28px;">
+                <div class="d-inline-flex align-items-center justify-content-center mb-3" style="width: 64px; height: 64px; border-radius: 50%; background-color: var(--color-sky-tint); color: var(--color-notion-blue); font-size: 28px; border: 1px solid rgba(0, 117, 222, 0.25);">
                     <i class="fa fa-heart"></i>
                 </div>
                 <h2 style="font-family: var(--font-serif); font-size: 1.4rem; font-weight: 700; color: var(--color-midnight-ink); margin-bottom: 8px;">
@@ -185,7 +185,7 @@
                                     <div class="card-body p-3 d-flex flex-column justify-content-between">
                                         <div>
                                             <div class="text-muted small mb-1">
-                                                <i class="fa fa-map-marker-alt mr-1 text-danger"></i> {{ $kos->city ?? 'Indonesia' }}
+                                                <i class="fa fa-map-marker-alt mr-1" style="color: var(--color-notion-blue);"></i> {{ $kos->city ?? 'Indonesia' }}
                                             </div>
                                             <h3 class="h6 font-weight-bold mb-2 text-dark text-truncate" title="{{ $kos->title }}">
                                                 <a href="{{ route('member.kos.show', $kos->slug) }}" class="text-dark text-decoration-none">

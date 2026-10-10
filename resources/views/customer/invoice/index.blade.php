@@ -40,8 +40,8 @@
                     @php
                         $isPaid = in_array(strtolower($invoice['status']), ['paid', 'lunas', 'selesai']);
                         $statusStyle = $isPaid 
-                            ? 'background-color: #edf7ee; color: #166534; border: 1px solid rgba(22, 101, 52, 0.2);'
-                            : 'background-color: #fef9c3; color: #854d0e; border: 1px solid rgba(133, 77, 14, 0.2);';
+                            ? 'background-color: var(--color-sky-tint); color: var(--color-notion-blue); border: 1px solid rgba(0, 117, 222, 0.2);'
+                            : 'background-color: #ffffff; color: var(--color-charcoal); border: 1px solid rgba(0, 0, 0, 0.18);';
                     @endphp
                     <tr style="border-bottom: 1px solid rgba(0,0,0,0.06);">
                         <td style="padding: 14px 20px; font-family: monospace; font-weight: 700; color: var(--color-notion-blue);">
@@ -81,18 +81,18 @@
         @csrf
         <div class="row">
             <div class="col-md-6 form-group mb-3">
-                <label style="font-size: 13px; font-weight: 600; color: var(--color-midnight-ink);">Nama Lengkap <span class="text-danger">*</span></label>
+                <label style="font-size: 13px; font-weight: 600; color: var(--color-midnight-ink);">Nama Lengkap <span style="color: var(--color-notion-blue);">*</span></label>
                 <input type="text" class="form-control" id="fullname" name="fullname" value="{{ Auth::user()->name ?? '' }}" placeholder="Nama sesuai KTP" required style="border-radius: var(--radius-inputs); border: var(--border-hairline); font-size: 14px; padding: 10px 14px;">
             </div>
             <div class="col-md-6 form-group mb-3">
-                <label style="font-size: 13px; font-weight: 600; color: var(--color-midnight-ink);">Alamat Email <span class="text-danger">*</span></label>
+                <label style="font-size: 13px; font-weight: 600; color: var(--color-midnight-ink);">Alamat Email <span style="color: var(--color-notion-blue);">*</span></label>
                 <input type="email" class="form-control" id="email" name="email" value="{{ Auth::user()->email ?? '' }}" placeholder="nama@email.com" required style="border-radius: var(--radius-inputs); border: var(--border-hairline); font-size: 14px; padding: 10px 14px;">
             </div>
         </div>
 
         <div class="row">
             <div class="col-md-6 form-group mb-3">
-                <label style="font-size: 13px; font-weight: 600; color: var(--color-midnight-ink);">Nomor WhatsApp <span class="text-danger">*</span></label>
+                <label style="font-size: 13px; font-weight: 600; color: var(--color-midnight-ink);">Nomor WhatsApp <span style="color: var(--color-notion-blue);">*</span></label>
                 <input type="tel" class="form-control" id="phone" name="phone" placeholder="08xxxxxxxxxx" required style="border-radius: var(--radius-inputs); border: var(--border-hairline); font-size: 14px; padding: 10px 14px;">
             </div>
             <div class="col-md-6 form-group mb-3">

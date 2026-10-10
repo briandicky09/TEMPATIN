@@ -35,8 +35,8 @@
                         <div style="font-size: 1.35rem; font-weight: 700; color: var(--color-midnight-ink); font-variant-numeric: tabular-nums; margin-bottom: 4px;">
                             Rp {{ number_format($summary['pendapatan'], 0, ',', '.') }}
                         </div>
-                        <span class="badge" style="background-color: #edf7ee; color: #166534; border: 1px solid rgba(22, 101, 52, 0.18); font-size: 11px; font-weight: 600;">
-                            <i class="fa fa-arrow-up mr-1" style="color: #166534;"></i>+{{ $summary['pertumbuhan'] }}% bln ini
+                        <span class="badge" style="background-color: var(--color-sky-tint); color: var(--color-notion-blue); border: 1px solid rgba(0, 117, 222, 0.2); font-size: 11px; font-weight: 600;">
+                            <i class="fa fa-arrow-up mr-1" style="color: var(--color-notion-blue);"></i>+{{ $summary['pertumbuhan'] }}% bln ini
                         </span>
                     </div>
                 </div>

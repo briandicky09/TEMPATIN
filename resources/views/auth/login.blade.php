@@ -58,23 +58,23 @@
                             <!-- Remember + Forgot -->
                             <div class="d-flex justify-content-between align-items-center mb-4" style="font-size: 13px;">
                                 <label class="d-flex align-items-center mb-0 cursor-pointer" style="cursor: pointer; color: var(--color-stone);">
-                                    <input type="checkbox" id="remember-me" name="remember" {{ old('remember') ? 'checked' : '' }} class="mr-2" style="accent-color: var(--color-midnight-ink);">
+                                    <input type="checkbox" id="remember-me" name="remember" {{ old('remember') ? 'checked' : '' }} class="mr-2" style="accent-color: var(--color-notion-blue);">
                                     Ingat sesi saya
                                 </label>
-                                <a href="{{ route('password.request') }}" style="color: var(--color-midnight-ink); font-weight: 600; text-decoration: none;">
+                                <a href="{{ route('password.request') }}" style="color: var(--color-notion-blue); font-weight: 600; text-decoration: none;">
                                     Lupa sandi?
                                 </a>
                             </div>
 
                             <!-- Submit Button -->
-                            <button type="submit" class="btn btn-block" style="background-color: var(--color-midnight-ink); color: #ffffff; font-weight: 600; font-size: 14px; padding: 12px; border-radius: var(--radius-buttons); border: none;">
+                            <button type="submit" class="btn btn-block" style="background-color: var(--color-notion-blue); color: #ffffff; font-weight: 600; font-size: 14px; padding: 12px; border-radius: var(--radius-buttons); border: none;">
                                 Masuk Sekarang
                             </button>
 
                             <!-- Register Link -->
                             <div class="text-center mt-4" style="font-size: 13px;">
                                 <span style="color: var(--color-stone);">Belum punya akun?</span>
-                                <a href="{{ route('register') }}" style="color: var(--color-midnight-ink); font-weight: 600; text-decoration: none;" class="ml-1">
+                                <a href="{{ route('register') }}" style="color: var(--color-notion-blue); font-weight: 600; text-decoration: none;" class="ml-1">
                                     Daftar di sini
                                 </a>
                             </div>

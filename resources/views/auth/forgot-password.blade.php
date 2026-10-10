@@ -40,14 +40,14 @@
                             </div>
 
                             <!-- Submit Button -->
-                            <button type="submit" class="btn btn-block" style="background-color: var(--color-midnight-ink); color: #ffffff; font-weight: 600; font-size: 14px; padding: 12px; border-radius: var(--radius-buttons); border: none;">
+                            <button type="submit" class="btn btn-block" style="background-color: var(--color-notion-blue); color: #ffffff; font-weight: 600; font-size: 14px; padding: 12px; border-radius: var(--radius-buttons); border: none;">
                                 Kirim Tautan Reset Sandi
                             </button>
 
                             <!-- Back to login link -->
                             <div class="text-center mt-4" style="font-size: 13px;">
                                 <span style="color: var(--color-stone);">Sudah ingat kata sandi?</span>
-                                <a href="{{ route('login') }}" style="color: var(--color-midnight-ink); font-weight: 600; text-decoration: none;" class="ml-1">
+                                <a href="{{ route('login') }}" style="color: var(--color-notion-blue); font-weight: 600; text-decoration: none;" class="ml-1">
                                     Masuk di sini
                                 </a>
                             </div>

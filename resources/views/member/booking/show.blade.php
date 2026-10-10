@@ -32,9 +32,9 @@
                 <div>
                     @php
                         $statusColor = match(strtolower($booking->status)) {
-                            'confirmed', 'paid', 'approved', 'success' => 'background-color: #edf7ee; color: #166534; border: 1px solid rgba(22, 101, 52, 0.2);',
-                            'pending' => 'background-color: #fef9c3; color: #854d0e; border: 1px solid rgba(133, 77, 14, 0.2);',
-                            'cancelled', 'rejected' => 'background-color: #fee2e2; color: #991b1b; border: 1px solid rgba(153, 27, 27, 0.2);',
+                            'confirmed', 'paid', 'approved', 'success' => 'background-color: var(--color-sky-tint); color: var(--color-notion-blue); border: 1px solid rgba(0, 117, 222, 0.25);',
+                            'pending' => 'background-color: #ffffff; color: var(--color-charcoal); border: 1px solid rgba(0, 0, 0, 0.2);',
+                            'cancelled', 'rejected' => 'background-color: #ffffff; color: var(--color-stone); border: 1px solid rgba(0, 0, 0, 0.15);',
                             default => 'background-color: var(--color-sky-tint); color: var(--color-notion-blue); border: 1px solid rgba(0, 117, 222, 0.2);',
                         };
                     @endphp

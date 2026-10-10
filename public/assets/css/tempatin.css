@@ -983,12 +983,12 @@ p {
     transition: fill 0.25s ease, stroke 0.25s ease;
 }
 
-/* Saat aktif / tersimpan ke favorit: isinya dan outlinenya berubah merah */
+/* Saat aktif / tersimpan ke favorit: isinya dan outlinenya berubah brand blue */
 .favorite-heart-svg.is-active path,
 .is-favorite .favorite-heart-svg path,
 .btn-favorite-action.is-active .favorite-heart-svg path {
-    fill: #ef4444 !important;
-    stroke: #ef4444 !important;
+    fill: var(--color-notion-blue, #0075de) !important;
+    stroke: var(--color-notion-blue, #0075de) !important;
 }
 
 .favorite-heart-svg.is-pop {

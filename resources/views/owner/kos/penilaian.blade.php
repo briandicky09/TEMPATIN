@@ -36,7 +36,7 @@
                             <span style="font-size: 1.75rem; font-weight: 700; color: var(--color-midnight-ink); font-variant-numeric: tabular-nums;" class="mr-2">
                                 {{ number_format($rataRating, 1, ',', '.') }}
                             </span>
-                            <span style="color: #ffb110; font-size: 1.1rem;"><i class="fa fa-star"></i></span>
+                            <span style="color: var(--color-notion-blue); font-size: 1.1rem;"><i class="fa fa-star"></i></span>
                             <span style="font-size: 12px; color: var(--color-stone);" class="ml-2">/ 5.0</span>
                         </div>
                     </div>
@@ -89,7 +89,7 @@
                                             <span style="font-size: 14px; font-weight: 700; color: var(--color-midnight-ink); font-variant-numeric: tabular-nums;" class="mr-2">
                                                 {{ number_format($rating['rating'], 1, ',', '.') }}
                                             </span>
-                                            <span style="color: #ffb110; font-size: 12px;"><i class="fa fa-star"></i></span>
+                                            <span style="color: var(--color-notion-blue); font-size: 12px;"><i class="fa fa-star"></i></span>
                                         </div>
                                     </td>
                                     <td style="padding: 16px 20px; font-size: 13.5px; color: var(--color-charcoal); max-width: 380px;">

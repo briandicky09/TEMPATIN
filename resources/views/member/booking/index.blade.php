@@ -59,7 +59,7 @@
 
                             <div class="row">
                                 <div class="col-md-6 form-group mb-3">
-                                    <label for="tenant_name" style="font-size: 13px; font-weight: 600; color: var(--color-midnight-ink);">Nama Lengkap Penyewa <span class="text-danger">*</span></label>
+                                    <label for="tenant_name" style="font-size: 13px; font-weight: 600; color: var(--color-midnight-ink);">Nama Lengkap Penyewa <span style="color: var(--color-notion-blue);">*</span></label>
                                     <input id="tenant_name" name="tenant_name" type="text" class="form-control @error('tenant_name') is-invalid @enderror" value="{{ old('tenant_name', auth()->user()->name ?? '') }}" placeholder="Nama sesuai KTP" required style="border-radius: var(--radius-inputs); border: var(--border-hairline); font-size: 14px; padding: 10px 14px;">
                                     @error('tenant_name')
                                         <div class="invalid-feedback d-block">{{ $message }}</div>
@@ -67,7 +67,7 @@
                                 </div>
 
                                 <div class="col-md-6 form-group mb-3">
-                                    <label for="tenant_phone" style="font-size: 13px; font-weight: 600; color: var(--color-midnight-ink);">Nomor WhatsApp Aktif <span class="text-danger">*</span></label>
+                                    <label for="tenant_phone" style="font-size: 13px; font-weight: 600; color: var(--color-midnight-ink);">Nomor WhatsApp Aktif <span style="color: var(--color-notion-blue);">*</span></label>
                                     <input id="tenant_phone" name="tenant_phone" type="tel" class="form-control @error('tenant_phone') is-invalid @enderror" value="{{ old('tenant_phone', auth()->user()->phone ?? '') }}" placeholder="cth. 081234567890" required style="border-radius: var(--radius-inputs); border: var(--border-hairline); font-size: 14px; padding: 10px 14px;">
                                     @error('tenant_phone')
                                         <div class="invalid-feedback d-block">{{ $message }}</div>
@@ -76,7 +76,7 @@
                             </div>
 
                             <div class="form-group mb-3">
-                                <label for="tenant_email" style="font-size: 13px; font-weight: 600; color: var(--color-midnight-ink);">Alamat Email <span class="text-danger">*</span></label>
+                                <label for="tenant_email" style="font-size: 13px; font-weight: 600; color: var(--color-midnight-ink);">Alamat Email <span style="color: var(--color-notion-blue);">*</span></label>
                                 <input id="tenant_email" name="tenant_email" type="email" class="form-control @error('tenant_email') is-invalid @enderror" value="{{ old('tenant_email', auth()->user()->email ?? '') }}" placeholder="nama@email.com" required style="border-radius: var(--radius-inputs); border: var(--border-hairline); font-size: 14px; padding: 10px 14px;">
                                 @error('tenant_email')
                                     <div class="invalid-feedback d-block">{{ $message }}</div>
@@ -85,7 +85,7 @@
 
                             <div class="row">
                                 <div class="col-md-6 form-group mb-3">
-                                    <label for="start_date" style="font-size: 13px; font-weight: 600; color: var(--color-midnight-ink);">Tanggal Mulai Sewa <span class="text-danger">*</span></label>
+                                    <label for="start_date" style="font-size: 13px; font-weight: 600; color: var(--color-midnight-ink);">Tanggal Mulai Sewa <span style="color: var(--color-notion-blue);">*</span></label>
                                     <input id="start_date" name="start_date" type="date" class="form-control @error('start_date') is-invalid @enderror" min="{{ date('Y-m-d') }}" value="{{ old('start_date', old('check_in', date('Y-m-d'))) }}" required style="border-radius: var(--radius-inputs); border: var(--border-hairline); font-size: 14px; padding: 10px 14px;">
                                     @error('start_date')
                                         <div class="invalid-feedback d-block">{{ $message }}</div>
@@ -93,7 +93,7 @@
                                 </div>
 
                                 <div class="col-md-6 form-group mb-3">
-                                    <label for="duration_months" style="font-size: 13px; font-weight: 600; color: var(--color-midnight-ink);">Durasi Sewa <span class="text-danger">*</span></label>
+                                    <label for="duration_months" style="font-size: 13px; font-weight: 600; color: var(--color-midnight-ink);">Durasi Sewa <span style="color: var(--color-notion-blue);">*</span></label>
                                     <select id="duration_months" name="duration_months" class="form-control @error('duration_months') is-invalid @enderror" required style="border-radius: var(--radius-inputs); border: var(--border-hairline); font-size: 14px; height: 44px; padding: 0 14px;">
                                         @for($month = 1; $month <= 12; $month++)
                                             <option value="{{ $month }}" {{ old('duration_months', old('duration', 1)) == $month ? 'selected' : '' }}>{{ $month }} Bulan</option>
@@ -144,7 +144,7 @@
                                 <div>
                                     <span class="badge mb-1" style="background-color: var(--surface-page-canvas); color: var(--color-stone); border: var(--border-hairline); font-size: 10px;">PROPERTI</span>
                                     <h3 style="font-size: 15px; font-weight: 700; color: var(--color-midnight-ink); margin-bottom: 2px;">{{ $kos['title'] }}</h3>
-                                    <div style="font-size: 12px; color: var(--color-stone);"><i class="fa fa-map-marker-alt mr-1 text-danger"></i> {{ $kos['city'] }}</div>
+                                    <div style="font-size: 12px; color: var(--color-stone);"><i class="fa fa-map-marker-alt mr-1" style="color: var(--color-notion-blue);"></i> {{ $kos['city'] }}</div>
                                 </div>
                             </div>
 

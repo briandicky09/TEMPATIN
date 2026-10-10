@@ -67,13 +67,13 @@
                                             <rect x="125" y="70" width="8" height="35" rx="2" fill="#e6f3fe" opacity="0.7"/>
                                             <rect x="140" y="65" width="8" height="40" rx="2" fill="#e6f3fe" opacity="0.7"/>
                                             <rect x="155" y="70" width="8" height="35" rx="2" fill="#e6f3fe" opacity="0.7"/>
-                                            <rect x="30" y="80" width="140" height="4" rx="2" fill="#bae0fd" opacity="0.6"/>
+                                            <rect x="30" y="80" width="140" height="4" rx="2" fill="#e6f3fe" opacity="0.6"/>
                                             <rect x="114" y="75" width="12" height="45" rx="2" fill="#615d59"/>
-                                            <path d="M100 65 L128 65 Q135 65 135 73 L135 88 Q135 94 128 94 L100 94 Q93 94 93 88 L93 73 Q93 65 100 65 Z" fill="#ffb110" stroke="#d97706" stroke-width="1.5"/>
-                                            <ellipse cx="98" cy="80" rx="9" ry="14" fill="#f59e0b"/>
+                                            <path d="M100 65 L128 65 Q135 65 135 73 L135 88 Q135 94 128 94 L100 94 Q93 94 93 88 L93 73 Q93 65 100 65 Z" fill="#0075de" stroke="#0075de" stroke-width="1.5"/>
+                                            <ellipse cx="98" cy="80" rx="9" ry="14" fill="#0075de"/>
                                             <rect x="118" y="55" width="3" height="15" fill="#64748b"/>
-                                            <polygon points="121,55 133,59 121,63" fill="#ffb110"/>
-                                            <circle cx="75" cy="55" r="14" fill="#fed7aa"/>
+                                            <polygon points="121,55 133,59 121,63" fill="#0075de"/>
+                                            <circle cx="75" cy="55" r="14" fill="#e6f3fe"/>
                                             <circle cx="72" cy="54" r="1.5" fill="#1e293b"/>
                                             <circle cx="80" cy="54" r="1.5" fill="#1e293b"/>
                                             <ellipse cx="100" cy="118" rx="65" ry="4" fill="#e2e8f0"/>
@@ -189,7 +189,7 @@
                         </a>
                         <form action="{{ route('owner.logout') }}" method="POST" class="d-inline m-0 p-0">
                             @csrf
-                            <button type="submit" class="notion-btn-ghost text-danger" title="Keluar" style="padding: 7px 10px;">
+                            <button type="submit" class="notion-btn-ghost text-dark" title="Keluar" style="padding: 7px 10px;">
                                 <i class="fa fa-sign-out-alt"></i>
                             </button>
                         </form>
@@ -225,7 +225,7 @@
                                 <div class="dropdown-divider my-1"></div>
                                 <form action="{{ route('member.logout') }}" method="POST" class="m-0 p-0">
                                     @csrf
-                                    <button type="submit" class="dropdown-item py-2 d-flex align-items-center text-danger border-0 bg-transparent w-100 text-left" style="cursor: pointer;">
+                                    <button type="submit" class="dropdown-item py-2 d-flex align-items-center text-dark border-0 bg-transparent w-100 text-left" style="cursor: pointer;">
                                         <i class="fa fa-sign-out-alt mr-2" style="width: 16px;"></i>
                                         <span>Keluar</span>
                                     </button>

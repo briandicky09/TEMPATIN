@@ -136,7 +136,7 @@
                                         </div>
 
                                         <div class="form-group mb-3">
-                                            <label for="inputName" class="font-weight-600 text-dark small mb-1">Nama Lengkap <span class="text-danger">*</span></label>
+                                            <label for="inputName" class="font-weight-600 text-dark small mb-1">Nama Lengkap <span style="color: var(--color-notion-blue);">*</span></label>
                                             <input type="text" class="form-control" id="inputName" name="name" value="{{ old('name', $user->name) }}" required style="border-radius: 8px; font-size: 14px;">
                                         </div>
                                         <div class="form-group mb-3">

@@ -54,13 +54,13 @@
                 <div class="col-md-4 col-sm-6 mb-3 mb-md-0">
                     <div class="p-3 rounded" style="background-color: #ffffff; border: var(--border-hairline); border-radius: var(--radius-cards);">
                         <div style="font-size: 12px; color: var(--color-stone); font-weight: 500; margin-bottom: 4px;">Sudah Lunas</div>
-                        <div style="font-size: 1.6rem; font-weight: 700; color: #166534; font-variant-numeric: tabular-nums;">{{ $paidCount }}</div>
+                        <div style="font-size: 1.6rem; font-weight: 700; color: var(--color-notion-blue); font-variant-numeric: tabular-nums;">{{ $paidCount }}</div>
                     </div>
                 </div>
                 <div class="col-md-4 col-sm-12">
                     <div class="p-3 rounded" style="background-color: #ffffff; border: var(--border-hairline); border-radius: var(--radius-cards);">
                         <div style="font-size: 12px; color: var(--color-stone); font-weight: 500; margin-bottom: 4px;">Menunggu Pembayaran</div>
-                        <div style="font-size: 1.6rem; font-weight: 700; color: #b45309; font-variant-numeric: tabular-nums;">{{ $unpaidCount }}</div>
+                        <div style="font-size: 1.6rem; font-weight: 700; color: var(--color-midnight-ink); font-variant-numeric: tabular-nums;">{{ $unpaidCount }}</div>
                     </div>
                 </div>
             </div>
@@ -87,8 +87,8 @@
                                     @php
                                         $isPaid = in_array(strtolower($inv->status), ['paid', 'lunas', 'settled', 'success']);
                                         $statusClass = $isPaid 
-                                            ? 'background-color: #edf7ee; color: #166534; border: 1px solid rgba(22, 101, 52, 0.2);'
-                                            : 'background-color: #fef9c3; color: #854d0e; border: 1px solid rgba(133, 77, 14, 0.2);';
+                                            ? 'background-color: var(--color-sky-tint); color: var(--color-notion-blue); border: 1px solid rgba(0, 117, 222, 0.2);'
+                                            : 'background-color: #ffffff; color: var(--color-charcoal); border: 1px solid rgba(0, 0, 0, 0.18);';
                                         $statusLabel = $inv->status_label ?? ucfirst($inv->status);
                                     @endphp
                                     <tr style="border-bottom: 1px solid rgba(0,0,0,0.06);">
