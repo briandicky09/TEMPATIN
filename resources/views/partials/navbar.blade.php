@@ -45,9 +45,11 @@
                       ]
                     : [
                         ['label' => 'Area Member', 'href' => route('member.home'), 'ariaLabel' => 'Buka beranda member'],
+                        ['label' => 'Kos Favorit', 'href' => route('member.favorit'), 'ariaLabel' => 'Lihat kos favorit tersimpan'],
+                        ['label' => 'Pesan & Chat', 'href' => route('member.pesan'), 'ariaLabel' => 'Buka pesan dan chat'],
+                        ['label' => 'Notifikasi Akun', 'href' => route('member.notifikasi'), 'ariaLabel' => 'Lihat notifikasi akun'],
                         ['label' => 'Tagihan / Invoice', 'href' => route('member.invoice.index'), 'ariaLabel' => 'Lihat tagihan dan invoice'],
                         ['label' => 'Profil Saya', 'href' => route('member.profile'), 'ariaLabel' => 'Pengaturan profil saya'],
-                        ['label' => 'Pusat Bantuan', 'href' => $contactUrl, 'ariaLabel' => 'Pusat bantuan member'],
                       ]
                   )
                 : [
@@ -73,32 +75,125 @@
 
                 <!-- Right Controls: Toggle Menu + Actions -->
                 <div class="card-nav-right-group">
-                    <!-- Toggle Menu Button -->
-                    <button type="button" class="card-nav-toggle" id="cardNavToggle" aria-label="Buka navigasi menu" aria-expanded="false" title="Menu Navigasi">
-                        <span class="card-nav-toggle-icon" id="cardNavToggleIcon">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                                <line x1="4" y1="7" x2="20" y2="7"></line>
-                                <line x1="4" y1="12" x2="20" y2="12"></line>
-                                <line x1="4" y1="17" x2="20" y2="17"></line>
-                            </svg>
-                        </span>
-                    </button>
+                    @if(Auth::check() && Auth::user()->role !== 'owner')
+                        {{-- Member Navigation Items (Image 2 Reference) --}}
+                        <div class="member-nav-items d-none d-md-flex align-items-center">
+                            {{-- 1. Cari Kos (diubah dari Cari Apa?) --}}
+                            <a href="{{ $kosUrl }}" class="member-nav-link {{ request()->routeIs('member.kos.*') || request()->routeIs('kos.*') ? 'active' : '' }}">
+                                Cari Kos
+                            </a>
 
-                    <!-- Right Action CTA -->
-                    <div class="card-nav-actions">
-                        @guest
-                            <a href="{{ route('login') }}" class="card-nav-cta-secondary d-none d-sm-inline-flex">
-                                Masuk
+                            {{-- 2. Favorit --}}
+                            <a href="{{ route('member.favorit') }}" class="member-nav-link {{ request()->routeIs('member.favorit') ? 'active' : '' }}">
+                                Favorit
                             </a>
-                            <a href="{{ $kosUrl }}" class="card-nav-cta-btn">
-                                <span>Cari Kos</span>
-                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-left: 6px;">
-                                    <circle cx="11" cy="11" r="8"></circle>
-                                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+
+                            {{-- 3. Chat --}}
+                            <a href="{{ route('member.pesan') }}" class="member-nav-link {{ request()->routeIs('member.pesan') || request()->routeIs('member.chat') ? 'active' : '' }}">
+                                Chat
+                            </a>
+
+                            {{-- 4. Notifikasi --}}
+                            <a href="{{ route('member.notifikasi') }}" class="member-nav-link {{ request()->routeIs('member.notifikasi') ? 'active' : '' }}">
+                                Notifikasi
+                            </a>
+
+                            {{-- 5. Lainnya Dropdown --}}
+                            <div class="member-nav-dropdown dropdown">
+                                <a href="javascript:void(0)" class="member-nav-link dropdown-toggle d-inline-flex align-items-center" id="memberNavLainnyaToggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <span>Lainnya</span>
+                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-left: 4px;">
+                                        <polyline points="6 9 12 15 18 9"></polyline>
+                                    </svg>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right member-custom-dropdown shadow" id="memberNavLainnyaMenu" aria-labelledby="memberNavLainnyaToggle">
+                                    <a class="dropdown-item py-2" href="{{ route('member.invoice.index') }}">
+                                        <i class="fa fa-file-invoice mr-2 text-muted" style="width: 16px;"></i> Tagihan &amp; Invoice
+                                    </a>
+                                    <a class="dropdown-item py-2" href="{{ $promoUrl }}">
+                                        <i class="fa fa-tag mr-2 text-muted" style="width: 16px;"></i> Voucher &amp; Promo
+                                    </a>
+                                    <a class="dropdown-item py-2" href="{{ $artikelUrl }}">
+                                        <i class="fa fa-newspaper mr-2 text-muted" style="width: 16px;"></i> Artikel &amp; Tips
+                                    </a>
+                                    <a class="dropdown-item py-2" href="{{ $contactUrl }}">
+                                        <i class="fa fa-life-ring mr-2 text-muted" style="width: 16px;"></i> Pusat Bantuan
+                                    </a>
+                                    <div class="dropdown-divider my-1"></div>
+                                    <a class="dropdown-item py-2" href="{{ $aboutUrl }}">
+                                        <i class="fa fa-info-circle mr-2 text-muted" style="width: 16px;"></i> Tentang TEMPATIN
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        {{-- 6. Profile Avatar Icon (Empty Profile Logo with Red Badge) + Dropdown (Edit Profil & Keluar) --}}
+                        <div class="member-profile-dropdown dropdown">
+                            <a href="javascript:void(0)" class="member-avatar-btn d-inline-flex align-items-center justify-content-center" id="memberProfileToggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="Profil Akun">
+                                <span class="member-avatar-circle">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#525252" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                        <circle cx="12" cy="7" r="4"></circle>
+                                    </svg>
+                                    <span class="member-avatar-dot" aria-hidden="true"></span>
+                                </span>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right member-custom-dropdown member-profile-menu shadow" id="memberProfileMenu" aria-labelledby="memberProfileToggle">
+                                <div class="px-3 py-2 border-bottom bg-light mb-1">
+                                    <div class="font-weight-bold text-dark text-truncate" style="font-size: 13.5px;">{{ Auth::user()->name ?? 'Member TEMPATIN' }}</div>
+                                    <div class="text-muted text-truncate" style="font-size: 11.5px;">{{ Auth::user()->email ?? '' }}</div>
+                                </div>
+                                <a class="dropdown-item py-2 d-flex align-items-center" href="{{ route('member.profile') }}">
+                                    <i class="fa fa-user-edit mr-2 text-muted" style="width: 16px;"></i>
+                                    <span>Edit Profil</span>
+                                </a>
+                                <div class="dropdown-divider my-1"></div>
+                                <form action="{{ route('member.logout') }}" method="POST" class="m-0 p-0">
+                                    @csrf
+                                    <button type="submit" class="dropdown-item py-2 d-flex align-items-center text-danger border-0 bg-transparent w-100 text-left" style="cursor: pointer;">
+                                        <i class="fa fa-sign-out-alt mr-2" style="width: 16px;"></i>
+                                        <span>Keluar</span>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+
+                        {{-- Toggle Menu Button for Mobile Only --}}
+                        <button type="button" class="card-nav-toggle d-md-none ml-1" id="cardNavToggle" aria-label="Buka navigasi menu" aria-expanded="false" title="Menu Navigasi">
+                            <span class="card-nav-toggle-icon" id="cardNavToggleIcon">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                    <line x1="4" y1="7" x2="20" y2="7"></line>
+                                    <line x1="4" y1="12" x2="20" y2="12"></line>
+                                    <line x1="4" y1="17" x2="20" y2="17"></line>
                                 </svg>
-                            </a>
-                        @else
-                            @if(Auth::user()->role === 'owner')
+                            </span>
+                        </button>
+                    @else
+                        {{-- Non-member (Guest or Owner) Toggle Menu Button --}}
+                        <button type="button" class="card-nav-toggle" id="cardNavToggle" aria-label="Buka navigasi menu" aria-expanded="false" title="Menu Navigasi">
+                            <span class="card-nav-toggle-icon" id="cardNavToggleIcon">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                    <line x1="4" y1="7" x2="20" y2="7"></line>
+                                    <line x1="4" y1="12" x2="20" y2="12"></line>
+                                    <line x1="4" y1="17" x2="20" y2="17"></line>
+                                </svg>
+                            </span>
+                        </button>
+
+                        <!-- Right Action CTA for Guest or Owner -->
+                        <div class="card-nav-actions">
+                            @guest
+                                <a href="{{ route('login') }}" class="card-nav-cta-secondary d-none d-sm-inline-flex">
+                                    Masuk
+                                </a>
+                                <a href="{{ $kosUrl }}" class="card-nav-cta-btn">
+                                    <span>Cari Kos</span>
+                                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-left: 6px;">
+                                        <circle cx="11" cy="11" r="8"></circle>
+                                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                                    </svg>
+                                </a>
+                            @else
                                 <a href="{{ route('owner.dashboard') }}" class="card-nav-cta-btn">
                                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px;">
                                         <rect x="3" y="3" width="7" height="9"></rect>
@@ -109,17 +204,9 @@
                                     <span class="d-none d-sm-inline">Dashboard Owner</span>
                                     <span class="d-sm-none">Dashboard</span>
                                 </a>
-                            @else
-                                <a href="{{ route('member.home') }}" class="card-nav-cta-btn">
-                                    <span class="d-inline-flex align-items-center justify-content-center rounded-circle" style="width: 22px; height: 22px; background: rgba(255,255,255,0.25); font-size: 11px; font-weight: 700; margin-right: 6px;">
-                                        {{ strtoupper(substr(Auth::user()->name ?? 'U', 0, 1)) }}
-                                    </span>
-                                    <span class="d-none d-sm-inline">{{ Str::limit(Auth::user()->name, 12) }}</span>
-                                    <span class="d-sm-none">Member</span>
-                                </a>
-                            @endif
-                        @endguest
-                    </div>
+                            @endguest
+                        </div>
+                    @endif
                 </div>
             </div>
 
@@ -191,7 +278,7 @@ document.addEventListener('DOMContentLoaded', function () {
         return 290;
     }
 
-    gsap.set(navEl, { height: getCollapsedHeight(), overflow: 'hidden' });
+    gsap.set(navEl, { height: getCollapsedHeight(), overflow: 'visible' });
     gsap.set(cards, { y: 24, opacity: 0 });
 
     function updateToggleIcon(open) {
@@ -224,6 +311,9 @@ document.addEventListener('DOMContentLoaded', function () {
         gsap.killTweensOf([navEl, cards]);
 
         const openTl = gsap.timeline({
+            onStart: function () {
+                gsap.set(navEl, { overflow: 'hidden' });
+            },
             onComplete: function () {
                 isAnimating = false;
             }
@@ -252,6 +342,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const collapsedHeight = getCollapsedHeight();
 
         gsap.killTweensOf([navEl, cards]);
+        gsap.set(navEl, { overflow: 'hidden' });
 
         const closeTl = gsap.timeline({
             onComplete: function () {
@@ -264,7 +355,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 contentEl.setAttribute('aria-hidden', 'true');
 
                 gsap.set(cards, { y: 24, opacity: 0 });
-                gsap.set(navEl, { height: getCollapsedHeight() });
+                gsap.set(navEl, { height: getCollapsedHeight(), overflow: 'visible' });
                 isAnimating = false;
             }
         });
@@ -313,12 +404,67 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Handle resize
     window.addEventListener('resize', function () {
-        if (!tl) return;
-        if (isExpanded) {
-            const newHeight = calculateHeight();
-            gsap.to(navEl, { height: newHeight, duration: 0.3, ease: 'power3.out' });
-        } else {
-            createTimeline();
+        if (!isExpanded) return;
+        const newHeight = calculateHeight();
+        gsap.to(navEl, { height: newHeight, duration: 0.3, ease: 'power3.out' });
+    });
+
+    // Member Custom Dropdowns (Lainnya & Profile Dropdown)
+    const profileToggle = document.getElementById('memberProfileToggle');
+    const profileMenu = document.getElementById('memberProfileMenu');
+    const lainnyaToggle = document.getElementById('memberNavLainnyaToggle');
+    const lainnyaMenu = document.getElementById('memberNavLainnyaMenu');
+
+    function closeAllMemberDropdowns() {
+        if (profileMenu) {
+            profileMenu.classList.remove('show');
+            if (profileToggle) profileToggle.setAttribute('aria-expanded', 'false');
+            if (profileToggle && profileToggle.parentElement) profileToggle.parentElement.classList.remove('show');
+        }
+        if (lainnyaMenu) {
+            lainnyaMenu.classList.remove('show');
+            if (lainnyaToggle) lainnyaToggle.setAttribute('aria-expanded', 'false');
+            if (lainnyaToggle && lainnyaToggle.parentElement) lainnyaToggle.parentElement.classList.remove('show');
+        }
+    }
+
+    if (profileToggle && profileMenu) {
+        profileToggle.addEventListener('click', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            const isOpen = profileMenu.classList.contains('show');
+            closeAllMemberDropdowns();
+            if (!isOpen) {
+                profileMenu.classList.add('show');
+                profileToggle.setAttribute('aria-expanded', 'true');
+                if (profileToggle.parentElement) profileToggle.parentElement.classList.add('show');
+            }
+        });
+    }
+
+    if (lainnyaToggle && lainnyaMenu) {
+        lainnyaToggle.addEventListener('click', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            const isOpen = lainnyaMenu.classList.contains('show');
+            closeAllMemberDropdowns();
+            if (!isOpen) {
+                lainnyaMenu.classList.add('show');
+                lainnyaToggle.setAttribute('aria-expanded', 'true');
+                if (lainnyaToggle.parentElement) lainnyaToggle.parentElement.classList.add('show');
+            }
+        });
+    }
+
+    document.addEventListener('click', function (e) {
+        if (!e.target.closest('.member-profile-dropdown') && !e.target.closest('.member-nav-dropdown')) {
+            closeAllMemberDropdowns();
+        }
+    });
+
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') {
+            closeAllMemberDropdowns();
         }
     });
 

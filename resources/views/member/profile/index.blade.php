@@ -15,7 +15,7 @@
         $displayRole = ucfirst($user?->role ?? 'member');
     @endphp
 
-    <main id="ts-main" style="padding-top: 100px; padding-bottom: 80px;">
+    <main id="ts-main" style="padding-top: 20px; padding-bottom: 80px;">
 
         <!-- BREADCRUMB -->
         <div class="container mb-4">
@@ -77,14 +77,69 @@
 
                         <!-- Quick Actions -->
                         <div class="pt-3 border-top d-flex flex-wrap gap-2 justify-content-between align-items-center" style="border-color: rgba(0,0,0,0.06) !important;">
-                            <a href="{{ route('member.invoice.index') }}" class="btn" style="background-color: var(--color-midnight-ink); color: #ffffff; font-weight: 600; font-size: 13px; border-radius: var(--radius-buttons); padding: 10px 18px; border: none;">
-                                <i class="fa fa-file-invoice mr-2"></i> Riwayat Invoice
-                            </a>
+                            <div>
+                                <button type="button" class="btn" data-toggle="modal" data-target="#editProfileModal" id="btnEditProfile" style="background-color: var(--color-notion-blue); color: #ffffff; font-weight: 600; font-size: 13px; border-radius: var(--radius-buttons); padding: 10px 18px; border: none; box-shadow: 0 2px 8px rgba(0, 117, 222, 0.25);">
+                                    <i class="fa fa-user-edit mr-2"></i> Edit Profil
+                                </button>
+                                <a href="{{ route('member.invoice.index') }}" class="btn ml-2" style="background-color: var(--color-midnight-ink); color: #ffffff; font-weight: 600; font-size: 13px; border-radius: var(--radius-buttons); padding: 10px 18px; border: none;">
+                                    <i class="fa fa-file-invoice mr-2"></i> Riwayat Invoice
+                                </a>
+                            </div>
                             <a href="{{ route('member.contact') }}" class="btn" style="background-color: var(--surface-page-canvas); color: var(--color-charcoal); border: var(--border-hairline); font-weight: 600; font-size: 13px; border-radius: var(--radius-buttons); padding: 10px 18px;">
                                 <i class="fa fa-life-ring mr-2"></i> Pusat Bantuan
                             </a>
                         </div>
 
+                    </div>
+
+                    <!-- MODAL EDIT PROFIL -->
+                    <div class="modal fade" id="editProfileModal" tabindex="-1" role="dialog" aria-labelledby="editProfileModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content" style="border-radius: var(--radius-cards); border: var(--border-hairline); overflow: hidden;">
+                                <div class="modal-header border-bottom py-3 px-4" style="background-color: var(--surface-page-canvas);">
+                                    <h5 class="modal-title font-weight-bold" id="editProfileModalLabel" style="font-family: var(--font-serif); font-size: 1.2rem; color: var(--color-midnight-ink);">
+                                        <i class="fa fa-user-edit mr-2 text-primary"></i> Edit Profil Member
+                                    </h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <form action="{{ route('member.profile.update') }}" method="POST">
+                                    @csrf
+                                    @method('PUT')
+                                    <div class="modal-body p-4">
+                                        <div class="form-group mb-3">
+                                            <label for="inputName" class="font-weight-600 text-dark small mb-1">Nama Lengkap <span class="text-danger">*</span></label>
+                                            <input type="text" class="form-control" id="inputName" name="name" value="{{ old('name', $user->name) }}" required style="border-radius: 8px; font-size: 14px;">
+                                        </div>
+                                        <div class="form-group mb-3">
+                                            <label for="inputEmail" class="font-weight-600 text-dark small mb-1">Email Terdaftar</label>
+                                            <input type="email" class="form-control bg-light" id="inputEmail" value="{{ $user->email }}" disabled readonly style="border-radius: 8px; font-size: 14px; cursor: not-allowed;">
+                                            <small class="text-muted" style="font-size: 11px;">Email akun tidak dapat diubah.</small>
+                                        </div>
+                                        <div class="form-group mb-3">
+                                            <label for="inputPhone" class="font-weight-600 text-dark small mb-1">Nomor Telepon / WhatsApp</label>
+                                            <input type="tel" class="form-control" id="inputPhone" name="phone" value="{{ old('phone', $user->phone) }}" placeholder="Contoh: 081234567890" style="border-radius: 8px; font-size: 14px;">
+                                        </div>
+                                        <hr class="my-3">
+                                        <div class="form-group mb-3">
+                                            <label for="inputPassword" class="font-weight-600 text-dark small mb-1">Kata Sandi Baru <span class="text-muted">(Kosongkan jika tidak diubah)</span></label>
+                                            <input type="password" class="form-control" id="inputPassword" name="password" placeholder="Minimal 6 karakter" style="border-radius: 8px; font-size: 14px;">
+                                        </div>
+                                        <div class="form-group mb-2">
+                                            <label for="inputPasswordConfirm" class="font-weight-600 text-dark small mb-1">Konfirmasi Kata Sandi Baru</label>
+                                            <input type="password" class="form-control" id="inputPasswordConfirm" name="password_confirmation" placeholder="Ulangi kata sandi baru" style="border-radius: 8px; font-size: 14px;">
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer border-top px-4 py-3 bg-light d-flex justify-content-between">
+                                        <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal" style="border-radius: 6px; font-weight: 500;">Batal</button>
+                                        <button type="submit" class="btn btn-primary btn-sm" style="background-color: var(--color-notion-blue); border: none; border-radius: 6px; font-weight: 600; padding: 7px 18px;">
+                                            <i class="fa fa-save mr-1"></i> Simpan Perubahan
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
                     </div>
 
                 </div>
@@ -96,4 +151,14 @@
     @include('partials.footer')
 
 </div>
+
+@push('scripts')
+<script>
+$(document).ready(function() {
+    if (window.location.hash === '#edit' || window.location.search.indexOf('edit=1') !== -1 || {{ $errors->any() ? 'true' : 'false' }}) {
+        $('#editProfileModal').modal('show');
+    }
+});
+</script>
+@endpush
 @endsection

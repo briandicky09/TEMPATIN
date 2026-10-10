@@ -155,6 +155,93 @@ class MemberController extends Controller
     }
 
     /**
+     * Update profil member.
+     */
+    public function updateProfile(Request $request): RedirectResponse
+    {
+        $user = Auth::user();
+
+        $validated = $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'phone' => ['nullable', 'string', 'max:20'],
+            'password' => ['nullable', 'string', 'min:6', 'confirmed'],
+        ], [
+            'name.required' => 'Nama lengkap wajib diisi.',
+            'password.min' => 'Password minimal 6 karakter.',
+            'password.confirmed' => 'Konfirmasi kata sandi tidak cocok.',
+        ]);
+
+        $user->name = $validated['name'];
+        if (isset($validated['phone'])) {
+            $user->phone = $validated['phone'];
+        }
+        if (!empty($validated['password'])) {
+            $user->password = \Illuminate\Support\Facades\Hash::make($validated['password']);
+        }
+
+        $user->save();
+
+        return redirect()->route('member.profile')->with('success', 'Profil Anda berhasil diperbarui!');
+    }
+
+    /**
+     * Halaman favorit kos member.
+     */
+    public function favorit(): View
+    {
+        $favoriteSlugs = session('member_favorites', []);
+
+        $favoriteKos = Kos::with(['facilities', 'owner', 'photos'])
+            ->whereIn('slug', $favoriteSlugs)
+            ->where('status', 'active')
+            ->get();
+
+        $recommendedKos = Kos::with(['facilities', 'owner', 'photos'])
+            ->where('status', 'active')
+            ->whereNotIn('slug', $favoriteSlugs)
+            ->latest('id')
+            ->take(6)
+            ->get();
+
+        return view('member.favorit.index', [
+            'favoriteKos' => $favoriteKos,
+            'recommendedKos' => $recommendedKos,
+        ]);
+    }
+
+    /**
+     * Toggle status simpan kos ke favorit (AJAX).
+     */
+    public function toggleFavorit(Request $request): \Illuminate\Http\JsonResponse
+    {
+        $slug = $request->input('slug');
+        if (!$slug) {
+            return response()->json(['success' => false, 'message' => 'Slug kos tidak valid.'], 400);
+        }
+
+        $favorites = session('member_favorites', []);
+
+        if (in_array($slug, $favorites)) {
+            $favorites = array_values(array_diff($favorites, [$slug]));
+            session(['member_favorites' => $favorites]);
+            $isFavorite = false;
+            $message = 'Kos berhasil dihapus dari daftar favorit.';
+        } else {
+            $favorites[] = $slug;
+            session(['member_favorites' => $favorites]);
+            $isFavorite = true;
+            $message = 'Kos berhasil ditambahkan ke daftar favorit!';
+        }
+
+        return response()->json([
+            'success' => true,
+            'is_favorite' => $isFavorite,
+            'message' => $message,
+            'count' => count($favorites),
+        ]);
+    }
+
+    /**
      * Halaman daftar invoice member (berdasarkan customer yang sedang login).
      */
     public function invoice(): View

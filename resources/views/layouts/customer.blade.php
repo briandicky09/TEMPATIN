@@ -6,7 +6,7 @@
     @include('partials.navbar')
     @include('partials.alert')
 
-    <main style="padding-top: 100px; padding-bottom: 80px;">
+    <main style="padding-top: 20px; padding-bottom: 80px;">
         <div class="container">
             <div class="row">
                 <!-- Sidebar Customer -->

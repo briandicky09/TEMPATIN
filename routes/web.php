@@ -27,6 +27,7 @@ Route::get('/kos', [KosController::class, 'index'])->name('kos.index');
 Route::prefix('kos')->name('kos.')->group(function () {
     Route::get('/{slug}', [KosController::class, 'show'])->name('show');
 });
+Route::post('/favorit/toggle', [MemberController::class, 'toggleFavorit'])->name('kos.favorit.toggle');
 
 // Autentikasi (Hanya untuk Guest)
 Route::middleware('guest')->group(function () {
@@ -90,12 +91,18 @@ Route::prefix('member')->name('member.')->middleware(['auth', 'role:customer'])-
     Route::get('/pesan', function () {
         return view('member.message.index');
     })->name('pesan');
+    Route::get('/chat', function () {
+        return redirect()->route('member.pesan');
+    })->name('chat');
+    Route::get('/favorit', [MemberController::class, 'favorit'])->name('favorit');
+    Route::post('/favorit/toggle', [MemberController::class, 'toggleFavorit'])->name('favorit.toggle');
     Route::get('/booking/{slug}', [MemberController::class, 'booking'])->name('booking.create');
     Route::post('/booking/{slug}', [MemberController::class, 'store'])->name('booking.store');
     Route::get('/booking/detail/{booking_code}', [MemberController::class, 'show'])->name('booking.show');
     Route::post('/booking/{slug}/payment', [MemberController::class, 'payment'])->name('booking.payment');
     Route::post('/payment/confirm', [MemberController::class, 'confirmPayment'])->name('payment.confirm');
     Route::get('/profil', [MemberController::class, 'profile'])->name('profile');
+    Route::put('/profil', [MemberController::class, 'updateProfile'])->name('profile.update');
     Route::get('/notifikasi', [MemberController::class, 'notifikasi'])->name('notifikasi');
     Route::prefix('invoice')->name('invoice.')->group(function () {
         Route::get('/', [MemberController::class, 'invoice'])->name('index');

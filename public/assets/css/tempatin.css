@@ -922,18 +922,111 @@ p {
 .ts-card__type,
 .badge-type-putra,
 .badge-type-putri,
-.badge-type-campur {
-    font-size: 12px;
-    font-weight: 600;
-    padding: 3px 10px;
-    border-radius: var(--radius-pills);
-    text-transform: capitalize;
+.badge-type-campur,
+.badge-type-eksklusif,
+.ts-card-badge-type {
+    background-color: #ffffff !important;
+    color: var(--color-notion-blue, #0075de) !important;
+    border-radius: 8px !important;
+    border: 1px solid rgba(0, 117, 222, 0.18) !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08) !important;
+    font-size: 12px !important;
+    font-weight: 600 !important;
+    padding: 5px 12px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    letter-spacing: -0.01em !important;
+    line-height: 1.2 !important;
+    text-transform: capitalize !important;
 }
 
-.ts-card__type {
-    background-color: var(--color-sky-tint);
-    color: var(--color-notion-blue);
-    border: 1px solid #d4ebfd;
+/* Tombol Simpan ke Favorit (Detail Page & Cards) */
+.btn-favorite-action {
+    display: inline-flex;
+    align-items: center;
+    background-color: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    border-radius: 10px;
+    padding: 6px 14px;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    outline: none !important;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+}
+
+.btn-favorite-action:hover {
+    background-color: #f9fafb;
+    border-color: rgba(0, 0, 0, 0.22);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    transform: translateY(-1px);
+}
+
+.btn-favorite-action:active {
+    transform: translateY(0);
+}
+
+.favorite-heart-svg {
+    width: 22px;
+    height: 22px;
+    display: inline-block;
+    vertical-align: middle;
+    transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.favorite-heart-svg path {
+    /* Outline hitam, isinya putih */
+    fill: #ffffff;
+    stroke: #111827;
+    stroke-width: 2px;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    transition: fill 0.25s ease, stroke 0.25s ease;
+}
+
+/* Saat aktif / tersimpan ke favorit: isinya dan outlinenya berubah merah */
+.favorite-heart-svg.is-active path,
+.is-favorite .favorite-heart-svg path,
+.btn-favorite-action.is-active .favorite-heart-svg path {
+    fill: #ef4444 !important;
+    stroke: #ef4444 !important;
+}
+
+.favorite-heart-svg.is-pop {
+    animation: heartPop 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes heartPop {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.35); }
+    100% { transform: scale(1); }
+}
+
+/* Floating Card Favorite Button */
+.btn-card-favorite {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.94);
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+    transition: all 0.2s ease;
+    z-index: 3;
+}
+
+.btn-card-favorite:hover {
+    background-color: #ffffff;
+    transform: scale(1.1);
+}
+
+.btn-card-favorite .favorite-heart-svg {
+    width: 18px;
+    height: 18px;
 }
 
 .ts-card__rating {
@@ -1952,6 +2045,166 @@ header#ts-header.is-shrunk,
 .card-nav-cta-secondary:hover {
     background-color: var(--surface-page-canvas, #f6f5f4);
     color: var(--color-midnight-ink);
+}
+
+/* ==========================================================================
+   MEMBER NAVBAR (MAMIKOS STYLE HORIZONTAL MENUS)
+   ========================================================================== */
+.card-nav:not(.open) {
+    overflow: visible !important;
+}
+
+.member-nav-items {
+    display: inline-flex;
+    align-items: center;
+    gap: 20px;
+    margin-right: 12px;
+}
+
+.member-nav-link {
+    font-size: 14.5px;
+    font-weight: 500;
+    color: #222222 !important;
+    text-decoration: none !important;
+    padding: 6px 4px;
+    transition: color 0.18s ease, transform 0.18s ease;
+    white-space: nowrap;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    line-height: 1;
+}
+
+.member-nav-link:hover,
+.member-nav-link:focus {
+    color: var(--color-notion-blue, #0075de) !important;
+    text-decoration: none !important;
+}
+
+.member-nav-link.active {
+    color: var(--color-notion-blue, #0075de) !important;
+    font-weight: 600;
+}
+
+.member-nav-dropdown {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+}
+
+.member-nav-dropdown .dropdown-toggle::after {
+    display: none !important;
+}
+
+/* Profile Avatar Button */
+.member-profile-dropdown {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+}
+
+.member-avatar-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    text-decoration: none !important;
+    outline: none !important;
+}
+
+.member-avatar-circle {
+    position: relative;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background-color: #e5e7eb;
+    border: 1.5px solid #d1d5db;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    color: #4b5563;
+}
+
+.member-avatar-btn:hover .member-avatar-circle,
+.member-avatar-btn:focus .member-avatar-circle,
+.member-profile-dropdown.show .member-avatar-circle {
+    background-color: #f3f4f6;
+    border-color: var(--color-notion-blue, #0075de);
+    box-shadow: 0 0 0 3px rgba(0, 117, 222, 0.18);
+    transform: scale(1.04);
+}
+
+.member-avatar-dot {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    width: 9px;
+    height: 9px;
+    background-color: #ef4444;
+    border: 2px solid #ffffff;
+    border-radius: 50%;
+}
+
+/* Custom Dropdown Menus */
+.member-custom-dropdown {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    min-width: 200px;
+    margin-top: 10px !important;
+    padding: 6px 0;
+    background-color: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12), 0 2px 6px rgba(0, 0, 0, 0.04) !important;
+    z-index: 1080 !important;
+    display: none;
+    animation: memberFadeIn 0.18s ease forwards;
+}
+
+.member-custom-dropdown.show,
+.dropdown.show > .member-custom-dropdown {
+    display: block !important;
+}
+
+.member-profile-menu {
+    min-width: 220px;
+}
+
+.member-custom-dropdown .dropdown-item {
+    font-size: 13.5px;
+    font-weight: 500;
+    color: #374151;
+    padding: 9px 18px;
+    transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.member-custom-dropdown .dropdown-item:hover,
+.member-custom-dropdown .dropdown-item:focus {
+    background-color: #f3f4f6;
+    color: var(--color-notion-blue, #0075de);
+}
+
+.member-custom-dropdown .dropdown-item.text-danger:hover {
+    background-color: #fef2f2;
+    color: #dc2626 !important;
+}
+
+@keyframes memberFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-6px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 /* Content cards reveal */

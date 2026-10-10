@@ -8,7 +8,7 @@
     @include('partials.navbar')
     @include('partials.alert')
 
-    <main id="ts-main" style="padding-top: 100px; padding-bottom: 80px;">
+    <main id="ts-main" style="padding-top: 20px; padding-bottom: 80px;">
 
         <!-- BREADCRUMB -->
         <div class="container mb-4">

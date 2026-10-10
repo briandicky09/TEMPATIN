@@ -78,10 +78,24 @@
 
                         <!--NAMA KOS & BADGES-->
                         <div id="page-title" class="mb-4">
-                            <div class="mb-2">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
                                 <span class="badge px-3 py-1 font-weight-normal" style="border-radius: 9999px; background-color: #edf7ee; color: #166534; border: 1px solid rgba(22, 101, 52, 0.18);">
                                     <i class="fa fa-check-circle mr-1" style="color: #166534;"></i>TEMPATIN Verified
                                 </span>
+
+                                <!-- Tombol Simpan ke Favorit (Heart: outline hitam, isi putih, berubah merah saat diklik) -->
+                                @php
+                                    $kosSlug = $kos['slug'] ?? '';
+                                    $isFavorited = in_array($kosSlug, session('member_favorites', []));
+                                @endphp
+                                <button type="button" class="btn-favorite-action btn-toggle-favorite {{ $isFavorited ? 'is-active' : '' }}" data-slug="{{ $kosSlug }}" id="btnDetailFavorite" title="{{ $isFavorited ? 'Tersimpan di Favorit' : 'Simpan ke Favorit' }}">
+                                    <svg class="favorite-heart-svg {{ $isFavorited ? 'is-active' : '' }}" viewBox="0 0 24 24">
+                                        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                                    </svg>
+                                    <span class="favorite-label-text ml-2 font-weight-600 small text-dark d-none d-sm-inline" id="detailFavoriteText">
+                                        {{ $isFavorited ? 'Tersimpan di Favorit' : 'Simpan ke Favorit' }}
+                                    </span>
+                                </button>
                             </div>
 
                             <h1 class="font-weight-bold text-dark mb-2" style="font-size: 2.2rem; line-height: 1.25; letter-spacing: -0.03em;">
@@ -89,8 +103,9 @@
                             </h1>
 
                             <div class="d-flex flex-wrap align-items-center text-muted" style="gap: 10px; font-size: 0.95rem;">
-                                <span class="badge badge-light border text-dark px-3 py-1 font-weight-normal" style="border-radius: 9999px;">
-                                    Kos {{ $kos['type'] ?? 'Campur' }}
+                                <!-- Label Kos (Layer putih, teks biru, rounded rectangle) -->
+                                <span class="badge ts-card-badge-type">
+                                    Kos {{ ucfirst($kos['type'] ?? 'Campur') }}
                                 </span>
                                 <span>&bull;</span>
                                 <span>
@@ -461,10 +476,13 @@
 
                             <div class="d-flex justify-content-between">
 
-                                <a href="#" class="btn btn-light mr-2 w-100" data-toggle="tooltip"
-                                    data-placement="top" title="Tambah ke favorit">
-                                    <i class="far fa-star"></i>
-                                </a>
+                                <button type="button" class="btn btn-light mr-2 w-100 btn-toggle-favorite {{ $isFavorited ? 'is-active' : '' }}" data-slug="{{ $kosSlug }}" data-toggle="tooltip"
+                                    data-placement="top" title="{{ $isFavorited ? 'Tersimpan di favorit' : 'Tambah ke favorit' }}" style="display: inline-flex; align-items: center; justify-content: center; gap: 6px;">
+                                    <svg class="favorite-heart-svg {{ $isFavorited ? 'is-active' : '' }}" viewBox="0 0 24 24" style="width: 18px; height: 18px;">
+                                        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                                    </svg>
+                                    <span class="small font-weight-bold">Favorit</span>
+                                </button>
 
                                 <a href="#" class="btn btn-light mr-2 w-100" data-toggle="tooltip"
                                     data-placement="top" title="Cetak">
@@ -554,4 +572,46 @@
 
 </div>
 <!--end page-->
+
+@push('scripts')
+<script>
+$(document).ready(function() {
+    $('.btn-toggle-favorite').on('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        const $btn = $(this);
+        const slug = $btn.data('slug');
+        const $svgs = $('.btn-toggle-favorite[data-slug="' + slug + '"] .favorite-heart-svg');
+        const $btns = $('.btn-toggle-favorite[data-slug="' + slug + '"]');
+        const $label = $('#detailFavoriteText');
+
+        $.ajax({
+            url: '{{ route("kos.favorit.toggle") }}',
+            type: 'POST',
+            data: {
+                _token: '{{ csrf_token() }}',
+                slug: slug
+            },
+            success: function(res) {
+                if (res.is_favorite) {
+                    $svgs.addClass('is-active is-pop');
+                    $btns.addClass('is-active').attr('title', 'Tersimpan di favorit');
+                    if ($label.length) $label.text('Tersimpan di Favorit');
+                } else {
+                    $svgs.removeClass('is-active').addClass('is-pop');
+                    $btns.removeClass('is-active').attr('title', 'Simpan ke favorit');
+                    if ($label.length) $label.text('Simpan ke Favorit');
+                }
+                setTimeout(function() {
+                    $svgs.removeClass('is-pop');
+                }, 400);
+            },
+            error: function() {
+                alert('Gagal memperbarui status favorit.');
+            }
+        });
+    });
+});
+</script>
+@endpush
 @endsection

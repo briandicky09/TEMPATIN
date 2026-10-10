@@ -8,7 +8,7 @@
     @include('partials.navbar')
     @include('partials.alert')
 
-    <main id="ts-main" style="min-height: calc(100vh - 120px); display: flex; align-items: center; justify-content: center; padding-top: 100px; padding-bottom: 60px;">
+    <main id="ts-main" style="min-height: calc(100vh - 68px); display: flex; align-items: center; justify-content: center; padding-top: 30px; padding-bottom: 60px;">
 
         <div class="container">
             <div class="row justify-content-center">

@@ -33,6 +33,18 @@
             <i class="fa fa-file-invoice mr-2" style="width: 18px; text-align: center; color: {{ request()->routeIs('member.invoice.*') ? 'var(--color-notion-blue)' : 'var(--color-stone)' }};"></i> Tagihan / Invoice
         </a>
 
+        <a href="{{ route('member.favorit') }}"
+           class="d-flex align-items-center px-3 py-2 rounded text-decoration-none"
+           style="font-size: 13.5px; font-weight: 500; transition: all 0.15s ease; {{ request()->routeIs('member.favorit') ? 'background-color: var(--color-sky-tint); color: var(--color-notion-blue); font-weight: 600;' : 'color: var(--color-charcoal);' }}">
+            <i class="fa fa-heart mr-2" style="width: 18px; text-align: center; color: {{ request()->routeIs('member.favorit') ? 'var(--color-notion-blue)' : 'var(--color-stone)' }};"></i> Kos Favorit
+        </a>
+
+        <a href="{{ route('member.pesan') }}"
+           class="d-flex align-items-center px-3 py-2 rounded text-decoration-none"
+           style="font-size: 13.5px; font-weight: 500; transition: all 0.15s ease; {{ request()->routeIs('member.pesan') || request()->routeIs('member.chat') ? 'background-color: var(--color-sky-tint); color: var(--color-notion-blue); font-weight: 600;' : 'color: var(--color-charcoal);' }}">
+            <i class="fa fa-comment-dots mr-2" style="width: 18px; text-align: center; color: {{ request()->routeIs('member.pesan') || request()->routeIs('member.chat') ? 'var(--color-notion-blue)' : 'var(--color-stone)' }};"></i> Pesan &amp; Chat
+        </a>
+
         <a href="{{ route('member.notifikasi') }}"
            class="d-flex align-items-center px-3 py-2 rounded text-decoration-none"
            style="font-size: 13.5px; font-weight: 500; transition: all 0.15s ease; {{ request()->routeIs('member.notifikasi') ? 'background-color: var(--color-sky-tint); color: var(--color-notion-blue); font-weight: 600;' : 'color: var(--color-charcoal);' }}">

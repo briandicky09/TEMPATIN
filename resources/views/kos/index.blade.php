@@ -8,10 +8,10 @@
     @include('partials.navbar')
     @include('partials.alert')
 
-    <main id="ts-main" class="py-4">
+    <main id="ts-main" class="pt-0 pb-4">
 
         <!-- Breadcrumb & Page Title -->
-        <section class="py-3" style="border-bottom: var(--border-hairline);">
+        <section class="pt-2 pb-3" style="border-bottom: var(--border-hairline);">
             <div class="container">
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb bg-transparent p-0 mb-2" style="font-size: 13px;">
@@ -112,11 +112,19 @@
                                                 default => 'badge-type-campur',
                                             };
                                         @endphp
+                                        <!-- Type Badge (White Layer, Blue Text, Rounded Rectangle) -->
                                         <span class="position-absolute" style="top: 12px; left: 12px; z-index: 2;">
-                                            <span class="badge {{ $typeClass }}">
+                                            <span class="badge {{ $typeClass }} ts-card-badge-type">
                                                 Kos {{ ucfirst($kos['type'] ?? 'Campur') }}
                                             </span>
                                         </span>
+
+                                        <!-- Favorite Heart Button (Black outline, white fill, turns red when clicked) -->
+                                        <button type="button" class="btn-card-favorite position-absolute btn-toggle-favorite" data-slug="{{ $kos['slug'] }}" style="top: 12px; right: 12px; z-index: 3;" title="Simpan ke favorit" aria-label="Simpan ke favorit">
+                                            <svg class="favorite-heart-svg {{ in_array($kos['slug'], session('member_favorites', [])) ? 'is-active' : '' }}" viewBox="0 0 24 24">
+                                                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                                            </svg>
+                                        </button>
                                     </a>
 
                                     <!-- Content Body -->
@@ -208,4 +216,42 @@
     @include('partials.footer')
 
 </div>
+
+@push('scripts')
+<script>
+$(document).ready(function() {
+    $('.btn-toggle-favorite').on('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        const $btn = $(this);
+        const slug = $btn.data('slug');
+        const $svg = $btn.find('.favorite-heart-svg');
+
+        $.ajax({
+            url: '{{ route("kos.favorit.toggle") }}',
+            type: 'POST',
+            data: {
+                _token: '{{ csrf_token() }}',
+                slug: slug
+            },
+            success: function(res) {
+                if (res.is_favorite) {
+                    $svg.addClass('is-active is-pop');
+                    $btn.attr('title', 'Tersimpan di favorit');
+                } else {
+                    $svg.removeClass('is-active').addClass('is-pop');
+                    $btn.attr('title', 'Simpan ke favorit');
+                }
+                setTimeout(function() {
+                    $svg.removeClass('is-pop');
+                }, 400);
+            },
+            error: function() {
+                alert('Gagal memperbarui status favorit.');
+            }
+        });
+    });
+});
+</script>
+@endpush
 @endsection
