@@ -1,4 +1,4 @@
-{{-- Header / CardNav TEMPATIN --}}
+{{-- Header / Notion Navbar TEMPATIN --}}
 @php
     $isMemberArea = request()->is('member*');
     $homeUrl = $isMemberArea ? url('/member' . route('home', [], false)) : route('home');
@@ -7,189 +7,194 @@
     $artikelUrl = $isMemberArea ? url('/member' . route('artikel', [], false)) : route('artikel');
     $aboutUrl = $isMemberArea ? url('/member' . route('about', [], false)) : route('about');
     $contactUrl = $isMemberArea ? url('/member' . route('contact', [], false)) : route('contact');
-    
-    $navCards = [
-        [
-            'label' => 'Eksplorasi Kos',
-            'bgColor' => '#111111',
-            'textColor' => '#ffffff',
-            'links' => [
-                ['label' => 'Semua Pilihan Kos', 'href' => $kosUrl, 'ariaLabel' => 'Lihat semua pilihan kos'],
-                ['label' => 'Kos Putra', 'href' => $kosUrl . '?gender=putra', 'ariaLabel' => 'Cari kos khusus putra'],
-                ['label' => 'Kos Putri', 'href' => $kosUrl . '?gender=putri', 'ariaLabel' => 'Cari kos khusus putri'],
-                ['label' => 'Kos Campur', 'href' => $kosUrl . '?gender=campur', 'ariaLabel' => 'Cari kos campur'],
-            ]
-        ],
-        [
-            'label' => 'Promo & Artikel',
-            'bgColor' => '#172332',
-            'textColor' => '#ffffff',
-            'links' => [
-                ['label' => 'Voucher & Promo', 'href' => $promoUrl, 'ariaLabel' => 'Lihat voucher dan promo sewa kos'],
-                ['label' => 'Artikel & Tips Kos', 'href' => $artikelUrl, 'ariaLabel' => 'Panduan dan artikel seputar kos'],
-                ['label' => 'Tentang TEMPATIN', 'href' => $aboutUrl, 'ariaLabel' => 'Tentang platform TEMPATIN'],
-                ['label' => 'Pusat Bantuan Kontak', 'href' => $contactUrl, 'ariaLabel' => 'Hubungi kontak bantuan'],
-            ]
-        ],
-        [
-            'label' => 'Akun & Layanan',
-            'bgColor' => '#0075de',
-            'textColor' => '#ffffff',
-            'links' => Auth::check() 
-                ? (Auth::user()->role === 'owner' 
-                    ? [
-                        ['label' => 'Dashboard Owner', 'href' => route('owner.dashboard'), 'ariaLabel' => 'Buka dashboard owner'],
-                        ['label' => 'Kelola Kos Saya', 'href' => route('owner.kos.index'), 'ariaLabel' => 'Kelola properti kos'],
-                        ['label' => 'Tambah Kos Baru', 'href' => route('owner.kos.create'), 'ariaLabel' => 'Daftarkan properti kos baru'],
-                        ['label' => 'Tentang Platform', 'href' => $aboutUrl, 'ariaLabel' => 'Tentang platform kami'],
-                      ]
-                    : [
-                        ['label' => 'Area Member', 'href' => route('member.home'), 'ariaLabel' => 'Buka beranda member'],
-                        ['label' => 'Kos Favorit', 'href' => route('member.favorit'), 'ariaLabel' => 'Lihat kos favorit tersimpan'],
-                        ['label' => 'Pesan & Chat', 'href' => route('member.pesan'), 'ariaLabel' => 'Buka pesan dan chat'],
-                        ['label' => 'Notifikasi Akun', 'href' => route('member.notifikasi'), 'ariaLabel' => 'Lihat notifikasi akun'],
-                        ['label' => 'Tagihan / Invoice', 'href' => route('member.invoice.index'), 'ariaLabel' => 'Lihat tagihan dan invoice'],
-                        ['label' => 'Profil Saya', 'href' => route('member.profile'), 'ariaLabel' => 'Pengaturan profil saya'],
-                      ]
-                  )
-                : [
-                    ['label' => 'Masuk ke Akun', 'href' => route('login'), 'ariaLabel' => 'Masuk ke akun', 'modalMode' => 'login'],
-                    ['label' => 'Daftar Akun Baru', 'href' => route('register'), 'ariaLabel' => 'Daftar akun baru', 'modalMode' => 'register'],
-                    ['label' => 'Gabung Mitra Owner', 'href' => route('owner.kos.create'), 'ariaLabel' => 'Daftarkan properti kos'],
-                    ['label' => 'Pusat Kontak & FAQ', 'href' => $contactUrl, 'ariaLabel' => 'Kontak dan tanya jawab'],
-                  ]
-        ]
-    ];
 @endphp
 
-<header id="ts-header" class="card-nav-wrapper fixed-top">
-    <div class="card-nav-container">
-        <nav class="card-nav" id="mainCardNav" aria-label="Navigasi Utama">
+<header id="ts-header" class="notion-navbar-wrapper card-nav-wrapper fixed-top">
+    <div class="notion-navbar-container card-nav-container">
+        <nav class="notion-navbar card-nav" id="mainNotionNav" aria-label="Navigasi Utama">
             
-            <!-- Top Bar (Collapsed 60px) -->
-            <div class="card-nav-top">
-                <!-- Brand Logo (Left) -->
-                <a href="{{ $homeUrl }}" class="card-nav-brand" aria-label="TEMPATIN Beranda">
-                    <img src="{{ asset('assets/img/logo.png') }}" alt="TEMPATIN" class="card-nav-logo-img">
+            <!-- Left: Logo TEMPATIN -->
+            <div class="notion-nav-left">
+                <a href="{{ $homeUrl }}" class="notion-nav-brand card-nav-brand" aria-label="TEMPATIN Beranda">
+                    <img src="{{ asset('assets/img/logo.png') }}" alt="TEMPATIN" class="notion-nav-logo-img card-nav-logo-img">
                 </a>
+            </div>
 
-                <!-- Right Controls: Toggle Menu + Actions -->
-                <div class="card-nav-right-group">
-                    @if(Auth::check() && Auth::user()->role !== 'owner')
-                        {{-- Member Navigation Items (Image 2 Reference) --}}
-                        <div class="member-nav-items d-none d-md-flex align-items-center">
-                            {{-- 1. Cari Kos (diubah dari Cari Apa?) --}}
-                            <a href="{{ $kosUrl }}" class="member-nav-link {{ request()->routeIs('member.kos.*') || request()->routeIs('kos.*') ? 'active' : '' }}">
-                                Cari Kos
+            <!-- Middle: Navigation Links ("tulisan-tulisan") -->
+            <div class="notion-nav-center">
+                @if(Auth::check() && Auth::user()->role !== 'owner')
+                    {{-- Member Navigation Items --}}
+                    <div class="member-nav-items d-none d-lg-flex align-items-center">
+                        <a href="{{ $kosUrl }}" class="notion-nav-link member-nav-link {{ request()->routeIs('member.kos.*') || request()->routeIs('kos.*') ? 'active' : '' }}">
+                            Cari Kos
+                        </a>
+                        <a href="{{ route('member.favorit') }}" class="notion-nav-link member-nav-link {{ request()->routeIs('member.favorit') ? 'active' : '' }}">
+                            Favorit
+                        </a>
+                        <a href="{{ route('member.pesan') }}" class="notion-nav-link member-nav-link {{ request()->routeIs('member.pesan') || request()->routeIs('member.chat') ? 'active' : '' }}">
+                            Chat
+                        </a>
+
+                        {{-- Notifikasi Popover --}}
+                        <div class="member-nav-dropdown dropdown notification-dropdown position-relative">
+                            <a href="javascript:void(0)" class="notion-nav-link member-nav-link d-inline-flex align-items-center" id="memberNotificationToggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span>Notifikasi</span>
                             </a>
-
-                            {{-- 2. Favorit --}}
-                            <a href="{{ route('member.favorit') }}" class="member-nav-link {{ request()->routeIs('member.favorit') ? 'active' : '' }}">
-                                Favorit
-                            </a>
-
-                            {{-- 3. Chat --}}
-                            <a href="{{ route('member.pesan') }}" class="member-nav-link {{ request()->routeIs('member.pesan') || request()->routeIs('member.chat') ? 'active' : '' }}">
-                                Chat
-                            </a>
-
-                            {{-- 4. Notifikasi (Floating Popover - Reference Image 2) --}}
-                            <div class="member-nav-dropdown dropdown notification-dropdown position-relative">
-                                <a href="javascript:void(0)" class="member-nav-link d-inline-flex align-items-center" id="memberNotificationToggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <span>Notifikasi</span>
-                                </a>
-                                <div class="dropdown-menu dropdown-menu-right shadow notification-popover-card" id="memberNotificationPopover" aria-labelledby="memberNotificationToggle" style="width: 340px; max-width: 90vw; border-radius: 16px; border: 1px solid rgba(0,0,0,0.08); box-shadow: 0 16px 40px rgba(0,0,0,0.12), 0 2px 8px rgba(0,0,0,0.04) !important; padding: 0; margin-top: 10px; overflow: hidden; background: #ffffff;">
-                                    <!-- Header -->
-                                    <div class="d-flex align-items-center justify-content-between px-4 py-3 border-bottom" style="border-color: rgba(0,0,0,0.06) !important;">
-                                        <h5 class="mb-0 font-weight-bold text-dark" style="font-size: 16px; font-family: var(--font-notioninter);">
-                                            Notifikasi
-                                        </h5>
-                                        <button type="button" class="close p-0 text-muted" id="btnCloseNotification" style="font-size: 20px; line-height: 1; opacity: 0.6;" aria-label="Tutup notifikasi">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-
-                                    <!-- Filter Pill -->
-                                    <div class="px-4 pt-3 pb-2">
-                                        <span class="d-inline-flex align-items-center px-3 py-1 rounded-pill" style="border: 1.5px solid #111827; font-size: 12px; font-weight: 600; color: #111827; background: #ffffff;">
-                                            <i class="fa fa-info-circle mr-1" style="font-size: 11px;"></i> Utama
-                                        </span>
-                                    </div>
-
-                                    <!-- Body: Empty State with Illustration -->
-                                    <div class="px-4 py-4 text-center">
-                                        <div class="mb-3 d-flex justify-content-center">
-                                            <svg width="170" height="120" viewBox="0 0 200 150" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <ellipse cx="100" cy="85" rx="85" ry="50" fill="#f0fdf4"/>
-                                                <circle cx="110" cy="25" r="2.5" fill="#22c55e" opacity="0.6"/>
-                                                <circle cx="95" cy="28" r="1.5" fill="#22c55e" opacity="0.6"/>
-                                                <circle cx="145" cy="35" r="2" fill="#22c55e" opacity="0.6"/>
-                                                <rect x="35" y="70" width="8" height="35" rx="2" fill="#bbf7d0" opacity="0.7"/>
-                                                <rect x="50" y="65" width="8" height="40" rx="2" fill="#bbf7d0" opacity="0.7"/>
-                                                <rect x="65" y="70" width="8" height="35" rx="2" fill="#bbf7d0" opacity="0.7"/>
-                                                <rect x="125" y="70" width="8" height="35" rx="2" fill="#bbf7d0" opacity="0.7"/>
-                                                <rect x="140" y="65" width="8" height="40" rx="2" fill="#bbf7d0" opacity="0.7"/>
-                                                <rect x="155" y="70" width="8" height="35" rx="2" fill="#bbf7d0" opacity="0.7"/>
-                                                <rect x="30" y="80" width="140" height="4" rx="2" fill="#86efac" opacity="0.6"/>
-                                                <rect x="114" y="75" width="12" height="45" rx="2" fill="#78350f"/>
-                                                <path d="M100 65 L128 65 Q135 65 135 73 L135 88 Q135 94 128 94 L100 94 Q93 94 93 88 L93 73 Q93 65 100 65 Z" fill="#facc15" stroke="#ca8a04" stroke-width="1.5"/>
-                                                <ellipse cx="98" cy="80" rx="9" ry="14" fill="#eab308"/>
-                                                <rect x="118" y="55" width="3" height="15" fill="#64748b"/>
-                                                <polygon points="121,55 133,59 121,63" fill="#facc15"/>
-                                                <path d="M58 80 C58 68, 72 68, 72 80 L76 102 C76 104, 60 106, 56 102 Z" fill="#16a34a"/>
-                                                <path d="M68 76 C76 74, 88 78, 104 82" stroke="#fed7aa" stroke-width="7" stroke-linecap="round"/>
-                                                <circle cx="104" cy="82" r="3.5" fill="#fbcfe8"/>
-                                                <circle cx="75" cy="55" r="14" fill="#fed7aa"/>
-                                                <ellipse cx="71" cy="59" rx="2.5" ry="1.5" fill="#f87171" opacity="0.6"/>
-                                                <ellipse cx="81" cy="59" rx="2.5" ry="1.5" fill="#f87171" opacity="0.6"/>
-                                                <circle cx="72" cy="54" r="1.5" fill="#1e293b"/>
-                                                <circle cx="80" cy="54" r="1.5" fill="#1e293b"/>
-                                                <path d="M74 61 Q77 59 80 61" stroke="#475569" stroke-width="1" stroke-linecap="round" fill="none"/>
-                                                <ellipse cx="75" cy="45" rx="14" ry="10" fill="#1e293b"/>
-                                                <circle cx="63" cy="50" r="6" fill="#1e293b"/>
-                                                <circle cx="87" cy="50" r="6" fill="#1e293b"/>
-                                                <circle cx="67" cy="40" r="5" fill="#1e293b"/>
-                                                <circle cx="83" cy="40" r="5" fill="#1e293b"/>
-                                                <ellipse cx="100" cy="118" rx="65" ry="4" fill="#e2e8f0"/>
-                                            </svg>
-                                        </div>
-                                        <h4 class="font-weight-bold mb-2 text-dark" style="font-size: 15px; font-family: var(--font-notioninter);">
-                                            Belum ada notifikasi...
-                                        </h4>
-                                        <p class="text-muted mb-0 mx-auto" style="font-size: 12.5px; line-height: 1.55; max-width: 270px;">
-                                            Belum ada notifikasi. Ketika ada notifikasi baru, akan muncul di halaman ini.
-                                        </p>
-                                    </div>
+                            <div class="dropdown-menu dropdown-menu-right shadow notification-popover-card" id="memberNotificationPopover" aria-labelledby="memberNotificationToggle" style="width: 340px; max-width: 90vw; border-radius: 12px; border: 1px solid rgba(0,0,0,0.08); box-shadow: 0 12px 32px rgba(0,0,0,0.08), 0 2px 6px rgba(0,0,0,0.04) !important; padding: 0; margin-top: 10px; overflow: hidden; background: #ffffff;">
+                                <div class="d-flex align-items-center justify-content-between px-4 py-3 border-bottom" style="border-color: rgba(0,0,0,0.06) !important;">
+                                    <h5 class="mb-0 font-weight-bold text-dark" style="font-size: 15px; font-family: var(--font-notioninter, 'Inter', sans-serif);">
+                                        Notifikasi
+                                    </h5>
+                                    <button type="button" class="close p-0 text-muted" id="btnCloseNotification" style="font-size: 18px; line-height: 1; opacity: 0.6;" aria-label="Tutup notifikasi">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
                                 </div>
-                            </div>
-
-                            {{-- 5. Lainnya Dropdown (Menu Tagihan & Invoice Dipindahkan ke Profil) --}}
-                            <div class="member-nav-dropdown dropdown">
-                                <a href="javascript:void(0)" class="member-nav-link dropdown-toggle d-inline-flex align-items-center" id="memberNavLainnyaToggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <span>Lainnya</span>
-                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-left: 4px;">
-                                        <polyline points="6 9 12 15 18 9"></polyline>
-                                    </svg>
-                                </a>
-                                <div class="dropdown-menu dropdown-menu-right member-custom-dropdown shadow" id="memberNavLainnyaMenu" aria-labelledby="memberNavLainnyaToggle">
-                                    <a class="dropdown-item py-2" href="{{ $promoUrl }}">
-                                        <i class="fa fa-tag mr-2 text-muted" style="width: 16px;"></i> Voucher &amp; Promo
-                                    </a>
-                                    <a class="dropdown-item py-2" href="{{ $artikelUrl }}">
-                                        <i class="fa fa-newspaper mr-2 text-muted" style="width: 16px;"></i> Artikel &amp; Tips
-                                    </a>
-                                    <a class="dropdown-item py-2" href="{{ $contactUrl }}">
-                                        <i class="fa fa-life-ring mr-2 text-muted" style="width: 16px;"></i> Pusat Bantuan
-                                    </a>
-                                    <div class="dropdown-divider my-1"></div>
-                                    <a class="dropdown-item py-2" href="{{ $aboutUrl }}">
-                                        <i class="fa fa-info-circle mr-2 text-muted" style="width: 16px;"></i> Tentang TEMPATIN
-                                    </a>
+                                <div class="px-4 pt-3 pb-2">
+                                    <span class="d-inline-flex align-items-center px-3 py-1 rounded-pill" style="border: 1px solid rgba(0,0,0,0.12); font-size: 11.5px; font-weight: 600; color: #111111; background: #ffffff;">
+                                        <i class="fa fa-info-circle mr-1" style="font-size: 11px;"></i> Utama
+                                    </span>
+                                </div>
+                                <div class="px-4 py-4 text-center">
+                                    <div class="mb-3 d-flex justify-content-center">
+                                        <svg width="150" height="100" viewBox="0 0 200 150" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <ellipse cx="100" cy="85" rx="85" ry="50" fill="#f6f5f4"/>
+                                            <circle cx="110" cy="25" r="2.5" fill="#0075de" opacity="0.6"/>
+                                            <circle cx="95" cy="28" r="1.5" fill="#0075de" opacity="0.6"/>
+                                            <circle cx="145" cy="35" r="2" fill="#0075de" opacity="0.6"/>
+                                            <rect x="35" y="70" width="8" height="35" rx="2" fill="#e6f3fe" opacity="0.7"/>
+                                            <rect x="50" y="65" width="8" height="40" rx="2" fill="#e6f3fe" opacity="0.7"/>
+                                            <rect x="65" y="70" width="8" height="35" rx="2" fill="#e6f3fe" opacity="0.7"/>
+                                            <rect x="125" y="70" width="8" height="35" rx="2" fill="#e6f3fe" opacity="0.7"/>
+                                            <rect x="140" y="65" width="8" height="40" rx="2" fill="#e6f3fe" opacity="0.7"/>
+                                            <rect x="155" y="70" width="8" height="35" rx="2" fill="#e6f3fe" opacity="0.7"/>
+                                            <rect x="30" y="80" width="140" height="4" rx="2" fill="#bae0fd" opacity="0.6"/>
+                                            <rect x="114" y="75" width="12" height="45" rx="2" fill="#615d59"/>
+                                            <path d="M100 65 L128 65 Q135 65 135 73 L135 88 Q135 94 128 94 L100 94 Q93 94 93 88 L93 73 Q93 65 100 65 Z" fill="#ffb110" stroke="#d97706" stroke-width="1.5"/>
+                                            <ellipse cx="98" cy="80" rx="9" ry="14" fill="#f59e0b"/>
+                                            <rect x="118" y="55" width="3" height="15" fill="#64748b"/>
+                                            <polygon points="121,55 133,59 121,63" fill="#ffb110"/>
+                                            <circle cx="75" cy="55" r="14" fill="#fed7aa"/>
+                                            <circle cx="72" cy="54" r="1.5" fill="#1e293b"/>
+                                            <circle cx="80" cy="54" r="1.5" fill="#1e293b"/>
+                                            <ellipse cx="100" cy="118" rx="65" ry="4" fill="#e2e8f0"/>
+                                        </svg>
+                                    </div>
+                                    <h4 class="font-weight-bold mb-2 text-dark" style="font-size: 14.5px; font-family: var(--font-notioninter, 'Inter', sans-serif);">
+                                        Belum ada notifikasi...
+                                    </h4>
+                                    <p class="text-muted mb-0 mx-auto" style="font-size: 12px; line-height: 1.5; max-width: 260px;">
+                                        Belum ada notifikasi. Ketika ada notifikasi baru, akan muncul di halaman ini.
+                                    </p>
                                 </div>
                             </div>
                         </div>
 
-                        {{-- 6. Profile Avatar Icon (Avatar Foto / Kosong + Dot) + Dropdown (Edit Profil, Tagihan & Invoice, Keluar) --}}
+                        {{-- Lainnya Dropdown --}}
+                        <div class="member-nav-dropdown dropdown">
+                            <a href="javascript:void(0)" class="notion-nav-link member-nav-link dropdown-toggle d-inline-flex align-items-center" id="memberNavLainnyaToggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span>Lainnya</span>
+                                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-left: 4px;">
+                                    <polyline points="6 9 12 15 18 9"></polyline>
+                                </svg>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right member-custom-dropdown shadow" id="memberNavLainnyaMenu" aria-labelledby="memberNavLainnyaToggle">
+                                <a class="dropdown-item py-2" href="{{ $promoUrl }}">
+                                    <i class="fa fa-tag mr-2 text-muted" style="width: 16px;"></i> Voucher &amp; Promo
+                                </a>
+                                <a class="dropdown-item py-2" href="{{ $artikelUrl }}">
+                                    <i class="fa fa-newspaper mr-2 text-muted" style="width: 16px;"></i> Artikel &amp; Tips
+                                </a>
+                                <a class="dropdown-item py-2" href="{{ $contactUrl }}">
+                                    <i class="fa fa-life-ring mr-2 text-muted" style="width: 16px;"></i> Pusat Bantuan
+                                </a>
+                                <div class="dropdown-divider my-1"></div>
+                                <a class="dropdown-item py-2" href="{{ $aboutUrl }}">
+                                    <i class="fa fa-info-circle mr-2 text-muted" style="width: 16px;"></i> Tentang TEMPATIN
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                @elseif(Auth::check() && Auth::user()->role === 'owner')
+                    {{-- Owner Navigation Items in Center --}}
+                    <div class="d-none d-lg-flex align-items-center notion-nav-links">
+                        <a href="{{ route('owner.dashboard') }}" class="notion-nav-link {{ request()->routeIs('owner.dashboard') ? 'active' : '' }}">
+                            Dashboard
+                        </a>
+                        <a href="{{ route('owner.kos.index') }}" class="notion-nav-link {{ request()->routeIs('owner.kos.*') ? 'active' : '' }}">
+                            Kelola Kos
+                        </a>
+                        <a href="{{ route('owner.statistik') }}" class="notion-nav-link {{ request()->routeIs('owner.statistik') ? 'active' : '' }}">
+                            Statistik
+                        </a>
+                        <a href="{{ $aboutUrl }}" class="notion-nav-link {{ request()->routeIs('about') ? 'active' : '' }}">
+                            Tentang Platform
+                        </a>
+                    </div>
+                @else
+                    {{-- Guest Navigation Items in Center ("tulisan-tulisan" sesuai DESIGN.md) --}}
+                    <div class="d-none d-lg-flex align-items-center notion-nav-links">
+                        <a href="{{ $homeUrl }}" class="notion-nav-link {{ request()->routeIs('home') ? 'active' : '' }}">
+                            Beranda
+                        </a>
+                        <a href="{{ $promoUrl }}" class="notion-nav-link {{ request()->routeIs('promo') ? 'active' : '' }}">
+                            Promo &amp; Voucher
+                        </a>
+                        <a href="{{ $artikelUrl }}" class="notion-nav-link {{ request()->routeIs('artikel') ? 'active' : '' }}">
+                            Artikel &amp; Tips
+                        </a>
+                        <a href="{{ $aboutUrl }}" class="notion-nav-link {{ request()->routeIs('about') ? 'active' : '' }}">
+                            Tentang Kami
+                        </a>
+                        <a href="{{ $contactUrl }}" class="notion-nav-link {{ request()->routeIs('contact') ? 'active' : '' }}">
+                            Pusat Bantuan
+                        </a>
+                    </div>
+                @endif
+            </div>
+
+            <!-- Right: Cari Kos dan Masuk/Login (atau Profil Akun) -->
+            <div class="notion-nav-right card-nav-actions">
+                @guest
+                    <a href="{{ route('login') }}" class="notion-btn-ghost card-nav-cta-secondary" data-toggle="modal" data-target="#authRoleModal" data-auth-mode="login">
+                        Masuk
+                    </a>
+                    <a href="{{ $kosUrl }}" class="notion-btn-primary card-nav-cta-btn">
+                        <span>Cari Kos</span>
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                        </svg>
+                    </a>
+
+                    {{-- Mobile Hamburger Toggle (only on mobile d-lg-none) --}}
+                    <button type="button" class="notion-mobile-toggle card-nav-toggle d-lg-none" id="notionMobileToggle" aria-label="Buka navigasi menu" aria-expanded="false" title="Menu Navigasi">
+                        <span class="card-nav-toggle-icon" id="cardNavToggleIcon">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="4" y1="7" x2="20" y2="7"></line>
+                                <line x1="4" y1="12" x2="20" y2="12"></line>
+                                <line x1="4" y1="17" x2="20" y2="17"></line>
+                            </svg>
+                        </span>
+                    </button>
+                @else
+                    @if(Auth::user()->role === 'owner')
+                        <a href="{{ route('owner.dashboard') }}" class="notion-btn-primary card-nav-cta-btn">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 5px;">
+                                <rect x="3" y="3" width="7" height="9"></rect>
+                                <rect x="14" y="3" width="7" height="5"></rect>
+                                <rect x="14" y="12" width="7" height="9"></rect>
+                                <rect x="3" y="16" width="7" height="5"></rect>
+                            </svg>
+                            <span>Dashboard</span>
+                        </a>
+                        <form action="{{ route('owner.logout') }}" method="POST" class="d-inline m-0 p-0">
+                            @csrf
+                            <button type="submit" class="notion-btn-ghost text-danger" title="Keluar" style="padding: 7px 10px;">
+                                <i class="fa fa-sign-out-alt"></i>
+                            </button>
+                        </form>
+                    @else
+                        {{-- Member Profile Dropdown --}}
                         <div class="member-profile-dropdown dropdown">
                             <a href="javascript:void(0)" class="member-avatar-btn d-inline-flex align-items-center justify-content-center" id="memberProfileToggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="Profil Akun">
                                 <span class="member-avatar-circle">
@@ -232,8 +237,8 @@
                             </div>
                         </div>
 
-                        {{-- Toggle Menu Button for Mobile Only --}}
-                        <button type="button" class="card-nav-toggle d-md-none ml-1" id="cardNavToggle" aria-label="Buka navigasi menu" aria-expanded="false" title="Menu Navigasi">
+                        {{-- Mobile Toggle for Member --}}
+                        <button type="button" class="notion-mobile-toggle card-nav-toggle d-lg-none ml-2" id="notionMobileToggle" aria-label="Buka navigasi menu" aria-expanded="false" title="Menu Navigasi">
                             <span class="card-nav-toggle-icon" id="cardNavToggleIcon">
                                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
                                     <line x1="4" y1="7" x2="20" y2="7"></line>
@@ -242,248 +247,140 @@
                                 </svg>
                             </span>
                         </button>
-                    @else
-                        {{-- Non-member (Guest or Owner) Toggle Menu Button --}}
-                        <button type="button" class="card-nav-toggle" id="cardNavToggle" aria-label="Buka navigasi menu" aria-expanded="false" title="Menu Navigasi">
-                            <span class="card-nav-toggle-icon" id="cardNavToggleIcon">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                                    <line x1="4" y1="7" x2="20" y2="7"></line>
-                                    <line x1="4" y1="12" x2="20" y2="12"></line>
-                                    <line x1="4" y1="17" x2="20" y2="17"></line>
-                                </svg>
-                            </span>
-                        </button>
-
-                        <!-- Right Action CTA for Guest or Owner -->
-                        <div class="card-nav-actions">
-                            @guest
-                                <a href="{{ route('login') }}" class="card-nav-cta-secondary d-none d-sm-inline-flex" data-toggle="modal" data-target="#authRoleModal" data-auth-mode="login">
-                                    Masuk
-                                </a>
-                                <a href="{{ $kosUrl }}" class="card-nav-cta-btn">
-                                    <span>Cari Kos</span>
-                                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-left: 6px;">
-                                        <circle cx="11" cy="11" r="8"></circle>
-                                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                                    </svg>
-                                </a>
-                            @else
-                                <a href="{{ route('owner.dashboard') }}" class="card-nav-cta-btn">
-                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px;">
-                                        <rect x="3" y="3" width="7" height="9"></rect>
-                                        <rect x="14" y="3" width="7" height="5"></rect>
-                                        <rect x="14" y="12" width="7" height="9"></rect>
-                                        <rect x="3" y="16" width="7" height="5"></rect>
-                                    </svg>
-                                    <span class="d-none d-sm-inline">Dashboard Owner</span>
-                                    <span class="d-sm-none">Dashboard</span>
-                                </a>
-                            @endguest
-                        </div>
                     @endif
-                </div>
-            </div>
-
-            <!-- Content / Reveal Cards (Expanded) -->
-            <div class="card-nav-content" id="cardNavContent" aria-hidden="true">
-                @foreach($navCards as $idx => $card)
-                    <div class="nav-card" style="background-color: {{ $card['bgColor'] }}; color: {{ $card['textColor'] }};">
-                        <div class="nav-card-label">
-                            {{ $card['label'] }}
-                        </div>
-                        <div class="nav-card-links">
-                            @foreach($card['links'] as $link)
-                                <a href="{{ $link['href'] }}" class="nav-card-link" aria-label="{{ $link['ariaLabel'] }}" @if(!empty($link['modalMode'])) data-toggle="modal" data-target="#authRoleModal" data-auth-mode="{{ $link['modalMode'] }}" @endif>
-                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="shrink-0">
-                                        <line x1="7" y1="17" x2="17" y2="7"></line>
-                                        <polyline points="7 7 17 7 17 17"></polyline>
-                                    </svg>
-                                    <span>{{ $link['label'] }}</span>
-                                </a>
-                            @endforeach
-                        </div>
-                    </div>
-                @endforeach
+                @endguest
             </div>
 
         </nav>
     </div>
+
+    <!-- Mobile Slide Drawer (only on < 992px) -->
+    <div class="notion-mobile-drawer" id="notionMobileDrawer" aria-hidden="true">
+        <div class="notion-mobile-drawer-content">
+            @if(Auth::check() && Auth::user()->role !== 'owner')
+                <div class="notion-mobile-nav-group">
+                    <div class="notion-mobile-group-title">Menu Utama</div>
+                    <a href="{{ $kosUrl }}" class="notion-mobile-nav-link">
+                        <i class="fa fa-search mr-2 text-muted" style="width: 18px;"></i> Cari Kos
+                    </a>
+                    <a href="{{ route('member.favorit') }}" class="notion-mobile-nav-link">
+                        <i class="fa fa-heart mr-2 text-muted" style="width: 18px;"></i> Favorit Saya
+                    </a>
+                    <a href="{{ route('member.pesan') }}" class="notion-mobile-nav-link">
+                        <i class="fa fa-comment-dots mr-2 text-muted" style="width: 18px;"></i> Chat &amp; Pesan
+                    </a>
+                    <a href="{{ route('member.notifikasi') }}" class="notion-mobile-nav-link">
+                        <i class="fa fa-bell mr-2 text-muted" style="width: 18px;"></i> Notifikasi
+                    </a>
+                </div>
+                <div class="notion-mobile-nav-group">
+                    <div class="notion-mobile-group-title">Eksplorasi &amp; Info</div>
+                    <a href="{{ $promoUrl }}" class="notion-mobile-nav-link">
+                        <i class="fa fa-tag mr-2 text-muted" style="width: 18px;"></i> Voucher &amp; Promo
+                    </a>
+                    <a href="{{ $artikelUrl }}" class="notion-mobile-nav-link">
+                        <i class="fa fa-newspaper mr-2 text-muted" style="width: 18px;"></i> Artikel &amp; Tips
+                    </a>
+                    <a href="{{ $aboutUrl }}" class="notion-mobile-nav-link">
+                        <i class="fa fa-info-circle mr-2 text-muted" style="width: 18px;"></i> Tentang TEMPATIN
+                    </a>
+                    <a href="{{ $contactUrl }}" class="notion-mobile-nav-link">
+                        <i class="fa fa-life-ring mr-2 text-muted" style="width: 18px;"></i> Pusat Bantuan
+                    </a>
+                </div>
+            @elseif(Auth::check() && Auth::user()->role === 'owner')
+                <div class="notion-mobile-nav-group">
+                    <div class="notion-mobile-group-title">Menu Pemilik Kos</div>
+                    <a href="{{ route('owner.dashboard') }}" class="notion-mobile-nav-link">
+                        <i class="fa fa-tachometer-alt mr-2 text-muted" style="width: 18px;"></i> Dashboard Owner
+                    </a>
+                    <a href="{{ route('owner.kos.index') }}" class="notion-mobile-nav-link">
+                        <i class="fa fa-home mr-2 text-muted" style="width: 18px;"></i> Kelola Kos
+                    </a>
+                    <a href="{{ route('owner.statistik') }}" class="notion-mobile-nav-link">
+                        <i class="fa fa-chart-line mr-2 text-muted" style="width: 18px;"></i> Statistik
+                    </a>
+                    <a href="{{ $aboutUrl }}" class="notion-mobile-nav-link">
+                        <i class="fa fa-info-circle mr-2 text-muted" style="width: 18px;"></i> Tentang Platform
+                    </a>
+                </div>
+            @else
+                <div class="notion-mobile-nav-group">
+                    <div class="notion-mobile-group-title">Navigasi</div>
+                    <a href="{{ $homeUrl }}" class="notion-mobile-nav-link">
+                        <i class="fa fa-home mr-2 text-muted" style="width: 18px;"></i> Beranda
+                    </a>
+                    <a href="{{ $kosUrl }}" class="notion-mobile-nav-link">
+                        <i class="fa fa-search mr-2 text-muted" style="width: 18px;"></i> Cari Kos
+                    </a>
+                    <a href="{{ $promoUrl }}" class="notion-mobile-nav-link">
+                        <i class="fa fa-tag mr-2 text-muted" style="width: 18px;"></i> Promo &amp; Voucher
+                    </a>
+                    <a href="{{ $artikelUrl }}" class="notion-mobile-nav-link">
+                        <i class="fa fa-newspaper mr-2 text-muted" style="width: 18px;"></i> Artikel &amp; Tips
+                    </a>
+                    <a href="{{ $aboutUrl }}" class="notion-mobile-nav-link">
+                        <i class="fa fa-info-circle mr-2 text-muted" style="width: 18px;"></i> Tentang Kami
+                    </a>
+                    <a href="{{ $contactUrl }}" class="notion-mobile-nav-link">
+                        <i class="fa fa-life-ring mr-2 text-muted" style="width: 18px;"></i> Pusat Bantuan
+                    </a>
+                </div>
+                <div class="notion-mobile-drawer-actions pt-3 border-top mt-2">
+                    <a href="{{ route('login') }}" class="btn btn-outline-dark btn-block mb-2 font-weight-medium" data-toggle="modal" data-target="#authRoleModal" data-auth-mode="login" style="border-radius: 8px; font-size: 14px; padding: 9px;">
+                        Masuk ke Akun
+                    </a>
+                    <a href="{{ $kosUrl }}" class="btn btn-primary btn-block font-weight-medium" style="background-color: var(--color-notion-blue, #0075de); border-color: var(--color-notion-blue, #0075de); border-radius: 8px; font-size: 14px; padding: 9px;">
+                        Cari Kos Sekarang
+                    </a>
+                </div>
+            @endif
+        </div>
+    </div>
 </header>
 
-{{-- GSAP CardNav Animation Engine --}}
 <script>
 document.addEventListener('DOMContentLoaded', function () {
-    const navEl = document.getElementById('mainCardNav');
-    const toggleBtn = document.getElementById('cardNavToggle');
-    const contentEl = document.getElementById('cardNavContent');
-    if (!navEl || !toggleBtn || !contentEl || typeof gsap === 'undefined') return;
+    // 1. Mobile Drawer Toggle
+    const mobileToggle = document.getElementById('notionMobileToggle');
+    const mobileDrawer = document.getElementById('notionMobileDrawer');
+    const toggleIcon = document.getElementById('cardNavToggleIcon');
 
-    const cards = navEl.querySelectorAll('.nav-card');
-    let isExpanded = false;
-    let isAnimating = false;
-    const headerWrapper = document.getElementById('ts-header');
-
-    function getCollapsedHeight() {
-        const isShrunk = headerWrapper && headerWrapper.classList.contains('is-shrunk');
-        return isShrunk ? 54 : 68;
-    }
-
-    function calculateHeight() {
-        const isMobile = window.matchMedia('(max-width: 767.98px)').matches;
-        if (isMobile) {
-            const wasVis = contentEl.style.visibility;
-            const wasPos = contentEl.style.position;
-            const wasH = contentEl.style.height;
-
-            contentEl.style.visibility = 'visible';
-            contentEl.style.position = 'static';
-            contentEl.style.height = 'auto';
-
-            const topBar = getCollapsedHeight();
-            const padding = 20;
-            const contentHeight = contentEl.scrollHeight;
-
-            contentEl.style.visibility = wasVis;
-            contentEl.style.position = wasPos;
-            contentEl.style.height = wasH;
-
-            return topBar + contentHeight + padding;
-        }
-        return 290;
-    }
-
-    gsap.set(navEl, { height: getCollapsedHeight(), overflow: 'visible' });
-    gsap.set(cards, { y: 24, opacity: 0 });
-
-    function updateToggleIcon(open) {
-        const iconSpan = toggleBtn.querySelector('.card-nav-toggle-icon');
-        if (!iconSpan) return;
-        if (open) {
-            iconSpan.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>';
+    function updateMobileIcon(isOpen) {
+        if (!toggleIcon) return;
+        if (isOpen) {
+            toggleIcon.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>';
         } else {
-            iconSpan.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="7" x2="20" y2="7"></line><line x1="4" y1="12" x2="20" y2="12"></line><line x1="4" y1="17" x2="20" y2="17"></line></svg>';
+            toggleIcon.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="7" x2="20" y2="7"></line><line x1="4" y1="12" x2="20" y2="12"></line><line x1="4" y1="17" x2="20" y2="17"></line></svg>';
         }
     }
 
-    function openMenu() {
-        if (isAnimating) return;
-        isAnimating = true;
-        isExpanded = true;
-
-        toggleBtn.setAttribute('aria-expanded', 'true');
-        updateToggleIcon(true);
-
-        navEl.classList.add('open');
-        if (headerWrapper) headerWrapper.classList.add('open');
-
-        contentEl.style.visibility = 'visible';
-        contentEl.style.pointerEvents = 'auto';
-        contentEl.setAttribute('aria-hidden', 'false');
-
-        const targetHeight = calculateHeight();
-
-        gsap.killTweensOf([navEl, cards]);
-
-        const openTl = gsap.timeline({
-            onStart: function () {
-                gsap.set(navEl, { overflow: 'hidden' });
-            },
-            onComplete: function () {
-                isAnimating = false;
+    if (mobileToggle && mobileDrawer) {
+        mobileToggle.addEventListener('click', function (e) {
+            e.stopPropagation();
+            const isOpen = mobileDrawer.classList.contains('show');
+            if (isOpen) {
+                mobileDrawer.classList.remove('show');
+                mobileToggle.setAttribute('aria-expanded', 'false');
+                updateMobileIcon(false);
+            } else {
+                mobileDrawer.classList.add('show');
+                mobileToggle.setAttribute('aria-expanded', 'true');
+                updateMobileIcon(true);
             }
         });
 
-        openTl.to(navEl, {
-            height: targetHeight,
-            duration: 0.45,
-            ease: 'power3.out'
-        });
-
-        openTl.fromTo(cards,
-            { y: 25, opacity: 0 },
-            { y: 0, opacity: 1, duration: 0.35, ease: 'power3.out', stagger: 0.06 },
-            '-=0.25'
-        );
-    }
-
-    function closeMenu() {
-        if (isAnimating) return;
-        isAnimating = true;
-
-        toggleBtn.setAttribute('aria-expanded', 'false');
-        updateToggleIcon(false);
-
-        const collapsedHeight = getCollapsedHeight();
-
-        gsap.killTweensOf([navEl, cards]);
-        gsap.set(navEl, { overflow: 'hidden' });
-
-        const closeTl = gsap.timeline({
-            onComplete: function () {
-                isExpanded = false;
-                navEl.classList.remove('open');
-                if (headerWrapper) headerWrapper.classList.remove('open');
-
-                contentEl.style.visibility = 'hidden';
-                contentEl.style.pointerEvents = 'none';
-                contentEl.setAttribute('aria-hidden', 'true');
-
-                gsap.set(cards, { y: 24, opacity: 0 });
-                gsap.set(navEl, { height: getCollapsedHeight(), overflow: 'visible' });
-                isAnimating = false;
+        // Close mobile drawer on outside click
+        document.addEventListener('click', function (e) {
+            if (mobileDrawer.classList.contains('show') && !mobileDrawer.contains(e.target) && !mobileToggle.contains(e.target)) {
+                mobileDrawer.classList.remove('show');
+                mobileToggle.setAttribute('aria-expanded', 'false');
+                updateMobileIcon(false);
             }
         });
-
-        closeTl.to(cards, {
-            y: 16,
-            opacity: 0,
-            duration: 0.22,
-            ease: 'power2.in',
-            stagger: 0.03
-        });
-
-        closeTl.to(navEl, {
-            height: collapsedHeight,
-            duration: 0.38,
-            ease: 'power2.inOut'
-        }, '-=0.12');
     }
 
-    function toggleMenu() {
-        if (!isExpanded) {
-            openMenu();
-        } else {
-            closeMenu();
-        }
-    }
-
-    toggleBtn.addEventListener('click', function (e) {
-        e.stopPropagation();
-        toggleMenu();
-    });
-
-    // Close when clicking outside of nav
-    document.addEventListener('click', function (e) {
-        if (isExpanded && !navEl.contains(e.target)) {
-            toggleMenu();
-        }
-    });
-
-    // Close on escape key
-    document.addEventListener('keydown', function (e) {
-        if (e.key === 'Escape' && isExpanded) {
-            toggleMenu();
-        }
-    });
-
-    // Handle resize
-    window.addEventListener('resize', function () {
-        if (!isExpanded) return;
-        const newHeight = calculateHeight();
-        gsap.to(navEl, { height: newHeight, duration: 0.3, ease: 'power3.out' });
-    });
-
-    // Member Custom Dropdowns (Lainnya, Notifikasi & Profile Dropdown)
+    // 2. Member Custom Dropdowns (Notifikasi, Lainnya, & Profil)
     const profileToggle = document.getElementById('memberProfileToggle');
     const profileMenu = document.getElementById('memberProfileMenu');
     const lainnyaToggle = document.getElementById('memberNavLainnyaToggle');
@@ -569,11 +466,15 @@ document.addEventListener('DOMContentLoaded', function () {
     document.addEventListener('keydown', function (e) {
         if (e.key === 'Escape') {
             closeAllMemberDropdowns();
+            if (mobileDrawer && mobileDrawer.classList.contains('show')) {
+                mobileDrawer.classList.remove('show');
+                if (mobileToggle) mobileToggle.setAttribute('aria-expanded', 'false');
+                updateMobileIcon(false);
+            }
         }
     });
 
-    // Shrinking Sticky Header Controller:
-    // As soon as user scrolls >= 100px down, shrink header height by 20% and apply glassmorphism
+    // 3. Header Shrink on Scroll (Notion sticky top bar)
     const headerEl = document.getElementById('ts-header');
     if (headerEl) {
         function checkScrollHeader() {
