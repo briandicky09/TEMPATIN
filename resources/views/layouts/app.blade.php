@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="author" content="TEMPATIN">
     <meta name="description" content="TEMPATIN - Temukan Kos Impianmu dengan Mudah. Cari kos putra, putri, campur, eksklusif, bulanan dan harian di seluruh kota di Indonesia.">
+    <meta name="referrer" content="no-referrer-when-downgrade">
 
     <!-- Google Fonts (Inter & Source Serif 4 for Notion Design System) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">

@@ -155,7 +155,7 @@
             <!-- Right: Cari Kos dan Masuk/Login (atau Profil Akun) -->
             <div class="notion-nav-right card-nav-actions">
                 @guest
-                    <a href="{{ route('login') }}" class="notion-btn-ghost card-nav-cta-secondary">
+                    <a href="{{ route('login') }}" class="notion-btn-ghost card-nav-cta-secondary" data-toggle="modal" data-target="#authRoleModal" data-auth-mode="login">
                         Masuk
                     </a>
                     <a href="{{ $kosUrl }}" class="notion-btn-primary card-nav-cta-btn">
@@ -199,7 +199,11 @@
                             <a href="javascript:void(0)" class="member-avatar-btn d-inline-flex align-items-center justify-content-center" id="memberProfileToggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="Profil Akun">
                                 <span class="member-avatar-circle">
                                     @if(Auth::user()->avatar)
-                                        <img src="{{ asset('storage/' . Auth::user()->avatar) }}" alt="{{ Auth::user()->name }}" class="member-avatar-img" id="navAvatarImg">
+                                        <img src="{{ \Illuminate\Support\Str::startsWith(Auth::user()->avatar, ['http://', 'https://']) ? Auth::user()->avatar : asset('storage/' . Auth::user()->avatar) }}" alt="{{ Auth::user()->name }}" class="member-avatar-img" id="navAvatarImg" referrerpolicy="no-referrer" crossorigin="anonymous" onerror="this.style.display='none'; document.getElementById('navAvatarFallbackSvg')?.classList.remove('d-none');">
+                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#525252" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" id="navAvatarFallbackSvg" class="d-none">
+                                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                            <circle cx="12" cy="7" r="4"></circle>
+                                        </svg>
                                     @else
                                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#525252" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" id="navAvatarSvg">
                                             <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
@@ -323,7 +327,7 @@
                     </a>
                 </div>
                 <div class="notion-mobile-drawer-actions pt-3 border-top mt-2">
-                    <a href="{{ route('login') }}" class="btn btn-outline-dark btn-block mb-2 font-weight-medium" style="border-radius: 8px; font-size: 14px; padding: 9px;">
+                    <a href="{{ route('login') }}" class="btn btn-outline-dark btn-block mb-2 font-weight-medium" data-toggle="modal" data-target="#authRoleModal" data-auth-mode="login" style="border-radius: 8px; font-size: 14px; padding: 9px;">
                         Masuk ke Akun
                     </a>
                     <a href="{{ $kosUrl }}" class="btn btn-primary btn-block font-weight-medium" style="background-color: var(--color-notion-blue, #0075de); border-color: var(--color-notion-blue, #0075de); border-radius: 8px; font-size: 14px; padding: 9px;">
@@ -485,3 +489,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 });
 </script>
+
+@guest
+    @include('partials.auth-role-modal')
+@endguest
