@@ -53,8 +53,8 @@
                       ]
                   )
                 : [
-                    ['label' => 'Masuk ke Akun', 'href' => route('login'), 'ariaLabel' => 'Masuk ke akun'],
-                    ['label' => 'Daftar Akun Baru', 'href' => route('register'), 'ariaLabel' => 'Daftar akun pencari kos'],
+                    ['label' => 'Masuk ke Akun', 'href' => route('login'), 'ariaLabel' => 'Masuk ke akun', 'modalMode' => 'login'],
+                    ['label' => 'Daftar Akun Baru', 'href' => route('register'), 'ariaLabel' => 'Daftar akun baru', 'modalMode' => 'register'],
                     ['label' => 'Gabung Mitra Owner', 'href' => route('owner.kos.create'), 'ariaLabel' => 'Daftarkan properti kos'],
                     ['label' => 'Pusat Kontak & FAQ', 'href' => $contactUrl, 'ariaLabel' => 'Kontak dan tanya jawab'],
                   ]
@@ -194,7 +194,11 @@
                             <a href="javascript:void(0)" class="member-avatar-btn d-inline-flex align-items-center justify-content-center" id="memberProfileToggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="Profil Akun">
                                 <span class="member-avatar-circle">
                                     @if(Auth::user()->avatar)
-                                        <img src="{{ asset('storage/' . Auth::user()->avatar) }}" alt="{{ Auth::user()->name }}" class="member-avatar-img" id="navAvatarImg">
+                                        <img src="{{ \Illuminate\Support\Str::startsWith(Auth::user()->avatar, ['http://', 'https://']) ? Auth::user()->avatar : asset('storage/' . Auth::user()->avatar) }}" alt="{{ Auth::user()->name }}" class="member-avatar-img" id="navAvatarImg" referrerpolicy="no-referrer" crossorigin="anonymous" onerror="this.style.display='none'; document.getElementById('navAvatarFallbackSvg')?.classList.remove('d-none');">
+                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#525252" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" id="navAvatarFallbackSvg" class="d-none">
+                                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                            <circle cx="12" cy="7" r="4"></circle>
+                                        </svg>
                                     @else
                                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#525252" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" id="navAvatarSvg">
                                             <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
@@ -253,7 +257,7 @@
                         <!-- Right Action CTA for Guest or Owner -->
                         <div class="card-nav-actions">
                             @guest
-                                <a href="{{ route('login') }}" class="card-nav-cta-secondary d-none d-sm-inline-flex">
+                                <a href="{{ route('login') }}" class="card-nav-cta-secondary d-none d-sm-inline-flex" data-toggle="modal" data-target="#authRoleModal" data-auth-mode="login">
                                     Masuk
                                 </a>
                                 <a href="{{ $kosUrl }}" class="card-nav-cta-btn">
@@ -289,7 +293,7 @@
                         </div>
                         <div class="nav-card-links">
                             @foreach($card['links'] as $link)
-                                <a href="{{ $link['href'] }}" class="nav-card-link" aria-label="{{ $link['ariaLabel'] }}">
+                                <a href="{{ $link['href'] }}" class="nav-card-link" aria-label="{{ $link['ariaLabel'] }}" @if(!empty($link['modalMode'])) data-toggle="modal" data-target="#authRoleModal" data-auth-mode="{{ $link['modalMode'] }}" @endif>
                                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="shrink-0">
                                         <line x1="7" y1="17" x2="17" y2="7"></line>
                                         <polyline points="7 7 17 7 17 17"></polyline>
@@ -584,3 +588,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 });
 </script>
+
+@guest
+    @include('partials.auth-role-modal')
+@endguest

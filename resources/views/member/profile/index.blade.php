@@ -37,7 +37,10 @@
                         <!-- Avatar & Identity -->
                         <div class="d-flex align-items-center pb-4 mb-4 border-bottom" style="border-color: rgba(0,0,0,0.06) !important;">
                             @if($user->avatar)
-                                <img src="{{ asset('storage/' . $user->avatar) }}" alt="{{ $displayName }}" class="rounded-circle mr-3" style="width: 68px; height: 68px; object-fit: cover; border: var(--border-hairline); box-shadow: 0 2px 8px rgba(0,0,0,0.08);">
+                                <img src="{{ \Illuminate\Support\Str::startsWith($user->avatar, ['http://', 'https://']) ? $user->avatar : asset('storage/' . $user->avatar) }}" alt="{{ $displayName }}" class="rounded-circle mr-3" style="width: 68px; height: 68px; object-fit: cover; border: var(--border-hairline); box-shadow: 0 2px 8px rgba(0,0,0,0.08);" referrerpolicy="no-referrer" crossorigin="anonymous" onerror="this.style.display='none'; if(this.nextElementSibling){ this.nextElementSibling.classList.remove('d-none'); this.nextElementSibling.classList.add('d-inline-flex'); }">
+                                <div class="d-none align-items-center justify-content-center rounded-circle mr-3" style="width: 68px; height: 68px; background-color: var(--surface-page-canvas); color: var(--color-midnight-ink); border: var(--border-hairline); font-size: 26px; font-weight: 700;">
+                                    {{ strtoupper(substr($displayName, 0, 1)) }}
+                                </div>
                             @else
                                 <div class="d-inline-flex align-items-center justify-content-center rounded-circle mr-3" style="width: 68px; height: 68px; background-color: var(--surface-page-canvas); color: var(--color-midnight-ink); border: var(--border-hairline); font-size: 26px; font-weight: 700;">
                                     {{ strtoupper(substr($displayName, 0, 1)) }}
@@ -117,7 +120,7 @@
                                             <label class="d-block font-weight-600 text-dark small mb-2 text-left">Foto Profil</label>
                                             <div class="d-inline-block position-relative">
                                                 @if($user->avatar)
-                                                    <img id="avatarPreviewImg" src="{{ asset('storage/' . $user->avatar) }}" alt="{{ $displayName }}" class="rounded-circle shadow-sm" style="width: 86px; height: 86px; object-fit: cover; border: 2px solid #ffffff; box-shadow: 0 4px 12px rgba(0,0,0,0.12) !important;">
+                                                    <img id="avatarPreviewImg" src="{{ \Illuminate\Support\Str::startsWith($user->avatar, ['http://', 'https://']) ? $user->avatar : asset('storage/' . $user->avatar) }}" alt="{{ $displayName }}" class="rounded-circle shadow-sm" style="width: 86px; height: 86px; object-fit: cover; border: 2px solid #ffffff; box-shadow: 0 4px 12px rgba(0,0,0,0.12) !important;" referrerpolicy="no-referrer" crossorigin="anonymous" onerror="this.style.display='none'; const fb = document.getElementById('avatarFallbackBox'); if(fb){ fb.classList.remove('d-none'); fb.classList.add('d-inline-flex'); }">
                                                     <div id="avatarFallbackBox" class="rounded-circle d-none align-items-center justify-content-center shadow-sm" style="width: 86px; height: 86px; background-color: #f1f5f9; color: var(--color-midnight-ink); font-size: 30px; font-weight: 700; border: 2px solid #ffffff;">
                                                         {{ strtoupper(substr($displayName, 0, 1)) }}
                                                     </div>
