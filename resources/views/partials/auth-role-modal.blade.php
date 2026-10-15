@@ -119,17 +119,17 @@
 <style>
 /* Hover & Animation Style untuk Role Card */
 .auth-role-option-card:hover {
-    border-color: var(--color-midnight-ink, #02093a) !important;
+    border-color: var(--color-notion-blue, #0075de) !important;
     background-color: #fbfbfb !important;
     transform: translateY(-2px);
-    box-shadow: 0 8px 20px -4px rgba(2, 9, 58, 0.12) !important;
+    box-shadow: 0 8px 20px -4px rgba(0, 117, 222, 0.15) !important;
 }
 .auth-role-option-card:hover .auth-role-arrow {
     transform: translateX(3px);
 }
 .auth-role-option-card:hover .auth-role-arrow svg {
     opacity: 1 !important;
-    stroke: var(--color-midnight-ink, #02093a);
+    stroke: var(--color-notion-blue, #0075de);
 }
 .auth-role-option-card:active {
     transform: scale(0.99);

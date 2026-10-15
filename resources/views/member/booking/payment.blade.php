@@ -30,7 +30,7 @@
                 </div>
                 <span style="color: var(--color-stone); font-size: 12px;"><i class="fa fa-chevron-right"></i></span>
                 <div class="d-inline-flex align-items-center px-3 py-1 rounded-pill" style="background-color: var(--surface-page-canvas); color: var(--color-midnight-ink); font-size: 13px; font-weight: 600; border: var(--border-hairline);">
-                    <span class="mr-2" style="width: 20px; height: 20px; border-radius: 50%; background-color: var(--color-midnight-ink); color: #fff; display: inline-flex; align-items: center; justify-content: center; font-size: 11px;">2</span>
+                    <span class="mr-2" style="width: 20px; height: 20px; border-radius: 50%; background-color: var(--color-notion-blue); color: #fff; display: inline-flex; align-items: center; justify-content: center; font-size: 11px;">2</span>
                     Metode Pembayaran
                 </div>
                 <span style="color: var(--color-stone); font-size: 12px;"><i class="fa fa-chevron-right"></i></span>
@@ -108,7 +108,7 @@
                                 <a href="{{ route('member.booking.create', $kos['slug']) }}" class="btn" style="background-color: var(--surface-page-canvas); color: var(--color-charcoal); border: var(--border-hairline); font-weight: 600; font-size: 13px; border-radius: var(--radius-buttons); padding: 10px 18px;">
                                     <i class="fa fa-arrow-left mr-2"></i> Ubah Data
                                 </a>
-                                <button type="submit" class="btn" style="background-color: var(--color-midnight-ink); color: #ffffff; font-weight: 600; font-size: 14px; padding: 12px 28px; border-radius: var(--radius-buttons); border: none;">
+                                <button type="submit" class="btn" style="background-color: var(--color-notion-blue); color: #ffffff; font-weight: 700; font-size: 14px; padding: 12px 28px; border-radius: var(--radius-buttons); border: none; box-shadow: 0 4px 14px rgba(0, 117, 222, 0.28);">
                                     <i class="fa fa-lock mr-2"></i> Konfirmasi Booking Sekarang
                                 </button>
                             </div>

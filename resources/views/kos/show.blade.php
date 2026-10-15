@@ -79,8 +79,8 @@
                         <!--NAMA KOS & BADGES-->
                         <div id="page-title" class="mb-4">
                             <div class="d-flex justify-content-between align-items-center mb-2">
-                                <span class="badge px-3 py-1 font-weight-normal" style="border-radius: 9999px; background-color: var(--color-sky-tint); color: var(--color-notion-blue); border: 1px solid rgba(0, 117, 222, 0.2);">
-                                    <i class="fa fa-check-circle mr-1" style="color: var(--color-notion-blue);"></i>TEMPATIN Verified
+                                <span class="badge px-3 py-1 font-weight-normal" style="border-radius: 9999px; background-color: var(--color-sky-tint); color: var(--color-ink-black); border: 1px solid rgba(0, 117, 222, 0.2);">
+                                    <i class="fa fa-check-circle mr-1" style="color: var(--color-ink-black);"></i>TEMPATIN Verified
                                 </span>
 
                                 <!-- Tombol Simpan ke Favorit (Heart: outline hitam, isi putih, berubah merah saat diklik) -->
@@ -119,7 +119,7 @@
                                         <strong class="text-dark">{{ number_format($kos['rating'], 1) }}</strong> ({{ $kos['review_count'] ?? 0 }} ulasan)
                                     </span>
                                 @endif
-                                <span class="badge ml-auto py-1 px-3" style="border-radius: 9999px; background-color: {{ ($kos['status'] ?? 'active') === 'active' ? 'var(--color-sky-tint)' : '#ffffff' }}; color: {{ ($kos['status'] ?? 'active') === 'active' ? 'var(--color-notion-blue)' : 'var(--color-charcoal)' }}; border: 1px solid {{ ($kos['status'] ?? 'active') === 'active' ? 'rgba(0, 117, 222, 0.25)' : 'rgba(0, 0, 0, 0.2)' }};">
+                                <span class="badge ml-auto py-1 px-3" style="border-radius: 9999px; background-color: {{ ($kos['status'] ?? 'active') === 'active' ? 'var(--color-sky-tint)' : '#ffffff' }}; color: {{ ($kos['status'] ?? 'active') === 'active' ? 'var(--color-ink-black)' : 'var(--color-charcoal)' }}; border: 1px solid {{ ($kos['status'] ?? 'active') === 'active' ? 'rgba(0, 117, 222, 0.25)' : 'rgba(0, 0, 0, 0.2)' }};">
                                     {{ ($kos['status'] ?? 'active') === 'active' ? 'Tersedia' : 'Penuh' }}
                                 </span>
                             </div>

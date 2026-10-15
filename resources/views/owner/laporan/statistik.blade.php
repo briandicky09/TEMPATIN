@@ -16,7 +16,7 @@
 
             <!-- HEADER -->
             <div class="mb-4">
-                <div class="d-inline-flex align-items-center mb-2 px-2 py-1 rounded" style="background-color: var(--color-sky-tint); color: var(--color-notion-blue); font-size: 11px; font-weight: 600;">
+                <div class="d-inline-flex align-items-center mb-2 px-2 py-1 rounded" style="background-color: var(--color-sky-tint); color: var(--color-ink-black); font-size: 11px; font-weight: 600;">
                     <i class="fa fa-chart-line mr-1"></i> ANALITIKA PROPERTI
                 </div>
                 <h1 style="font-family: var(--font-serif); font-size: 1.85rem; font-weight: 700; color: var(--color-midnight-ink); margin-bottom: 4px;">
@@ -35,8 +35,8 @@
                         <div style="font-size: 1.35rem; font-weight: 700; color: var(--color-midnight-ink); font-variant-numeric: tabular-nums; margin-bottom: 4px;">
                             Rp {{ number_format($summary['pendapatan'], 0, ',', '.') }}
                         </div>
-                        <span class="badge" style="background-color: var(--color-sky-tint); color: var(--color-notion-blue); border: 1px solid rgba(0, 117, 222, 0.2); font-size: 11px; font-weight: 600;">
-                            <i class="fa fa-arrow-up mr-1" style="color: var(--color-notion-blue);"></i>+{{ $summary['pertumbuhan'] }}% bln ini
+                        <span class="badge" style="background-color: var(--color-sky-tint); color: var(--color-ink-black); border: 1px solid rgba(0, 117, 222, 0.2); font-size: 11px; font-weight: 600;">
+                            <i class="fa fa-arrow-up mr-1" style="color: var(--color-ink-black);"></i>+{{ $summary['pertumbuhan'] }}% bln ini
                         </span>
                     </div>
                 </div>

@@ -32,10 +32,10 @@
                 <div>
                     @php
                         $statusColor = match(strtolower($booking->status)) {
-                            'confirmed', 'paid', 'approved', 'success' => 'background-color: var(--color-sky-tint); color: var(--color-notion-blue); border: 1px solid rgba(0, 117, 222, 0.25);',
+                            'confirmed', 'paid', 'approved', 'success' => 'background-color: var(--color-sky-tint); color: var(--color-ink-black); border: 1px solid rgba(0, 117, 222, 0.25);',
                             'pending' => 'background-color: #ffffff; color: var(--color-charcoal); border: 1px solid rgba(0, 0, 0, 0.2);',
                             'cancelled', 'rejected' => 'background-color: #ffffff; color: var(--color-stone); border: 1px solid rgba(0, 0, 0, 0.15);',
-                            default => 'background-color: var(--color-sky-tint); color: var(--color-notion-blue); border: 1px solid rgba(0, 117, 222, 0.2);',
+                            default => 'background-color: var(--color-sky-tint); color: var(--color-ink-black); border: 1px solid rgba(0, 117, 222, 0.2);',
                         };
                     @endphp
                     <span class="px-3 py-2 rounded-pill font-weight-bold text-uppercase" style="{{ $statusColor }}; font-size: 12px; letter-spacing: 0.05em;">
@@ -137,7 +137,7 @@
 
                         @if($booking->kos)
                         <div class="p-4 rounded mb-4" style="background-color: #ffffff; border: var(--border-hairline); border-radius: var(--radius-cards);">
-                            <img src="{{ asset($booking->kos->thumbnail) }}" alt="{{ $booking->kos->title }}" class="w-100 rounded mb-3" style="height: 180px; object-fit: cover; border: var(--border-hairline);">
+                            <img src="{{ asset($booking->kos->thumbnail) }}" alt="{{ $booking->kos->title }}" class="w-100 mb-3" style="height: 180px; object-fit: cover; border: var(--border-hairline); border-radius: var(--radius-cards, 12px);">
                             <h3 style="font-size: 1.15rem; font-weight: 700; color: var(--color-midnight-ink); margin-bottom: 4px;">{{ $booking->kos->title }}</h3>
                             <p style="font-size: 13px; color: var(--color-stone); margin-bottom: 16px;"><i class="fa fa-map-marker-alt mr-1" style="color: var(--color-stone);"></i> {{ $booking->kos->address ?? $booking->kos->city }}</p>
                             <a href="{{ route('member.kos.show', $booking->kos->slug) }}" class="btn btn-block" style="background-color: var(--surface-page-canvas); color: var(--color-midnight-ink); border: var(--border-hairline); font-weight: 600; font-size: 13px; padding: 10px; border-radius: var(--radius-buttons); text-align: center;">
@@ -152,7 +152,7 @@
                             </div>
                             <h4 style="font-size: 14px; font-weight: 700; color: var(--color-midnight-ink); margin-bottom: 6px;">Butuh Bukti Invoice?</h4>
                             <p style="font-size: 12.5px; color: var(--color-stone); margin-bottom: 16px;">Invoice resmi diterbitkan di pusat tagihan akun kamu.</p>
-                            <a href="{{ route('member.invoice.index') }}" class="btn btn-block" style="background-color: var(--color-midnight-ink); color: #ffffff; font-weight: 600; font-size: 13px; padding: 10px; border-radius: var(--radius-buttons); border: none;">
+                            <a href="{{ route('member.invoice.index') }}" class="btn btn-block" style="background-color: var(--color-notion-blue); color: #ffffff; font-weight: 700; font-size: 13px; padding: 10px; border-radius: var(--radius-buttons); border: none; box-shadow: 0 2px 8px rgba(0, 117, 222, 0.25);">
                                 Buka Tagihan & Invoice
                             </a>
                         </div>

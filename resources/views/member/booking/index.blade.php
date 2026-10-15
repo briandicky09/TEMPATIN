@@ -24,7 +24,7 @@
         <!-- STEP PROGRESS INDICATOR -->
         <div class="container mb-5">
             <div class="d-flex align-items-center justify-content-center flex-wrap gap-2">
-                <div class="d-inline-flex align-items-center px-3 py-1 rounded-pill" style="background-color: var(--color-sky-tint); color: var(--color-notion-blue); font-size: 13px; font-weight: 600; border: 1px solid rgba(0, 117, 222, 0.2);">
+                <div class="d-inline-flex align-items-center px-3 py-1 rounded-pill" style="background-color: var(--color-sky-tint); color: var(--color-ink-black); font-size: 13px; font-weight: 600; border: 1px solid rgba(0, 117, 222, 0.2);">
                     <span class="mr-2" style="width: 20px; height: 20px; border-radius: 50%; background-color: var(--color-notion-blue); color: #fff; display: inline-flex; align-items: center; justify-content: center; font-size: 11px;">1</span>
                     Data Penyewa
                 </div>
@@ -140,7 +140,7 @@
 
                             <!-- Property Brief -->
                             <div class="d-flex gap-3 mb-3 pb-3 border-bottom" style="border-color: rgba(0,0,0,0.06) !important;">
-                                <img src="{{ asset($kos['thumbnail']) }}" alt="{{ $kos['title'] }}" class="rounded mr-3" style="width: 80px; height: 80px; object-fit: cover; border: var(--border-hairline);">
+                                <img src="{{ asset($kos['thumbnail']) }}" alt="{{ $kos['title'] }}" class="mr-3" style="width: 80px; height: 80px; object-fit: cover; border: var(--border-hairline); border-radius: var(--radius-cards, 12px);">
                                 <div>
                                     <span class="badge mb-1" style="background-color: var(--surface-page-canvas); color: var(--color-stone); border: var(--border-hairline); font-size: 10px;">PROPERTI</span>
                                     <h3 style="font-size: 15px; font-weight: 700; color: var(--color-midnight-ink); margin-bottom: 2px;">{{ $kos['title'] }}</h3>

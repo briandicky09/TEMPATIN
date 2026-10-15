@@ -17,7 +17,7 @@
             <!-- HEADER -->
             <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-3">
                 <div>
-                    <div class="d-inline-flex align-items-center mb-2 px-2 py-1 rounded" style="background-color: var(--color-sky-tint); color: var(--color-notion-blue); font-size: 11px; font-weight: 600;">
+                    <div class="d-inline-flex align-items-center mb-2 px-2 py-1 rounded" style="background-color: var(--color-sky-tint); color: var(--color-ink-black); font-size: 11px; font-weight: 600;">
                         <i class="fa fa-tasks mr-1"></i> PENGATURAN HUNIAN
                     </div>
                     <h1 style="font-family: var(--font-serif); font-size: 1.85rem; font-weight: 700; color: var(--color-midnight-ink); margin-bottom: 4px;">
@@ -100,7 +100,7 @@
                         <p style="font-size: 13.5px; color: var(--color-stone); max-width: 440px; margin: 0 auto 20px;">
                             Tambahkan properti kos baru untuk mulai mengelola ketersediaan kamar.
                         </p>
-                        <a href="{{ route('owner.kos.create') }}" class="btn" style="background-color: var(--color-midnight-ink); color: #ffffff; font-weight: 600; font-size: 13px; padding: 10px 20px; border-radius: var(--radius-buttons); border: none;">
+                        <a href="{{ route('owner.kos.create') }}" class="btn" style="background-color: var(--color-notion-blue); color: #ffffff; font-weight: 700; font-size: 13px; padding: 10px 20px; border-radius: var(--radius-buttons); border: none; box-shadow: 0 2px 8px rgba(0, 117, 222, 0.25);">
                             + Tambah Kos Sekarang
                         </a>
                     </div>

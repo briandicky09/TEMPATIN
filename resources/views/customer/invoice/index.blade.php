@@ -6,7 +6,7 @@
 
 <!-- HEADER -->
 <div class="mb-4">
-    <div class="d-inline-flex align-items-center mb-2 px-2 py-1 rounded" style="background-color: var(--color-sky-tint); color: var(--color-notion-blue); font-size: 11px; font-weight: 600;">
+    <div class="d-inline-flex align-items-center mb-2 px-2 py-1 rounded" style="background-color: var(--color-sky-tint); color: var(--color-ink-black); font-size: 11px; font-weight: 600;">
         <i class="fa fa-file-invoice mr-1"></i> TAGIHAN HUNIAN
     </div>
     <h1 style="font-family: var(--font-serif); font-size: 1.85rem; font-weight: 700; color: var(--color-midnight-ink); margin-bottom: 4px;">
@@ -40,7 +40,7 @@
                     @php
                         $isPaid = in_array(strtolower($invoice['status']), ['paid', 'lunas', 'selesai']);
                         $statusStyle = $isPaid 
-                            ? 'background-color: var(--color-sky-tint); color: var(--color-notion-blue); border: 1px solid rgba(0, 117, 222, 0.2);'
+                            ? 'background-color: var(--color-sky-tint); color: var(--color-ink-black); border: 1px solid rgba(0, 117, 222, 0.2);'
                             : 'background-color: #ffffff; color: var(--color-charcoal); border: 1px solid rgba(0, 0, 0, 0.18);';
                     @endphp
                     <tr style="border-bottom: 1px solid rgba(0,0,0,0.06);">

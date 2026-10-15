@@ -29,7 +29,7 @@
         <!-- HERO HEADER -->
         <section class="container mb-5">
             <div style="max-width: 820px;">
-                <div class="d-inline-flex align-items-center mb-3 px-3 py-1 rounded-pill" style="background-color: var(--color-sky-tint); border: 1px solid rgba(0, 117, 222, 0.2); font-size: 12px; font-weight: 700; color: var(--color-notion-blue); letter-spacing: 0.04em;">
+                <div class="d-inline-flex align-items-center mb-3 px-3 py-1 rounded-pill" style="background-color: var(--color-sky-tint); border: 1px solid rgba(0, 117, 222, 0.2); font-size: 12px; font-weight: 700; color: var(--color-ink-black); letter-spacing: 0.04em;">
                     <i class="fa fa-book-open mr-2"></i> PUSAT BACAAN &amp; PANDUAN SEWA
                 </div>
                 <h1 style="font-family: var(--font-serif); font-size: clamp(2rem, 3.6vw, 2.75rem); font-weight: 700; color: var(--color-midnight-ink); letter-spacing: -0.025em; line-height: 1.25;" class="mb-3">
@@ -80,8 +80,8 @@
                             Cara Memilih Kos yang Aman, Nyaman, dan Dekat Aktivitas Harian
                         </h2>
 
-                        <div class="mb-4 overflow-hidden rounded position-relative" style="border: var(--border-hairline); max-height: 340px;">
-                            <img src="{{ asset('assets/img/artikel-survey.jpg') }}" alt="Cara memilih kos yang aman dan nyaman" class="img-fluid w-100" style="object-fit: cover; width: 100%; height: 320px; display: block;">
+                        <div class="mb-4 overflow-hidden position-relative" style="border: var(--border-hairline); max-height: 340px; border-radius: var(--radius-cards, 12px);">
+                            <img src="{{ asset('assets/img/artikel-survey.jpg') }}" alt="Cara memilih kos yang aman dan nyaman" class="img-fluid w-100" style="object-fit: cover; width: 100%; height: 320px; display: block; border-radius: var(--radius-cards, 12px);">
                         </div>
 
                         <p style="font-size: 15px; color: var(--color-charcoal); line-height: 1.7; margin-bottom: 20px;">
@@ -123,8 +123,8 @@
                             5 Hal Wajib Diperiksa Sebelum Membayar Uang Muka Booking Kos
                         </h2>
 
-                        <div class="mb-4 overflow-hidden rounded position-relative" style="border: var(--border-hairline); max-height: 340px;">
-                            <img src="{{ asset('assets/img/artikel-1.png') }}" alt="5 hal wajib diperhatikan sebelum booking kos" class="img-fluid w-100" style="object-fit: cover; width: 100%; height: 320px; display: block;">
+                        <div class="mb-4 overflow-hidden position-relative" style="border: var(--border-hairline); max-height: 340px; border-radius: var(--radius-cards, 12px);">
+                            <img src="{{ asset('assets/img/artikel-sewa-dp.jpg') }}" alt="5 hal wajib diperhatikan sebelum booking kos" class="img-fluid w-100" style="object-fit: cover; width: 100%; height: 320px; display: block; border-radius: var(--radius-cards, 12px);">
                         </div>
 
                         <p style="font-size: 15px; color: var(--color-charcoal); line-height: 1.7; margin-bottom: 20px;">
@@ -166,8 +166,8 @@
                             Perbedaan Karakteristik Kos Putra, Putri, Campur &amp; Eksklusif
                         </h2>
 
-                        <div class="mb-4 overflow-hidden rounded position-relative" style="border: var(--border-hairline); max-height: 340px;">
-                            <img src="{{ asset('assets/img/kos-anggrek.jpg') }}" alt="Perbedaan tipe kos" class="img-fluid w-100" style="object-fit: cover; width: 100%; height: 320px; display: block;">
+                        <div class="mb-4 overflow-hidden position-relative" style="border: var(--border-hairline); max-height: 340px; border-radius: var(--radius-cards, 12px);">
+                            <img src="{{ asset('assets/img/kos-anggrek.jpg') }}" alt="Perbedaan tipe kos" class="img-fluid w-100" style="object-fit: cover; width: 100%; height: 320px; display: block; border-radius: var(--radius-cards, 12px);">
                         </div>
 
                         <p style="font-size: 15px; color: var(--color-charcoal); line-height: 1.7; margin-bottom: 20px;">
@@ -209,8 +209,8 @@
                             Simulasi Budget Sewa Kos: Biaya Pokok vs Biaya Tersembunyi
                         </h2>
 
-                        <div class="mb-4 overflow-hidden rounded position-relative" style="border: var(--border-hairline); max-height: 340px;">
-                            <img src="{{ asset('assets/img/artikel-budget.jpg') }}" alt="Simulasi budget sewa kos" class="img-fluid w-100" style="object-fit: cover; width: 100%; height: 320px; display: block;">
+                        <div class="mb-4 overflow-hidden position-relative" style="border: var(--border-hairline); max-height: 340px; border-radius: var(--radius-cards, 12px);">
+                            <img src="{{ asset('assets/img/artikel-budget-clean.jpg') }}" alt="Simulasi budget sewa kos" class="img-fluid w-100" style="object-fit: cover; width: 100%; height: 320px; display: block; border-radius: var(--radius-cards, 12px);">
                         </div>
 
                         <p style="font-size: 15px; color: var(--color-charcoal); line-height: 1.7; margin-bottom: 20px;">
@@ -310,7 +310,7 @@
                             <p style="font-size: 13px; color: var(--color-stone); line-height: 1.6; margin-bottom: 16px;">
                                 Konsultasikan kampus atau area kantor tujuan serta batas budget kamu dengan konsultan hunian TEMPATIN tanpa dipungut biaya.
                             </p>
-                            <a href="{{ route('contact') }}" class="btn btn-block font-weight-bold" style="background-color: var(--color-midnight-ink); color: #ffffff; font-size: 13px; padding: 10px 16px; border-radius: var(--radius-buttons); text-decoration: none;">
+                            <a href="{{ route('contact') }}" class="btn btn-block font-weight-bold" style="background-color: var(--color-notion-blue); color: #ffffff; font-size: 13.5px; padding: 11px 16px; border-radius: var(--radius-buttons); text-decoration: none; border: none; box-shadow: 0 4px 12px rgba(0, 117, 222, 0.25);">
                                 <i class="fa fa-comments mr-2"></i> Konsultasi Gratis Sekarang
                             </a>
                         </div>

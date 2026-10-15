@@ -32,7 +32,7 @@
                             </div>
                             @if($roleLabel)
                                 <div class="mb-2">
-                                    <span class="d-inline-flex align-items-center px-2 py-1 rounded" style="background-color: {{ $isOwner ? 'var(--color-emerald-tint, #edf7ee)' : 'var(--color-sky-tint, #e6f3fe)' }}; color: {{ $isOwner ? '#059669' : 'var(--color-signal-blue, #097fe8)' }}; font-size: 12px; font-weight: 600; border: 1px solid {{ $isOwner ? 'rgba(5,150,105,0.2)' : 'rgba(9,127,232,0.2)' }};">
+                                    <span class="d-inline-flex align-items-center px-2 py-1 rounded" style="background-color: {{ $isOwner ? 'var(--color-emerald-tint, #edf7ee)' : 'var(--color-sky-tint, #e6f3fe)' }}; color: {{ $isOwner ? '#059669' : 'var(--color-ink-black, #000000)' }}; font-size: 12px; font-weight: 600; border: 1px solid {{ $isOwner ? 'rgba(5,150,105,0.2)' : 'rgba(9,127,232,0.2)' }};">
                                         <i class="fa {{ $isOwner ? 'fa-building mr-1' : 'fa-user mr-1' }}"></i> {{ $roleLabel }}
                                     </span>
                                 </div>

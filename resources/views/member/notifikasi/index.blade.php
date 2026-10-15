@@ -27,7 +27,7 @@
                     <!-- HEADER -->
                     <div class="d-flex justify-content-between align-items-center mb-4">
                         <div>
-                            <div class="d-inline-flex align-items-center mb-1 px-2 py-1 rounded" style="background-color: var(--color-sky-tint); color: var(--color-notion-blue); font-size: 11px; font-weight: 600;">
+                            <div class="d-inline-flex align-items-center mb-1 px-2 py-1 rounded" style="background-color: var(--color-sky-tint); color: var(--color-ink-black); font-size: 11px; font-weight: 600;">
                                 <i class="fa fa-bell mr-1"></i> PUSAT INFORMASI
                             </div>
                             <h1 style="font-family: var(--font-serif); font-size: 1.75rem; font-weight: 700; color: var(--color-midnight-ink); margin-bottom: 0;">

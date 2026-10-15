@@ -88,7 +88,7 @@
                                 <button type="button" class="btn" data-toggle="modal" data-target="#editProfileModal" id="btnEditProfile" style="background-color: var(--color-notion-blue); color: #ffffff; font-weight: 600; font-size: 13px; border-radius: var(--radius-buttons); padding: 10px 18px; border: none; box-shadow: 0 2px 8px rgba(0, 117, 222, 0.25);">
                                     <i class="fa fa-user-edit mr-2"></i> Edit Profil
                                 </button>
-                                <a href="{{ route('member.invoice.index') }}" class="btn ml-2" style="background-color: var(--color-midnight-ink); color: #ffffff; font-weight: 600; font-size: 13px; border-radius: var(--radius-buttons); padding: 10px 18px; border: none;">
+                                <a href="{{ route('member.invoice.index') }}" class="btn ml-2" style="background-color: var(--color-sky-tint); color: var(--color-notion-blue); border: 1px solid rgba(0, 117, 222, 0.25); font-weight: 600; font-size: 13px; border-radius: var(--radius-buttons); padding: 10px 18px;">
                                     <i class="fa fa-file-invoice mr-2"></i> Riwayat Invoice
                                 </a>
                             </div>

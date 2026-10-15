@@ -5,7 +5,7 @@
             <!-- Brand Logo -->
             <a class="navbar-brand d-inline-flex align-items-center" href="{{ route('owner.dashboard') }}">
                 <img src="{{ asset('assets/img/logo.png') }}" alt="TEMPATIN" style="height: 28px; width: auto; object-fit: contain;">
-                <span class="badge ml-2 font-weight-bold" style="font-size: 11px; background-color: var(--color-sky-tint); color: var(--color-notion-blue); border: 1px solid rgba(0, 117, 222, 0.2);">Owner</span>
+                <span class="badge ml-2 font-weight-bold" style="font-size: 11px; background-color: var(--color-sky-tint); color: var(--color-ink-black); border: 1px solid rgba(0, 117, 222, 0.2);">Owner</span>
             </a>
 
             <!-- Mobile Toggle -->

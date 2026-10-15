@@ -17,7 +17,7 @@
             <!-- HEADER -->
             <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-3">
                 <div>
-                    <div class="d-inline-flex align-items-center mb-2 px-2 py-1 rounded" style="background-color: var(--color-sky-tint); color: var(--color-notion-blue); font-size: 11px; font-weight: 600;">
+                    <div class="d-inline-flex align-items-center mb-2 px-2 py-1 rounded" style="background-color: var(--color-sky-tint); color: var(--color-ink-black); font-size: 11px; font-weight: 600;">
                         <i class="fa fa-edit mr-1"></i> PERBARUI PROPERTI
                     </div>
                     <h1 style="font-family: var(--font-serif); font-size: 1.85rem; font-weight: 700; color: var(--color-midnight-ink); margin-bottom: 4px;">
@@ -43,7 +43,7 @@
                     <!-- SECTION 1: INFORMASI DASAR -->
                     <div class="mb-5">
                         <div class="d-flex align-items-center mb-3 pb-2 border-bottom" style="border-color: rgba(0,0,0,0.06) !important;">
-                            <span class="mr-2" style="width: 24px; height: 24px; border-radius: 50%; background-color: var(--color-sky-tint); color: var(--color-notion-blue); border: 1px solid rgba(0, 117, 222, 0.2); display: inline-flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700;">1</span>
+                            <span class="mr-2" style="width: 24px; height: 24px; border-radius: 50%; background-color: var(--color-sky-tint); color: var(--color-ink-black); border: 1px solid rgba(0, 117, 222, 0.2); display: inline-flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700;">1</span>
                             <h2 style="font-size: 1.1rem; font-weight: 700; color: var(--color-midnight-ink); margin-bottom: 0;">Informasi Properti</h2>
                         </div>
 
@@ -97,7 +97,7 @@
                     <!-- SECTION 2: DESKRIPSI & THUMBNAIL -->
                     <div class="mb-5">
                         <div class="d-flex align-items-center mb-3 pb-2 border-bottom" style="border-color: rgba(0,0,0,0.06) !important;">
-                            <span class="mr-2" style="width: 24px; height: 24px; border-radius: 50%; background-color: var(--color-sky-tint); color: var(--color-notion-blue); border: 1px solid rgba(0, 117, 222, 0.2); display: inline-flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700;">2</span>
+                            <span class="mr-2" style="width: 24px; height: 24px; border-radius: 50%; background-color: var(--color-sky-tint); color: var(--color-ink-black); border: 1px solid rgba(0, 117, 222, 0.2); display: inline-flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700;">2</span>
                             <h2 style="font-size: 1.1rem; font-weight: 700; color: var(--color-midnight-ink); margin-bottom: 0;">Deskripsi & Foto Sampul</h2>
                         </div>
 
@@ -109,7 +109,7 @@
 
                         <div class="d-flex align-items-center gap-3 p-3 rounded" style="background-color: var(--surface-page-canvas); border: 1px solid rgba(0,0,0,0.06);">
                             @if(!empty($kos['thumbnail']))
-                                <img src="{{ asset($kos['thumbnail']) }}" alt="{{ $kos['title'] }}" class="rounded mr-3" style="width: 72px; height: 72px; object-fit: cover; border: var(--border-hairline);">
+                                <img src="{{ asset($kos['thumbnail']) }}" alt="{{ $kos['title'] }}" class="mr-3" style="width: 72px; height: 72px; object-fit: cover; border: var(--border-hairline); border-radius: var(--radius-cards, 12px);">
                             @endif
                             <div class="flex-grow-1">
                                 <label style="font-size: 13px; font-weight: 600; color: var(--color-midnight-ink); margin-bottom: 2px;">Ganti Foto Sampul Utama</label>
@@ -122,7 +122,7 @@
                     <!-- SECTION 3: GALERI FOTO -->
                     <div class="mb-5">
                         <div class="d-flex align-items-center mb-3 pb-2 border-bottom" style="border-color: rgba(0,0,0,0.06) !important;">
-                            <span class="mr-2" style="width: 24px; height: 24px; border-radius: 50%; background-color: var(--color-sky-tint); color: var(--color-notion-blue); border: 1px solid rgba(0, 117, 222, 0.2); display: inline-flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700;">3</span>
+                            <span class="mr-2" style="width: 24px; height: 24px; border-radius: 50%; background-color: var(--color-sky-tint); color: var(--color-ink-black); border: 1px solid rgba(0, 117, 222, 0.2); display: inline-flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700;">3</span>
                             <h2 style="font-size: 1.1rem; font-weight: 700; color: var(--color-midnight-ink); margin-bottom: 0;">Galeri Foto Properti</h2>
                         </div>
 
@@ -134,8 +134,8 @@
                             <div class="row mb-4">
                                 @foreach($kos->photos as $photo)
                                     <div class="col-6 col-md-4 col-lg-3 mb-3">
-                                        <div class="p-2 rounded text-center" style="background-color: var(--surface-page-canvas); border: var(--border-hairline);">
-                                            <img src="{{ is_object($photo) ? $photo->url : (is_array($photo) ? ($photo['url'] ?? '') : $photo) }}" alt="Foto Kos" class="w-100 rounded mb-2" style="height: 110px; object-fit: cover;">
+                                        <div class="p-2 rounded text-center" style="background-color: var(--surface-page-canvas); border: var(--border-hairline); border-radius: var(--radius-cards, 12px);">
+                                            <img src="{{ is_object($photo) ? $photo->url : (is_array($photo) ? ($photo['url'] ?? '') : $photo) }}" alt="Foto Kos" class="w-100 mb-2" style="height: 110px; object-fit: cover; border-radius: var(--radius-cards, 12px);">
                                             <label class="d-flex align-items-center justify-content-center mb-0 cursor-pointer" style="font-size: 12px; color: var(--color-charcoal); font-weight: 600; cursor: pointer;">
                                                 <input type="checkbox" name="delete_photos[]" value="{{ is_object($photo) ? $photo->id : (is_array($photo) ? ($photo['id'] ?? '') : $photo) }}" class="mr-1" style="accent-color: var(--color-notion-blue);">
                                                 Hapus Foto
@@ -160,7 +160,7 @@
                     <!-- SECTION 4: FASILITAS -->
                     <div class="mb-5">
                         <div class="d-flex align-items-center mb-3 pb-2 border-bottom" style="border-color: rgba(0,0,0,0.06) !important;">
-                            <span class="mr-2" style="width: 24px; height: 24px; border-radius: 50%; background-color: var(--color-sky-tint); color: var(--color-notion-blue); border: 1px solid rgba(0, 117, 222, 0.2); display: inline-flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700;">4</span>
+                            <span class="mr-2" style="width: 24px; height: 24px; border-radius: 50%; background-color: var(--color-sky-tint); color: var(--color-ink-black); border: 1px solid rgba(0, 117, 222, 0.2); display: inline-flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700;">4</span>
                             <h2 style="font-size: 1.1rem; font-weight: 700; color: var(--color-midnight-ink); margin-bottom: 0;">Fasilitas Kos</h2>
                         </div>
 

@@ -16,7 +16,7 @@
             <!-- HEADER -->
             <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-3">
                 <div>
-                    <div class="d-inline-flex align-items-center mb-2 px-2 py-1 rounded" style="background-color: var(--color-sky-tint); color: var(--color-notion-blue); font-size: 11px; font-weight: 600;">
+                    <div class="d-inline-flex align-items-center mb-2 px-2 py-1 rounded" style="background-color: var(--color-sky-tint); color: var(--color-ink-black); font-size: 11px; font-weight: 600;">
                         <i class="fa fa-tachometer-alt mr-1"></i> RINGKASAN PORTOFOLIO
                     </div>
                     <h1 style="font-family: var(--font-serif); font-size: 1.85rem; font-weight: 700; color: var(--color-midnight-ink); margin-bottom: 4px;">
@@ -27,7 +27,7 @@
                     </p>
                 </div>
                 <div>
-                    <a href="{{ route('owner.kos.create') }}" class="btn" style="background-color: var(--color-midnight-ink); color: #ffffff; font-weight: 600; font-size: 13.5px; padding: 10px 20px; border-radius: var(--radius-buttons); border: none;">
+                    <a href="{{ route('owner.kos.create') }}" class="btn" style="background-color: var(--color-notion-blue); color: #ffffff; font-weight: 700; font-size: 13.5px; padding: 10px 20px; border-radius: var(--radius-buttons); border: none; box-shadow: 0 2px 8px rgba(0, 117, 222, 0.25);">
                         <i class="fa fa-plus-circle mr-1"></i> Tambah Kos Baru
                     </a>
                 </div>
@@ -88,8 +88,8 @@
                         <div class="col-md-6 col-xl-4 mb-3">
                             <div class="h-100 d-flex flex-column justify-content-between p-3 rounded" style="background-color: var(--surface-page-canvas); border: 1px solid rgba(0,0,0,0.06);">
                                 <div>
-                                    <div class="position-relative overflow-hidden mb-2 rounded" style="height: 140px;">
-                                        <img src="{{ asset($kos['thumbnail']) }}" class="w-100 h-100" alt="{{ $kos['title'] }}" style="object-fit: cover;">
+                                    <div class="position-relative overflow-hidden mb-2" style="height: 140px; border-radius: var(--radius-cards, 12px);">
+                                        <img src="{{ asset($kos['thumbnail']) }}" class="w-100 h-100" alt="{{ $kos['title'] }}" style="object-fit: cover; border-radius: var(--radius-cards, 12px);">
                                     </div>
                                     <h3 style="font-size: 14px; font-weight: 700; color: var(--color-midnight-ink); margin-bottom: 4px;">
                                         {{ $kos['title'] }}

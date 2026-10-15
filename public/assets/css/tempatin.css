@@ -270,7 +270,7 @@ p {
 
 .notion-pill-highlight--blue {
     background-color: var(--color-sky-tint);
-    color: var(--color-notion-blue);
+    color: var(--color-ink-black);
     border: 1px solid rgba(0, 117, 222, 0.15);
 }
 
@@ -408,7 +408,7 @@ p {
 .badge-primary,
 .badge-info {
     background-color: var(--color-sky-tint) !important;
-    color: var(--color-notion-blue) !important;
+    color: var(--color-ink-black) !important;
     border: 1px solid rgba(0, 117, 222, 0.18) !important;
 }
 
@@ -564,7 +564,7 @@ p {
 
 #ts-primary-navigation .navbar-nav .nav-item.active > .nav-link,
 #ts-primary-navigation .navbar-nav .nav-link.active {
-    color: var(--color-notion-blue) !important;
+    color: var(--color-ink-black) !important;
     font-weight: 600;
     background-color: var(--color-sky-tint) !important;
 }
@@ -1400,7 +1400,7 @@ div[style*="position: sticky"] {
 
 .badge-primary {
     background-color: var(--color-sky-tint) !important;
-    color: var(--color-notion-blue) !important;
+    color: var(--color-ink-black) !important;
 }
 
 /* =========================================================================
@@ -1442,7 +1442,7 @@ div[style*="position: sticky"] {
 
 .notion-character-mark--coral { border-color: #fca5a5 !important; color: #dc2626 !important; background-color: #fef2f2 !important; }
 .notion-character-mark--yellow { border-color: #fde68a !important; color: #b45309 !important; background-color: #fffbeb !important; }
-.notion-character-mark--blue { border-color: #bae6fd !important; color: var(--color-notion-blue) !important; background-color: var(--color-sky-tint) !important; }
+.notion-character-mark--blue { border-color: #bae6fd !important; color: var(--color-ink-black) !important; background-color: var(--color-sky-tint) !important; }
 .notion-character-mark--sky { border-color: #bae6fd !important; color: #0284c7 !important; background-color: #f0f9ff !important; }
 .notion-character-mark--mocha { border-color: #e5e7eb !important; color: #4b5563 !important; background-color: #f9fafb !important; }
 
@@ -1923,7 +1923,7 @@ header#ts-header.is-shrunk,
 }
 
 .notion-nav-link.active {
-    color: var(--color-notion-blue, #0075de) !important;
+    color: var(--color-ink-black, #000000) !important;
     background-color: var(--color-sky-tint, #e6f3fe);
     font-weight: 600;
 }
@@ -2125,7 +2125,7 @@ header#ts-header.is-shrunk,
 }
 
 .member-nav-link.active {
-    color: var(--color-notion-blue, #0075de) !important;
+    color: var(--color-ink-black, #000000) !important;
     background-color: var(--color-sky-tint, #e6f3fe);
     font-weight: 600;
 }
@@ -2474,7 +2474,7 @@ body {
     align-items: center;
     gap: 6px;
     background-color: var(--color-sky-tint);
-    color: var(--color-notion-blue);
+    color: var(--color-ink-black);
     font-size: 12px;
     font-weight: 600;
     padding: 4px 14px;
@@ -3320,7 +3320,7 @@ body {
     font-size: 12px;
     font-weight: 600;
     letter-spacing: 0.04em;
-    color: var(--color-notion-blue, #0075de);
+    color: var(--color-ink-black, #000000);
     text-transform: uppercase;
     margin-bottom: 14px;
 }
@@ -3626,5 +3626,41 @@ body {
     }
 }
 
+/* =========================================================================
+   GLOBAL IMAGE ROUNDING ENHANCEMENTS
+   Match Landing Page Card Aesthetic (--radius-cards: 12px)
+   ========================================================================= */
+.article-item .position-relative.overflow-hidden,
+.article-item img.img-fluid,
+.promo-card-item .position-relative.overflow-hidden,
+.promo-card-item img,
+.notion-kos-card img {
+    border-radius: var(--radius-cards, 12px);
+}
 
+.promo-card-item .position-relative.overflow-hidden img {
+    border-top-left-radius: var(--radius-cards, 12px) !important;
+    border-top-right-radius: var(--radius-cards, 12px) !important;
+    border-bottom-left-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+}
+
+/* =========================================================================
+   DARK MIDNIGHT-INK BANNER CONTRAST FIX
+   Guarantee high-contrast white headings on dark blue backgrounds
+   ========================================================================= */
+[style*="background: var(--color-midnight-ink)"] h1,
+[style*="background: var(--color-midnight-ink)"] h2,
+[style*="background: var(--color-midnight-ink)"] h3,
+[style*="background: var(--color-midnight-ink)"] h4,
+[style*="background: var(--color-midnight-ink)"] h5,
+[style*="background: var(--color-midnight-ink)"] h6,
+[style*="background-color: var(--color-midnight-ink)"] h1,
+[style*="background-color: var(--color-midnight-ink)"] h2,
+[style*="background-color: var(--color-midnight-ink)"] h3,
+[style*="background-color: var(--color-midnight-ink)"] h4,
+[style*="background-color: var(--color-midnight-ink)"] h5,
+[style*="background-color: var(--color-midnight-ink)"] h6 {
+    color: #ffffff !important;
+}
 

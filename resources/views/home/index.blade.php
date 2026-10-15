@@ -11,8 +11,13 @@
     <!-- =========================================================================
          1. NOTION HERO (CENTERED STACK LAYOUT)
          ========================================================================= -->
-    <section class="pt-3 pb-5" style="background-color: var(--surface-page-canvas); border-bottom: var(--border-hairline);">
-        <div class="container pt-2 pb-4 text-center">
+    <section class="pt-3 pb-5 position-relative overflow-hidden" style="background-color: var(--surface-page-canvas); border-bottom: var(--border-hairline);">
+        <!-- Solid City Skyline Illustration Backdrop Behind Headline -->
+        <div class="hero-skyline-backdrop" aria-hidden="true" style="position: absolute; top: 15px; left: 50%; transform: translateX(-50%); width: 100%; max-width: 1240px; height: 360px; pointer-events: none; z-index: 0; opacity: 0.42; mix-blend-mode: multiply; user-select: none;">
+            @include('partials.city-skyline')
+        </div>
+
+        <div class="container pt-2 pb-4 text-center position-relative" style="z-index: 1;">
 
             <!-- Avatar Character Marks Row -->
             <div class="notion-character-row">
@@ -951,7 +956,7 @@
                 <!-- Left: Heading, Lede, & Dot Pagination -->
                 <div class="col-lg-5 mb-5 mb-lg-0 pr-lg-4">
                     <div style="max-width: 440px;">
-                        <span class="badge mb-3" style="background-color: #EEF2FF; color: #4F46E5; border: 1px solid #E0E7FF; font-size: 12px; font-weight: 600; padding: 5px 12px; border-radius: 9999px;">
+                        <span class="badge mb-3" style="background-color: #EEF2FF; color: var(--color-ink-black, #000000); border: 1px solid #E0E7FF; font-size: 12px; font-weight: 600; padding: 5px 12px; border-radius: 9999px;">
                             Testimoni Komunitas
                         </span>
                         <h2 class="mb-3" style="font-size: 2.25rem; font-weight: 700; color: #09090B; letter-spacing: -0.03em; line-height: 1.25;">

@@ -48,7 +48,7 @@
                 </div>
 
                 <div class="d-flex gap-2">
-                    <a href="{{ route('owner.kos.edit', $kos['slug']) }}" class="btn" style="background-color: var(--color-midnight-ink); color: #ffffff; font-weight: 600; font-size: 13px; padding: 10px 18px; border-radius: var(--radius-buttons); border: none;">
+                    <a href="{{ route('owner.kos.edit', $kos['slug']) }}" class="btn" style="background-color: var(--color-notion-blue); color: #ffffff; font-weight: 700; font-size: 13px; padding: 10px 18px; border-radius: var(--radius-buttons); border: none; box-shadow: 0 2px 8px rgba(0, 117, 222, 0.25);">
                         <i class="fa fa-edit mr-1"></i> Edit Kos
                     </a>
                     <a href="{{ route('kos.show', $kos['slug']) }}" target="_blank" class="btn" style="background-color: var(--surface-page-canvas); color: var(--color-charcoal); border: var(--border-hairline); font-weight: 600; font-size: 13px; padding: 10px 18px; border-radius: var(--radius-buttons);">
@@ -64,8 +64,8 @@
 
                     <!-- Main Image & Description -->
                     <div class="p-4 rounded mb-4" style="background-color: #ffffff; border: var(--border-hairline); border-radius: var(--radius-cards);">
-                        <div class="mb-4 overflow-hidden rounded" style="height: 320px; border: var(--border-hairline);">
-                            <img src="{{ asset($kos['thumbnail']) }}" alt="{{ $kos['title'] }}" class="w-100 h-100" style="object-fit: cover;">
+                        <div class="mb-4 overflow-hidden" style="height: 320px; border: var(--border-hairline); border-radius: var(--radius-cards, 12px);">
+                            <img src="{{ asset($kos['thumbnail']) }}" alt="{{ $kos['title'] }}" class="w-100 h-100" style="object-fit: cover; border-radius: var(--radius-cards, 12px);">
                         </div>
 
                         <h2 style="font-size: 1.15rem; font-weight: 700; color: var(--color-midnight-ink); margin-bottom: 12px;">
@@ -103,8 +103,8 @@
                             <div class="row">
                                 @foreach($kos->photos as $photo)
                                     <div class="col-sm-4 col-6 mb-3">
-                                        <a href="{{ $photo->url }}" target="_blank" class="d-block overflow-hidden rounded" style="height: 120px; border: var(--border-hairline);">
-                                            <img src="{{ $photo->url }}" alt="Foto Kos" class="w-100 h-100" style="object-fit: cover;">
+                                        <a href="{{ $photo->url }}" target="_blank" class="d-block overflow-hidden" style="height: 120px; border: var(--border-hairline); border-radius: var(--radius-cards, 12px);">
+                                            <img src="{{ $photo->url }}" alt="Foto Kos" class="w-100 h-100" style="object-fit: cover; border-radius: var(--radius-cards, 12px);">
                                         </a>
                                     </div>
                                 @endforeach
@@ -144,7 +144,7 @@
                             </div>
 
                             <div class="d-flex flex-column gap-2">
-                                <a href="{{ route('owner.kos.edit', $kos['slug']) }}" class="btn btn-block" style="background-color: var(--color-midnight-ink); color: #ffffff; font-weight: 600; font-size: 13px; padding: 10px; border-radius: var(--radius-buttons); text-align: center; border: none;">
+                                <a href="{{ route('owner.kos.edit', $kos['slug']) }}" class="btn btn-block" style="background-color: var(--color-notion-blue); color: #ffffff; font-weight: 700; font-size: 13px; padding: 10px; border-radius: var(--radius-buttons); text-align: center; border: none; box-shadow: 0 2px 8px rgba(0, 117, 222, 0.25);">
                                     <i class="fa fa-edit mr-2"></i> Edit Informasi Kos
                                 </a>
 

@@ -24,7 +24,7 @@
         <section class="container mb-4">
             <div class="d-flex flex-wrap justify-content-between align-items-center gap-3">
                 <div>
-                    <div class="d-inline-flex align-items-center mb-2 px-2 py-1 rounded" style="background-color: var(--color-sky-tint); color: var(--color-notion-blue); font-size: 11px; font-weight: 600;">
+                    <div class="d-inline-flex align-items-center mb-2 px-2 py-1 rounded" style="background-color: var(--color-sky-tint); color: var(--color-ink-black); font-size: 11px; font-weight: 600;">
                         <i class="fa fa-file-invoice mr-1"></i> PUSAT TAGIHAN RESMI
                     </div>
                     <h1 style="font-family: var(--font-serif); font-size: 1.85rem; font-weight: 700; color: var(--color-midnight-ink); margin-bottom: 4px;">
@@ -87,7 +87,7 @@
                                     @php
                                         $isPaid = in_array(strtolower($inv->status), ['paid', 'lunas', 'settled', 'success']);
                                         $statusClass = $isPaid 
-                                            ? 'background-color: var(--color-sky-tint); color: var(--color-notion-blue); border: 1px solid rgba(0, 117, 222, 0.2);'
+                                            ? 'background-color: var(--color-sky-tint); color: var(--color-ink-black); border: 1px solid rgba(0, 117, 222, 0.2);'
                                             : 'background-color: #ffffff; color: var(--color-charcoal); border: 1px solid rgba(0, 0, 0, 0.18);';
                                         $statusLabel = $inv->status_label ?? ucfirst($inv->status);
                                     @endphp
@@ -137,7 +137,7 @@
                         <p style="font-size: 13.5px; color: var(--color-stone); max-width: 440px; margin: 0 auto 20px;">
                             Anda belum memiliki tagihan sewa. Saat Anda melakukan booking kos, invoice otomatis akan terbit di halaman ini.
                         </p>
-                        <a href="{{ route('search.kos') }}" class="btn" style="background-color: var(--color-midnight-ink); color: #ffffff; font-weight: 600; font-size: 13px; padding: 10px 20px; border-radius: var(--radius-buttons); border: none;">
+                        <a href="{{ route('search.kos') }}" class="btn" style="background-color: var(--color-notion-blue); color: #ffffff; font-weight: 700; font-size: 13px; padding: 10px 20px; border-radius: var(--radius-buttons); border: none; box-shadow: 0 2px 8px rgba(0, 117, 222, 0.25);">
                             <i class="fa fa-search mr-2"></i> Cari Kos Sekarang
                         </a>
                     </div>

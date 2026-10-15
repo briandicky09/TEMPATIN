@@ -5,7 +5,7 @@
 @section('customer-content')
 
 <div class="mb-4">
-    <div class="d-inline-flex align-items-center mb-2 px-2 py-1 rounded" style="background-color: var(--color-sky-tint); color: var(--color-notion-blue); font-size: 11px; font-weight: 600;">
+    <div class="d-inline-flex align-items-center mb-2 px-2 py-1 rounded" style="background-color: var(--color-sky-tint); color: var(--color-ink-black); font-size: 11px; font-weight: 600;">
         <i class="fa fa-bed mr-1"></i> HUNIAN AKTIF
     </div>
     <h1 style="font-family: var(--font-serif); font-size: 1.75rem; font-weight: 700; color: var(--color-midnight-ink); margin-bottom: 4px;">
@@ -21,8 +21,8 @@
     <div class="col-md-6 mb-4">
         <div class="notion-kos-card h-100 d-flex flex-column justify-content-between p-3" style="background-color: #ffffff; border: var(--border-hairline); border-radius: var(--radius-cards);">
             <div>
-                <div class="position-relative overflow-hidden mb-3 rounded" style="height: 190px;">
-                    <img src="{{ asset($kos['thumbnail']) }}" class="w-100 h-100" alt="{{ $kos['title'] }}" style="object-fit: cover;">
+                <div class="position-relative overflow-hidden mb-3" style="height: 190px; border-radius: var(--radius-cards, 12px);">
+                    <img src="{{ asset($kos['thumbnail']) }}" class="w-100 h-100" alt="{{ $kos['title'] }}" style="object-fit: cover; border-radius: var(--radius-cards, 12px);">
                     <div class="position-absolute" style="top: 10px; left: 10px;">
                         <span class="badge" style="background: rgba(255, 255, 255, 0.95); color: var(--color-midnight-ink); font-weight: 600; font-size: 11px; border: var(--border-hairline); padding: 4px 8px; border-radius: 4px;">
                             Kos {{ $kos['type'] }}

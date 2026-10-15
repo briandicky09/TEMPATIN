@@ -31,7 +31,7 @@
             <div class="p-4 p-md-5 rounded overflow-hidden position-relative" style="background-color: #ffffff; border: var(--border-hairline); border-radius: var(--radius-cards);">
                 <div class="row align-items-center">
                     <div class="col-lg-7 mb-4 mb-lg-0">
-                        <div class="d-inline-flex align-items-center mb-3 px-3 py-1 rounded-pill" style="background-color: var(--color-sky-tint); border: 1px solid rgba(0, 117, 222, 0.2); font-size: 12px; font-weight: 700; color: var(--color-notion-blue); letter-spacing: 0.04em;">
+                        <div class="d-inline-flex align-items-center mb-3 px-3 py-1 rounded-pill" style="background-color: var(--color-sky-tint); border: 1px solid rgba(0, 117, 222, 0.2); font-size: 12px; font-weight: 700; color: var(--color-ink-black); letter-spacing: 0.04em;">
                             <i class="fa fa-percent mr-2"></i> PENAWARAN KHUSUS &amp; VOUCHER TERVERIFIKASI
                         </div>
                         <h1 style="font-family: var(--font-serif); font-size: clamp(2rem, 3.6vw, 2.75rem); font-weight: 700; color: var(--color-midnight-ink); letter-spacing: -0.025em; line-height: 1.25;" class="mb-3">
@@ -50,11 +50,11 @@
                         </div>
                     </div>
                     <div class="col-lg-5">
-                        <div class="position-relative rounded overflow-hidden shadow-sm" style="border: var(--border-hairline); max-height: 320px;">
-                            <img src="{{ asset('assets/img/promo-hero.jpg') }}" alt="Promo Hunian Kos TEMPATIN" class="img-fluid w-100" style="object-fit: cover; height: 300px; display: block;">
-                            <div class="position-absolute" style="bottom: 12px; left: 12px; right: 12px; background: rgba(2, 9, 58, 0.88); backdrop-filter: blur(8px); padding: 10px 14px; border-radius: 8px; color: #ffffff; font-size: 12px; border: 1px solid rgba(255,255,255,0.15);">
+                        <div class="position-relative overflow-hidden shadow-sm" style="border: var(--border-hairline); max-height: 320px; border-radius: var(--radius-cards, 12px);">
+                            <img src="{{ asset('assets/img/promo-hero.jpg') }}" alt="Promo Hunian Kos TEMPATIN" class="img-fluid w-100" style="object-fit: cover; height: 300px; display: block; border-radius: var(--radius-cards, 12px);">
+                            <div class="position-absolute" style="bottom: 12px; left: 12px; right: 12px; background: rgba(0, 117, 222, 0.92); backdrop-filter: blur(8px); padding: 10px 14px; border-radius: 10px; color: #ffffff; font-size: 12px; border: 1px solid rgba(255,255,255,0.25); box-shadow: 0 4px 16px rgba(0, 117, 222, 0.3);">
                                 <div class="d-flex align-items-center justify-content-between">
-                                    <span><i class="fa fa-check-circle text-primary mr-1"></i> Garansi Resmi TEMPATIN</span>
+                                    <span><i class="fa fa-check-circle mr-1" style="color: #ffffff;"></i> Garansi Resmi TEMPATIN</span>
                                     <span class="font-weight-bold" style="color: #ffffff;">Update Setiap Bulan</span>
                                 </div>
                             </div>
@@ -102,13 +102,13 @@
                 <div class="col-lg-4 col-md-6 mb-4 promo-card-item" data-category="penghuni-baru" data-code="KOSBARU20">
                     <div class="notion-card h-100 d-flex flex-column justify-content-between overflow-hidden" style="background: #ffffff; border-radius: var(--radius-cards); border: var(--border-hairline);">
                         <div>
-                            <div class="position-relative overflow-hidden" style="height: 160px; background-color: var(--surface-page-canvas);">
-                                <img src="{{ asset('assets/img/kos-anggrek.jpg') }}" alt="Diskon Penghuni Baru" class="w-100 h-100" style="object-fit: cover;">
+                            <div class="position-relative overflow-hidden" style="height: 160px; background-color: var(--surface-page-canvas); border-top-left-radius: var(--radius-cards, 12px); border-top-right-radius: var(--radius-cards, 12px);">
+                                <img src="{{ asset('assets/img/kos-anggrek.jpg') }}" alt="Diskon Penghuni Baru" class="w-100 h-100" style="object-fit: cover; border-top-left-radius: var(--radius-cards, 12px); border-top-right-radius: var(--radius-cards, 12px);">
                                 <div class="position-absolute" style="top: 12px; left: 12px;">
                                     <span class="badge" style="background-color: #ffffff; color: var(--color-notion-blue); font-weight: 700; font-size: 11px; padding: 5px 10px; border-radius: 6px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">PENGHUNI BARU</span>
                                 </div>
                                 <div class="position-absolute" style="top: 12px; right: 12px;">
-                                    <span class="badge" style="background-color: rgba(2, 9, 58, 0.85); color: #ffffff; font-weight: 500; font-size: 11px; padding: 5px 8px; border-radius: 6px;"><i class="fa fa-clock mr-1"></i> s/d 31 Des 2026</span>
+                                    <span class="badge" style="background-color: var(--color-notion-blue); color: #ffffff; font-weight: 600; font-size: 11px; padding: 5px 10px; border-radius: 6px; box-shadow: 0 2px 6px rgba(0, 117, 222, 0.25);"><i class="fa fa-clock mr-1"></i> s/d 31 Des 2026</span>
                                 </div>
                             </div>
                             <div class="p-4">
@@ -130,11 +130,11 @@
                             <div class="pt-3 border-top" style="border-color: rgba(0,0,0,0.06) !important;">
                                 <div class="d-flex align-items-center justify-content-between p-2 rounded mb-2" style="background-color: var(--surface-page-canvas); border: 1px dashed rgba(0, 117, 222, 0.4);">
                                     <code style="font-size: 14px; font-weight: 700; color: var(--color-notion-blue); letter-spacing: 0.06em;">KOSBARU20</code>
-                                    <button type="button" class="btn btn-sm copy-btn" data-code="KOSBARU20" style="font-size: 11px; font-weight: 600; padding: 4px 10px; border-radius: 4px; background-color: var(--color-sky-tint); color: var(--color-notion-blue); border: none;">
+                                    <button type="button" class="btn btn-sm copy-btn" data-code="KOSBARU20" style="font-size: 11px; font-weight: 600; padding: 4px 10px; border-radius: 4px; background-color: var(--color-sky-tint); color: var(--color-ink-black); border: none;">
                                         <i class="fa fa-copy mr-1"></i> Salin Kode
                                     </button>
                                 </div>
-                                <a href="{{ route('kos.index') }}" class="btn btn-block btn-sm" style="background-color: var(--color-midnight-ink); color: #ffffff; font-weight: 600; font-size: 12.5px; padding: 8px 12px; border-radius: var(--radius-buttons); text-decoration: none;">
+                                <a href="{{ route('kos.index') }}" class="btn btn-block btn-sm" style="background-color: var(--color-notion-blue); color: #ffffff; font-weight: 700; font-size: 12.5px; padding: 9px 14px; border-radius: var(--radius-buttons); text-decoration: none; border: none; box-shadow: 0 2px 8px rgba(0, 117, 222, 0.25);">
                                     Gunakan Voucher &rarr;
                                 </a>
                             </div>
@@ -146,13 +146,13 @@
                 <div class="col-lg-4 col-md-6 mb-4 promo-card-item" data-category="bebas-admin" data-code="FREEADMIN">
                     <div class="notion-card h-100 d-flex flex-column justify-content-between overflow-hidden" style="background: #ffffff; border-radius: var(--radius-cards); border: var(--border-hairline);">
                         <div>
-                            <div class="position-relative overflow-hidden" style="height: 160px; background-color: var(--surface-page-canvas);">
-                                <img src="{{ asset('assets/img/kos-mawar.webp') }}" alt="Bebas Biaya Administrasi" class="w-100 h-100" style="object-fit: cover;">
+                            <div class="position-relative overflow-hidden" style="height: 160px; background-color: var(--surface-page-canvas); border-top-left-radius: var(--radius-cards, 12px); border-top-right-radius: var(--radius-cards, 12px);">
+                                <img src="{{ asset('assets/img/kos-mawar-clean.jpg') }}" alt="Bebas Biaya Administrasi" class="w-100 h-100" style="object-fit: cover; border-top-left-radius: var(--radius-cards, 12px); border-top-right-radius: var(--radius-cards, 12px);">
                                 <div class="position-absolute" style="top: 12px; left: 12px;">
                                     <span class="badge" style="background-color: #ffffff; color: var(--color-notion-blue); font-weight: 700; font-size: 11px; padding: 5px 10px; border-radius: 6px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">BEBAS ADMIN</span>
                                 </div>
                                 <div class="position-absolute" style="top: 12px; right: 12px;">
-                                    <span class="badge" style="background-color: rgba(2, 9, 58, 0.85); color: #ffffff; font-weight: 500; font-size: 11px; padding: 5px 8px; border-radius: 6px;"><i class="fa fa-bolt mr-1"></i> Kuota Harian</span>
+                                    <span class="badge" style="background-color: var(--color-notion-blue); color: #ffffff; font-weight: 600; font-size: 11px; padding: 5px 10px; border-radius: 6px; box-shadow: 0 2px 6px rgba(0, 117, 222, 0.25);"><i class="fa fa-bolt mr-1"></i> Kuota Harian</span>
                                 </div>
                             </div>
                             <div class="p-4">
@@ -173,11 +173,11 @@
                             <div class="pt-3 border-top" style="border-color: rgba(0,0,0,0.06) !important;">
                                 <div class="d-flex align-items-center justify-content-between p-2 rounded mb-2" style="background-color: var(--surface-page-canvas); border: 1px dashed rgba(0, 117, 222, 0.4);">
                                     <code style="font-size: 14px; font-weight: 700; color: var(--color-notion-blue); letter-spacing: 0.06em;">FREEADMIN</code>
-                                    <button type="button" class="btn btn-sm copy-btn" data-code="FREEADMIN" style="font-size: 11px; font-weight: 600; padding: 4px 10px; border-radius: 4px; background-color: var(--color-sky-tint); color: var(--color-notion-blue); border: none;">
+                                    <button type="button" class="btn btn-sm copy-btn" data-code="FREEADMIN" style="font-size: 11px; font-weight: 600; padding: 4px 10px; border-radius: 4px; background-color: var(--color-sky-tint); color: var(--color-ink-black); border: none;">
                                         <i class="fa fa-copy mr-1"></i> Salin Kode
                                     </button>
                                 </div>
-                                <a href="{{ route('kos.index') }}" class="btn btn-block btn-sm" style="background-color: var(--color-midnight-ink); color: #ffffff; font-weight: 600; font-size: 12.5px; padding: 8px 12px; border-radius: var(--radius-buttons); text-decoration: none;">
+                                <a href="{{ route('kos.index') }}" class="btn btn-block btn-sm" style="background-color: var(--color-notion-blue); color: #ffffff; font-weight: 700; font-size: 12.5px; padding: 9px 14px; border-radius: var(--radius-buttons); text-decoration: none; border: none; box-shadow: 0 2px 8px rgba(0, 117, 222, 0.25);">
                                     Gunakan Voucher &rarr;
                                 </a>
                             </div>
@@ -189,13 +189,13 @@
                 <div class="col-lg-4 col-md-6 mb-4 promo-card-item" data-category="sewa-panjang" data-code="SEMESTERAN500">
                     <div class="notion-card h-100 d-flex flex-column justify-content-between overflow-hidden" style="background: #ffffff; border-radius: var(--radius-cards); border: var(--border-hairline);">
                         <div>
-                            <div class="position-relative overflow-hidden" style="height: 160px; background-color: var(--surface-page-canvas);">
-                                <img src="{{ asset('assets/img/kos-melati.png') }}" alt="Cashback Sewa Semesteran" class="w-100 h-100" style="object-fit: cover;">
+                            <div class="position-relative overflow-hidden" style="height: 160px; background-color: var(--surface-page-canvas); border-top-left-radius: var(--radius-cards, 12px); border-top-right-radius: var(--radius-cards, 12px);">
+                                <img src="{{ asset('assets/img/kos-melati.png') }}" alt="Cashback Sewa Semesteran" class="w-100 h-100" style="object-fit: cover; border-top-left-radius: var(--radius-cards, 12px); border-top-right-radius: var(--radius-cards, 12px);">
                                 <div class="position-absolute" style="top: 12px; left: 12px;">
                                     <span class="badge" style="background-color: #ffffff; color: var(--color-notion-blue); font-weight: 700; font-size: 11px; padding: 5px 10px; border-radius: 6px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">SEWA PANJANG</span>
                                 </div>
                                 <div class="position-absolute" style="top: 12px; right: 12px;">
-                                    <span class="badge" style="background-color: rgba(2, 9, 58, 0.85); color: #ffffff; font-weight: 500; font-size: 11px; padding: 5px 8px; border-radius: 6px;"><i class="fa fa-calendar mr-1"></i> Min. 6 Bulan</span>
+                                    <span class="badge" style="background-color: var(--color-notion-blue); color: #ffffff; font-weight: 600; font-size: 11px; padding: 5px 10px; border-radius: 6px; box-shadow: 0 2px 6px rgba(0, 117, 222, 0.25);"><i class="fa fa-calendar mr-1"></i> Min. 6 Bulan</span>
                                 </div>
                             </div>
                             <div class="p-4">
@@ -217,11 +217,11 @@
                             <div class="pt-3 border-top" style="border-color: rgba(0,0,0,0.06) !important;">
                                 <div class="d-flex align-items-center justify-content-between p-2 rounded mb-2" style="background-color: var(--surface-page-canvas); border: 1px dashed rgba(0, 117, 222, 0.4);">
                                     <code style="font-size: 14px; font-weight: 700; color: var(--color-notion-blue); letter-spacing: 0.06em;">SEMESTERAN500</code>
-                                    <button type="button" class="btn btn-sm copy-btn" data-code="SEMESTERAN500" style="font-size: 11px; font-weight: 600; padding: 4px 10px; border-radius: 4px; background-color: var(--color-sky-tint); color: var(--color-notion-blue); border: none;">
+                                    <button type="button" class="btn btn-sm copy-btn" data-code="SEMESTERAN500" style="font-size: 11px; font-weight: 600; padding: 4px 10px; border-radius: 4px; background-color: var(--color-sky-tint); color: var(--color-ink-black); border: none;">
                                         <i class="fa fa-copy mr-1"></i> Salin Kode
                                     </button>
                                 </div>
-                                <a href="{{ route('kos.index') }}" class="btn btn-block btn-sm" style="background-color: var(--color-midnight-ink); color: #ffffff; font-weight: 600; font-size: 12.5px; padding: 8px 12px; border-radius: var(--radius-buttons); text-decoration: none;">
+                                <a href="{{ route('kos.index') }}" class="btn btn-block btn-sm" style="background-color: var(--color-notion-blue); color: #ffffff; font-weight: 700; font-size: 12.5px; padding: 9px 14px; border-radius: var(--radius-buttons); text-decoration: none; border: none; box-shadow: 0 2px 8px rgba(0, 117, 222, 0.25);">
                                     Gunakan Voucher &rarr;
                                 </a>
                             </div>
@@ -233,13 +233,13 @@
                 <div class="col-lg-4 col-md-6 mb-4 promo-card-item" data-category="penghuni-baru" data-code="KAMPUSHEMAT">
                     <div class="notion-card h-100 d-flex flex-column justify-content-between overflow-hidden" style="background: #ffffff; border-radius: var(--radius-cards); border: var(--border-hairline);">
                         <div>
-                            <div class="position-relative overflow-hidden" style="height: 160px; background-color: var(--surface-page-canvas);">
-                                <img src="{{ asset('assets/img/banner-kos.jpg') }}" alt="Subsidi Mahasiswa" class="w-100 h-100" style="object-fit: cover;">
+                            <div class="position-relative overflow-hidden" style="height: 160px; background-color: var(--surface-page-canvas); border-top-left-radius: var(--radius-cards, 12px); border-top-right-radius: var(--radius-cards, 12px);">
+                                <img src="{{ asset('assets/img/banner-kos.jpg') }}" alt="Subsidi Mahasiswa" class="w-100 h-100" style="object-fit: cover; border-top-left-radius: var(--radius-cards, 12px); border-top-right-radius: var(--radius-cards, 12px);">
                                 <div class="position-absolute" style="top: 12px; left: 12px;">
                                     <span class="badge" style="background-color: #ffffff; color: var(--color-notion-blue); font-weight: 700; font-size: 11px; padding: 5px 10px; border-radius: 6px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">PENGHUNI BARU</span>
                                 </div>
                                 <div class="position-absolute" style="top: 12px; right: 12px;">
-                                    <span class="badge" style="background-color: rgba(2, 9, 58, 0.85); color: #ffffff; font-weight: 500; font-size: 11px; padding: 5px 8px; border-radius: 6px;"><i class="fa fa-graduation-cap mr-1"></i> Khusus Mahasiswa</span>
+                                    <span class="badge" style="background-color: var(--color-notion-blue); color: #ffffff; font-weight: 600; font-size: 11px; padding: 5px 10px; border-radius: 6px; box-shadow: 0 2px 6px rgba(0, 117, 222, 0.25);"><i class="fa fa-graduation-cap mr-1"></i> Khusus Mahasiswa</span>
                                 </div>
                             </div>
                             <div class="p-4">
@@ -260,11 +260,11 @@
                             <div class="pt-3 border-top" style="border-color: rgba(0,0,0,0.06) !important;">
                                 <div class="d-flex align-items-center justify-content-between p-2 rounded mb-2" style="background-color: var(--surface-page-canvas); border: 1px dashed rgba(0, 117, 222, 0.4);">
                                     <code style="font-size: 14px; font-weight: 700; color: var(--color-notion-blue); letter-spacing: 0.06em;">KAMPUSHEMAT</code>
-                                    <button type="button" class="btn btn-sm copy-btn" data-code="KAMPUSHEMAT" style="font-size: 11px; font-weight: 600; padding: 4px 10px; border-radius: 4px; background-color: var(--color-sky-tint); color: var(--color-notion-blue); border: none;">
+                                    <button type="button" class="btn btn-sm copy-btn" data-code="KAMPUSHEMAT" style="font-size: 11px; font-weight: 600; padding: 4px 10px; border-radius: 4px; background-color: var(--color-sky-tint); color: var(--color-ink-black); border: none;">
                                         <i class="fa fa-copy mr-1"></i> Salin Kode
                                     </button>
                                 </div>
-                                <a href="{{ route('kos.index') }}" class="btn btn-block btn-sm" style="background-color: var(--color-midnight-ink); color: #ffffff; font-weight: 600; font-size: 12.5px; padding: 8px 12px; border-radius: var(--radius-buttons); text-decoration: none;">
+                                <a href="{{ route('kos.index') }}" class="btn btn-block btn-sm" style="background-color: var(--color-notion-blue); color: #ffffff; font-weight: 700; font-size: 12.5px; padding: 9px 14px; border-radius: var(--radius-buttons); text-decoration: none; border: none; box-shadow: 0 2px 8px rgba(0, 117, 222, 0.25);">
                                     Gunakan Voucher &rarr;
                                 </a>
                             </div>
@@ -276,13 +276,13 @@
                 <div class="col-lg-4 col-md-6 mb-4 promo-card-item" data-category="sewa-panjang" data-code="TAHUNANPLUS">
                     <div class="notion-card h-100 d-flex flex-column justify-content-between overflow-hidden" style="background: #ffffff; border-radius: var(--radius-cards); border: var(--border-hairline);">
                         <div>
-                            <div class="position-relative overflow-hidden" style="height: 160px; background-color: var(--surface-page-canvas);">
-                                <img src="{{ asset('assets/img/artikel-survey.jpg') }}" alt="Promo Sewa Tahunan" class="w-100 h-100" style="object-fit: cover;">
+                            <div class="position-relative overflow-hidden" style="height: 160px; background-color: var(--surface-page-canvas); border-top-left-radius: var(--radius-cards, 12px); border-top-right-radius: var(--radius-cards, 12px);">
+                                <img src="{{ asset('assets/img/artikel-survey.jpg') }}" alt="Promo Sewa Tahunan" class="w-100 h-100" style="object-fit: cover; border-top-left-radius: var(--radius-cards, 12px); border-top-right-radius: var(--radius-cards, 12px);">
                                 <div class="position-absolute" style="top: 12px; left: 12px;">
                                     <span class="badge" style="background-color: #ffffff; color: var(--color-notion-blue); font-weight: 700; font-size: 11px; padding: 5px 10px; border-radius: 6px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">SEWA PANJANG</span>
                                 </div>
                                 <div class="position-absolute" style="top: 12px; right: 12px;">
-                                    <span class="badge" style="background-color: rgba(2, 9, 58, 0.85); color: #ffffff; font-weight: 500; font-size: 11px; padding: 5px 8px; border-radius: 6px;"><i class="fa fa-crown mr-1"></i> Superhost</span>
+                                    <span class="badge" style="background-color: var(--color-notion-blue); color: #ffffff; font-weight: 600; font-size: 11px; padding: 5px 10px; border-radius: 6px; box-shadow: 0 2px 6px rgba(0, 117, 222, 0.25);"><i class="fa fa-crown mr-1"></i> Superhost</span>
                                 </div>
                             </div>
                             <div class="p-4">
@@ -304,11 +304,11 @@
                             <div class="pt-3 border-top" style="border-color: rgba(0,0,0,0.06) !important;">
                                 <div class="d-flex align-items-center justify-content-between p-2 rounded mb-2" style="background-color: var(--surface-page-canvas); border: 1px dashed rgba(0, 117, 222, 0.4);">
                                     <code style="font-size: 14px; font-weight: 700; color: var(--color-notion-blue); letter-spacing: 0.06em;">TAHUNANPLUS</code>
-                                    <button type="button" class="btn btn-sm copy-btn" data-code="TAHUNANPLUS" style="font-size: 11px; font-weight: 600; padding: 4px 10px; border-radius: 4px; background-color: var(--color-sky-tint); color: var(--color-notion-blue); border: none;">
+                                    <button type="button" class="btn btn-sm copy-btn" data-code="TAHUNANPLUS" style="font-size: 11px; font-weight: 600; padding: 4px 10px; border-radius: 4px; background-color: var(--color-sky-tint); color: var(--color-ink-black); border: none;">
                                         <i class="fa fa-copy mr-1"></i> Salin Kode
                                     </button>
                                 </div>
-                                <a href="{{ route('kos.index') }}" class="btn btn-block btn-sm" style="background-color: var(--color-midnight-ink); color: #ffffff; font-weight: 600; font-size: 12.5px; padding: 8px 12px; border-radius: var(--radius-buttons); text-decoration: none;">
+                                <a href="{{ route('kos.index') }}" class="btn btn-block btn-sm" style="background-color: var(--color-notion-blue); color: #ffffff; font-weight: 700; font-size: 12.5px; padding: 9px 14px; border-radius: var(--radius-buttons); text-decoration: none; border: none; box-shadow: 0 2px 8px rgba(0, 117, 222, 0.25);">
                                     Gunakan Voucher &rarr;
                                 </a>
                             </div>
@@ -320,13 +320,13 @@
                 <div class="col-lg-4 col-md-6 mb-4 promo-card-item" data-category="bebas-admin" data-code="DIGITALPAY">
                     <div class="notion-card h-100 d-flex flex-column justify-content-between overflow-hidden" style="background: #ffffff; border-radius: var(--radius-cards); border: var(--border-hairline);">
                         <div>
-                            <div class="position-relative overflow-hidden" style="height: 160px; background-color: var(--surface-page-canvas);">
-                                <img src="{{ asset('assets/img/artikel-budget.jpg') }}" alt="Cashback Digital Pay" class="w-100 h-100" style="object-fit: cover;">
+                            <div class="position-relative overflow-hidden" style="height: 160px; background-color: var(--surface-page-canvas); border-top-left-radius: var(--radius-cards, 12px); border-top-right-radius: var(--radius-cards, 12px);">
+                                <img src="{{ asset('assets/img/artikel-budget-clean.jpg') }}" alt="Cashback Digital Pay" class="w-100 h-100" style="object-fit: cover; border-top-left-radius: var(--radius-cards, 12px); border-top-right-radius: var(--radius-cards, 12px);">
                                 <div class="position-absolute" style="top: 12px; left: 12px;">
                                     <span class="badge" style="background-color: #ffffff; color: var(--color-notion-blue); font-weight: 700; font-size: 11px; padding: 5px 10px; border-radius: 6px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">BEBAS ADMIN</span>
                                 </div>
                                 <div class="position-absolute" style="top: 12px; right: 12px;">
-                                    <span class="badge" style="background-color: rgba(2, 9, 58, 0.85); color: #ffffff; font-weight: 500; font-size: 11px; padding: 5px 8px; border-radius: 6px;"><i class="fa fa-qrcode mr-1"></i> QRIS &amp; VA</span>
+                                    <span class="badge" style="background-color: var(--color-notion-blue); color: #ffffff; font-weight: 600; font-size: 11px; padding: 5px 10px; border-radius: 6px; box-shadow: 0 2px 6px rgba(0, 117, 222, 0.25);"><i class="fa fa-qrcode mr-1"></i> QRIS &amp; VA</span>
                                 </div>
                             </div>
                             <div class="p-4">
@@ -347,11 +347,11 @@
                             <div class="pt-3 border-top" style="border-color: rgba(0,0,0,0.06) !important;">
                                 <div class="d-flex align-items-center justify-content-between p-2 rounded mb-2" style="background-color: var(--surface-page-canvas); border: 1px dashed rgba(0, 117, 222, 0.4);">
                                     <code style="font-size: 14px; font-weight: 700; color: var(--color-notion-blue); letter-spacing: 0.06em;">DIGITALPAY</code>
-                                    <button type="button" class="btn btn-sm copy-btn" data-code="DIGITALPAY" style="font-size: 11px; font-weight: 600; padding: 4px 10px; border-radius: 4px; background-color: var(--color-sky-tint); color: var(--color-notion-blue); border: none;">
+                                    <button type="button" class="btn btn-sm copy-btn" data-code="DIGITALPAY" style="font-size: 11px; font-weight: 600; padding: 4px 10px; border-radius: 4px; background-color: var(--color-sky-tint); color: var(--color-ink-black); border: none;">
                                         <i class="fa fa-copy mr-1"></i> Salin Kode
                                     </button>
                                 </div>
-                                <a href="{{ route('kos.index') }}" class="btn btn-block btn-sm" style="background-color: var(--color-midnight-ink); color: #ffffff; font-weight: 600; font-size: 12.5px; padding: 8px 12px; border-radius: var(--radius-buttons); text-decoration: none;">
+                                <a href="{{ route('kos.index') }}" class="btn btn-block btn-sm" style="background-color: var(--color-notion-blue); color: #ffffff; font-weight: 700; font-size: 12.5px; padding: 9px 14px; border-radius: var(--radius-buttons); text-decoration: none; border: none; box-shadow: 0 2px 8px rgba(0, 117, 222, 0.25);">
                                     Gunakan Voucher &rarr;
                                 </a>
                             </div>
@@ -380,7 +380,7 @@
         <section class="container mb-5">
             <div class="p-4 p-md-5 rounded" style="background-color: #ffffff; border: var(--border-hairline); border-radius: var(--radius-cards);">
                 <div class="text-center mb-5" style="max-width: 640px; margin: 0 auto;">
-                    <div class="d-inline-flex align-items-center mb-2 px-3 py-1 rounded-pill" style="background-color: var(--color-sky-tint); color: var(--color-notion-blue); font-size: 11px; font-weight: 700; letter-spacing: 0.05em;">
+                    <div class="d-inline-flex align-items-center mb-2 px-3 py-1 rounded-pill" style="background-color: var(--color-sky-tint); color: var(--color-ink-black); font-size: 11px; font-weight: 700; letter-spacing: 0.05em;">
                         PANDUAN PRAKTIS
                     </div>
                     <h2 style="font-family: var(--font-serif); font-size: 1.85rem; font-weight: 700; color: var(--color-midnight-ink); letter-spacing: -0.02em;">
@@ -482,14 +482,14 @@
 
         <!-- CTA TO LISTING -->
         <section class="container mb-5">
-            <div class="p-4 p-md-5 rounded d-flex flex-column flex-md-row align-items-md-center justify-content-between" style="background: var(--color-midnight-ink); color: #ffffff; border-radius: var(--radius-cards);">
+            <div class="p-4 p-md-5 rounded d-flex flex-column flex-md-row align-items-md-center justify-content-between" style="background: linear-gradient(135deg, #0075de 0%, #0056b3 100%); color: #ffffff; border-radius: var(--radius-cards); box-shadow: 0 8px 30px rgba(0, 117, 222, 0.25);">
                 <div class="mb-4 mb-md-0" style="max-width: 600px;">
-                    <span class="badge mb-2 px-2 py-1" style="background: rgba(255,255,255,0.15); color: #ffffff; font-size: 11px; letter-spacing: 0.05em;">SIAP PINDAH KOS?</span>
-                    <h3 style="font-family: var(--font-serif); font-size: 1.65rem; font-weight: 700; margin-bottom: 8px;">Cari Kos Sesuai Budget Sekarang</h3>
-                    <p style="color: rgba(255,255,255,0.75); font-size: 14px; margin-bottom: 0;">Jelajahi ratusan kos pilihan dengan filter kampus, lokasi strategis, fasilitas komplit, dan klaim vouchernya hari ini.</p>
+                    <span class="badge mb-2 px-2 py-1" style="background: rgba(255,255,255,0.22); border: 1px solid rgba(255,255,255,0.35); color: #ffffff !important; font-size: 11px; font-weight: 700; letter-spacing: 0.05em; border-radius: 9999px;">SIAP PINDAH KOS?</span>
+                    <h3 style="font-family: var(--font-serif); font-size: 1.65rem; font-weight: 700; margin-bottom: 8px; color: #ffffff !important;">Cari Kos Sesuai Budget Sekarang</h3>
+                    <p style="color: rgba(255,255,255,0.92); font-size: 14px; margin-bottom: 0; line-height: 1.6;">Jelajahi ratusan kos pilihan dengan filter kampus, lokasi strategis, fasilitas komplit, dan klaim vouchernya hari ini.</p>
                 </div>
                 <div class="d-flex flex-wrap gap-2">
-                    <a href="{{ route('kos.index') }}" class="btn" style="background-color: var(--color-notion-blue); color: #ffffff; font-weight: 600; font-size: 14px; padding: 12px 24px; border-radius: var(--radius-buttons); border: none;">
+                    <a href="{{ route('kos.index') }}" class="btn" style="background-color: #ffffff; color: var(--color-notion-blue); font-weight: 700; font-size: 14px; padding: 12px 24px; border-radius: var(--radius-buttons); border: none; box-shadow: 0 4px 14px rgba(0,0,0,0.12);">
                         <i class="fa fa-search mr-2"></i> Jelajahi Semua Kos
                     </a>
                 </div>
@@ -527,8 +527,8 @@
 </div>
 
 <!-- TOAST NOTIFICATION -->
-<div id="promoToast" style="position: fixed; bottom: 24px; right: 24px; z-index: 9999; background: var(--color-midnight-ink); color: #ffffff; padding: 12px 20px; border-radius: 8px; box-shadow: 0 4px 14px rgba(0,0,0,0.18); font-size: 13.5px; font-weight: 600; display: none; align-items: center; gap: 8px;">
-    <i class="fa fa-check-circle text-primary"></i> <span id="promoToastText">Kode voucher berhasil disalin!</span>
+<div id="promoToast" style="position: fixed; bottom: 24px; right: 24px; z-index: 9999; background: var(--color-notion-blue); color: #ffffff; padding: 12px 20px; border-radius: 8px; box-shadow: 0 6px 20px rgba(0, 117, 222, 0.35); font-size: 13.5px; font-weight: 600; display: none; align-items: center; gap: 8px;">
+    <i class="fa fa-check-circle mr-1" style="color: #ffffff;"></i> <span id="promoToastText">Kode voucher berhasil disalin!</span>
 </div>
 
 @push('scripts')

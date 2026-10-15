@@ -17,7 +17,7 @@
             <!-- HEADER -->
             <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-3">
                 <div>
-                    <div class="d-inline-flex align-items-center mb-2 px-2 py-1 rounded" style="background-color: var(--color-sky-tint); color: var(--color-notion-blue); font-size: 11px; font-weight: 600;">
+                    <div class="d-inline-flex align-items-center mb-2 px-2 py-1 rounded" style="background-color: var(--color-sky-tint); color: var(--color-ink-black); font-size: 11px; font-weight: 600;">
                         <i class="fa fa-building mr-1"></i> PORTOFOLIO HUNIAN
                     </div>
                     <h1 style="font-family: var(--font-serif); font-size: 1.85rem; font-weight: 700; color: var(--color-midnight-ink); margin-bottom: 4px;">
@@ -43,8 +43,8 @@
                     <div class="col-md-6 col-xl-4 mb-4">
                         <div class="h-100 d-flex flex-column justify-content-between p-3 rounded" style="background-color: #ffffff; border: var(--border-hairline); border-radius: var(--radius-cards);">
                             <div>
-                                <div class="position-relative overflow-hidden mb-3 rounded" style="height: 180px;">
-                                    <img src="{{ asset($kos['thumbnail']) }}" class="w-100 h-100" alt="{{ $kos['title'] }}" style="object-fit: cover;">
+                                <div class="position-relative overflow-hidden mb-3" style="height: 180px; border-radius: var(--radius-cards, 12px);">
+                                    <img src="{{ asset($kos['thumbnail']) }}" class="w-100 h-100" alt="{{ $kos['title'] }}" style="object-fit: cover; border-radius: var(--radius-cards, 12px);">
                                     <div class="position-absolute" style="top: 10px; right: 10px;">
                                         <span class="badge px-2 py-1" style="background-color: #ffffff; color: var(--color-midnight-ink); font-size: 11px; font-weight: 700; border: var(--border-hairline); border-radius: 4px;">
                                             {{ $isActive ? 'Aktif' : 'Nonaktif' }}
@@ -91,7 +91,7 @@
                             <p style="font-size: 13.5px; color: var(--color-stone); max-width: 440px; margin: 0 auto 20px;">
                                 Anda belum memiliki properti kos. Daftarkan properti kos Anda hari ini.
                             </p>
-                            <a href="{{ route('owner.kos.create') }}" class="btn" style="background-color: var(--color-midnight-ink); color: #ffffff; font-weight: 600; font-size: 13px; padding: 10px 20px; border-radius: var(--radius-buttons); border: none;">
+                            <a href="{{ route('owner.kos.create') }}" class="btn" style="background-color: var(--color-notion-blue); color: #ffffff; font-weight: 700; font-size: 13px; padding: 10px 20px; border-radius: var(--radius-buttons); border: none; box-shadow: 0 2px 8px rgba(0, 117, 222, 0.25);">
                                 + Tambah Kos Baru
                             </a>
                         </div>

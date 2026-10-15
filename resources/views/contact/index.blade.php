@@ -31,7 +31,7 @@
             <div class="p-4 p-md-5 rounded overflow-hidden" style="background-color: #ffffff; border: var(--border-hairline); border-radius: var(--radius-cards);">
                 <div class="row align-items-center">
                     <div class="col-lg-7 mb-4 mb-lg-0">
-                        <div class="d-inline-flex align-items-center mb-3 px-3 py-1 rounded-pill" style="background-color: var(--color-sky-tint); border: 1px solid rgba(0, 117, 222, 0.2); font-size: 12px; font-weight: 700; color: var(--color-notion-blue); letter-spacing: 0.04em;">
+                        <div class="d-inline-flex align-items-center mb-3 px-3 py-1 rounded-pill" style="background-color: var(--color-sky-tint); border: 1px solid rgba(0, 117, 222, 0.2); font-size: 12px; font-weight: 700; color: var(--color-ink-black); letter-spacing: 0.04em;">
                             <i class="fa fa-headset mr-2"></i> PUSAT BANTUAN &amp; LAYANAN PENGGUNA
                         </div>
                         <h1 style="font-family: var(--font-serif); font-size: clamp(2rem, 3.6vw, 2.75rem); font-weight: 700; color: var(--color-midnight-ink); letter-spacing: -0.025em; line-height: 1.25;" class="mb-3">
@@ -55,11 +55,11 @@
                         </div>
                     </div>
                     <div class="col-lg-5">
-                        <div class="position-relative rounded overflow-hidden shadow-sm" style="border: var(--border-hairline); max-height: 330px;">
-                            <img src="{{ asset('assets/img/bantuan-support.jpg') }}" alt="Tim Layanan Konsumen TEMPATIN" class="img-fluid w-100" style="object-fit: cover; height: 310px; display: block;">
-                            <div class="position-absolute" style="bottom: 12px; left: 12px; right: 12px; background: rgba(2, 9, 58, 0.88); backdrop-filter: blur(8px); padding: 10px 14px; border-radius: 8px; color: #ffffff; font-size: 12px; border: 1px solid rgba(255,255,255,0.15);">
+                        <div class="position-relative overflow-hidden shadow-sm" style="border: var(--border-hairline); max-height: 330px; border-radius: var(--radius-cards, 12px);">
+                            <img src="{{ asset('assets/img/bantuan-support.jpg') }}?v={{ filemtime(public_path('assets/img/bantuan-support.jpg')) }}" alt="Tim Layanan Konsumen TEMPATIN" class="img-fluid w-100" style="object-fit: cover; height: 310px; display: block; border-radius: var(--radius-cards, 12px);">
+                            <div class="position-absolute" style="bottom: 12px; left: 12px; right: 12px; background: rgba(0, 117, 222, 0.92); backdrop-filter: blur(8px); padding: 10px 14px; border-radius: 10px; color: #ffffff; font-size: 12px; border: 1px solid rgba(255,255,255,0.25); box-shadow: 0 4px 16px rgba(0, 117, 222, 0.3);">
                                 <div class="d-flex align-items-center justify-content-between">
-                                    <span><i class="fa fa-clock text-primary mr-1"></i> Respon Cepat</span>
+                                    <span><i class="fa fa-clock mr-1" style="color: #ffffff;"></i> Respon Cepat</span>
                                     <span class="font-weight-bold" style="color: #ffffff;">Senin – Minggu</span>
                                 </div>
                             </div>
@@ -125,7 +125,7 @@
             <div class="p-4 p-md-5 rounded" style="background-color: #ffffff; border: var(--border-hairline); border-radius: var(--radius-cards);">
                 <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4 pb-3" style="border-bottom: var(--border-hairline);">
                     <div>
-                        <div class="d-inline-flex align-items-center mb-1 px-3 py-1 rounded-pill" style="background-color: var(--color-sky-tint); color: var(--color-notion-blue); font-size: 11px; font-weight: 700; letter-spacing: 0.05em;">
+                        <div class="d-inline-flex align-items-center mb-1 px-3 py-1 rounded-pill" style="background-color: var(--color-sky-tint); color: var(--color-ink-black); font-size: 11px; font-weight: 700; letter-spacing: 0.05em;">
                             PERTANYAAN UMUM
                         </div>
                         <h2 style="font-family: var(--font-serif); font-size: 1.75rem; font-weight: 700; color: var(--color-midnight-ink); letter-spacing: -0.02em; margin-bottom: 0;">
@@ -253,7 +253,7 @@
                                 </div>
                             </div>
                             <p style="font-size: 13px; color: var(--color-stone); margin-bottom: 14px; line-height: 1.55;">Konsultasi rekomendasi kos, konfirmasi check-in, dan respon cepat kendala reservasi.</p>
-                            <a href="https://wa.me/6281234567890" target="_blank" class="btn btn-sm d-inline-flex align-items-center" style="background-color: var(--color-midnight-ink); color: #ffffff; font-weight: 600; font-size: 12.5px; border-radius: var(--radius-buttons); padding: 8px 16px; text-decoration: none;">
+                            <a href="https://wa.me/6281234567890" target="_blank" class="btn btn-sm d-inline-flex align-items-center" style="background-color: var(--color-notion-blue); color: #ffffff; font-weight: 700; font-size: 12.5px; border-radius: var(--radius-buttons); padding: 8px 16px; text-decoration: none; border: none; box-shadow: 0 2px 8px rgba(0, 117, 222, 0.25);">
                                 <i class="fab fa-whatsapp mr-2"></i> +62 812-3456-7890
                             </a>
                         </div>
@@ -293,7 +293,7 @@
                 <!-- RIGHT COLUMN: CONTACT FORM -->
                 <div class="col-lg-8">
                     <div class="p-4 p-md-5 rounded" style="background-color: #ffffff; border: var(--border-hairline); border-radius: var(--radius-cards);">
-                        <div class="d-inline-flex align-items-center mb-2 px-3 py-1 rounded-pill" style="background-color: var(--color-sky-tint); color: var(--color-notion-blue); font-size: 11px; font-weight: 700; letter-spacing: 0.05em;">
+                        <div class="d-inline-flex align-items-center mb-2 px-3 py-1 rounded-pill" style="background-color: var(--color-sky-tint); color: var(--color-ink-black); font-size: 11px; font-weight: 700; letter-spacing: 0.05em;">
                             HUBUNGI KAMI
                         </div>
                         <h2 style="font-family: var(--font-serif); font-size: 1.65rem; font-weight: 700; color: var(--color-midnight-ink); margin-bottom: 8px;">
@@ -374,8 +374,8 @@
 </div>
 
 <!-- TOAST NOTIFICATION -->
-<div id="contactToast" style="position: fixed; bottom: 24px; right: 24px; z-index: 9999; background: var(--color-midnight-ink); color: #ffffff; padding: 14px 22px; border-radius: 8px; box-shadow: 0 4px 14px rgba(0,0,0,0.18); font-size: 13.5px; font-weight: 600; display: none; align-items: center; gap: 8px;">
-    <i class="fa fa-check-circle text-primary"></i> <span>Terima kasih! Pesan kamu berhasil dikirim ke tim support TEMPATIN.</span>
+<div id="contactToast" style="position: fixed; bottom: 24px; right: 24px; z-index: 9999; background: var(--color-notion-blue); color: #ffffff; padding: 14px 22px; border-radius: 8px; box-shadow: 0 6px 20px rgba(0, 117, 222, 0.35); font-size: 13.5px; font-weight: 600; display: none; align-items: center; gap: 8px;">
+    <i class="fa fa-check-circle mr-1" style="color: #ffffff;"></i> <span>Terima kasih! Pesan kamu berhasil dikirim ke tim support TEMPATIN.</span>
 </div>
 
 @push('scripts')
