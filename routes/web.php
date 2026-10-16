@@ -108,6 +108,7 @@ Route::prefix('member')->name('member.')->middleware(['auth', 'role:customer'])-
     Route::get('/booking/{slug}', [MemberController::class, 'booking'])->name('booking.create');
     Route::post('/booking/{slug}', [MemberController::class, 'store'])->name('booking.store');
     Route::get('/booking/detail/{booking_code}', [MemberController::class, 'show'])->name('booking.show');
+    Route::get('/booking/nota/{booking_code}/download', [MemberController::class, 'downloadNota'])->name('booking.nota.pdf');
     Route::match(['get', 'post'], '/booking/{slug}/payment', [MemberController::class, 'payment'])->name('booking.payment');
     Route::post('/payment/confirm', [MemberController::class, 'confirmPayment'])->name('payment.confirm');
     Route::get('/profil', [MemberController::class, 'profile'])->name('profile');

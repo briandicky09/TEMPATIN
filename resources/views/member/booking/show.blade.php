@@ -171,9 +171,12 @@
                         </div>
                         @else
                         <div class="pt-3 mt-3 border-top text-center" style="border-color: rgba(0,0,0,0.06) !important;">
-                            <span class="badge px-3 py-2" style="background-color: var(--color-sky-tint); color: var(--color-ink-black); font-size: 12px;">
+                            <span class="badge px-3 py-2 mb-3 d-inline-block" style="background-color: var(--color-sky-tint); color: var(--color-ink-black); font-size: 12px;">
                                 <i class="fa fa-check-circle mr-1 text-primary"></i> Pembayaran Terverifikasi
                             </span>
+                            <a href="{{ route('member.booking.nota.pdf', $booking->booking_code) }}" class="btn btn-block" style="background-color: var(--color-notion-blue); color: #ffffff; font-weight: 700; font-size: 13.5px; padding: 12px; border-radius: var(--radius-buttons); text-align: center; border: none; box-shadow: 0 4px 12px rgba(0, 117, 222, 0.25);">
+                                <i class="fa fa-file-pdf mr-2"></i> Unduh Nota Pembayaran (PDF)
+                            </a>
                         </div>
                         @endif
                     </div>
@@ -201,6 +204,11 @@
                             </div>
                             <h4 style="font-size: 14px; font-weight: 700; color: var(--color-midnight-ink); margin-bottom: 6px;">Butuh Bukti Invoice?</h4>
                             <p style="font-size: 12.5px; color: var(--color-stone); margin-bottom: 16px;">Invoice resmi diterbitkan di pusat tagihan akun kamu.</p>
+                            @if($booking->status !== 'pending')
+                            <a href="{{ route('member.booking.nota.pdf', $booking->booking_code) }}" class="btn btn-block mb-2" style="background-color: var(--surface-page-canvas); color: var(--color-midnight-ink); border: var(--border-hairline); font-weight: 600; font-size: 13px; padding: 10px; border-radius: var(--radius-buttons); text-align: center;">
+                                <i class="fa fa-file-pdf mr-1 text-danger"></i> Unduh Nota (PDF)
+                            </a>
+                            @endif
                             <a href="{{ route('member.invoice.index') }}" class="btn btn-block" style="background-color: var(--color-notion-blue); color: #ffffff; font-weight: 700; font-size: 13px; padding: 10px; border-radius: var(--radius-buttons); border: none; box-shadow: 0 2px 8px rgba(0, 117, 222, 0.25);">
                                 Buka Tagihan & Invoice
                             </a>

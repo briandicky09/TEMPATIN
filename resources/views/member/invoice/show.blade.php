@@ -24,6 +24,11 @@
                     <button type="button" onclick="window.print()" class="btn btn-sm" style="background-color: #ffffff; border: var(--border-hairline); font-size: 12px; font-weight: 600; color: var(--color-midnight-ink); border-radius: var(--radius-buttons); padding: 8px 14px;">
                         <i class="fa fa-print mr-1"></i> Cetak Invoice
                     </button>
+                    @if($invoice->booking && in_array(strtolower($invoice->booking->status), ['confirmed', 'paid', 'success', 'approved']))
+                    <a href="{{ route('member.booking.nota.pdf', $invoice->booking->booking_code) }}" class="btn btn-sm" style="background-color: var(--color-sky-tint); border: 1px solid rgba(0, 117, 222, 0.25); font-size: 12px; font-weight: 600; color: var(--color-ink-black); border-radius: var(--radius-buttons); padding: 8px 14px;">
+                        <i class="fa fa-file-pdf mr-1 text-primary"></i> Unduh Nota PDF
+                    </a>
+                    @endif
                     <a href="{{ route('member.invoice.index') }}" class="btn btn-sm" style="background-color: var(--surface-page-canvas); border: var(--border-hairline); font-size: 12px; font-weight: 600; color: var(--color-stone); border-radius: var(--radius-buttons); padding: 8px 14px;">
                         <i class="fa fa-arrow-left mr-1"></i> Kembali
                     </a>

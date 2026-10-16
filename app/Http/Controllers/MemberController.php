@@ -8,6 +8,7 @@ use App\Models\Invoice;
 use App\Models\Kos;
 use App\Models\Payment;
 use App\Services\MidtransService;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -179,6 +180,69 @@ class MemberController extends Controller
         $clientKey = config('services.midtrans.client_key') ?: config('midtrans.client_key');
 
         return view('member.booking.show', compact('booking', 'invoice', 'snapToken', 'redirectUrl', 'clientKey'));
+    }
+
+    /**
+     * Unduh nota bukti pembayaran resmi dalam format PDF.
+     */
+    public function downloadNota(Request $request, string $bookingCode)
+    {
+        $booking = Booking::with(['kos.owner', 'customer', 'invoice.payments'])
+            ->where('booking_code', $bookingCode)
+            ->firstOrFail();
+
+        // Otorisasi anti-IDOR: Customer hanya berhak mengunduh nota miliknya sendiri
+        if ((int) $booking->customer_id !== (int) Auth::id()) {
+            abort(403, 'Akses ditolak. Anda tidak memiliki izin untuk mengunduh nota booking ini.');
+        }
+
+        $invoice = $booking->invoice ?? Invoice::where('booking_id', $booking->id)->first();
+
+        // Auto-sinkronisasi status dengan Midtrans API jika masih berstatus pending
+        if ($booking->status === 'pending') {
+            $pendingPayment = $invoice ? $invoice->payments()->whereNotNull('order_id')->latest('id')->first() : null;
+            if ($pendingPayment && $pendingPayment->order_id) {
+                try {
+                    $statusObj = $this->midtransService->fetchTransactionStatus($pendingPayment->order_id);
+                    if ($statusObj && in_array($statusObj->transaction_status ?? '', ['settlement', 'capture', 'expire', 'deny', 'cancel'])) {
+                        $this->midtransService->handleNotification((array) $statusObj);
+                        $booking->refresh();
+                        if ($invoice) {
+                            $invoice->refresh();
+                        }
+                    }
+                } catch (\Throwable $e) {
+                    // Abaikan jika network issue
+                }
+            }
+        }
+
+        // Jika status masih pending, arahkan kembali dengan notifikasi
+        if ($booking->status === 'pending') {
+            return redirect()
+                ->route('member.booking.show', $booking->booking_code)
+                ->with('error', 'Nota pembayaran belum tersedia karena pesanan belum selesai dibayar.');
+        }
+
+        if (in_array($booking->status, ['cancelled', 'rejected'])) {
+            return redirect()
+                ->route('member.booking.show', $booking->booking_code)
+                ->with('error', 'Nota tidak tersedia untuk pesanan yang telah dibatalkan.');
+        }
+
+        if (!$invoice) {
+            $invoice = Invoice::createFromBooking($booking);
+        }
+
+        $payment = $invoice->payments()->whereIn('status', ['paid', 'settlement', 'capture', 'success'])->latest('id')->first()
+            ?? $invoice->payments()->latest('id')->first();
+
+        $pdf = Pdf::loadView('member.booking.nota_pdf', compact('booking', 'invoice', 'payment'));
+        $pdf->setPaper('a4', 'portrait');
+
+        $filename = 'Nota-Pembayaran-' . preg_replace('/[^A-Za-z0-9\-]/', '', $booking->booking_code) . '.pdf';
+
+        return $pdf->download($filename);
     }
 
     /**
