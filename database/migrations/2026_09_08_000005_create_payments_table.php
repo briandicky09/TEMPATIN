@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('invoice_id')->constrained('invoices')->onDelete('restrict');
             $table->string('payment_code', 50)->unique();
-            $table->enum('payment_method', ['transfer_bank', 'e_wallet', 'virtual_account']);
+            $table->string('payment_method', 50)->default('virtual_account');
             $table->string('payment_channel', 50)->nullable();
             $table->string('transaction_id', 100)->nullable()->unique();
             $table->decimal('amount', 12, 2);

@@ -6,6 +6,7 @@ use App\Http\Controllers\GoogleAuthController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\KosController;
 use App\Http\Controllers\MemberController;
+use App\Http\Controllers\MidtransNotificationController;
 use App\Http\Controllers\OwnerKosController;
 use Illuminate\Support\Facades\Route;
 
@@ -78,6 +79,9 @@ Route::prefix('customer')->name('customer.')->middleware(['auth', 'role:customer
     });
 });
 
+// Midtrans Webhook Notification (Server-to-Server, CSRF Exempt)
+Route::post('/payment/midtrans/notification', [MidtransNotificationController::class, 'handle'])->name('midtrans.notification');
+
 // Area Member (Membutuhkan Autentikasi dan Role Customer)
 Route::prefix('member')->name('member.')->middleware(['auth', 'role:customer'])->group(function () {
     // Member area - mirror public pages under /member
@@ -104,7 +108,7 @@ Route::prefix('member')->name('member.')->middleware(['auth', 'role:customer'])-
     Route::get('/booking/{slug}', [MemberController::class, 'booking'])->name('booking.create');
     Route::post('/booking/{slug}', [MemberController::class, 'store'])->name('booking.store');
     Route::get('/booking/detail/{booking_code}', [MemberController::class, 'show'])->name('booking.show');
-    Route::post('/booking/{slug}/payment', [MemberController::class, 'payment'])->name('booking.payment');
+    Route::match(['get', 'post'], '/booking/{slug}/payment', [MemberController::class, 'payment'])->name('booking.payment');
     Route::post('/payment/confirm', [MemberController::class, 'confirmPayment'])->name('payment.confirm');
     Route::get('/profil', [MemberController::class, 'profile'])->name('profile');
     Route::put('/profil', [MemberController::class, 'updateProfile'])->name('profile.update');

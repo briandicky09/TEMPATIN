@@ -58,6 +58,14 @@ class Booking extends Model
     }
 
     /**
+     * Accessor total alias untuk total_amount.
+     */
+    public function getTotalAttribute(): float
+    {
+        return (float) ($this->total_amount ?? ((float) $this->subtotal + (float) $this->admin_fee));
+    }
+
+    /**
      * Customer / penyewa yang melakukan booking ini.
      */
     public function customer(): BelongsTo

@@ -158,7 +158,7 @@ class BookingTest extends TestCase
             ->first();
 
         $this->assertNotNull($booking);
-        $response->assertRedirect(route('member.booking.show', $booking->booking_code));
+        $response->assertRedirect(route('member.booking.payment', ['slug' => $this->kosActive->slug, 'booking_code' => $booking->booking_code]));
     }
 
     /**

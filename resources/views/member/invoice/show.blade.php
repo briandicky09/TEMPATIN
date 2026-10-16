@@ -57,10 +57,13 @@
                             {{ $invoice->invoice_number }}
                         </div>
                         @php
-                            $statusStyle = 'background-color: var(--surface-page-canvas); color: var(--color-midnight-ink); border: var(--border-hairline);';
+                            $isPaid = in_array(strtolower($invoice->status), ['paid', 'lunas']);
+                            $statusStyle = $isPaid
+                                ? 'background-color: var(--color-sky-tint); color: var(--color-ink-black); border: 1px solid rgba(0, 117, 222, 0.25);'
+                                : 'background-color: var(--surface-page-canvas); color: var(--color-midnight-ink); border: var(--border-hairline);';
                         @endphp
                         <span class="px-3 py-1 rounded-pill" style="{{ $statusStyle }}; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;">
-                            {{ $invoice->status_label ?? ucfirst($invoice->status) }}
+                            <i class="fa {{ $isPaid ? 'fa-check-circle text-primary' : 'fa-clock' }} mr-1"></i> {{ $invoice->status_label ?? ucfirst($invoice->status) }}
                         </span>
                     </div>
                 </div>
@@ -155,6 +158,14 @@
                                 </strong>
                             </div>
                         </div>
+
+                        @if($invoice->status === 'unpaid' && $invoice->booking)
+                        <div class="mt-3 text-right">
+                            <a href="{{ route('member.booking.payment', ['slug' => $invoice->kos->slug ?? $invoice->booking->kos->slug, 'booking_code' => $invoice->booking->booking_code]) }}" class="btn" style="background-color: var(--color-notion-blue); color: #ffffff; font-weight: 700; font-size: 13.5px; padding: 12px 24px; border-radius: var(--radius-buttons); border: none; box-shadow: 0 4px 12px rgba(0, 117, 222, 0.25);">
+                                <i class="fa fa-credit-card mr-2"></i> Bayar Tagihan via Midtrans
+                            </a>
+                        </div>
+                        @endif
                     </div>
                 </div>
 

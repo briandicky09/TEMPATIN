@@ -6,15 +6,25 @@ use App\Http\Requests\StoreBookingRequest;
 use App\Models\Booking;
 use App\Models\Invoice;
 use App\Models\Kos;
+use App\Models\Payment;
+use App\Services\MidtransService;
 use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\View\View;
 
 class MemberController extends Controller
 {
+    protected MidtransService $midtransService;
+
+    public function __construct(MidtransService $midtransService)
+    {
+        $this->midtransService = $midtransService;
+    }
+
     /**
      * Form booking kos.
      */
@@ -26,7 +36,7 @@ class MemberController extends Controller
     }
 
     /**
-     * Menyimpan data booking baru ke database.
+     * Menyimpan data booking baru ke database dan menyiapkan transaksi Midtrans.
      */
     public function store(StoreBookingRequest $request, string $slug): RedirectResponse
     {
@@ -37,51 +47,78 @@ class MemberController extends Controller
         $startDate = Carbon::parse($validated['start_date']);
         $endDate = $startDate->copy()->addMonths($durationMonths);
 
-        // Perhitungan finansial strictly server-side
+        // Perhitungan finansial strictly server-side berdasarkan harga database
         $kosPrice = (float) $kos->price;
         $subtotal = $kosPrice * $durationMonths;
         $adminFee = Booking::DEFAULT_ADMIN_FEE;
         $totalAmount = $subtotal + $adminFee;
 
-        $booking = DB::transaction(function () use (
-            $request,
-            $kos,
-            $validated,
-            $durationMonths,
-            $startDate,
-            $endDate,
-            $kosPrice,
-            $subtotal,
-            $adminFee,
-            $totalAmount
-        ) {
-            $booking = Booking::create([
-                'customer_id' => $request->user()->id,
-                'kos_id' => $kos->id,
-                'booking_code' => Booking::generateBookingCode(),
-                'tenant_name' => $validated['tenant_name'],
-                'tenant_phone' => $validated['tenant_phone'],
-                'tenant_email' => $validated['tenant_email'],
-                'start_date' => $startDate->format('Y-m-d'),
-                'end_date' => $endDate->format('Y-m-d'),
-                'duration_months' => $durationMonths,
-                'kos_price' => $kosPrice,
-                'subtotal' => $subtotal,
-                'admin_fee' => $adminFee,
-                'total_amount' => $totalAmount,
-                'notes' => $validated['notes'] ?? null,
-                'status' => 'pending',
+        // Proteksi cegah double submission akibat tombol diklik berulang kali
+        $existingBooking = Booking::with('invoice')
+            ->where('customer_id', $request->user()->id)
+            ->where('kos_id', $kos->id)
+            ->where('start_date', $startDate->format('Y-m-d'))
+            ->where('duration_months', $durationMonths)
+            ->where('status', 'pending')
+            ->where('created_at', '>=', now()->subMinutes(5))
+            ->latest('id')
+            ->first();
+
+        if ($existingBooking && $existingBooking->invoice) {
+            $booking = $existingBooking;
+            $invoice = $existingBooking->invoice;
+        } else {
+            [$booking, $invoice] = DB::transaction(function () use (
+                $request,
+                $kos,
+                $validated,
+                $durationMonths,
+                $startDate,
+                $endDate,
+                $kosPrice,
+                $subtotal,
+                $adminFee,
+                $totalAmount
+            ) {
+                $booking = Booking::create([
+                    'customer_id' => $request->user()->id,
+                    'kos_id' => $kos->id,
+                    'booking_code' => Booking::generateBookingCode(),
+                    'tenant_name' => $validated['tenant_name'],
+                    'tenant_phone' => $validated['tenant_phone'],
+                    'tenant_email' => $validated['tenant_email'],
+                    'start_date' => $startDate->format('Y-m-d'),
+                    'end_date' => $endDate->format('Y-m-d'),
+                    'duration_months' => $durationMonths,
+                    'kos_price' => $kosPrice,
+                    'subtotal' => $subtotal,
+                    'admin_fee' => $adminFee,
+                    'total_amount' => $totalAmount,
+                    'notes' => $validated['notes'] ?? null,
+                    'status' => 'pending',
+                ]);
+
+                // Buat Invoice secara otomatis di dalam DB::transaction yang sama
+                $invoice = Invoice::createFromBooking($booking);
+
+                return [$booking, $invoice];
+            });
+        }
+
+        // Buat atau gunakan kembali Snap Token dari Midtrans Sandbox
+        try {
+            $this->midtransService->getOrCreateSnapTransaction($booking, $invoice);
+        } catch (\Throwable $e) {
+            Log::error('Midtrans transaction error saat booking store', [
+                'booking_code' => $booking->booking_code,
+                'message' => $e->getMessage(),
             ]);
-
-            // Buat Invoice secara otomatis di dalam DB::transaction yang sama
-            Invoice::createFromBooking($booking);
-
-            return $booking;
-        });
+            // Tetap redirect ke halaman pembayaran agar user melihat petunjuk dan dapat retry
+        }
 
         return redirect()
-            ->route('member.booking.show', $booking->booking_code)
-            ->with('success', 'Booking berhasil dibuat! Pesanan Anda saat ini berstatus pending.');
+            ->route('member.booking.payment', ['slug' => $kos->slug, 'booking_code' => $booking->booking_code])
+            ->with('success', 'Booking berhasil dibuat! Silakan selesaikan pembayaran melalui Midtrans.');
     }
 
     /**
@@ -89,7 +126,7 @@ class MemberController extends Controller
      */
     public function show(string $bookingCode): View
     {
-        $booking = Booking::with(['kos.owner', 'customer'])
+        $booking = Booking::with(['kos.owner', 'customer', 'invoice.payments'])
             ->where('booking_code', $bookingCode)
             ->firstOrFail();
 
@@ -98,42 +135,141 @@ class MemberController extends Controller
             abort(403, 'Akses ditolak. Anda tidak memiliki izin untuk melihat booking ini.');
         }
 
-        return view('member.booking.show', compact('booking'));
+        $invoice = $booking->invoice;
+        $snapToken = null;
+        $redirectUrl = null;
+
+        if ($booking->status === 'pending' && $invoice) {
+            $payment = Payment::where('invoice_id', $invoice->id)
+                ->where('status', 'pending')
+                ->whereNotNull('snap_token')
+                ->latest('id')
+                ->first();
+
+            // Auto-sinkronisasi status dengan Midtrans API saat halaman dibuka
+            if ($payment && $payment->order_id) {
+                try {
+                    $statusObj = $this->midtransService->fetchTransactionStatus($payment->order_id);
+                    if ($statusObj && in_array($statusObj->transaction_status ?? '', ['settlement', 'capture', 'expire', 'deny', 'cancel'])) {
+                        $this->midtransService->handleNotification((array) $statusObj);
+                        $booking->refresh();
+                        $invoice->refresh();
+                    }
+                } catch (\Throwable $e) {
+                    // Abaikan jika network issue
+                }
+            }
+
+            if ($booking->status === 'pending') {
+                if ($payment && $payment->status === 'pending') {
+                    $snapToken = $payment->snap_token;
+                    $redirectUrl = $payment->snap_redirect_url;
+                } else {
+                    try {
+                        $midtransData = $this->midtransService->getOrCreateSnapTransaction($booking, $invoice);
+                        $snapToken = $midtransData['snap_token'];
+                        $redirectUrl = $midtransData['redirect_url'];
+                    } catch (\Throwable $e) {
+                        // Abaikan error pada view show
+                    }
+                }
+            }
+        }
+
+        $clientKey = config('services.midtrans.client_key') ?: config('midtrans.client_key');
+
+        return view('member.booking.show', compact('booking', 'invoice', 'snapToken', 'redirectUrl', 'clientKey'));
     }
 
     /**
-     * Ringkasan pembayaran setelah form booking diisi.
+     * Redirect langsung ke gerbang pembayaran Midtrans resmi (tanpa halaman perantara).
      */
-    public function payment(Request $request, string $slug): View
+    public function payment(Request $request, string $slug): RedirectResponse
     {
         $kos = $this->findKos($slug);
-        $booking = $request->validate([
-            'tenant_name' => ['required', 'string', 'max:100'],
-            'tenant_email' => ['required', 'email', 'max:150'],
-            'tenant_phone' => ['required', 'string', 'max:30'],
-            'check_in' => ['required', 'date'],
-            'duration' => ['required', 'integer', 'min:1', 'max:12'],
-            'notes' => ['nullable', 'string', 'max:500'],
-        ]);
 
-        $booking['duration_label'] = $booking['duration'] . ' Bulan';
-        $booking['subtotal'] = $kos['price'] * $booking['duration'];
-        $booking['admin_fee'] = 25000;
-        $booking['total'] = $booking['subtotal'] + $booking['admin_fee'];
+        // Jika request membawa input form booking lengkap (alur direct POST ke payment)
+        if ($request->isMethod('post') && ($request->has('start_date') || $request->has('check_in'))) {
+            return $this->store(app(\App\Http\Requests\StoreBookingRequest::class), $slug);
+        }
 
-        return view('member.booking.payment', compact('kos', 'booking'));
+        // Ambil booking_code dari query string / request input
+        $bookingCode = $request->input('booking_code') ?? $request->query('booking_code');
+
+        $booking = null;
+        if ($bookingCode) {
+            $booking = Booking::with(['kos.owner', 'customer', 'invoice.payments'])
+                ->where('booking_code', $bookingCode)
+                ->first();
+        }
+
+        // Jika booking_code tidak spesifik, cari booking berstatus pending milik customer saat ini
+        if (!$booking) {
+            $booking = Booking::with(['kos.owner', 'customer', 'invoice.payments'])
+                ->where('customer_id', Auth::id())
+                ->where('kos_id', $kos->id)
+                ->where('status', 'pending')
+                ->latest('id')
+                ->first();
+        }
+
+        if (!$booking) {
+            return redirect()
+                ->route('member.booking.create', $kos->slug)
+                ->with('error', 'Silakan lengkapi data pemesanan terlebih dahulu.');
+        }
+
+        // Otorisasi anti-IDOR: Customer hanya berhak membayar booking miliknya sendiri
+        if ((int) $booking->customer_id !== (int) Auth::id()) {
+            abort(403, 'Akses ditolak. Anda tidak memiliki izin untuk membayar booking ini.');
+        }
+
+        // Jika booking sudah confirmed / invoice lunas, arahkan langsung ke halaman detail
+        if ($booking->status === 'confirmed') {
+            return redirect()
+                ->route('member.booking.show', $booking->booking_code)
+                ->with('success', 'Pemesanan ini sudah berhasil dibayar dan dikonfirmasi.');
+        }
+
+        // Dapatkan invoice terkait
+        $invoice = $booking->invoice ?? Invoice::where('booking_id', $booking->id)->first();
+        if (!$invoice) {
+            $invoice = Invoice::createFromBooking($booking);
+        }
+
+        // Ambil atau buat transaksi Midtrans Snap token & redirect URL
+        try {
+            $midtransData = $this->midtransService->getOrCreateSnapTransaction($booking, $invoice);
+            $redirectUrl = $midtransData['redirect_url'] ?? null;
+
+            if (!empty($redirectUrl)) {
+                return redirect()->away($redirectUrl);
+            }
+        } catch (\Throwable $e) {
+            Log::error('Gagal mendapatkan redirect URL Midtrans saat menuju payment gateway', [
+                'booking_code' => $booking->booking_code,
+                'message' => $e->getMessage(),
+            ]);
+        }
+
+        return redirect()
+            ->route('member.booking.show', $booking->booking_code)
+            ->with('error', 'Gagal membuka gerbang pembayaran Midtrans. Silakan coba beberapa saat lagi.');
     }
 
     /**
-     * Konfirmasi pembayaran dan kembali ke daftar invoice.
+     * Konfirmasi pembayaran dan kembali ke daftar invoice atau detail booking.
      */
-    public function confirmPayment(Request $request)
+    public function confirmPayment(Request $request): RedirectResponse
     {
-        $request->validate([
-            'payment_method' => ['required', 'string', 'max:50'],
-        ]);
+        $bookingCode = $request->input('booking_code');
+        if ($bookingCode) {
+            return redirect()->route('member.booking.show', $bookingCode)
+                ->with('success', 'Pembayaran sedang diproses dan diverifikasi.');
+        }
 
-        return redirect()->route('member.invoice.index')->with('success', 'Booking berhasil dibuat. Silakan ikuti instruksi pembayaran pada invoice Anda.');
+        return redirect()->route('member.invoice.index')
+            ->with('success', 'Booking berhasil dibuat. Silakan ikuti instruksi pembayaran pada invoice Anda.');
     }
 
     private function findKos(string $slug): Kos
@@ -284,6 +420,22 @@ class MemberController extends Controller
         // Otorisasi: Customer hanya berhak melihat invoice miliknya sendiri
         if ((int) $invoice->customer_id !== (int) Auth::id()) {
             abort(403, 'Akses ditolak. Anda tidak memiliki izin untuk melihat invoice ini.');
+        }
+
+        // Auto-sinkronisasi status dengan Midtrans API jika invoice masih berstatus unpaid
+        if ($invoice->status === 'unpaid') {
+            $pendingPayment = $invoice->payments()->where('status', 'pending')->whereNotNull('order_id')->latest('id')->first();
+            if ($pendingPayment && $pendingPayment->order_id) {
+                try {
+                    $statusObj = $this->midtransService->fetchTransactionStatus($pendingPayment->order_id);
+                    if ($statusObj && in_array($statusObj->transaction_status ?? '', ['settlement', 'capture', 'expire', 'deny', 'cancel'])) {
+                        $this->midtransService->handleNotification((array) $statusObj);
+                        $invoice->refresh();
+                    }
+                } catch (\Throwable $e) {
+                    // Abaikan jika network issue
+                }
+            }
         }
 
         return view('member.invoice.show', compact('invoice'));

@@ -31,7 +31,7 @@
                 <span style="color: var(--color-stone); font-size: 12px;"><i class="fa fa-chevron-right"></i></span>
                 <div class="d-inline-flex align-items-center px-3 py-1 rounded-pill" style="background-color: #ffffff; color: var(--color-stone); font-size: 13px; font-weight: 500; border: var(--border-hairline);">
                     <span class="mr-2" style="width: 20px; height: 20px; border-radius: 50%; background-color: var(--surface-page-canvas); color: var(--color-stone); display: inline-flex; align-items: center; justify-content: center; font-size: 11px;">2</span>
-                    Metode Pembayaran
+                    Pembayaran Midtrans
                 </div>
                 <span style="color: var(--color-stone); font-size: 12px;"><i class="fa fa-chevron-right"></i></span>
                 <div class="d-inline-flex align-items-center px-3 py-1 rounded-pill" style="background-color: #ffffff; color: var(--color-stone); font-size: 13px; font-weight: 500; border: var(--border-hairline);">
@@ -123,7 +123,7 @@
                                 <a href="{{ route('member.kos.show', $kos['slug']) }}" class="btn" style="background-color: var(--surface-page-canvas); color: var(--color-charcoal); border: var(--border-hairline); font-weight: 600; font-size: 13px; border-radius: var(--radius-buttons); padding: 10px 18px;">
                                     <i class="fa fa-arrow-left mr-2"></i> Kembali
                                 </a>
-                                <button type="submit" class="btn" style="background-color: var(--color-notion-blue); color: #ffffff; font-weight: 600; font-size: 14px; padding: 12px 28px; border-radius: var(--radius-buttons); border: none;">
+                                <button type="submit" id="btn-submit-booking" class="btn" style="background-color: var(--color-notion-blue); color: #ffffff; font-weight: 600; font-size: 14px; padding: 12px 28px; border-radius: var(--radius-buttons); border: none;">
                                     Lanjut ke Pembayaran <i class="fa fa-arrow-right ml-2"></i>
                                 </button>
                             </div>
@@ -228,6 +228,15 @@
         if (durationSelect) {
             durationSelect.addEventListener('change', updateSummary);
             updateSummary();
+        }
+
+        const bookingForm = document.querySelector('form[action*="booking"]');
+        const submitBtn = document.getElementById('btn-submit-booking');
+        if (bookingForm && submitBtn) {
+            bookingForm.addEventListener('submit', function () {
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '<i class="fa fa-spinner fa-spin mr-2"></i> Menyiapkan Pembayaran...';
+            });
         }
     });
 </script>

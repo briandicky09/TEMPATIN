@@ -47,6 +47,33 @@
 
         <section class="container">
 
+            <!-- PAYMENT STATUS FEEDBACK (FROM MIDTRANS SNAP CALLBACK) -->
+            @if(request('payment_status') === 'success')
+            <div class="p-3 mb-4 rounded d-flex align-items-center" style="background-color: var(--color-sky-tint); border: 1px solid rgba(0, 117, 222, 0.25); color: var(--color-ink-black); border-radius: var(--radius-cards);">
+                <i class="fa fa-info-circle mr-3" style="font-size: 20px; color: var(--color-notion-blue);"></i>
+                <div>
+                    <strong>Pembayaran Anda sedang diverifikasi.</strong>
+                    <div style="font-size: 13px;">Status booking dan invoice Anda akan diperbarui otomatis secara real-time begitu webhook notifikasi Midtrans diterima server.</div>
+                </div>
+            </div>
+            @elseif(request('payment_status') === 'pending')
+            <div class="p-3 mb-4 rounded d-flex align-items-center" style="background-color: #fffbeb; border: 1px solid #fde68a; color: #92400e; border-radius: var(--radius-cards);">
+                <i class="fa fa-clock mr-3" style="font-size: 20px;"></i>
+                <div>
+                    <strong>Menunggu Pembayaran.</strong>
+                    <div style="font-size: 13px;">Transaksi Anda telah terdaftar. Silakan selesaikan pembayaran pada nomor Virtual Account atau kanal yang telah dipilih.</div>
+                </div>
+            </div>
+            @elseif(request('payment_status') === 'failed')
+            <div class="p-3 mb-4 rounded d-flex align-items-center" style="background-color: #fef2f2; border: 1px solid #fecaca; color: #991b1b; border-radius: var(--radius-cards);">
+                <i class="fa fa-times-circle mr-3" style="font-size: 20px;"></i>
+                <div>
+                    <strong>Pembayaran Belum Berhasil.</strong>
+                    <div style="font-size: 13px;">Silakan ulangi pembayaran menggunakan tombol bayar di bawah atau hubungi bantuan.</div>
+                </div>
+            </div>
+            @endif
+
             <!-- SUCCESS BANNER -->
             <div class="p-4 mb-4 rounded d-flex align-items-center" style="background-color: #ffffff; border: var(--border-hairline); border-left: 4px solid var(--color-notion-blue); border-radius: var(--radius-cards);">
                 <div class="d-inline-flex align-items-center justify-content-center mr-3 rounded-circle" style="width: 44px; height: 44px; background-color: var(--color-sky-tint); color: var(--color-notion-blue); border: 1px solid rgba(0, 117, 222, 0.2); font-size: 1.25rem;">
@@ -114,19 +141,41 @@
                             <span style="color: var(--color-midnight-ink); font-weight: 600;">Rp {{ number_format($booking->admin_fee, 0, ',', '.') }}</span>
                         </div>
 
+                        @if($booking->status === 'pending')
                         <div class="p-3 rounded mb-3" style="background-color: var(--surface-page-canvas); border: 1px solid rgba(0,0,0,0.06);">
                             <div class="d-flex justify-content-between align-items-center">
-                                <span style="font-size: 14px; font-weight: 700; color: var(--color-midnight-ink);">Total Biaya</span>
+                                <span style="font-size: 14px; font-weight: 700; color: var(--color-midnight-ink);">Total Tagihan</span>
                                 <span style="font-size: 1.25rem; font-weight: 700; color: var(--color-notion-blue); font-variant-numeric: tabular-nums;">
-                                    Rp {{ number_format($booking->total, 0, ',', '.') }}
+                                    Rp {{ number_format($booking->total_amount, 0, ',', '.') }}
                                 </span>
                             </div>
                         </div>
+                        @endif
 
                         <div class="d-flex justify-content-between align-items-center" style="font-size: 13px; color: var(--color-stone);">
                             <span>Metode Pembayaran</span>
-                            <span style="font-weight: 600; color: var(--color-midnight-ink);">{{ $booking->payment_method ?? 'Transfer Bank' }}</span>
+                            <span style="font-weight: 600; color: var(--color-midnight-ink);">
+                                @php
+                                    $paymentRecord = $booking->invoice?->payments?->first();
+                                    $paymentMethodLabel = $paymentRecord ? ($paymentRecord->payment_channel ?? $paymentRecord->payment_method) : ($booking->payment_method ?? 'Midtrans Payment');
+                                @endphp
+                                {{ $paymentMethodLabel }}
+                            </span>
                         </div>
+
+                        @if($booking->status === 'pending')
+                        <div class="pt-3 mt-3 border-top" style="border-color: rgba(0,0,0,0.06) !important;">
+                            <a href="{{ route('member.booking.payment', ['slug' => $booking->kos->slug, 'booking_code' => $booking->booking_code]) }}" class="btn btn-block" style="background-color: var(--color-notion-blue); color: #ffffff; font-weight: 700; font-size: 14px; padding: 12px; border-radius: var(--radius-buttons); text-align: center; border: none; box-shadow: 0 4px 12px rgba(0, 117, 222, 0.25);">
+                                <i class="fa fa-credit-card mr-2"></i> Lanjutkan Pembayaran (Midtrans)
+                            </a>
+                        </div>
+                        @else
+                        <div class="pt-3 mt-3 border-top text-center" style="border-color: rgba(0,0,0,0.06) !important;">
+                            <span class="badge px-3 py-2" style="background-color: var(--color-sky-tint); color: var(--color-ink-black); font-size: 12px;">
+                                <i class="fa fa-check-circle mr-1 text-primary"></i> Pembayaran Terverifikasi
+                            </span>
+                        </div>
+                        @endif
                     </div>
 
                 </div>
