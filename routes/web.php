@@ -28,6 +28,7 @@ Route::redirect('/search', '/kos')->name('search.kos');
 Route::get('/kos', [KosController::class, 'index'])->name('kos.index');
 Route::prefix('kos')->name('kos.')->group(function () {
     Route::get('/{slug}', [KosController::class, 'show'])->name('show');
+    Route::post('/{slug}/review', [KosController::class, 'storeReview'])->name('review.store');
 });
 Route::post('/favorit/toggle', [MemberController::class, 'toggleFavorit'])->name('kos.favorit.toggle');
 
@@ -96,6 +97,7 @@ Route::prefix('member')->name('member.')->middleware(['auth', 'role:customer'])-
     Route::get('/kos', [KosController::class, 'index'])->name('kos.index');
     Route::prefix('kos')->name('kos.')->group(function () {
         Route::get('/{slug}', [KosController::class, 'show'])->name('show');
+        Route::post('/{slug}/review', [KosController::class, 'storeReview'])->name('review.store');
     });
     Route::get('/pesan', function () {
         return view('member.message.index');

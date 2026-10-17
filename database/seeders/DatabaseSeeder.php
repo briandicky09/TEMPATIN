@@ -7,6 +7,7 @@ use App\Models\Facility;
 use App\Models\Invoice;
 use App\Models\Kos;
 use App\Models\Payment;
+use App\Models\Review;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -232,6 +233,17 @@ class DatabaseSeeder extends Seeder
                 'payment_proof' => 'assets/img/payment-sample.jpg',
                 'status' => 'success',
                 'paid_at' => '2026-08-02 14:30:00',
+            ]
+        );
+
+        // 6. Reviews: Ulasan penghuni
+        Review::updateOrCreate(
+            ['kos_id' => $kosMelati->id, 'reviewer_name' => 'Dewi Sartika'],
+            [
+                'user_id' => $customer->id,
+                'rating' => 5,
+                'comment' => 'Tempatnya bersih, nyaman sekali untuk istirahat setelah kuliah, dan ibu kos sangat ramah dan responsif!',
+                'reply' => 'Terima kasih Mbak Dewi, senang bisa melayani dengan baik. Semoga betah tinggal di Kos Putri Melati!',
             ]
         );
     }

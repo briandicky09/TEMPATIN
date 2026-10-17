@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Kos;
+use App\Models\Review;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
@@ -49,7 +51,9 @@ class KosController extends Controller
      */
     public function show(string $slug): View
     {
-        $kos = Kos::with(['owner', 'facilities', 'photos'])
+        $kos = Kos::with(['owner', 'facilities', 'photos', 'reviews' => function ($q) {
+            $q->latest();
+        }, 'reviews.user'])
             ->where('slug', $slug)
             ->where('status', 'active')
             ->firstOrFail();
@@ -62,5 +66,39 @@ class KosController extends Controller
             ->get();
 
         return view('kos.show', compact('kos', 'similarKos'));
+    }
+
+    /**
+     * Simpan ulasan penghuni baru untuk properti kos ini.
+     * Ulasan ini langsung tersimpan dan dapat dilihat oleh pemilik kos di akun owner.
+     */
+    public function storeReview(Request $request, string $slug): RedirectResponse
+    {
+        $kos = Kos::where('slug', $slug)->where('status', 'active')->firstOrFail();
+
+        $validated = $request->validate([
+            'reviewer_name' => ['required', 'string', 'max:100'],
+            'rating' => ['required', 'integer', 'between:1,5'],
+            'comment' => ['required', 'string', 'min:5', 'max:1000'],
+        ], [
+            'reviewer_name.required' => 'Nama penghuni wajib diisi.',
+            'rating.required' => 'Silakan pilih skor bintang ulasan (1 - 5).',
+            'rating.between' => 'Rating harus antara 1 sampai 5 bintang.',
+            'comment.required' => 'Tuliskan ulasan pengalaman Anda.',
+            'comment.min' => 'Ulasan minimal 5 karakter.',
+        ]);
+
+        $validated['kos_id'] = $kos->id;
+        if (auth()->check()) {
+            $validated['user_id'] = auth()->id();
+            if (empty($validated['reviewer_name'])) {
+                $validated['reviewer_name'] = auth()->user()->name;
+            }
+        }
+
+        Review::create($validated);
+
+        return redirect()->to(url()->previous() . '#reviews')
+            ->with('review_success', 'Terima kasih! Ulasan Anda berhasil dikirim dan tersimpan di akun pemilik kos.');
     }
 }

@@ -140,6 +140,124 @@
     .similar-property-card .similar-card-btn i {
         transition: transform 0.2s ease;
     }
+
+    /* Star Rating Widget for Reviews */
+    .star-rating-widget .star-btn {
+        font-size: 26px;
+        color: #d1d5db;
+        cursor: pointer;
+        transition: color 0.15s ease, transform 0.15s ease;
+        display: inline-block;
+        line-height: 1;
+        padding: 2px 3px;
+    }
+    .star-rating-widget .star-btn.active,
+    .star-rating-widget .star-btn.hover-active {
+        color: #f59e0b !important;
+    }
+    .star-rating-widget .star-btn:hover {
+        transform: scale(1.2);
+    }
+
+    /* Reviews Collapsed, Fading, and Expand Button */
+    #reviews-wrapper.is-collapsed .review-item-hidden {
+        display: none !important;
+    }
+    #reviews-wrapper.is-collapsed .review-item-fading {
+        position: relative;
+        -webkit-mask-image: linear-gradient(180deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0.85) 25%, rgba(0,0,0,0.3) 60%, rgba(0,0,0,0) 100%);
+        mask-image: linear-gradient(180deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0.85) 25%, rgba(0,0,0,0.3) 60%, rgba(0,0,0,0) 100%);
+        filter: blur(0.5px);
+        opacity: 0.75;
+        pointer-events: none;
+        transition: all 0.35s ease;
+    }
+    #reviews-wrapper:not(.is-collapsed) .review-item-fading {
+        -webkit-mask-image: none !important;
+        mask-image: none !important;
+        filter: none !important;
+        opacity: 1 !important;
+        pointer-events: auto !important;
+    }
+    .reviews-fade-overlay {
+        position: relative;
+        margin-top: -65px;
+        padding-top: 45px;
+        padding-bottom: 8px;
+        text-align: center;
+        background: linear-gradient(180deg, rgba(247, 246, 243, 0) 0%, rgba(247, 246, 243, 0.75) 35%, rgba(247, 246, 243, 0.98) 75%, #f7f6f3 100%);
+        backdrop-filter: blur(2px);
+        -webkit-backdrop-filter: blur(2px);
+        z-index: 5;
+        border-radius: 0 0 12px 12px;
+        transition: all 0.3s ease;
+    }
+    #reviews-wrapper:not(.is-collapsed) .reviews-fade-overlay {
+        margin-top: 8px;
+        padding-top: 0;
+        background: none;
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+    }
+    .btn-show-all-reviews {
+        background-color: #ffffff;
+        color: var(--color-midnight-ink, #2f3437);
+        border: none;
+        outline: none;
+        font-weight: 600;
+        font-size: 13px;
+        border-radius: 20px;
+        padding: 9px 24px;
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+        transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+        display: inline-flex;
+        align-items: center;
+        cursor: pointer;
+    }
+    .btn-show-all-reviews:hover {
+        background-color: var(--color-sky-tint, #e8f3ff);
+        color: var(--color-notion-blue, #0075de);
+        border: none;
+        outline: none;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 18px rgba(0, 117, 222, 0.16);
+    }
+    .btn-show-all-reviews:focus,
+    .btn-show-all-reviews:active {
+        border: none !important;
+        outline: none !important;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
+    }
+
+    /* Filter Pills */
+    .btn-review-filter {
+        background-color: #ffffff;
+        color: var(--color-charcoal, #4b5563);
+        border: 1px solid rgba(0, 0, 0, 0.08);
+        border-radius: 20px;
+        font-size: 12.5px;
+        font-weight: 600;
+        padding: 6px 14px;
+        transition: all 0.2s ease;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+    }
+    .btn-review-filter:hover {
+        background-color: var(--surface-page-canvas, #f7f6f3);
+        color: var(--color-midnight-ink, #111827);
+        border-color: rgba(0, 0, 0, 0.18);
+    }
+    .btn-review-filter.active {
+        background-color: var(--color-midnight-ink, #111827);
+        color: #ffffff;
+        border-color: var(--color-midnight-ink, #111827);
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    }
+    .btn-review-filter.active .text-warning {
+        color: #fbbf24 !important;
+    }
 </style>
 @endpush
 
@@ -369,58 +487,207 @@
                         <section id="reviews" class="pk-reviews mt-4">
                             <hr class="mb-4">
 
+                            @php
+                                $reviewsList = $kos->reviews ?? collect($kos['reviews'] ?? []);
+                                $reviewCount = $reviewsList->count();
+                                $averageRating = $reviewCount > 0 ? round((float) $reviewsList->avg('rating'), 1) : 0.0;
+                            @endphp
+
                             <div class="d-flex flex-wrap justify-content-between align-items-center mb-4">
                                 <div>
-                                    <h3 class="mb-1">Ulasan Penghuni</h3>
-                                    <p class="text-muted mb-0">Pengalaman penghuni di {{ $kos['title'] }}</p>
+                                    <h3 class="mb-1" style="font-size: 1.35rem; font-weight: 700; color: var(--color-midnight-ink);">Ulasan Penghuni</h3>
+                                    <p class="text-muted mb-0" style="font-size: 13.5px;">Pengalaman penghuni di {{ $kos['title'] }}</p>
                                 </div>
-                                <div class="pk-reviews__summary">
-                                    <i class="fa fa-star"></i>
-                                    <strong>{{ number_format($kos['rating'] ?? 0, 1) }}</strong>
-                                    <span>({{ $kos['review_count'] ?? 0 }} ulasan)</span>
-                                </div>
-                            </div>
-
-                            <div class="ts-box pk-reviews__breakdown mb-4">
-                                <div class="row">
-                                    @foreach($kos['rating_breakdown'] ?? [] as $rating)
-                                    <div class="col-md-6 mb-3 mb-md-2">
-                                        <div class="pk-review-score">
-                                            <span>{{ $rating['label'] }}</span>
-                                            <span class="pk-review-score__stars" aria-label="Rating {{ $rating['score'] }} dari 5">
-                                                @for($star = 1; $star <= 5; $star++)
-                                                    <i class="fa fa-star{{ $star <= round($rating['score']) ? '' : '-o' }}"></i>
-                                                @endfor
-                                            </span>
-                                            <strong>{{ number_format($rating['score'], 1) }}</strong>
-                                        </div>
-                                    </div>
-                                    @endforeach
+                                <div class="d-inline-flex align-items-center px-3 py-1 rounded" style="background-color: var(--surface-page-canvas); border: var(--border-hairline);">
+                                    <i class="fa fa-star mr-1" style="color: #f59e0b;"></i>
+                                    <strong style="font-size: 14px; color: var(--color-midnight-ink); font-variant-numeric: tabular-nums;">{{ number_format($averageRating, 1) }}</strong>
+                                    <span class="text-muted ml-2 small">({{ $reviewCount }} ulasan)</span>
                                 </div>
                             </div>
 
-                            @foreach($kos['reviews'] ?? [] as $review)
-                            <article class="pk-review-item mb-3">
-                                <div class="d-flex justify-content-between align-items-start">
-                                    <div class="d-flex align-items-center">
-                                        <div class="pk-review-item__avatar"><i class="fa fa-user"></i></div>
-                                        <div>
-                                            <h5 class="mb-1">{{ $review['name'] }}</h5>
-                                            <small class="text-muted">{{ $review['date'] }}</small>
-                                        </div>
-                                    </div>
-                                    <span class="pk-review-item__score"><i class="fa fa-star"></i> {{ number_format($review['score'], 1) }}</span>
+                            @if(session('review_success'))
+                                <div class="alert alert-success d-flex align-items-center mb-4 py-3 px-3" style="border-radius: 10px; font-size: 13.5px; background-color: #ecfdf5; border-color: #a7f3d0; color: #065f46;">
+                                    <i class="fa fa-check-circle mr-2" style="font-size: 18px; color: #10b981;"></i>
+                                    <div>{{ session('review_success') }}</div>
                                 </div>
-                                <p class="mb-0 mt-3">{{ $review['comment'] }}</p>
+                            @endif
 
-                                @if(!empty($review['reply']))
-                                <div class="pk-review-item__reply mt-2">
-                                    <strong>Balasan dari Pemilik Kos</strong>
-                                    <p class="mb-0 mt-1">{{ $review['reply'] }}</p>
+                            @if($reviewCount > 0)
+                                @php
+                                    $starCounts = [5 => 0, 4 => 0, 3 => 0, 2 => 0, 1 => 0];
+                                    foreach ($reviewsList as $rItem) {
+                                        $rVal = (int) (is_object($rItem) ? ($rItem->rating ?? 5) : ($rItem['score'] ?? 5));
+                                        if (isset($starCounts[$rVal])) {
+                                            $starCounts[$rVal]++;
+                                        }
+                                    }
+                                @endphp
+
+                                <!-- Filter Ulasan Berdasarkan Rating Bintang -->
+                                <div class="review-filter-bar d-flex flex-wrap align-items-center mb-3 pb-1" style="gap: 8px;">
+                                    <button type="button" class="btn btn-review-filter active" data-rating="all">
+                                        Semua ({{ $reviewCount }})
+                                    </button>
+                                    <button type="button" class="btn btn-review-filter" data-rating="5">
+                                        <i class="fa fa-star text-warning mr-1"></i> 5 Bintang ({{ $starCounts[5] }})
+                                    </button>
+                                    <button type="button" class="btn btn-review-filter" data-rating="4">
+                                        <i class="fa fa-star text-warning mr-1"></i> 4 Bintang ({{ $starCounts[4] }})
+                                    </button>
+                                    <button type="button" class="btn btn-review-filter" data-rating="3">
+                                        <i class="fa fa-star text-warning mr-1"></i> 3 Bintang ({{ $starCounts[3] }})
+                                    </button>
+                                    <button type="button" class="btn btn-review-filter" data-rating="2">
+                                        <i class="fa fa-star text-warning mr-1"></i> 2 Bintang ({{ $starCounts[2] }})
+                                    </button>
+                                    <button type="button" class="btn btn-review-filter" data-rating="1">
+                                        <i class="fa fa-star text-warning mr-1"></i> 1 Bintang ({{ $starCounts[1] }})
+                                    </button>
                                 </div>
-                                @endif
-                            </article>
-                            @endforeach
+
+                                <!-- Alert saat filter tidak menemukan hasil -->
+                                <div id="no-matching-reviews" class="p-4 text-center rounded mb-4" style="display: none; background-color: var(--surface-page-canvas); border: var(--border-hairline); border-radius: 12px;">
+                                    <i class="fa fa-star-half-alt fa-2x mb-2 d-block text-muted" style="opacity: 0.35;"></i>
+                                    <div style="font-weight: 600; font-size: 14px; color: var(--color-midnight-ink); margin-bottom: 3px;">Tidak Ada Ulasan</div>
+                                    <div class="text-muted small" id="no-matching-reviews-text">Belum ada ulasan untuk rating bintang ini.</div>
+                                </div>
+
+                                <!-- Review List Wrapper (Max 2 reviews initially with fade & blur) -->
+                                <div id="reviews-wrapper" class="{{ $reviewCount > 2 ? 'is-collapsed' : '' }} mb-4" style="position: relative;">
+                                    <div id="reviews-list">
+                                        @foreach($reviewsList as $index => $review)
+                                        @php
+                                            $rName = is_object($review) ? ($review->reviewer_name ?? 'Penghuni') : ($review['name'] ?? 'Penghuni');
+                                            $rRating = is_object($review) ? ($review->rating ?? 5) : ($review['score'] ?? 5);
+                                            $rDate = is_object($review) ? ($review->created_at ? $review->created_at->translatedFormat('d F Y') : '') : ($review['date'] ?? '');
+                                            $rComment = is_object($review) ? $review->comment : ($review['comment'] ?? '');
+                                            $rReply = is_object($review) ? $review->reply : ($review['reply'] ?? null);
+                                            $isBeyondTwo = $index >= 2;
+                                            $isSecondItem = $index === 1 && $reviewCount > 2;
+                                        @endphp
+                                        <article class="review-item-card p-3 mb-3 rounded {{ $isBeyondTwo ? 'review-item-hidden' : '' }} {{ $isSecondItem ? 'review-item-fading' : '' }}" 
+                                                 data-index="{{ $index }}"
+                                                 data-rating="{{ $rRating }}"
+                                                 style="background-color: #ffffff; border: var(--border-hairline); border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.02); transition: all 0.3s ease;">
+                                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                                <div class="d-flex align-items-center">
+                                                    <div class="rounded-circle mr-2 d-inline-flex align-items-center justify-content-center" style="width: 36px; height: 36px; background-color: var(--color-sky-tint); color: var(--color-notion-blue); font-weight: 700; font-size: 13px;">
+                                                        {{ strtoupper(substr($rName, 0, 1)) }}
+                                                    </div>
+                                                    <div>
+                                                        <h5 class="mb-0 font-weight-bold" style="font-size: 13.5px; color: var(--color-midnight-ink);">{{ $rName }}</h5>
+                                                        <small class="text-muted" style="font-size: 11.5px;">{{ $rDate }}</small>
+                                                    </div>
+                                                </div>
+                                                <!-- White background with black outline -->
+                                                <div class="d-inline-flex align-items-center px-2 py-1" style="background-color: #ffffff; border: 1.5px solid #111827; border-radius: 6px; color: #111827; font-size: 12px; font-weight: 700; box-shadow: 0 1px 2px rgba(0,0,0,0.04);">
+                                                    <i class="fa fa-star mr-1" style="font-size: 11px; color: #f59e0b;"></i> {{ number_format($rRating, 1) }}
+                                                </div>
+                                            </div>
+                                            <p class="mb-0 mt-2" style="font-size: 13.5px; color: var(--color-charcoal); line-height: 1.55;">{{ $rComment }}</p>
+
+                                            @if(!empty($rReply))
+                                            <div class="mt-3 p-3 rounded" style="background-color: var(--surface-page-canvas); border-left: 3px solid var(--color-notion-blue); font-size: 12.5px;">
+                                                <strong class="d-block mb-1" style="color: var(--color-midnight-ink); font-size: 12px;">
+                                                    <i class="fa fa-reply mr-1" style="color: var(--color-notion-blue);"></i> Balasan dari Pemilik Kos
+                                                </strong>
+                                                <p class="mb-0 text-muted" style="line-height: 1.5;">{{ $rReply }}</p>
+                                            </div>
+                                            @endif
+                                        </article>
+                                        @endforeach
+                                    </div>
+
+                                    @if($reviewCount > 2)
+                                        <!-- Fade & Blur Overlay + Expand Button -->
+                                        <div id="reviews-fade-container" class="reviews-fade-overlay">
+                                            <button type="button" id="btn-toggle-reviews" class="btn btn-show-all-reviews">
+                                                <i class="fa fa-chevron-down mr-2" id="reviews-btn-icon"></i> <span id="reviews-btn-text">Lihat Semua Ulasan ({{ $reviewCount }})</span>
+                                            </button>
+                                        </div>
+                                    @endif
+                                </div>
+                            @else
+                                <!-- EMPTY STATE PLACEHOLDER -->
+                                <div class="p-4 text-center rounded mb-4" style="background-color: var(--surface-page-canvas); border: var(--border-hairline); border-radius: 14px;">
+                                    <div class="d-inline-flex align-items-center justify-content-center rounded-circle mb-3" style="width: 52px; height: 52px; background-color: #ffffff; border: 1px solid rgba(0,0,0,0.06); color: var(--color-notion-blue); box-shadow: 0 2px 6px rgba(0,0,0,0.04);">
+                                        <i class="fa fa-comment-dots fa-2x"></i>
+                                    </div>
+                                    <h5 class="font-weight-bold mb-1" style="color: var(--color-midnight-ink); font-size: 15px;">Belum Ada Ulasan untuk Kos Ini</h5>
+                                    <p class="text-muted mb-0 mx-auto" style="font-size: 13px; max-width: 480px; line-height: 1.5;">
+                                        Jadilah penghuni pertama yang membagikan pengalaman tinggal di {{ $kos['title'] }}. Ulasan Anda akan langsung masuk ke akun pemilik kos.
+                                    </p>
+                                </div>
+                            @endif
+
+                            <!-- FORM TULIS ULASAN PENGHUNI -->
+                            <div class="card p-4 mt-3" style="background-color: #ffffff; border: var(--border-hairline); border-radius: 14px; box-shadow: 0 1px 3px rgba(0,0,0,0.03);">
+                                <div class="d-flex align-items-center mb-3">
+                                    <div class="rounded-circle mr-2 d-inline-flex align-items-center justify-content-center" style="width: 32px; height: 32px; background-color: var(--color-sky-tint); color: var(--color-notion-blue); font-size: 13px;">
+                                        <i class="fa fa-pen"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="mb-0 font-weight-bold" style="font-size: 1rem; color: var(--color-midnight-ink);">Tulis Ulasan Penghuni</h4>
+                                        <small class="text-muted" style="font-size: 11.5px;">Ulasan Anda akan langsung masuk ke dashboard penilaian pemilik kos.</small>
+                                    </div>
+                                </div>
+
+                                <form action="{{ route('kos.review.store', $kos['slug']) }}" method="POST">
+                                    @csrf
+
+                                    <!-- Rating Star Widget -->
+                                    <div class="form-group mb-3">
+                                        <label class="d-block mb-1 font-weight-bold" style="font-size: 13px; color: var(--color-midnight-ink);">
+                                            Penilaian Bintang <span style="color: var(--color-notion-blue);">*</span>
+                                        </label>
+                                        <div class="star-rating-widget d-inline-flex align-items-center flex-wrap" id="starRatingWidget">
+                                            <div class="stars-list d-inline-flex align-items-center mr-2" style="gap: 6px;">
+                                                <i class="fa fa-star star-btn active" data-rating="1" title="1 Bintang - Sangat Buruk"></i>
+                                                <i class="fa fa-star star-btn active" data-rating="2" title="2 Bintang - Kurang"></i>
+                                                <i class="fa fa-star star-btn active" data-rating="3" title="3 Bintang - Cukup"></i>
+                                                <i class="fa fa-star star-btn active" data-rating="4" title="4 Bintang - Puas"></i>
+                                                <i class="fa fa-star star-btn active" data-rating="5" title="5 Bintang - Sangat Puas"></i>
+                                            </div>
+                                            <input type="hidden" name="rating" id="selectedRatingInput" value="{{ old('rating', '5') }}" required>
+                                            <span id="star-desc-label" class="text-muted font-weight-bold small ml-1" style="font-size: 12.5px;">5.0 (Sangat Puas)</span>
+                                        </div>
+                                        @error('rating') <div class="text-danger small mt-1">{{ $message }}</div> @enderror
+                                    </div>
+
+                                    <!-- Reviewer Name -->
+                                    <div class="form-group mb-3">
+                                        <label class="font-weight-bold mb-1" style="font-size: 13px; color: var(--color-midnight-ink);">
+                                            Nama Anda <span style="color: var(--color-notion-blue);">*</span>
+                                        </label>
+                                        <input type="text" 
+                                               name="reviewer_name" 
+                                               class="form-control @error('reviewer_name') is-invalid @enderror" 
+                                               placeholder="Contoh: Dewi Sartika / Mahasiswa ITS" 
+                                               value="{{ old('reviewer_name', auth()->user()->name ?? '') }}" 
+                                               required
+                                               style="border-radius: var(--radius-inputs, 8px); border: var(--border-hairline); font-size: 13.5px; padding: 10px 14px;">
+                                        @error('reviewer_name') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                                    </div>
+
+                                    <!-- Review Comment Textarea -->
+                                    <div class="form-group mb-3">
+                                        <label class="font-weight-bold mb-1" style="font-size: 13px; color: var(--color-midnight-ink);">
+                                            Ulasan Pengalaman <span style="color: var(--color-notion-blue);">*</span>
+                                        </label>
+                                        <textarea name="comment" 
+                                                  rows="3" 
+                                                  class="form-control @error('comment') is-invalid @enderror" 
+                                                  placeholder="Ceritakan pengalaman Anda tinggal di kos ini secara jujur... Contoh: Lingkungan tenang, kamar mandi dalam bersih, sirkulasi udara sejuk, akses jalan aman malam hari, dan pemilik kos sangat ramah serta cepat tanggap." 
+                                                  required
+                                                  style="border-radius: var(--radius-inputs, 8px); border: var(--border-hairline); font-size: 13.5px; padding: 12px 14px; line-height: 1.5;">{{ old('comment') }}</textarea>
+                                        @error('comment') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                                    </div>
+
+                                    <button type="submit" class="btn btn-primary" style="font-weight: 600; font-size: 13.5px; padding: 10px 22px; border-radius: var(--radius-buttons, 8px); box-shadow: 0 2px 6px rgba(0, 117, 222, 0.2);">
+                                        <i class="fa fa-paper-plane mr-2"></i> Kirim Ulasan ke Pemilik
+                                    </button>
+                                </form>
+                            </div>
                         </section>
 
                     </div>
@@ -827,6 +1094,145 @@ $(document).ready(function() {
                 alert('Gagal memperbarui status favorit.');
             }
         });
+    });
+
+    // Interactive Star Rating Widget
+    const ratingLabels = {
+        1: '1.0 (Sangat Buruk)',
+        2: '2.0 (Kurang)',
+        3: '3.0 (Cukup)',
+        4: '4.0 (Puas)',
+        5: '5.0 (Sangat Puas)'
+    };
+    const $stars = $('.star-rating-widget .star-btn');
+    const $ratingInput = $('#selectedRatingInput');
+    const $descLabel = $('#star-desc-label');
+
+    function updateStarsDisplay(val) {
+        $stars.each(function() {
+            const starVal = parseInt($(this).data('rating'), 10);
+            if (starVal <= val) {
+                $(this).addClass('active');
+            } else {
+                $(this).removeClass('active');
+            }
+        });
+        $descLabel.text(ratingLabels[val] || val + '.0');
+    }
+
+    $stars.on('click', function() {
+        const val = parseInt($(this).data('rating'), 10);
+        $ratingInput.val(val);
+        updateStarsDisplay(val);
+    });
+
+    $stars.on('mouseenter', function() {
+        const hoverVal = parseInt($(this).data('rating'), 10);
+        $stars.each(function() {
+            const starVal = parseInt($(this).data('rating'), 10);
+            if (starVal <= hoverVal) {
+                $(this).addClass('hover-active');
+            } else {
+                $(this).removeClass('hover-active');
+            }
+        });
+        $descLabel.text(ratingLabels[hoverVal] || hoverVal + '.0');
+    });
+
+    $('#starRatingWidget .stars-list').on('mouseleave', function() {
+        $stars.removeClass('hover-active');
+        const selectedVal = parseInt($ratingInput.val(), 10) || 5;
+        updateStarsDisplay(selectedVal);
+    });
+
+    // Inisialisasi awal
+    const initRating = parseInt($ratingInput.val(), 10) || 5;
+    updateStarsDisplay(initRating);
+
+    // Toggle Collapse / Expand Reviews (Batasi 2 komentar, hilangkan blur saat dibuka)
+    $('#btn-toggle-reviews').on('click', function(e) {
+        e.preventDefault();
+        const $wrapper = $('#reviews-wrapper');
+        const isCollapsed = $wrapper.hasClass('is-collapsed');
+        
+        if (isCollapsed) {
+            $wrapper.removeClass('is-collapsed');
+            $('.review-item-hidden').removeClass('review-item-hidden').hide().slideDown(300);
+            $('#reviews-btn-icon').removeClass('fa-chevron-down').addClass('fa-chevron-up');
+            $('#reviews-btn-text').text('Tutup Sebagian Ulasan');
+        } else {
+            $wrapper.addClass('is-collapsed');
+            $('.review-item-card').each(function() {
+                if (parseInt($(this).data('index'), 10) >= 2) {
+                    $(this).addClass('review-item-hidden');
+                }
+            });
+            $('#reviews-btn-icon').removeClass('fa-chevron-up').addClass('fa-chevron-down');
+            const total = {{ $reviewCount }};
+            $('#reviews-btn-text').text('Lihat Semua Ulasan (' + total + ')');
+        }
+    });
+
+    // Filter Ulasan Berdasarkan Rating Bintang
+    $('.btn-review-filter').on('click', function() {
+        const $btn = $(this);
+        $('.btn-review-filter').removeClass('active');
+        $btn.addClass('active');
+
+        const selectedRating = $btn.data('rating');
+        const $wrapper = $('#reviews-wrapper');
+        const $fadeContainer = $('#reviews-fade-container');
+        const $noMatchAlert = $('#no-matching-reviews');
+
+        if (selectedRating === 'all') {
+            // Mode "Semua": kembali ke tampilan 2 ulasan awal + fade jika > 2
+            $noMatchAlert.hide();
+            const totalCount = {{ $reviewCount }};
+
+            if (totalCount > 2) {
+                $wrapper.addClass('is-collapsed');
+                $('.review-item-card').each(function() {
+                    const idx = parseInt($(this).data('index'), 10);
+                    if (idx < 2) {
+                        $(this).removeClass('review-item-hidden').show();
+                    } else {
+                        $(this).addClass('review-item-hidden').hide();
+                    }
+                });
+                $fadeContainer.show();
+                $('#reviews-btn-icon').removeClass('fa-chevron-up').addClass('fa-chevron-down');
+                $('#reviews-btn-text').text('Lihat Semua Ulasan (' + totalCount + ')');
+            } else {
+                $wrapper.removeClass('is-collapsed');
+                $('.review-item-card').removeClass('review-item-hidden').show();
+                $fadeContainer.hide();
+            }
+        } else {
+            // Mode Filter Rating Tertentu (1, 2, 3, 4, atau 5)
+            const targetRating = parseInt(selectedRating, 10);
+            
+            // Hilangkan status collapsed saat memfilter
+            $wrapper.removeClass('is-collapsed');
+            $fadeContainer.hide();
+
+            let matchCount = 0;
+            $('.review-item-card').each(function() {
+                const cardRating = parseInt($(this).data('rating'), 10);
+                if (cardRating === targetRating) {
+                    $(this).removeClass('review-item-hidden').fadeIn(200);
+                    matchCount++;
+                } else {
+                    $(this).addClass('review-item-hidden').hide();
+                }
+            });
+
+            if (matchCount === 0) {
+                $('#no-matching-reviews-text').html('Belum ada ulasan dengan penilaian <strong>' + targetRating + ' Bintang</strong>.');
+                $noMatchAlert.fadeIn(200);
+            } else {
+                $noMatchAlert.hide();
+            }
+        }
     });
 });
 </script>

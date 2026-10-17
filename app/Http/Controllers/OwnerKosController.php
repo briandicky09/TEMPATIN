@@ -6,6 +6,7 @@ use App\Http\Requests\StoreKosRequest;
 use App\Http\Requests\UpdateKosRequest;
 use App\Models\Facility;
 use App\Models\Kos;
+use App\Models\Review;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -267,42 +268,37 @@ class OwnerKosController extends Controller
     /**
      * Halaman penilaian kos untuk owner.
      */
-    public function penilaian(): View
+    public function penilaian(Request $request): View
     {
-        $ratings = [
-            [
-                'kos' => 'Kos Putri Melati',
-                'slug' => 'kos-putri-melati',
-                'rating' => 4.8,
-                'total' => 24,
-                'latest' => 'Tempatnya bersih dan pemilik sangat responsif.',
-                'reviewer' => 'Dewi Sartika',
-                'date' => '18 Agustus 2026',
-            ],
-            [
-                'kos' => 'Kos Putra Anggrek',
-                'slug' => 'kos-putra-anggrek',
-                'rating' => 4.5,
-                'total' => 16,
-                'latest' => 'Lokasi strategis, fasilitas sesuai dengan deskripsi.',
-                'reviewer' => 'Rizky Maulana',
-                'date' => '12 Agustus 2026',
-            ],
-            [
-                'kos' => 'Kos Eksklusif Mawar',
-                'slug' => 'kos-eksklusif-mawar',
-                'rating' => 4.2,
-                'total' => 9,
-                'latest' => 'Kamar nyaman, semoga pilihan fasilitasnya bertambah.',
-                'reviewer' => 'Anisa Putri',
-                'date' => '5 Agustus 2026',
-            ],
-        ];
+        $owner = $request->user();
+        $ownerKos = $owner->kos()->with(['reviews' => function ($q) {
+            $q->latest();
+        }])->get();
 
-        $totalUlasan = collect($ratings)->sum('total');
-        $rataRating = round(collect($ratings)->avg('rating'), 1);
+        $allReviews = Review::whereIn('kos_id', $ownerKos->pluck('id'))->latest()->get();
 
-        return view('owner.kos.penilaian', compact('ratings', 'totalUlasan', 'rataRating'));
+        $ratings = [];
+        foreach ($ownerKos as $item) {
+            $kosReviews = $item->reviews;
+            $count = $kosReviews->count();
+            if ($count > 0) {
+                $latest = $kosReviews->first();
+                $ratings[] = [
+                    'kos' => $item->title,
+                    'slug' => $item->slug,
+                    'rating' => round((float) $kosReviews->avg('rating'), 1),
+                    'total' => $count,
+                    'latest' => $latest->comment,
+                    'reviewer' => $latest->reviewer_name,
+                    'date' => $latest->created_at->translatedFormat('d F Y'),
+                ];
+            }
+        }
+
+        $totalUlasan = $allReviews->count();
+        $rataRating = $totalUlasan > 0 ? round((float) $allReviews->avg('rating'), 1) : 0.0;
+
+        return view('owner.kos.penilaian', compact('ratings', 'totalUlasan', 'rataRating', 'allReviews'));
     }
 
     /**

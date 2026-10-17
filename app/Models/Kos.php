@@ -84,6 +84,31 @@ class Kos extends Model
     }
 
     /**
+     * Seluruh ulasan / review penghuni kos ini.
+     */
+    public function reviews(): HasMany
+    {
+        return $this->hasMany(Review::class, 'kos_id')->latest();
+    }
+
+    /**
+     * Rata-rata skor rating kos.
+     */
+    public function getRatingAttribute(): float
+    {
+        $avg = $this->reviews()->avg('rating');
+        return $avg ? round((float) $avg, 1) : 0.0;
+    }
+
+    /**
+     * Total jumlah ulasan kos.
+     */
+    public function getReviewCountAttribute(): int
+    {
+        return $this->reviews()->count();
+    }
+
+    /**
      * Scope untuk kos yang aktif saja.
      */
     public function scopeActive($query)

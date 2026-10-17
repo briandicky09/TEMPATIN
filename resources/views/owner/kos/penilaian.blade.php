@@ -74,7 +74,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($ratings as $rating)
+                            @forelse($ratings as $rating)
                                 <tr style="border-bottom: 1px solid rgba(0,0,0,0.06);">
                                     <td style="padding: 16px 20px;">
                                         <div style="font-weight: 700; color: var(--color-midnight-ink); font-size: 14px;">
@@ -104,7 +104,17 @@
                                         </a>
                                     </td>
                                 </tr>
-                            @endforeach
+                            @empty
+                                <tr>
+                                    <td colspan="4" class="text-center py-5">
+                                        <div style="color: var(--color-stone); font-size: 14px; margin-bottom: 4px;">
+                                            <i class="fa fa-comment-slash fa-2x mb-2 d-block" style="opacity: 0.35;"></i>
+                                            Belum ada ulasan masuk untuk properti kos Anda.
+                                        </div>
+                                        <small class="text-muted">Setiap ulasan yang dikirimkan oleh penghuni pada halaman publik/member kos Anda akan otomatis tercatat dan tersinkronisasi di sini.</small>
+                                    </td>
+                                </tr>
+                            @endforelse
                         </tbody>
                     </table>
                 </div>
