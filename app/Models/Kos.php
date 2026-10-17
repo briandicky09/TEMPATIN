@@ -25,12 +25,21 @@ class Kos extends Model
         'address',
         'thumbnail',
         'status',
+        'area',
+        'rooms',
+        'bathrooms',
+        'bedrooms',
+        'garages',
+        'latitude',
+        'longitude',
     ];
 
     protected function casts(): array
     {
         return [
             'price' => 'decimal:2',
+            'latitude' => 'float',
+            'longitude' => 'float',
         ];
     }
 

@@ -2,6 +2,147 @@
 
 @section('title', $kos['title'] . ' - TEMPATIN')
 
+@php
+    $lat = $kos['latitude'] ?? null;
+    $lng = $kos['longitude'] ?? null;
+    $hasValidCoordinates = !empty($lat) && !empty($lng) && is_numeric($lat) && is_numeric($lng) && ($lat >= -90 && $lat <= 90) && ($lng >= -180 && $lng <= 180);
+@endphp
+
+@push('styles')
+@if($hasValidCoordinates)
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+<style>
+    #property-map {
+        z-index: 1;
+    }
+    #property-map .leaflet-control-zoom {
+        border: none;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        border-radius: 8px;
+        overflow: hidden;
+        margin: 12px;
+    }
+    #property-map .leaflet-control-zoom a {
+        background-color: #ffffff;
+        color: #2f3437;
+        font-size: 14px;
+        width: 32px;
+        height: 32px;
+        line-height: 32px;
+        border-bottom: 1px solid #f0f0f0;
+    }
+    #property-map .leaflet-control-zoom a:hover {
+        background-color: #f7f6f3;
+        color: #0075de;
+    }
+    #property-map .leaflet-control-attribution {
+        background-color: rgba(255, 255, 255, 0.88);
+        font-size: 10.5px;
+        padding: 2px 6px;
+    }
+    #property-map .leaflet-popup-content-wrapper {
+        border-radius: 10px;
+        box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+        font-family: inherit;
+    }
+    #property-map .leaflet-popup-content {
+        font-size: 12.5px;
+        line-height: 1.45;
+        margin: 12px 14px;
+    }
+</style>
+@endif
+<style>
+    /* Clean Notion-Styled Similar Property Cards */
+    .similar-property-card {
+        background-color: #ffffff;
+        border: 1px solid rgba(0, 0, 0, 0.08);
+        border-radius: 14px;
+        overflow: hidden;
+        transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.25s ease;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        position: relative;
+    }
+    .similar-property-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08);
+        border-color: rgba(0, 117, 222, 0.25);
+    }
+    .similar-property-card .similar-card-img-wrap {
+        position: relative;
+        height: 190px;
+        overflow: hidden;
+        background-color: #f3f4f6;
+    }
+    .similar-property-card .similar-card-img-wrap img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.4s ease;
+    }
+    .similar-property-card:hover .similar-card-img-wrap img {
+        transform: scale(1.04);
+    }
+    .similar-property-card .similar-type-badge {
+        position: absolute;
+        top: 12px;
+        left: 12px;
+        z-index: 2;
+        background-color: rgba(255, 255, 255, 0.94);
+        backdrop-filter: blur(4px);
+        color: var(--color-midnight-ink, #2f3437);
+        font-size: 11.5px;
+        font-weight: 600;
+        padding: 4px 10px;
+        border-radius: 6px;
+        border: 1px solid rgba(0, 0, 0, 0.06);
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+    }
+    .similar-property-card .similar-badge-rec {
+        position: absolute;
+        top: 12px;
+        right: 12px;
+        z-index: 2;
+        background-color: #fef3c7;
+        color: #92400e;
+        font-size: 11px;
+        font-weight: 600;
+        padding: 4px 9px;
+        border-radius: 6px;
+        border: 1px solid rgba(245, 158, 11, 0.25);
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+    }
+    .similar-property-card .similar-card-btn {
+        background-color: var(--surface-page-canvas, #f7f6f3);
+        color: var(--color-midnight-ink, #2f3437);
+        border: 1px solid rgba(0, 0, 0, 0.08);
+        font-weight: 600;
+        font-size: 12.5px;
+        border-radius: 8px;
+        padding: 9px 14px;
+        text-decoration: none;
+        transition: all 0.2s ease;
+    }
+    .similar-property-card .similar-card-btn:hover {
+        background-color: var(--color-sky-tint, #e8f3ff) !important;
+        color: var(--color-notion-blue, #0075de) !important;
+        border-color: rgba(0, 117, 222, 0.25) !important;
+    }
+    .similar-property-card .similar-card-btn:hover i {
+        transform: translateX(3px);
+    }
+    .similar-property-card .similar-card-btn i {
+        transition: transform 0.2s ease;
+    }
+</style>
+@endpush
+
 @section('content')
 <div class="ts-page-wrapper" id="page-top" style="background-color: var(--surface-page-canvas); min-height: 100vh;">
 
@@ -127,61 +268,6 @@
 
                         <hr class="mb-4" style="border-top: var(--border-hairline);">
 
-                        <!--QUICK INFO
-                        =========================================================================================-->
-                        <section id="quick-info">
-                            <h3>Info Singkat</h3>
-
-                            <!--Quick Info-->
-                            <div class="ts-quick-info ts-box">
-
-                                <!--Row-->
-                                <div class="row no-gutters">
-
-                                    <!--Bathrooms-->
-                                    <div class="col-sm-3">
-                                        <div class="ts-quick-info__item"
-                                            data-bg-image="{{ asset('assets/img/icon-quick-info-shower.png') }}">
-                                            <h6>K. Mandi</h6>
-                                            <figure>{{ $kos['bathrooms'] ?? '1' }}</figure>
-                                        </div>
-                                    </div>
-
-                                    <!--Bedrooms-->
-                                    <div class="col-sm-3">
-                                        <div class="ts-quick-info__item"
-                                            data-bg-image="{{ asset('assets/img/icon-quick-info-bed.png') }}">
-                                            <h6>Kamar Tidur</h6>
-                                            <figure>{{ $kos['bedrooms'] ?? '1' }}</figure>
-                                        </div>
-                                    </div>
-
-                                    <!--Area-->
-                                    <div class="col-sm-3">
-                                        <div class="ts-quick-info__item"
-                                            data-bg-image="{{ asset('assets/img/icon-quick-info-area.png') }}">
-                                            <h6>Luas</h6>
-                                            <figure>{{ $kos['area'] ?? '-' }}m<sup>2</sup></figure>
-                                        </div>
-                                    </div>
-
-                                    <!--Garages-->
-                                    <div class="col-sm-3">
-                                        <div class="ts-quick-info__item"
-                                            data-bg-image="{{ asset('assets/img/icon-quick-info-garages.png') }}">
-                                            <h6>Parkir</h6>
-                                            <figure>{{ $kos['garages'] ?? '-' }}</figure>
-                                        </div>
-                                    </div>
-
-                                </div>
-                                <!--end row-->
-
-                            </div>
-                            <!--end ts-quick-info-->
-
-                        </section>
-
                         <!--DESCRIPTION
                         =========================================================================================-->
                         <section id="description">
@@ -237,17 +323,44 @@
 
                         </section>
 
-                        <!--MAP PLACEHOLDER
+                        <!--MAP SECTION (LEAFLET + OPENSTREETMAP)
                         =========================================================================================-->
-                        <section id="map-location">
+                        <section id="map-location" class="mb-4">
 
                             <h3>Peta Lokasi</h3>
 
-                            <div class="ts-box text-center py-5" style="background-color: var(--surface-page-canvas);">
-                                <i class="fa fa-map-marked-alt fa-3x text-muted mb-3"></i>
-                                <p class="text-muted mb-0">Peta lokasi akan segera tersedia.</p>
-                                <p class="text-muted mb-0"><small>{{ $kos['address'] ?? $kos['city'] }}</small></p>
-                            </div>
+                            @if($hasValidCoordinates)
+                                <div class="position-relative" style="background-color: #ffffff; border: var(--border-hairline, 1px solid rgba(0, 0, 0, 0.08)); border-radius: 16px; overflow: hidden; height: 260px; box-shadow: 0 1px 3px rgba(0,0,0,0.03);">
+                                    <div id="property-map" style="width: 100%; height: 100%;"></div>
+                                </div>
+
+                                <div class="d-flex flex-wrap justify-content-between align-items-center mt-2 px-1 gap-2" style="font-size: 13px;">
+                                    <div class="text-muted d-flex align-items-center text-truncate" style="max-width: calc(100% - 190px);">
+                                        <i class="fa fa-map-marker-alt mr-2" style="color: var(--color-notion-blue); flex-shrink: 0;"></i>
+                                        <span class="text-truncate">{{ $kos['address'] ?? $kos['city'] }}</span>
+                                    </div>
+                                    <a href="https://www.google.com/maps/search/?api=1&query={{ $lat }},{{ $lng }}"
+                                       target="_blank"
+                                       rel="noopener noreferrer"
+                                       class="btn btn-sm d-inline-flex align-items-center"
+                                       style="background-color: #ffffff; border: var(--border-hairline, 1px solid rgba(0, 0, 0, 0.12)); border-radius: var(--radius-buttons, 6px); font-size: 12.5px; font-weight: 600; color: var(--color-midnight-ink); padding: 6px 14px; text-decoration: none; box-shadow: 0 1px 2px rgba(0,0,0,0.04); transition: all 0.2s ease;">
+                                        <i class="fa fa-external-link-alt mr-2" style="color: var(--color-notion-blue); font-size: 11px;"></i>
+                                        Buka di Google Maps
+                                    </a>
+                                </div>
+                            @else
+                                <div class="text-center d-flex flex-column align-items-center justify-content-center p-4"
+                                     style="background-color: #ffffff; border: var(--border-hairline, 1px solid rgba(0, 0, 0, 0.08)); border-radius: 16px; height: 260px; box-shadow: 0 1px 3px rgba(0,0,0,0.03);">
+                                    <div class="d-inline-flex align-items-center justify-content-center rounded-circle mb-3"
+                                         style="width: 52px; height: 52px; background-color: var(--surface-page-canvas, #f7f6f3); border: var(--border-hairline, 1px solid rgba(0,0,0,0.08)); color: var(--color-stone, #787774);">
+                                        <i class="fa fa-map-marked-alt fa-2x"></i>
+                                    </div>
+                                    <h5 class="mb-1 font-weight-bold" style="color: var(--color-midnight-ink, #2f3437); font-size: 14.5px;">Lokasi properti belum tersedia</h5>
+                                    <p class="text-muted mb-0" style="font-size: 13px;">
+                                        {{ $kos['address'] ?? $kos['city'] }}
+                                    </p>
+                                </div>
+                            @endif
 
                         </section>
 
@@ -362,10 +475,16 @@
                                     <dd>Kos {{ $kos['type'] ?? '-' }}</dd>
 
                                     <dt>Status:</dt>
-                                    <dd>{{ $kos['status'] ?? 'Tersedia' }}</dd>
+                                    <dd>{{ in_array(strtolower($kos['status'] ?? ''), ['active', 'tersedia', 'aktif']) ? 'Tersedia' : 'Penuh' }}</dd>
 
                                     <dt>Luas:</dt>
-                                    <dd>{{ $kos['area'] ?? '-' }} m<sup>2</sup></dd>
+                                    <dd>
+                                        @if(!empty($kos['area']))
+                                            {!! preg_match('/(m2|m²|m\^2)$/i', trim($kos['area'])) ? e($kos['area']) : e($kos['area']) . ' m<sup>2</sup>' !!}
+                                        @else
+                                            -
+                                        @endif
+                                    </dd>
 
                                     <dt>Kamar:</dt>
                                     <dd>{{ $kos['rooms'] ?? '-' }}</dd>
@@ -518,45 +637,86 @@
         <section id="similar-properties" class="py-5 bg-white border-top">
             <div class="container">
                 <div class="d-flex justify-content-between align-items-center mb-4">
-                    <h3 class="mb-0">Kos Serupa</h3>
-                    <span class="text-muted pk-similar-count">{{ count($similarKos) }} pilihan</span>
+                    <div>
+                        <h3 class="mb-1" style="font-size: 1.45rem; font-weight: 700; color: var(--color-midnight-ink); letter-spacing: -0.015em;">
+                            Kos Serupa
+                        </h3>
+                        <p class="text-muted small mb-0">Rekomendasi hunian sejenis yang mungkin cocok untuk Anda.</p>
+                    </div>
+                    <span class="badge" style="background-color: var(--color-sky-tint); color: var(--color-notion-blue); font-weight: 600; font-size: 12px; padding: 6px 14px; border-radius: 20px; border: 1px solid rgba(0, 117, 222, 0.15);">
+                        {{ count($similarKos) }} pilihan
+                    </span>
                 </div>
 
                 <div class="row">
                     @foreach($similarKos as $similar)
                     <div class="col-md-6 col-lg-4 mb-4">
-                        <div class="card ts-item ts-card pk-similar-card h-100">
-                            @if($loop->first)
-                            <div class="ts-ribbon"><i class="fa fa-thumbs-up"></i></div>
-                            @endif
+                        <div class="similar-property-card">
+                            <!-- Card Image -->
+                            <div class="similar-card-img-wrap">
+                                <a href="{{ route('kos.show', $similar['slug']) }}" class="d-block w-100 h-100">
+                                    <img src="{{ asset($similar['thumbnail']) }}" alt="{{ $similar['title'] }}" loading="lazy" onerror="this.onerror=null; this.src='{{ asset('assets/img/kos/1.png') }}';">
+                                </a>
 
-                            <!--Card Image-->
-                            <a href="{{ route('kos.show', $similar['slug']) }}" class="card-img ts-item__image"
-                                data-bg-image="{{ asset($similar['thumbnail']) }}" style="height: 180px; background-size: cover; background-position: center;"></a>
+                                <!-- Type Badge -->
+                                <span class="similar-type-badge">
+                                    Kos {{ ucfirst($similar['type'] ?? 'Campur') }}
+                                </span>
 
-                            <!--Card Body-->
-                            <div class="card-body ts-item__body p-3">
-                                <figure class="ts-item__info mb-2">
-                                    <h5 class="mb-1"><a href="{{ route('kos.show', $similar['slug']) }}">{{ $similar['title'] }}</a></h5>
-                                    <aside class="text-muted small">
-                                        <i class="fa fa-map-marker-alt mr-1" style="color: var(--color-stone);"></i>
-                                        {{ $similar['city'] }}
-                                    </aside>
-                                </figure>
+                                @if($loop->first)
+                                <span class="similar-badge-rec">
+                                    <i class="fa fa-star" style="color: #f59e0b; font-size: 10px;"></i> Pilihan Populer
+                                </span>
+                                @endif
+                            </div>
 
-                                <div class="font-weight-bold mb-2" style="color: var(--color-midnight-ink);">Rp {{ number_format($similar['price'], 0, ',', '.') }} <small class="text-muted">/bln</small></div>
+                            <!-- Card Body -->
+                            <div class="p-3 d-flex flex-column flex-grow-1">
+                                <!-- Price -->
+                                <div class="d-flex align-items-baseline mb-1">
+                                    <span style="font-size: 1.2rem; font-weight: 700; color: var(--color-midnight-ink); letter-spacing: -0.01em;">
+                                        Rp {{ number_format($similar['price'], 0, ',', '.') }}
+                                    </span>
+                                    <span class="text-muted ml-1" style="font-size: 12px; font-weight: 500;">/bln</span>
+                                </div>
 
-                                <div class="d-flex justify-content-between text-muted small border-top pt-2">
-                                    <span><i class="fa fa-ruler-combined mr-1"></i>{{ $similar['area'] ?? '12' }}m²</span>
-                                    <span><i class="fa fa-bed mr-1"></i>{{ $similar['bedrooms'] ?? '1' }} Kamar</span>
-                                    <span><i class="fa fa-bath mr-1"></i>{{ $similar['bathrooms'] ?? '1' }} KM</span>
+                                <!-- Title -->
+                                <h4 class="mb-2 text-truncate" style="font-size: 1.02rem; font-weight: 700; color: var(--color-midnight-ink); line-height: 1.35;">
+                                    <a href="{{ route('kos.show', $similar['slug']) }}" class="text-reset text-decoration-none" title="{{ $similar['title'] }}">
+                                        {{ $similar['title'] }}
+                                    </a>
+                                </h4>
+
+                                <!-- City / Location -->
+                                <div class="d-flex align-items-center text-muted mb-3" style="font-size: 12.5px;">
+                                    <i class="fa fa-map-marker-alt mr-1" style="color: var(--color-notion-blue); font-size: 11.5px; flex-shrink: 0;"></i>
+                                    <span class="text-truncate">{{ $similar['city'] ?? '-' }}</span>
+                                </div>
+
+                                <!-- Specs row -->
+                                <div class="d-flex align-items-center justify-content-between pt-2 mt-auto" style="border-top: 1px solid rgba(0, 0, 0, 0.06); font-size: 12px; color: var(--color-stone);">
+                                    <span class="d-inline-flex align-items-center" title="Luas Kamar">
+                                        <i class="fa fa-ruler-combined mr-1" style="color: var(--color-stone); font-size: 11px;"></i>
+                                        {{ !empty($similar['area']) ? $similar['area'] . ' m²' : '12 m²' }}
+                                    </span>
+                                    <span class="d-inline-flex align-items-center" title="Jumlah Kamar">
+                                        <i class="fa fa-bed mr-1" style="color: var(--color-stone); font-size: 11px;"></i>
+                                        {{ !empty($similar['bedrooms']) ? $similar['bedrooms'] . ' Kamar' : '1 Kamar' }}
+                                    </span>
+                                    <span class="d-inline-flex align-items-center" title="Kamar Mandi">
+                                        <i class="fa fa-bath mr-1" style="color: var(--color-stone); font-size: 11px;"></i>
+                                        {{ !empty($similar['bathrooms']) ? $similar['bathrooms'] : 'Dalam KM' }}
+                                    </span>
                                 </div>
                             </div>
 
-                            <!--Card Footer-->
-                            <a href="{{ route('kos.show', $similar['slug']) }}" class="card-footer ts-item__footer text-center py-2 bg-light">
-                                <span class="ts-btn-arrow font-weight-bold">Lihat Detail</span>
-                            </a>
+                            <!-- Card Footer -->
+                            <div class="px-3 pb-3">
+                                <a href="{{ route('kos.show', $similar['slug']) }}" class="btn btn-block d-flex align-items-center justify-content-center similar-card-btn">
+                                    <span>Lihat Detail</span>
+                                    <i class="fa fa-arrow-right ml-2" style="font-size: 10px; color: var(--color-notion-blue);"></i>
+                                </a>
+                            </div>
                         </div>
                     </div>
                     @endforeach
@@ -574,6 +734,63 @@
 <!--end page-->
 
 @push('scripts')
+@if($hasValidCoordinates)
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    var mapContainer = document.getElementById('property-map');
+    if (!mapContainer || typeof L === 'undefined') return;
+
+    // Fix default marker icon paths when using Leaflet from CDN
+    delete L.Icon.Default.prototype._getIconUrl;
+    L.Icon.Default.mergeOptions({
+        iconRetinaUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png',
+        iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
+        shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
+    });
+
+    var lat = {{ (float) $lat }};
+    var lng = {{ (float) $lng }};
+    var title = @json($kos['title']);
+    var address = @json($kos['address'] ?? $kos['city']);
+
+    var map = L.map('property-map', {
+        scrollWheelZoom: false,
+        zoomControl: true
+    }).setView([lat, lng], 15);
+
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+    var marker = L.marker([lat, lng]).addTo(map);
+
+    var popupHtml = '<div style="font-weight: 700; color: #111827; margin-bottom: 2px;">' + title + '</div>' +
+        '<div style="color: #6b7280; font-size: 11.5px; margin-bottom: 8px;">' + address + '</div>' +
+        '<a href="https://www.google.com/maps/search/?api=1&query=' + lat + ',' + lng + '" target="_blank" rel="noopener noreferrer" style="color: #0075de; font-weight: 600; text-decoration: none; font-size: 11.5px;"><i class="fa fa-external-link-alt mr-1"></i> Buka di Google Maps &rarr;</a>';
+
+    marker.bindPopup(popupHtml);
+
+    // Enable scroll wheel zoom on click, disable on mouse leave
+    map.on('click', function () {
+        map.scrollWheelZoom.enable();
+    });
+    map.on('mouseout', function () {
+        map.scrollWheelZoom.disable();
+    });
+
+    // Invalidate map size so all tiles render properly
+    setTimeout(function () {
+        map.invalidateSize();
+    }, 250);
+
+    window.addEventListener('resize', function () {
+        map.invalidateSize();
+    });
+});
+</script>
+@endif
 <script>
 $(document).ready(function() {
     $('.btn-toggle-favorite').on('click', function(e) {

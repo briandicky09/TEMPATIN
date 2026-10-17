@@ -45,7 +45,7 @@ class DatabaseSeeder extends Seeder
         );
 
         // 2. Kos: 2 Properti milik Owner
-        $kosMelati = Kos::firstOrCreate(
+        $kosMelati = Kos::updateOrCreate(
             ['slug' => 'kos-putri-melati'],
             [
                 'owner_id' => $owner->id,
@@ -57,10 +57,17 @@ class DatabaseSeeder extends Seeder
                 'address' => 'Jl. Kalirungkut No. 88, Ruko Rungkut Makmur Blok C, Surabaya',
                 'thumbnail' => 'assets/img/kos/1.png',
                 'status' => 'active',
+                'area' => '16',
+                'rooms' => '1',
+                'bathrooms' => 'Dalam',
+                'bedrooms' => '1',
+                'garages' => 'Motor',
+                'latitude' => -7.319563,
+                'longitude' => 112.766732,
             ]
         );
 
-        $kosAnggrek = Kos::firstOrCreate(
+        $kosAnggrek = Kos::updateOrCreate(
             ['slug' => 'kos-putra-anggrek'],
             [
                 'owner_id' => $owner->id,
@@ -72,6 +79,13 @@ class DatabaseSeeder extends Seeder
                 'address' => 'Jl. Soekarno Hatta No. 12, Malang',
                 'thumbnail' => 'assets/img/kos/2.png',
                 'status' => 'active',
+                'area' => '12',
+                'rooms' => '1',
+                'bathrooms' => 'Luar',
+                'bedrooms' => '1',
+                'garages' => 'Motor',
+                'latitude' => null,
+                'longitude' => null,
             ]
         );
 
@@ -82,7 +96,7 @@ class DatabaseSeeder extends Seeder
         $anggrekFacilities = Facility::whereIn('name', ['WiFi', 'Kasur', 'Lemari', 'Meja', 'Kursi', 'Parkir Motor', 'Listrik'])->pluck('id');
         $kosAnggrek->facilities()->sync($anggrekFacilities);
 
-        $kosLavender = Kos::firstOrCreate(
+        $kosLavender = Kos::updateOrCreate(
             ['slug' => 'kos-eksklusif-lavender'],
             [
                 'owner_id' => $owner->id,
@@ -94,11 +108,18 @@ class DatabaseSeeder extends Seeder
                 'address' => 'Jl. Kaliurang KM 5.5 No. 42, Sleman, Yogyakarta',
                 'thumbnail' => 'assets/img/kos/3.png',
                 'status' => 'active',
+                'area' => '20',
+                'rooms' => '1',
+                'bathrooms' => 'Dalam',
+                'bedrooms' => '1',
+                'garages' => 'Motor & Mobil',
+                'latitude' => -7.763428,
+                'longitude' => 110.378901,
             ]
         );
         $kosLavender->facilities()->sync($melatiFacilities);
 
-        $kosCendana = Kos::firstOrCreate(
+        $kosCendana = Kos::updateOrCreate(
             ['slug' => 'kos-putra-cendana'],
             [
                 'owner_id' => $owner->id,
@@ -110,11 +131,16 @@ class DatabaseSeeder extends Seeder
                 'address' => 'Jl. Dago Asri No. 18, Bandung',
                 'thumbnail' => 'assets/img/kos/4.png',
                 'status' => 'active',
+                'area' => '14',
+                'rooms' => '1',
+                'bathrooms' => 'Dalam',
+                'bedrooms' => '1',
+                'garages' => 'Motor',
             ]
         );
         $kosCendana->facilities()->sync($anggrekFacilities);
 
-        $kosMawar = Kos::firstOrCreate(
+        $kosMawar = Kos::updateOrCreate(
             ['slug' => 'kos-putri-mawar-asri'],
             [
                 'owner_id' => $owner->id,
@@ -126,11 +152,16 @@ class DatabaseSeeder extends Seeder
                 'address' => 'Jl. Fatmawati Raya No. 27, Jakarta Selatan',
                 'thumbnail' => 'assets/img/kos/5.png',
                 'status' => 'active',
+                'area' => '15',
+                'rooms' => '1',
+                'bathrooms' => 'Dalam',
+                'bedrooms' => '1',
+                'garages' => 'Motor',
             ]
         );
         $kosMawar->facilities()->sync($melatiFacilities);
 
-        $kosHarmoni = Kos::firstOrCreate(
+        $kosHarmoni = Kos::updateOrCreate(
             ['slug' => 'kos-harmoni-residence'],
             [
                 'owner_id' => $owner->id,
@@ -142,6 +173,11 @@ class DatabaseSeeder extends Seeder
                 'address' => 'Jl. Pandanaran No. 70, Semarang',
                 'thumbnail' => 'assets/img/kos/6.png',
                 'status' => 'active',
+                'area' => '18',
+                'rooms' => '1',
+                'bathrooms' => 'Dalam',
+                'bedrooms' => '1',
+                'garages' => 'Motor & Mobil',
             ]
         );
         $kosHarmoni->facilities()->sync($anggrekFacilities);

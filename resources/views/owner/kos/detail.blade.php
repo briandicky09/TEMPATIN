@@ -137,9 +137,47 @@
                                     <span style="color: var(--color-stone);">Tipe:</span>
                                     <strong style="color: var(--color-midnight-ink);">Kos {{ ucfirst($kos['type']) }}</strong>
                                 </div>
-                                <div class="d-flex justify-content-between">
+                                <div class="d-flex justify-content-between mb-2">
                                     <span style="color: var(--color-stone);">Kota:</span>
                                     <strong style="color: var(--color-midnight-ink);">{{ $kos['city'] }}</strong>
+                                </div>
+                                <div class="d-flex justify-content-between mb-2">
+                                    <span style="color: var(--color-stone);">Luas:</span>
+                                    <strong style="color: var(--color-midnight-ink);">
+                                        @if(!empty($kos['area']))
+                                            {!! preg_match('/(m2|m²|m\^2)$/i', trim($kos['area'])) ? e($kos['area']) : e($kos['area']) . ' m<sup>2</sup>' !!}
+                                        @else
+                                            -
+                                        @endif
+                                    </strong>
+                                </div>
+                                <div class="d-flex justify-content-between mb-2">
+                                    <span style="color: var(--color-stone);">Kamar:</span>
+                                    <strong style="color: var(--color-midnight-ink);">{{ $kos['rooms'] ?? '-' }}</strong>
+                                </div>
+                                <div class="d-flex justify-content-between mb-2">
+                                    <span style="color: var(--color-stone);">K. Mandi:</span>
+                                    <strong style="color: var(--color-midnight-ink);">{{ $kos['bathrooms'] ?? '-' }}</strong>
+                                </div>
+                                <div class="d-flex justify-content-between mb-2">
+                                    <span style="color: var(--color-stone);">Tempat Tidur:</span>
+                                    <strong style="color: var(--color-midnight-ink);">{{ $kos['bedrooms'] ?? '-' }}</strong>
+                                </div>
+                                <div class="d-flex justify-content-between mb-2">
+                                    <span style="color: var(--color-stone);">Parkir:</span>
+                                    <strong style="color: var(--color-midnight-ink);">{{ $kos['garages'] ?? '-' }}</strong>
+                                </div>
+                                <div class="d-flex justify-content-between">
+                                    <span style="color: var(--color-stone);">Koordinat:</span>
+                                    <strong style="color: var(--color-midnight-ink);">
+                                        @if(!empty($kos['latitude']) && !empty($kos['longitude']))
+                                            <a href="https://www.google.com/maps/search/?api=1&query={{ $kos['latitude'] }},{{ $kos['longitude'] }}" target="_blank" rel="noopener noreferrer" style="color: var(--color-notion-blue); text-decoration: none;">
+                                                <i class="fa fa-map-pin mr-1"></i>{{ round($kos['latitude'], 4) }}, {{ round($kos['longitude'], 4) }}
+                                            </a>
+                                        @else
+                                            -
+                                        @endif
+                                    </strong>
                                 </div>
                             </div>
 
