@@ -12,10 +12,6 @@
          1. NOTION HERO (CENTERED STACK LAYOUT)
          ========================================================================= -->
     <section class="pt-3 pb-5 position-relative overflow-hidden" style="background-color: var(--surface-page-canvas); border-bottom: var(--border-hairline);">
-        <!-- Animated Architectural City Skyline Backdrop Behind Headline -->
-        <div class="hero-skyline-backdrop" aria-hidden="true" style="position: absolute; top: 15px; left: 50%; transform: translateX(-50%); width: 100%; max-width: 1240px; height: 360px; pointer-events: none; z-index: 0; opacity: 0.42; mix-blend-mode: multiply; user-select: none;">
-            @include('partials.city-skyline')
-        </div>
 
         <div class="container pt-2 pb-4 text-center position-relative" style="z-index: 1;">
 
@@ -55,10 +51,15 @@
             </div>
 
             <!-- Centered Product UI Mockup (Search & Workspace Window - Prompt 6 Refined Combobox/Dropdown) -->
-            <div class="notion-app-mockup text-left mx-auto" id="cari-kos-mockup" style="max-width: 1040px; overflow: visible;">
+            <div class="notion-app-mockup text-left mx-auto position-relative" id="cari-kos-mockup" style="max-width: 1040px; overflow: visible; margin-top: 52px;">
                 
+                <!-- Architectural City Skyline Docked Directly on Top Border -->
+                <div class="hero-skyline-docked" aria-hidden="true" style="position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%); width: calc(100% - 24px); max-width: 1000px; height: 230px; pointer-events: none; z-index: 0; opacity: 0.35; margin-bottom: -1px; user-select: none;">
+                    @include('partials.city-skyline')
+                </div>
+
                 <!-- Mockup Chrome Header -->
-                <div class="notion-app-mockup__chrome">
+                <div class="notion-app-mockup__chrome" style="position: relative; z-index: 2;">
                     <div class="notion-app-mockup__dots">
                         <span class="notion-app-mockup__dot notion-app-mockup__dot--red"></span>
                         <span class="notion-app-mockup__dot notion-app-mockup__dot--yellow"></span>

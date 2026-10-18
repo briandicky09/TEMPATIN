@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 370" fill="none" class="w-100 h-100" style="object-fit: contain; object-position: center bottom; display: block;">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 361" fill="none" class="w-100 h-100" style="object-fit: contain; object-position: center bottom; display: block;">
     <defs>
         <!-- Soft Minimalist Gradients -->
         <linearGradient id="skylineFarGrad" x1="0%" y1="0%" x2="0%" y2="100%">
@@ -72,32 +72,18 @@
             .anim-bird-1 { animation: birdGlideA 7s ease-in-out infinite; will-change: transform; }
             .anim-bird-2 { animation: birdGlideB 8.5s ease-in-out infinite 1s; will-change: transform; }
 
-            /* Skyscraper Spire Beacons Pulsing */
-            @keyframes spireBeaconPulse {
-                0%, 100% { opacity: 0.35; transform: scale(0.9); }
-                50% { opacity: 1; transform: scale(1.35); }
-            }
-            .anim-beacon-left {
-                animation: spireBeaconPulse 2.4s ease-in-out infinite;
-                transform-origin: 140px 92px;
-            }
-            .anim-beacon-right {
-                animation: spireBeaconPulse 2.8s ease-in-out infinite 0.7s;
-                transform-origin: 1030px 88px;
-            }
-
-            /* Window Shimmer / Glow */
+            /* Window Shimmer / Subtle Ambient Glow */
             @keyframes windowSoftGlow1 {
-                0%, 100% { fill-opacity: 0.25; }
-                50% { fill-opacity: 0.85; }
+                0%, 100% { fill-opacity: 0.2; }
+                50% { fill-opacity: 0.45; }
             }
             @keyframes windowSoftGlow2 {
-                0%, 100% { fill-opacity: 0.3; }
-                50% { fill-opacity: 0.9; }
+                0%, 100% { fill-opacity: 0.25; }
+                50% { fill-opacity: 0.5; }
             }
             @keyframes windowWarmGlow {
-                0%, 100% { fill-opacity: 0.3; }
-                50% { fill-opacity: 0.95; }
+                0%, 100% { fill-opacity: 0.25; }
+                50% { fill-opacity: 0.55; }
             }
             .anim-win-glow-1 { animation: windowSoftGlow1 4s ease-in-out infinite; }
             .anim-win-glow-2 { animation: windowSoftGlow2 4.8s ease-in-out infinite 1.6s; }
@@ -185,18 +171,8 @@
             <polygon points="1175,360 1175,240 1195,240 1195,360"/>
         </g>
 
-        <!-- SPIRE BEACON GLOWS (Subtle animated flashing light at antenna tips) -->
-        <g>
-            <!-- Left Spire Beacon -->
-            <circle cx="140" cy="93" r="4.5" fill="#ef4444" fill-opacity="0.25" class="anim-beacon-left"/>
-            <circle cx="140" cy="93" r="2.2" fill="#ef4444" class="anim-beacon-left"/>
-            <!-- Right Spire Beacon -->
-            <circle cx="1030" cy="89" r="4.5" fill="#0075de" fill-opacity="0.3" class="anim-beacon-right"/>
-            <circle cx="1030" cy="89" r="2.2" fill="#0075de" class="anim-beacon-right"/>
-        </g>
-
         <!-- LAYER 2: MIDGROUND MODERN APARTMENTS & RESIDENCES -->
-        <g fill="url(#skylineMidGrad)" stroke="#64748b" stroke-width="1.3" stroke-linejoin="round">
+        <g fill="url(#skylineMidGrad)" stroke="#94a3b8" stroke-width="1.15" stroke-linejoin="round">
             <!-- Left Mid-Rise Residence -->
             <polygon points="35,360 35,260 65,260 65,230 100,230 100,260 120,260 120,360"/>
             <!-- Left Slanted Roof Kos Studio -->
@@ -221,31 +197,31 @@
         </g>
 
         <!-- LAYER 3: FOREGROUND RESIDENTIAL ACCENTS (Doors, subtle balconies, louvers) -->
-        <g stroke="#475569" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
+        <g stroke="#64748b" stroke-width="1.15" stroke-linecap="round" stroke-linejoin="round">
             <!-- Building 1 (Far Left): Entrance & Balcony Line -->
-            <rect x="55" y="325" width="12" height="35" rx="1" fill="#cbd5e1" fill-opacity="0.4"/>
-            <line x1="45" y1="290" x2="110" y2="290" stroke="#94a3b8" stroke-width="1.2"/>
+            <rect x="55" y="325" width="12" height="35" rx="1" fill="#cbd5e1" fill-opacity="0.35"/>
+            <line x1="45" y1="290" x2="110" y2="290" stroke="#94a3b8" stroke-width="1.1"/>
 
             <!-- Building 2 (Studio): Balcony Railing -->
-            <line x1="145" y1="285" x2="195" y2="285" stroke="#94a3b8" stroke-width="1.4"/>
-            <rect x="160" y="325" width="16" height="35" rx="1" fill="#cbd5e1" fill-opacity="0.4"/>
+            <line x1="145" y1="285" x2="195" y2="285" stroke="#94a3b8" stroke-width="1.1"/>
+            <rect x="160" y="325" width="16" height="35" rx="1" fill="#cbd5e1" fill-opacity="0.35"/>
 
             <!-- Building 3 (Kos Complex): Balconies -->
-            <line x1="230" y1="295" x2="300" y2="295" stroke="#94a3b8" stroke-width="1.4"/>
-            <line x1="230" y1="325" x2="300" y2="325" stroke="#94a3b8" stroke-width="1.4"/>
+            <line x1="230" y1="295" x2="300" y2="295" stroke="#94a3b8" stroke-width="1.1"/>
+            <line x1="230" y1="325" x2="300" y2="325" stroke="#94a3b8" stroke-width="1.1"/>
 
             <!-- Center Residences (Terraces & Entrances) -->
-            <rect x="425" y="335" width="15" height="25" rx="1" fill="#cbd5e1" fill-opacity="0.4"/>
-            <line x1="495" y1="330" x2="535" y2="330" stroke="#94a3b8" stroke-width="1.2"/>
-            <rect x="585" y="330" width="20" height="30" rx="1" fill="#cbd5e1" fill-opacity="0.4"/>
-            <line x1="655" y1="330" x2="695" y2="330" stroke="#94a3b8" stroke-width="1.2"/>
-            <rect x="745" y="335" width="15" height="25" rx="1" fill="#cbd5e1" fill-opacity="0.4"/>
+            <rect x="425" y="335" width="15" height="25" rx="1" fill="#cbd5e1" fill-opacity="0.35"/>
+            <line x1="495" y1="330" x2="535" y2="330" stroke="#94a3b8" stroke-width="1.1"/>
+            <rect x="585" y="330" width="20" height="30" rx="1" fill="#cbd5e1" fill-opacity="0.35"/>
+            <line x1="655" y1="330" x2="695" y2="330" stroke="#94a3b8" stroke-width="1.1"/>
+            <rect x="745" y="335" width="15" height="25" rx="1" fill="#cbd5e1" fill-opacity="0.35"/>
 
             <!-- Right Residences: Balconies & Entrances -->
-            <line x1="890" y1="295" x2="960" y2="295" stroke="#94a3b8" stroke-width="1.4"/>
-            <line x1="890" y1="325" x2="960" y2="325" stroke="#94a3b8" stroke-width="1.4"/>
-            <rect x="1010" y="325" width="16" height="35" rx="1" fill="#cbd5e1" fill-opacity="0.4"/>
-            <line x1="1080" y1="285" x2="1140" y2="285" stroke="#94a3b8" stroke-width="1.4"/>
+            <line x1="890" y1="295" x2="960" y2="295" stroke="#94a3b8" stroke-width="1.1"/>
+            <line x1="890" y1="325" x2="960" y2="325" stroke="#94a3b8" stroke-width="1.1"/>
+            <rect x="1010" y="325" width="16" height="35" rx="1" fill="#cbd5e1" fill-opacity="0.35"/>
+            <line x1="1080" y1="285" x2="1140" y2="285" stroke="#94a3b8" stroke-width="1.1"/>
         </g>
 
         <!-- SELECTIVE ANIMATED WINDOWS (Subtle breathing light effects) -->
@@ -306,6 +282,6 @@
         </g>
 
         <!-- CLEAN MINIMALIST BASELINE GROUND -->
-        <line x1="0" y1="360" x2="1200" y2="360" stroke="#cbd5e1" stroke-width="1.8"/>
+        <line x1="0" y1="360" x2="1200" y2="360" stroke="#cbd5e1" stroke-width="1.2"/>
     </g>
 </svg>
