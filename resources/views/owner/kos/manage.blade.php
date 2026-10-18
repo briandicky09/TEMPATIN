@@ -76,6 +76,9 @@
                                         </td>
                                         <td style="padding: 16px 20px; text-align: right;">
                                             <div class="d-inline-flex gap-1">
+                                                <a href="{{ route('owner.kos.rooms.index', $kos['slug']) }}" class="btn btn-sm" style="background-color: var(--surface-page-canvas); color: var(--color-midnight-ink); border: var(--border-hairline); font-weight: 600; font-size: 12px; border-radius: var(--radius-buttons); padding: 6px 12px;">
+                                                    <i class="fa fa-door-open mr-1"></i> Kamar
+                                                </a>
                                                 <a href="{{ route('owner.kos.show', $kos['slug']) }}" class="btn btn-sm" style="background-color: var(--surface-page-canvas); color: var(--color-midnight-ink); border: var(--border-hairline); font-weight: 600; font-size: 12px; border-radius: var(--radius-buttons); padding: 6px 12px;">
                                                     Detail
                                                 </a>

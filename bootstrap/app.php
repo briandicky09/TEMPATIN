@@ -17,6 +17,9 @@ return Application::configure(basePath: dirname(__DIR__))
 
         // Redirect user terautentikasi yang mengakses halaman guest (login/register) sesuai role
         $middleware->redirectUsersTo(function () {
+            if (Auth::check() && Auth::user()->role === 'admin') {
+                return route('admin.dashboard');
+            }
             if (Auth::check() && Auth::user()->role === 'owner') {
                 return route('owner.dashboard');
             }

@@ -337,24 +337,39 @@
 
                         <!--NAMA KOS & BADGES-->
                         <div id="page-title" class="mb-4">
-                            <div class="d-flex justify-content-between align-items-center mb-2">
+                            <div class="d-flex justify-content-between align-items-center mb-2 flex-wrap" style="gap: 8px;">
                                 <span class="badge px-3 py-1 font-weight-normal" style="border-radius: 9999px; background-color: var(--color-sky-tint); color: var(--color-ink-black); border: 1px solid rgba(0, 117, 222, 0.2);">
                                     <i class="fa fa-check-circle mr-1" style="color: var(--color-ink-black);"></i>TEMPATIN Verified
                                 </span>
 
-                                <!-- Tombol Simpan ke Favorit (Heart: outline hitam, isi putih, berubah merah saat diklik) -->
-                                @php
-                                    $kosSlug = $kos['slug'] ?? '';
-                                    $isFavorited = in_array($kosSlug, session('member_favorites', []));
-                                @endphp
-                                <button type="button" class="btn-favorite-action btn-toggle-favorite {{ $isFavorited ? 'is-active' : '' }}" data-slug="{{ $kosSlug }}" id="btnDetailFavorite" title="{{ $isFavorited ? 'Tersimpan di Favorit' : 'Simpan ke Favorit' }}">
-                                    <svg class="favorite-heart-svg {{ $isFavorited ? 'is-active' : '' }}" viewBox="0 0 24 24">
-                                        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
-                                    </svg>
-                                    <span class="favorite-label-text ml-2 font-weight-600 small text-dark d-none d-sm-inline" id="detailFavoriteText">
-                                        {{ $isFavorited ? 'Tersimpan di Favorit' : 'Simpan ke Favorit' }}
-                                    </span>
-                                </button>
+                                <div class="d-flex align-items-center" style="gap: 8px;">
+                                    <!-- Tombol Cetak -->
+                                    <button type="button" class="btn btn-sm btn-outline-secondary" onclick="window.print()" title="Cetak Ringkasan Kos" style="border-radius: 8px; border: var(--border-hairline); background: #ffffff; padding: 6px 12px; font-size: 13px; font-weight: 600; color: var(--color-charcoal);">
+                                        <i class="fa fa-print mr-1"></i><span class="d-none d-sm-inline">Cetak</span>
+                                    </button>
+
+                                    <!-- Tombol Bagikan -->
+                                    <button type="button" class="btn btn-sm btn-outline-secondary" id="btnShareKos" title="Bagikan Kos Ini" style="border-radius: 8px; border: var(--border-hairline); background: #ffffff; padding: 6px 12px; font-size: 13px; font-weight: 600; color: var(--color-charcoal);">
+                                        <i class="fa fa-share-alt mr-1"></i><span class="d-none d-sm-inline">Bagikan</span>
+                                    </button>
+
+                                    <!-- Tombol Simpan ke Favorit (Heart: outline hitam, isi putih, berubah merah saat diklik) -->
+                                    @php
+                                        $kosSlug = $kos['slug'] ?? '';
+                                        $isFavorited = in_array($kosSlug, session('member_favorites', []));
+                                        if (auth()->check() && isset($kos['id'])) {
+                                            $isFavorited = $isFavorited || \App\Models\Favorite::where('user_id', auth()->id())->where('kos_id', $kos['id'])->exists();
+                                        }
+                                    @endphp
+                                    <button type="button" class="btn-favorite-action btn-toggle-favorite {{ $isFavorited ? 'is-active' : '' }}" data-slug="{{ $kosSlug }}" id="btnDetailFavorite" title="{{ $isFavorited ? 'Tersimpan di Favorit' : 'Simpan ke Favorit' }}">
+                                        <svg class="favorite-heart-svg {{ $isFavorited ? 'is-active' : '' }}" viewBox="0 0 24 24">
+                                            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                                        </svg>
+                                        <span class="favorite-label-text ml-2 font-weight-600 small text-dark d-none d-sm-inline" id="detailFavoriteText">
+                                            {{ $isFavorited ? 'Tersimpan di Favorit' : 'Simpan ke Favorit' }}
+                                        </span>
+                                    </button>
+                                </div>
                             </div>
 
                             <h1 class="font-weight-bold text-dark mb-2" style="font-size: 2.2rem; line-height: 1.25; letter-spacing: -0.03em;">
@@ -575,7 +590,14 @@
                                                         {{ strtoupper(substr($rName, 0, 1)) }}
                                                     </div>
                                                     <div>
-                                                        <h5 class="mb-0 font-weight-bold" style="font-size: 13.5px; color: var(--color-midnight-ink);">{{ $rName }}</h5>
+                                                        <div class="d-flex align-items-center flex-wrap">
+                                                            <h5 class="mb-0 font-weight-bold" style="font-size: 13.5px; color: var(--color-midnight-ink);">{{ $rName }}</h5>
+                                                            @if(is_object($review) && $review->is_verified_tenant)
+                                                                <span class="badge ml-2 px-2 py-0.5" style="background-color: #ecfdf5; color: #065f46; font-size: 10px; border: 1px solid rgba(16, 185, 129, 0.2); border-radius: 4px; font-weight: 600;">
+                                                                    <i class="fa fa-check-circle mr-1 text-success"></i> Penghuni Terverifikasi
+                                                                </span>
+                                                            @endif
+                                                        </div>
                                                         <small class="text-muted" style="font-size: 11.5px;">{{ $rDate }}</small>
                                                     </div>
                                                 </div>
@@ -631,6 +653,20 @@
                                         <small class="text-muted" style="font-size: 11.5px;">Ulasan Anda akan langsung masuk ke dashboard penilaian pemilik kos.</small>
                                     </div>
                                 </div>
+
+                                @if(session('review_success'))
+                                    <div class="alert alert-success d-flex align-items-center mb-3" role="alert" style="border-radius: var(--radius-buttons); font-size: 13px; border-left: 4px solid #10b981;">
+                                        <i class="fa fa-check-circle mr-2"></i>
+                                        <div>{{ session('review_success') }}</div>
+                                    </div>
+                                @endif
+
+                                @if(session('review_error'))
+                                    <div class="alert alert-warning d-flex align-items-center mb-3" role="alert" style="border-radius: var(--radius-buttons); font-size: 13px; border-left: 4px solid #f59e0b;">
+                                        <i class="fa fa-exclamation-triangle mr-2"></i>
+                                        <div>{{ session('review_error') }}</div>
+                                    </div>
+                                @endif
 
                                 <form action="{{ route('kos.review.store', $kos['slug']) }}" method="POST">
                                     @csrf
@@ -722,9 +758,20 @@
                                         <i class="fa fa-calendar-check mr-2"></i>Ajukan Sewa Sekarang
                                     </a>
 
-                                    <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $kos['owner_phone'] ?? '6280286216730') }}?text=Halo, saya tertarik dengan {{ urlencode($kos['title']) }}"
-                                        target="_blank" class="btn btn-outline-dark btn-block py-2 font-weight-bold">
-                                        <i class="fab fa-whatsapp mr-2" style="color: var(--color-midnight-ink);"></i>Tanya Pemilik Langsung
+                                    <button type="button" class="btn btn-outline-primary btn-block py-2 font-weight-bold" data-toggle="modal" data-target="#modalSurvei" style="border-radius: 8px;">
+                                        <i class="fa fa-walking mr-2"></i>Jadwalkan Survei Lokasi
+                                    </button>
+
+                                    @php
+                                        $rawPhone = $kos['owner_phone'] ?? ($kos->owner?->phone ?? '6281234567890');
+                                        $cleanPhone = preg_replace('/[^0-9]/', '', $rawPhone);
+                                        if (str_starts_with($cleanPhone, '0')) {
+                                            $cleanPhone = '62' . substr($cleanPhone, 1);
+                                        }
+                                    @endphp
+                                    <a href="https://wa.me/{{ $cleanPhone }}?text=Halo%2C%20saya%20tertarik%20dengan%20kos%20{{ urlencode($kos['title']) }}"
+                                        target="_blank" class="btn btn-outline-dark btn-block py-2 font-weight-bold" style="border-radius: 8px;">
+                                        <i class="fab fa-whatsapp mr-2" style="color: #25D366;"></i>Tanya Pemilik Langsung
                                     </a>
                                 </div>
                             </div>
@@ -796,34 +843,21 @@
                                 </div>
 
                                 <!--Agent contact form-->
-                                <form id="form-agent" class="ts-form">
-
-                                    <!--Name-->
-                                    <div class="form-group">
-                                        <input type="text" class="form-control" id="name" name="name"
-                                            placeholder="Nama Anda">
-                                    </div>
-
-                                    <!--Email-->
-                                    <div class="form-group">
-                                        <input type="email" class="form-control" id="email" name="email"
-                                            placeholder="Email Anda">
-                                    </div>
-
+                                <form action="{{ route('chat.start', $kos['slug']) }}" method="POST" class="ts-form">
+                                    @csrf
                                     <!--Message-->
                                     <div class="form-group">
-                                        <textarea class="form-control" id="form-contact-message" rows="3" name="message"
-                                            placeholder="Halo, saya ingin bertanya tentang {{ $kos['title'] }}"></textarea>
+                                        <label for="form-contact-message" class="font-weight-600 text-dark small mb-1">Pesan untuk Pemilik:</label>
+                                        <textarea class="form-control" id="form-contact-message" rows="3" name="message" required
+                                            placeholder="Halo, saya tertarik dengan {{ $kos['title'] }}. Apakah masih tersedia?"></textarea>
                                     </div>
 
                                     <!--Submit button-->
                                     <div class="form-group clearfix mb-0">
-                                        <button type="button" class="btn btn-primary float-right"
-                                            id="form-contact-submit" onclick="alert('Fitur hubungi pemilik akan segera tersedia.')">
-                                            <i class="fa fa-envelope mr-2"></i>Kirim Pesan
+                                        <button type="submit" class="btn btn-primary float-right" id="form-contact-submit">
+                                            <i class="fa fa-paper-plane mr-2"></i>Kirim Pesan Chat
                                         </button>
                                     </div>
-
                                 </form>
 
                             </div>
@@ -870,20 +904,20 @@
                                     <span class="small font-weight-bold">Favorit</span>
                                 </button>
 
-                                <a href="#" class="btn btn-light mr-2 w-100" data-toggle="tooltip"
-                                    data-placement="top" title="Cetak">
+                                <button type="button" onclick="window.print()" class="btn btn-light mr-2 w-100" data-toggle="tooltip"
+                                    data-placement="top" title="Cetak Ringkasan Kos">
                                     <i class="fa fa-print"></i>
-                                </a>
+                                </button>
 
-                                <a href="#" class="btn btn-light mr-2 w-100" data-toggle="tooltip"
-                                    data-placement="top" title="Bandingkan">
+                                <a href="#similar-properties" class="btn btn-light mr-2 w-100" data-toggle="tooltip"
+                                    data-placement="top" title="Bandingkan dengan Kos Serupa">
                                     <i class="fa fa-exchange-alt"></i>
                                 </a>
 
-                                <a href="#" class="btn btn-light w-100" data-toggle="tooltip" data-placement="top"
-                                    title="Bagikan">
+                                <button type="button" class="btn btn-light w-100 btn-share-property" id="btnShareKosBottom" data-toggle="tooltip" data-placement="top"
+                                    title="Bagikan Tautan Kos">
                                     <i class="fa fa-share-alt"></i>
-                                </a>
+                                </button>
 
                             </div>
 
@@ -999,6 +1033,62 @@
 
 </div>
 <!--end page-->
+
+<!-- MODAL JADWALKAN SURVEI -->
+<div class="modal fade" id="modalSurvei" tabindex="-1" role="dialog" aria-labelledby="modalSurveiLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content" style="border-radius: 14px; border: var(--border-hairline); box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
+            <div class="modal-header" style="border-bottom: var(--border-hairline); padding: 18px 24px;">
+                <h5 class="modal-title font-weight-bold" id="modalSurveiLabel" style="color: var(--color-midnight-ink);">
+                    <i class="fa fa-walking mr-2" style="color: var(--color-notion-blue);"></i>Jadwalkan Survei Lokasi
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="{{ route('surveys.store', $kos['slug']) }}" method="POST">
+                @csrf
+                <div class="modal-body" style="padding: 24px;">
+                    <p class="text-muted small mb-3">
+                        Pilih tanggal dan estimasi waktu kunjungan Anda untuk melihat langsung kos <strong>{{ $kos['title'] }}</strong>. Pemilik akan mengonfirmasi jadwal Anda.
+                    </p>
+
+                    <div class="form-group mb-3">
+                        <label for="survey_date" class="font-weight-600 small text-dark">Tanggal Survei <span class="text-danger">*</span></label>
+                        <input type="date" class="form-control" id="survey_date" name="survey_date" required
+                            min="{{ date('Y-m-d') }}" style="border-radius: 8px;">
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label for="survey_time" class="font-weight-600 small text-dark">Jam Kunjungan <span class="text-danger">*</span></label>
+                        <select class="form-control" id="survey_time" name="survey_time" required style="border-radius: 8px;">
+                            <option value="">-- Pilih Jam Survei --</option>
+                            <option value="09:00">09:00 WIB (Pagi)</option>
+                            <option value="10:00">10:00 WIB (Pagi)</option>
+                            <option value="11:00">11:00 WIB (Siang)</option>
+                            <option value="13:00">13:00 WIB (Siang)</option>
+                            <option value="14:00">14:00 WIB (Siang)</option>
+                            <option value="15:00">15:00 WIB (Sore)</option>
+                            <option value="16:00">16:00 WIB (Sore)</option>
+                            <option value="17:00">17:00 WIB (Sore)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group mb-0">
+                        <label for="survey_notes" class="font-weight-600 small text-dark">Catatan Tambahan (Opsional)</label>
+                        <textarea class="form-control" id="survey_notes" name="notes" rows="2" placeholder="Contoh: Datang bersama teman / ingin lihat kamar nomor 3" style="border-radius: 8px;"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer" style="border-top: var(--border-hairline); padding: 16px 24px;">
+                    <button type="button" class="btn btn-outline-secondary btn-sm font-weight-600" data-dismiss="modal" style="border-radius: 8px;">Batal</button>
+                    <button type="submit" class="btn btn-primary btn-sm font-weight-bold" style="border-radius: 8px; padding: 8px 18px;">
+                        <i class="fa fa-paper-plane mr-1"></i>Kirim Pengajuan
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 
 @push('scripts')
 @if($hasValidCoordinates)
@@ -1232,6 +1322,24 @@ $(document).ready(function() {
             } else {
                 $noMatchAlert.hide();
             }
+        }
+    });
+
+    // Share Kos Button (Top & Bottom)
+    $('#btnShareKos, #btnShareKosBottom').on('click', function(e) {
+        e.preventDefault();
+        if (navigator.share) {
+            navigator.share({
+                title: @json($kos['title']),
+                text: "Cek kos ini di TEMPATIN: " + @json($kos['title']),
+                url: window.location.href
+            }).catch(function(e) {});
+        } else if (navigator.clipboard) {
+            navigator.clipboard.writeText(window.location.href).then(function() {
+                alert('Tautan kos berhasil disalin ke clipboard!');
+            });
+        } else {
+            prompt('Salin tautan kos berikut:', window.location.href);
         }
     });
 });

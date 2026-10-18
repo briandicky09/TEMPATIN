@@ -29,6 +29,7 @@ class Booking extends Model
     protected $fillable = [
         'customer_id',
         'kos_id',
+        'room_id',
         'booking_code',
         'tenant_name',
         'tenant_phone',
@@ -42,6 +43,7 @@ class Booking extends Model
         'total_amount',
         'notes',
         'status',
+        'rejection_reason',
     ];
 
     protected function casts(): array
@@ -82,6 +84,30 @@ class Booking extends Model
     }
 
     /**
+     * Kamar individual spesifik yang dibooking (jika ada).
+     */
+    public function room(): BelongsTo
+    {
+        return $this->belongsTo(Room::class, 'room_id');
+    }
+
+    /**
+     * Kontrak sewa digital untuk booking ini.
+     */
+    public function contract(): \Illuminate\Database\Eloquent\Relations\HasOne
+    {
+        return $this->hasOne(RentalContract::class, 'booking_id');
+    }
+
+    /**
+     * Laporan kerusakan yang berkaitan dengan booking masa sewa ini.
+     */
+    public function maintenanceReports(): HasMany
+    {
+        return $this->hasMany(MaintenanceReport::class, 'booking_id');
+    }
+
+    /**
      * Seluruh invoice tagihan yang dihasilkan dari booking ini.
      */
     public function invoices(): HasMany
@@ -98,11 +124,76 @@ class Booking extends Model
     }
 
     /**
-     * Cek apakah status booking saat ini pending.
+     * Cek apakah status booking saat ini pending (menunggu persetujuan owner).
      */
     public function isPending(): bool
     {
         return $this->status === 'pending';
+    }
+
+    /**
+     * Cek apakah status booking disetujui owner dan siap dibayar.
+     */
+    public function isApproved(): bool
+    {
+        return $this->status === 'approved';
+    }
+
+    /**
+     * Cek apakah booking sudah berhasil dibayar / dikonfirmasi.
+     */
+    public function isConfirmed(): bool
+    {
+        return $this->status === 'confirmed';
+    }
+
+    /**
+     * Cek apakah penyewa sudah aktif menghuni (check-in).
+     */
+    public function isActive(): bool
+    {
+        return $this->status === 'active';
+    }
+
+    /**
+     * Cek apakah masa sewa sudah selesai (check-out).
+     */
+    public function isCompleted(): bool
+    {
+        return $this->status === 'completed';
+    }
+
+    /**
+     * Cek apakah booking ditolak owner.
+     */
+    public function isRejected(): bool
+    {
+        return $this->status === 'rejected';
+    }
+
+    /**
+     * Cek apakah booking dibatalkan.
+     */
+    public function isCancelled(): bool
+    {
+        return $this->status === 'cancelled';
+    }
+
+    /**
+     * Label status bahasa Indonesia.
+     */
+    public function getStatusLabelAttribute(): string
+    {
+        return match ($this->status) {
+            'pending' => 'Menunggu Persetujuan',
+            'approved' => 'Disetujui (Menunggu Pembayaran)',
+            'confirmed' => 'Terkonfirmasi (Sudah Bayar)',
+            'active' => 'Aktif Menghuni',
+            'completed' => 'Selesai Sewa',
+            'rejected' => 'Ditolak',
+            'cancelled' => 'Dibatalkan',
+            default => ucfirst((string) $this->status),
+        };
     }
 }
 

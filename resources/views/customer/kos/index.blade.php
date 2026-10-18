@@ -75,4 +75,46 @@
     @endforelse
 </div>
 
+@if(isset($pendingBookings) && $pendingBookings->isNotEmpty())
+<div class="mt-4 pt-3 border-top" style="border-color: rgba(0,0,0,0.06) !important;">
+    <div class="d-inline-flex align-items-center mb-2 px-2 py-1 rounded" style="background-color: #fff8e6; color: #b7791f; font-size: 11px; font-weight: 600;">
+        <i class="fa fa-clock mr-1"></i> STATUS PENGAJUAN
+    </div>
+    <h2 style="font-family: var(--font-serif); font-size: 1.35rem; font-weight: 700; color: var(--color-midnight-ink); margin-bottom: 4px;">
+        Booking dalam Proses
+    </h2>
+    <p style="font-size: 13.5px; color: var(--color-stone); margin-bottom: 16px;">
+        Pesanan yang sedang menunggu persetujuan pemilik kos atau siap untuk dibayarkan.
+    </p>
+
+    <div class="row">
+        @foreach($pendingBookings as $booking)
+        <div class="col-md-6 mb-3">
+            <div class="p-3 rounded" style="background-color: #ffffff; border: var(--border-hairline); border-radius: var(--radius-cards);">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <span style="font-size: 12px; font-weight: 600; color: var(--color-midnight-ink);">
+                        {{ $booking->booking_code }}
+                    </span>
+                    <span class="badge" style="background-color: {{ $booking->status === 'approved' ? 'var(--color-sky-tint)' : '#fef3c7' }}; color: {{ $booking->status === 'approved' ? 'var(--color-notion-blue)' : '#92400e' }}; font-weight: 600; font-size: 11px; padding: 4px 8px; border-radius: 4px;">
+                        {{ $booking->status_label }}
+                    </span>
+                </div>
+                <h4 style="font-size: 14px; font-weight: 700; color: var(--color-midnight-ink); margin-bottom: 4px;">
+                    {{ $booking->kos->title ?? 'Properti Kos' }}
+                </h4>
+                <div style="font-size: 12.5px; color: var(--color-stone); margin-bottom: 12px;">
+                    Mulai: {{ $booking->start_date ? $booking->start_date->format('d M Y') : '-' }} ({{ $booking->duration_months }} bulan) &bull; Rp {{ number_format($booking->total_amount, 0, ',', '.') }}
+                </div>
+                <div class="d-flex gap-2">
+                    <a href="{{ route('member.booking.show', $booking->booking_code) }}" class="btn btn-sm" style="background-color: var(--color-notion-blue); color: #ffffff; font-weight: 600; font-size: 12px; padding: 6px 14px; border-radius: var(--radius-buttons); border: none;">
+                        Lihat Status &amp; Instruksi
+                    </a>
+                </div>
+            </div>
+        </div>
+        @endforeach
+    </div>
+</div>
+@endif
+
 @endsection

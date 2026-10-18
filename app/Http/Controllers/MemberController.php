@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreBookingRequest;
 use App\Models\Booking;
+use App\Models\Favorite;
 use App\Models\Invoice;
 use App\Models\Kos;
 use App\Models\Payment;
@@ -101,6 +102,19 @@ class MemberController extends Controller
 
                 // Buat Invoice secara otomatis di dalam DB::transaction yang sama
                 $invoice = Invoice::createFromBooking($booking);
+
+                // Kirim notifikasi pengajuan sewa baru ke pemilik kos
+                try {
+                    $kos->owner?->notify(new \App\Notifications\TempatinNotification(
+                        'Booking Baru Masuk',
+                        'Pengajuan sewa baru dari ' . $booking->tenant_name . ' untuk ' . $kos->title . '.',
+                        route('owner.bookings.show', $booking->booking_code),
+                        'booking',
+                        'fa-calendar-check'
+                    ));
+                } catch (\Throwable $e) {
+                    // Abaikan jika background notification gagal
+                }
 
                 return [$booking, $invoice];
             });
@@ -288,8 +302,22 @@ class MemberController extends Controller
             abort(403, 'Akses ditolak. Anda tidak memiliki izin untuk membayar booking ini.');
         }
 
+        // Jika booking ditolak oleh pemilik
+        if ($booking->status === 'rejected') {
+            return redirect()
+                ->route('member.booking.show', $booking->booking_code)
+                ->with('error', 'Pemesanan ini telah ditolak oleh pemilik kos dan tidak dapat dibayar.');
+        }
+
+        // Jika booking dibatalkan
+        if ($booking->status === 'cancelled') {
+            return redirect()
+                ->route('member.booking.show', $booking->booking_code)
+                ->with('error', 'Pemesanan ini telah dibatalkan.');
+        }
+
         // Jika booking sudah confirmed / invoice lunas, arahkan langsung ke halaman detail
-        if ($booking->status === 'confirmed') {
+        if (in_array($booking->status, ['confirmed', 'active', 'completed'])) {
             return redirect()
                 ->route('member.booking.show', $booking->booking_code)
                 ->with('success', 'Pemesanan ini sudah berhasil dibayar dan dikonfirmasi.');
@@ -299,6 +327,17 @@ class MemberController extends Controller
         $invoice = $booking->invoice ?? Invoice::where('booking_id', $booking->id)->first();
         if (!$invoice) {
             $invoice = Invoice::createFromBooking($booking);
+        }
+
+        // Alur persetujuan owner sebelum pembayaran untuk booking baru
+        if ($booking->status === 'pending') {
+            // Backward compatibility: izinkan jika transaksi snap sudah ada sebelumnya
+            $hasExistingSnap = $invoice->payments()->whereNotNull('snap_token')->exists();
+            if (!$hasExistingSnap) {
+                return redirect()
+                    ->route('member.booking.show', $booking->booking_code)
+                    ->with('info', 'Pemesanan Anda sedang menunggu persetujuan dari pemilik kos sebelum pembayaran dapat dilakukan.');
+            }
         }
 
         // Ambil atau buat transaksi Midtrans Snap token & redirect URL
@@ -402,7 +441,14 @@ class MemberController extends Controller
      */
     public function favorit(): View
     {
-        $favoriteSlugs = session('member_favorites', []);
+        $sessionFavorites = session('member_favorites', []);
+        $dbFavorites = [];
+
+        if (Auth::check()) {
+            $dbFavorites = Auth::user()->favoritedKos()->pluck('slug')->toArray();
+        }
+
+        $favoriteSlugs = array_values(array_unique(array_merge($sessionFavorites, $dbFavorites)));
 
         $favoriteKos = Kos::with(['facilities', 'owner', 'photos'])
             ->whereIn('slug', $favoriteSlugs)
@@ -432,25 +478,56 @@ class MemberController extends Controller
             return response()->json(['success' => false, 'message' => 'Slug kos tidak valid.'], 400);
         }
 
-        $favorites = session('member_favorites', []);
+        $kos = Kos::where('slug', $slug)->first();
+        if (!$kos) {
+            return response()->json(['success' => false, 'message' => 'Kos tidak ditemukan.'], 404);
+        }
 
-        if (in_array($slug, $favorites)) {
-            $favorites = array_values(array_diff($favorites, [$slug]));
-            session(['member_favorites' => $favorites]);
-            $isFavorite = false;
-            $message = 'Kos berhasil dihapus dari daftar favorit.';
+        $sessionFavorites = session('member_favorites', []);
+        $isFavorite = false;
+
+        if (Auth::check()) {
+            $existing = Favorite::where('user_id', Auth::id())
+                ->where('kos_id', $kos->id)
+                ->first();
+
+            if ($existing) {
+                $existing->delete();
+                $isFavorite = false;
+                $message = 'Kos berhasil dihapus dari daftar favorit.';
+                $sessionFavorites = array_values(array_diff($sessionFavorites, [$slug]));
+            } else {
+                Favorite::firstOrCreate([
+                    'user_id' => Auth::id(),
+                    'kos_id' => $kos->id,
+                ]);
+                $isFavorite = true;
+                $message = 'Kos berhasil ditambahkan ke daftar favorit!';
+                if (!in_array($slug, $sessionFavorites)) {
+                    $sessionFavorites[] = $slug;
+                }
+            }
+            session(['member_favorites' => $sessionFavorites]);
+            $count = Auth::user()->favorites()->count();
         } else {
-            $favorites[] = $slug;
-            session(['member_favorites' => $favorites]);
-            $isFavorite = true;
-            $message = 'Kos berhasil ditambahkan ke daftar favorit!';
+            if (in_array($slug, $sessionFavorites)) {
+                $sessionFavorites = array_values(array_diff($sessionFavorites, [$slug]));
+                $isFavorite = false;
+                $message = 'Kos berhasil dihapus dari daftar favorit.';
+            } else {
+                $sessionFavorites[] = $slug;
+                $isFavorite = true;
+                $message = 'Kos berhasil ditambahkan ke daftar favorit!';
+            }
+            session(['member_favorites' => $sessionFavorites]);
+            $count = count($sessionFavorites);
         }
 
         return response()->json([
             'success' => true,
             'is_favorite' => $isFavorite,
             'message' => $message,
-            'count' => count($favorites),
+            'count' => $count,
         ]);
     }
 
@@ -510,29 +587,23 @@ class MemberController extends Controller
      */
     public function notifikasi(): View
     {
-        $notifications = [
-            [
-                'title' => 'Tagihan Baru',
-                'message' => 'Tagihan untuk Kos Putri Melati bulan ini telah terbit. Segera lakukan pembayaran.',
-                'time' => '2 jam yang lalu',
-                'is_read' => false,
-                'icon' => 'fa-file-invoice text-danger',
-            ],
-            [
-                'title' => 'Pengingat Pembayaran',
-                'message' => 'Jatuh tempo pembayaran tagihan Kos Putri Melati adalah 3 hari lagi.',
-                'time' => '1 hari yang lalu',
-                'is_read' => true,
-                'icon' => 'fa-clock text-warning',
-            ],
-            [
-                'title' => 'Booking Dikonfirmasi',
-                'message' => 'Booking Anda untuk Kos Putri Melati telah dikonfirmasi oleh pemilik.',
-                'time' => '3 hari yang lalu',
-                'is_read' => true,
-                'icon' => 'fa-check text-success',
-            ],
-        ];
+        $user = Auth::user();
+        $dbNotifs = $user->notifications()->latest()->take(30)->get();
+
+        $notifications = $dbNotifs->map(function ($n) {
+            return [
+                'id' => $n->id,
+                'title' => $n->data['title'] ?? 'Pemberitahuan',
+                'message' => $n->data['message'] ?? '',
+                'time' => $n->created_at->diffForHumans(),
+                'is_read' => $n->read_at !== null,
+                'icon' => ($n->data['icon'] ?? 'fa-bell') . ' text-primary',
+                'action_url' => $n->data['action_url'] ?? null,
+            ];
+        })->toArray();
+
+        // Tandai seluruh notifikasi unread sebagai sudah dibaca saat membuka halaman ini
+        $user->unreadNotifications->markAsRead();
 
         return view('member.notifikasi.index', compact('notifications'));
     }

@@ -16,18 +16,40 @@
                 </a>
 
                 <!-- Notification -->
+                @php
+                    $unreadOwnerNotifs = Auth::user()->unreadNotifications->count();
+                @endphp
                 <div class="dropdown">
-                    <a class="nav-link p-2" href="#" id="ownerNotificationDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <a class="nav-link p-2 position-relative" href="#" id="ownerNotificationDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="fa fa-bell text-muted"></i>
+                        @if($unreadOwnerNotifs > 0)
+                            <span class="badge badge-danger rounded-circle position-absolute" style="top: 2px; right: 2px; font-size: 9px; padding: 3px 5px; background-color: #ef4444;">{{ $unreadOwnerNotifs }}</span>
+                        @endif
                     </a>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="ownerNotificationDropdown" style="width: 300px;">
                         <div class="p-3 border-bottom d-flex justify-content-between align-items-center">
-                            <h6 class="mb-0 font-weight-bold">Notifikasi Owner</h6>
-                            <span class="badge badge-light border">0 Baru</span>
+                            <h6 class="mb-0 font-weight-bold" style="font-size: 13.5px;">Notifikasi Owner</h6>
+                            <span class="badge badge-light border" style="font-size: 11px;">{{ $unreadOwnerNotifs }} Baru</span>
                         </div>
-                        <div class="p-4 text-center text-muted small">
-                            <i class="fa fa-inbox fa-2x mb-2 text-muted opacity-50"></i>
-                            <p class="mb-0">Belum ada notifikasi baru saat ini.</p>
+                        @if($unreadOwnerNotifs > 0)
+                            <div class="p-2">
+                                @foreach(Auth::user()->unreadNotifications->take(4) as $notif)
+                                    <a href="{{ $notif->data['action_url'] ?? route('owner.notifikasi') }}" class="dropdown-item px-3 py-2 rounded text-wrap" style="font-size: 12.5px;">
+                                        <div class="font-weight-bold text-dark">{{ $notif->data['title'] ?? 'Notifikasi' }}</div>
+                                        <div class="text-muted small text-truncate">{{ $notif->data['message'] ?? '' }}</div>
+                                    </a>
+                                @endforeach
+                            </div>
+                        @else
+                            <div class="p-4 text-center text-muted small">
+                                <i class="fa fa-inbox fa-2x mb-2 text-muted opacity-50"></i>
+                                <p class="mb-0">Belum ada notifikasi baru saat ini.</p>
+                            </div>
+                        @endif
+                        <div class="p-2 border-top text-center">
+                            <a href="{{ route('owner.notifikasi') }}" class="small font-weight-bold" style="color: var(--color-notion-blue); text-decoration: none;">
+                                Lihat Semua Notifikasi
+                            </a>
                         </div>
                     </div>
                 </div>

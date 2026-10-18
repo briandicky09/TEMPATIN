@@ -210,7 +210,7 @@
                         </h2>
 
                         <div class="mb-4 overflow-hidden position-relative" style="border: var(--border-hairline); max-height: 340px; border-radius: var(--radius-cards, 12px);">
-                            <img src="{{ asset('assets/img/artikel-budget-clean.jpg') }}" alt="Simulasi budget sewa kos" class="img-fluid w-100" style="object-fit: cover; width: 100%; height: 320px; display: block; border-radius: var(--radius-cards, 12px);">
+                            <img src="{{ asset('assets/img/artikel-budget.jpg') }}" alt="Simulasi budget sewa kos" class="img-fluid w-100" style="object-fit: cover; width: 100%; height: 320px; display: block; border-radius: var(--radius-cards, 12px);">
                         </div>
 
                         <p style="font-size: 15px; color: var(--color-charcoal); line-height: 1.7; margin-bottom: 20px;">

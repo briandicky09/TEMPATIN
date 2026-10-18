@@ -33,6 +33,30 @@
             <i class="fa fa-building mr-2" style="width: 18px; text-align: center; color: {{ (request()->routeIs('owner.kos.index') || request()->routeIs('owner.kos.my') || request()->routeIs('owner.kos.manage')) ? 'var(--color-notion-blue)' : 'var(--color-stone)' }};"></i> Kos Saya
         </a>
 
+        <a href="{{ route('owner.bookings.index') }}"
+           class="d-flex align-items-center px-3 py-2 rounded text-decoration-none"
+           style="font-size: 13.5px; font-weight: 500; transition: all 0.15s ease; {{ request()->routeIs('owner.bookings.*') ? 'background-color: var(--color-sky-tint); color: var(--color-ink-black); font-weight: 600;' : 'color: var(--color-charcoal);' }}">
+            <i class="fa fa-calendar-check mr-2" style="width: 18px; text-align: center; color: {{ request()->routeIs('owner.bookings.*') ? 'var(--color-notion-blue)' : 'var(--color-stone)' }};"></i> Booking Masuk
+        </a>
+
+        <a href="{{ route('owner.surveys.index') }}"
+           class="d-flex align-items-center px-3 py-2 rounded text-decoration-none"
+           style="font-size: 13.5px; font-weight: 500; transition: all 0.15s ease; {{ request()->routeIs('owner.surveys.*') ? 'background-color: var(--color-sky-tint); color: var(--color-ink-black); font-weight: 600;' : 'color: var(--color-charcoal);' }}">
+            <i class="fa fa-walking mr-2" style="width: 18px; text-align: center; color: {{ request()->routeIs('owner.surveys.*') ? 'var(--color-notion-blue)' : 'var(--color-stone)' }};"></i> Jadwal Survei
+        </a>
+
+        <a href="{{ route('owner.penghuni.index') }}"
+           class="d-flex align-items-center px-3 py-2 rounded text-decoration-none"
+           style="font-size: 13.5px; font-weight: 500; transition: all 0.15s ease; {{ request()->routeIs('owner.penghuni.*') ? 'background-color: var(--color-sky-tint); color: var(--color-ink-black); font-weight: 600;' : 'color: var(--color-charcoal);' }}">
+            <i class="fa fa-users mr-2" style="width: 18px; text-align: center; color: {{ request()->routeIs('owner.penghuni.*') ? 'var(--color-notion-blue)' : 'var(--color-stone)' }};"></i> Penyewa &amp; Siklus Sewa
+        </a>
+
+        <a href="{{ route('owner.maintenance.index') }}"
+           class="d-flex align-items-center px-3 py-2 rounded text-decoration-none"
+           style="font-size: 13.5px; font-weight: 500; transition: all 0.15s ease; {{ request()->routeIs('owner.maintenance.*') ? 'background-color: var(--color-sky-tint); color: var(--color-ink-black); font-weight: 600;' : 'color: var(--color-charcoal);' }}">
+            <i class="fa fa-tools mr-2" style="width: 18px; text-align: center; color: {{ request()->routeIs('owner.maintenance.*') ? 'var(--color-notion-blue)' : 'var(--color-stone)' }};"></i> Laporan Kerusakan
+        </a>
+
         <a href="{{ route('owner.kos.create') }}"
            class="d-flex align-items-center px-3 py-2 rounded text-decoration-none"
            style="font-size: 13.5px; font-weight: 500; transition: all 0.15s ease; {{ request()->routeIs('owner.kos.create') ? 'background-color: var(--color-sky-tint); color: var(--color-ink-black); font-weight: 600;' : 'color: var(--color-charcoal);' }}">

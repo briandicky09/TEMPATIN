@@ -2,51 +2,64 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Booking;
+use App\Models\Invoice;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
 class CustomerKosController extends Controller
 {
     /**
-     * Halaman kos yang sedang disewa customer.
+     * Halaman kos yang sedang disewa customer (Data aktual dari database).
      */
     public function index(): View
     {
-        $rentedKos = [
-            [
-                'title' => 'Kos Putri Melati',
-                'slug' => 'kos-putri-melati',
-                'price' => 850000,
-                'city' => 'Surabaya',
-                'type' => 'Putri',
-                'thumbnail' => 'assets/img/kos/1.png',
-                'periode' => 'Berakhir 12 September 2026',
-            ],
-        ];
+        $userId = Auth::id();
 
-        return view('customer.kos.index', compact('rentedKos'));
+        // Hanya tampilkan kos yang sudah terkonfirmasi (sudah bayar) atau aktif dihuni
+        $confirmedBookings = Booking::with(['kos', 'room'])
+            ->where('customer_id', $userId)
+            ->whereIn('status', ['confirmed', 'active'])
+            ->latest('id')
+            ->get();
+
+        // Booking yang masih dalam proses persetujuan atau menunggu pembayaran
+        $pendingBookings = Booking::with(['kos', 'room'])
+            ->where('customer_id', $userId)
+            ->whereIn('status', ['pending', 'approved'])
+            ->latest('id')
+            ->get();
+
+        $rentedKos = $confirmedBookings->map(function ($booking) {
+            return [
+                'id' => $booking->id,
+                'booking_code' => $booking->booking_code,
+                'title' => $booking->kos->title ?? 'Kos Pilihan',
+                'slug' => $booking->kos->slug ?? '#',
+                'price' => (float) ($booking->kos_price ?? $booking->kos?->price ?? 0),
+                'city' => $booking->kos->city ?? '-',
+                'type' => $booking->kos->type ?? 'Campur',
+                'thumbnail' => $booking->kos->thumbnail ?? 'assets/img/kos/1.png',
+                'room_number' => $booking->room?->room_number,
+                'status' => $booking->status,
+                'status_label' => $booking->status_label,
+                'start_date' => $booking->start_date ? $booking->start_date->format('d M Y') : '-',
+                'periode' => $booking->end_date ? 'Berakhir ' . $booking->end_date->translatedFormat('d F Y') : '-',
+            ];
+        });
+
+        return view('customer.kos.index', compact('rentedKos', 'pendingBookings'));
     }
 
     /**
-     * Halaman tagihan/invoice customer.
+     * Halaman tagihan/invoice customer (Mengambil data aktual dari database).
      */
     public function invoice(): View
     {
-        $invoices = [
-            [
-                'invoice_number' => 'INV/2026/08/0001',
-                'kos' => 'Kos Putri Melati',
-                'amount' => 850000,
-                'status' => 'Belum Dibayar',
-                'due_date' => '10 Agustus 2026',
-            ],
-            [
-                'invoice_number' => 'INV/2026/07/0001',
-                'kos' => 'Kos Putri Melati',
-                'amount' => 850000,
-                'status' => 'Lunas',
-                'due_date' => '10 Juli 2026',
-            ],
-        ];
+        $invoices = Invoice::with(['booking', 'kos'])
+            ->where('customer_id', Auth::id())
+            ->latest('id')
+            ->get();
 
         return view('customer.invoice.index', compact('invoices'));
     }

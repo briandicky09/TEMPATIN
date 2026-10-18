@@ -68,6 +68,66 @@ class Kos extends Model
     }
 
     /**
+     * Seluruh kamar individual milik properti kos ini.
+     */
+    public function rooms(): HasMany
+    {
+        return $this->hasMany(Room::class, 'kos_id');
+    }
+
+    /**
+     * Kamar yang statusnya masih tersedia.
+     */
+    public function availableRooms(): HasMany
+    {
+        return $this->hasMany(Room::class, 'kos_id')->where('status', 'available');
+    }
+
+    /**
+     * Seluruh record favorit untuk kos ini.
+     */
+    public function favorites(): HasMany
+    {
+        return $this->hasMany(Favorite::class, 'kos_id');
+    }
+
+    /**
+     * Seluruh pengajuan survei untuk kos ini.
+     */
+    public function surveys(): HasMany
+    {
+        return $this->hasMany(Survey::class, 'kos_id');
+    }
+
+    /**
+     * Seluruh tiket kerusakan pada kos ini.
+     */
+    public function maintenanceReports(): HasMany
+    {
+        return $this->hasMany(MaintenanceReport::class, 'kos_id');
+    }
+
+    /**
+     * Seluruh percakapan chat mengenai kos ini.
+     */
+    public function conversations(): HasMany
+    {
+        return $this->hasMany(Conversation::class, 'kos_id');
+    }
+
+    /**
+     * Cek apakah user saat ini memfavoritkan kos ini.
+     */
+    public function isFavoritedBy(?User $user = null): bool
+    {
+        if (!$user) {
+            return false;
+        }
+
+        return $this->favorites()->where('user_id', $user->id)->exists();
+    }
+
+    /**
      * Seluruh pemesanan / booking yang terjadi pada kos ini.
      */
     public function bookings(): HasMany

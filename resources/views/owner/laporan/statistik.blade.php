@@ -85,8 +85,14 @@
                             <span class="badge" style="background-color: var(--surface-page-canvas); color: var(--color-stone); border: var(--border-hairline); font-size: 11px;">Tahun 2026</span>
                         </div>
 
-                        @php $maxRevenue = max(array_column($monthlyRevenue, 'value')); @endphp
+                        @php
+                            $maxVal = max(array_column($monthlyRevenue, 'value'));
+                            $maxRevenue = $maxVal > 0 ? $maxVal : 1;
+                        @endphp
                         @foreach($monthlyRevenue as $rev)
+                            @php
+                                $percent = $maxVal > 0 ? ($rev['value'] / $maxRevenue) * 100 : 0;
+                            @endphp
                             <div class="mb-3">
                                 <div class="d-flex justify-content-between align-items-center mb-1" style="font-size: 12.5px;">
                                     <span style="font-weight: 600; color: var(--color-midnight-ink);">{{ $rev['month'] }}</span>
@@ -95,7 +101,7 @@
                                     </span>
                                 </div>
                                 <div class="rounded overflow-hidden" style="height: 8px; background-color: var(--surface-page-canvas);">
-                                    <div style="height: 100%; width: {{ ($rev['value'] / $maxRevenue) * 100 }}%; background-color: var(--color-notion-blue); border-radius: 4px; transition: width 0.3s ease;"></div>
+                                    <div style="height: 100%; width: {{ $percent }}%; background-color: var(--color-notion-blue); border-radius: 4px; transition: width 0.3s ease;"></div>
                                 </div>
                             </div>
                         @endforeach

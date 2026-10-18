@@ -3664,3 +3664,29 @@ body {
     color: #ffffff !important;
 }
 
+/* =========================================================================
+   CLEAN PRINT STYLES
+   ========================================================================= */
+@media print {
+    #ts-header,
+    #breadcrumb,
+    #actions,
+    .modal,
+    .btn,
+    .notion-nav,
+    footer,
+    #form-agent,
+    .contact-the-agent,
+    .card-nav-actions {
+        display: none !important;
+    }
+    body, .ts-page-wrapper, main {
+        background: #ffffff !important;
+        color: #000000 !important;
+    }
+    .ts-box, .card {
+        border: 1px solid #e5e7eb !important;
+        box-shadow: none !important;
+    }
+}
+

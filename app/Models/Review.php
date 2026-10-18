@@ -10,7 +10,9 @@ class Review extends Model
     protected $fillable = [
         'kos_id',
         'user_id',
+        'booking_id',
         'reviewer_name',
+        'is_verified_tenant',
         'rating',
         'comment',
         'reply',
@@ -20,6 +22,7 @@ class Review extends Model
     {
         return [
             'rating' => 'integer',
+            'is_verified_tenant' => 'boolean',
         ];
     }
 
@@ -37,5 +40,13 @@ class Review extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id');
+    }
+
+    /**
+     * Booking sewa yang menjadi dasar verifikasi ulasan ini.
+     */
+    public function booking(): BelongsTo
+    {
+        return $this->belongsTo(Booking::class, 'booking_id');
     }
 }

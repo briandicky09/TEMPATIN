@@ -159,7 +159,7 @@
                                     'eksklusif' => 'badge-type-eksklusif',
                                     default => 'badge-type-campur',
                                 };
-                                $isFav = in_array($kos->slug, session('member_favorites', []));
+                                $isFav = $kos->isFavoritedBy(auth()->user());
                             @endphp
                             <div class="col-md-6 col-lg-4 mb-4">
                                 <div class="card h-100 border-0 shadow-sm" style="border-radius: var(--radius-cards); overflow: hidden; transition: transform 0.2s, box-shadow 0.2s; background: #ffffff;">

@@ -4,12 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreKosRequest;
 use App\Http\Requests\UpdateKosRequest;
+use App\Models\Booking;
 use App\Models\Facility;
+use App\Models\Invoice;
 use App\Models\Kos;
 use App\Models\Review;
+use App\Models\Room;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -306,60 +310,192 @@ class OwnerKosController extends Controller
      */
     public function statistik(): View
     {
+        $owner = Auth::user();
+        $ownerKos = $owner->kos()->with(['rooms', 'bookings'])->get();
+        $ownerKosIds = $ownerKos->pluck('id');
+
+        // 1. Total Pendapatan dari invoice yang benar-benar dibayar
+        $totalPendapatan = (float) Invoice::whereIn('kos_id', $ownerKosIds)
+            ->where('status', 'paid')
+            ->sum('total_amount');
+
+        // 2. Total Booking milik owner
+        $totalBooking = Booking::whereIn('kos_id', $ownerKosIds)->count();
+
+        // 3. Tingkat Okupansi Kamar
+        $totalRooms = Room::whereIn('kos_id', $ownerKosIds)->count();
+        $occupiedRooms = Room::whereIn('kos_id', $ownerKosIds)->where('status', 'occupied')->count();
+
+        if ($totalRooms > 0) {
+            $tingkatHunian = (int) round(($occupiedRooms / $totalRooms) * 100);
+        } else {
+            $capacity = (int) $ownerKos->sum('rooms');
+            $activeTenants = Booking::whereIn('kos_id', $ownerKosIds)->whereIn('status', ['confirmed', 'active'])->count();
+            $tingkatHunian = $capacity > 0 ? (int) min(100, round(($activeTenants / $capacity) * 100)) : 0;
+        }
+
+        // 4. Pertumbuhan Pendapatan (dibandingkan bulan sebelumnya)
+        $currMonthRev = (float) Invoice::whereIn('kos_id', $ownerKosIds)
+            ->where('status', 'paid')
+            ->whereMonth('paid_at', now()->month)
+            ->whereYear('paid_at', now()->year)
+            ->sum('total_amount');
+
+        $prevMonthRev = (float) Invoice::whereIn('kos_id', $ownerKosIds)
+            ->where('status', 'paid')
+            ->whereMonth('paid_at', now()->subMonth()->month)
+            ->whereYear('paid_at', now()->subMonth()->year)
+            ->sum('total_amount');
+
+        $pertumbuhan = $prevMonthRev > 0
+            ? round((($currMonthRev - $prevMonthRev) / $prevMonthRev) * 100, 1)
+            : ($currMonthRev > 0 ? 100.0 : 0.0);
+
         $summary = [
-            'pendapatan' => 31250000,
-            'booking' => 42,
-            'tingkat_hunian' => 78,
-            'pertumbuhan' => 12.5,
+            'pendapatan' => $totalPendapatan,
+            'booking' => $totalBooking,
+            'tingkat_hunian' => $tingkatHunian,
+            'pertumbuhan' => $pertumbuhan,
         ];
 
-        $monthlyRevenue = [
-            ['month' => 'Mar', 'value' => 4200000],
-            ['month' => 'Apr', 'value' => 5100000],
-            ['month' => 'Mei', 'value' => 4600000],
-            ['month' => 'Jun', 'value' => 5800000],
-            ['month' => 'Jul', 'value' => 5300000],
-            ['month' => 'Agu', 'value' => 7000000],
-        ];
+        // 5. Tren Pendapatan 6 Bulan Terakhir
+        $monthlyRevenue = [];
+        for ($i = 5; $i >= 0; $i--) {
+            $dt = now()->subMonths($i);
+            $val = (float) Invoice::whereIn('kos_id', $ownerKosIds)
+                ->where('status', 'paid')
+                ->whereMonth('paid_at', $dt->month)
+                ->whereYear('paid_at', $dt->year)
+                ->sum('total_amount');
 
-        $kosPerformance = [
-            ['title' => 'Kos Putri Melati', 'occupancy' => 92, 'booking' => 18, 'revenue' => 15300000],
-            ['title' => 'Kos Putra Anggrek', 'occupancy' => 81, 'booking' => 15, 'revenue' => 11250000],
-            ['title' => 'Kos Eksklusif Mawar', 'occupancy' => 60, 'booking' => 9, 'revenue' => 13500000],
-        ];
+            $monthlyRevenue[] = [
+                'month' => $dt->translatedFormat('M'),
+                'value' => $val,
+            ];
+        }
+
+        // 6. Performa Masing-Masing Properti Kos
+        $kosPerformance = [];
+        foreach ($ownerKos as $k) {
+            $kTotalRooms = $k->rooms()->count();
+            $kOccupied = $k->rooms()->where('status', 'occupied')->count();
+
+            if ($kTotalRooms > 0) {
+                $kOcc = (int) round(($kOccupied / $kTotalRooms) * 100);
+            } else {
+                $kCap = (int) ($k->rooms ?? 0);
+                $kActive = $k->bookings()->whereIn('status', ['confirmed', 'active'])->count();
+                $kOcc = $kCap > 0 ? (int) min(100, round(($kActive / $kCap) * 100)) : 0;
+            }
+
+            $kBookings = $k->bookings()->count();
+            $kRev = (float) $k->invoices()->where('status', 'paid')->sum('total_amount');
+
+            $kosPerformance[] = [
+                'title' => $k->title,
+                'occupancy' => $kOcc,
+                'booking' => $kBookings,
+                'revenue' => $kRev,
+            ];
+        }
 
         return view('owner.laporan.statistik', compact('summary', 'monthlyRevenue', 'kosPerformance'));
     }
 
     /**
-     * Halaman notifikasi owner.
+     * Halaman notifikasi owner (Data nyata dari database notifications).
      */
     public function notifikasi(): View
     {
-        $notifications = [
-            [
-                'title' => 'Pesanan Baru',
-                'message' => 'Ada pesanan baru untuk Kos Putri Melati dari Dewi Sartika.',
-                'time' => '10 menit yang lalu',
-                'is_read' => false,
-                'icon' => 'fa-bell text-primary',
-            ],
-            [
-                'title' => 'Pembayaran Berhasil',
-                'message' => 'Pembayaran untuk INV-2026-08-0001 telah berhasil dikonfirmasi.',
-                'time' => '1 jam yang lalu',
-                'is_read' => true,
-                'icon' => 'fa-check-circle text-success',
-            ],
-            [
-                'title' => 'Pertanyaan Baru',
-                'message' => 'Ada pesan pertanyaan baru terkait Kos Putra Anggrek.',
-                'time' => '1 hari yang lalu',
-                'is_read' => true,
-                'icon' => 'fa-envelope text-info',
-            ],
-        ];
+        $dbNotifs = Auth::user()->notifications()->latest()->take(30)->get();
+
+        $notifications = $dbNotifs->map(function ($n) {
+            return [
+                'id' => $n->id,
+                'title' => $n->data['title'] ?? 'Pemberitahuan',
+                'message' => $n->data['message'] ?? '',
+                'time' => $n->created_at->diffForHumans(),
+                'is_read' => $n->read_at !== null,
+                'icon' => ($n->data['icon'] ?? 'fa-bell') . ' text-primary',
+                'action_url' => $n->data['action_url'] ?? null,
+            ];
+        })->toArray();
+
+        // Tandai seluruh notifikasi unread sebagai sudah dibaca
+        Auth::user()->unreadNotifications->markAsRead();
 
         return view('owner.notifikasi.index', compact('notifications'));
+    }
+
+    /**
+     * Balas ulasan dari penghuni kos.
+     */
+    public function replyReview(Request $request, Review $review): RedirectResponse
+    {
+        $owner = Auth::user();
+
+        // Verifikasi kepemilikan kos
+        if ($review->kos->owner_id !== $owner->id) {
+            abort(403, 'Anda tidak berhak membalas ulasan pada properti ini.');
+        }
+
+        $validated = $request->validate([
+            'reply' => ['required', 'string', 'min:3', 'max:1000'],
+        ], [
+            'reply.required' => 'Balasan ulasan wajib diisi.',
+            'reply.min' => 'Balasan ulasan minimal 3 karakter.',
+            'reply.max' => 'Balasan ulasan maksimal 1000 karakter.',
+        ]);
+
+        $review->update([
+            'reply' => strip_tags($validated['reply']),
+        ]);
+
+        // Notifikasi ke reviewer jika memiliki akun
+        try {
+            $review->user?->notify(new \App\Notifications\TempatinNotification(
+                'Balasan Pemilik Kos',
+                'Pemilik ' . $review->kos->title . ' telah membalas ulasan Anda.',
+                route('kos.show', $review->kos->slug) . '#reviews',
+                'review',
+                'fa-reply'
+            ));
+        } catch (\Throwable $e) {
+            // Abaikan jika background notification gagal
+        }
+
+        return redirect()->back()->with('success', 'Balasan ulasan berhasil disimpan.');
+    }
+
+    /**
+     * Tampilkan daftar penghuni dan masa hunian aktif pada properti milik owner.
+     */
+    public function penghuni(Request $request): View
+    {
+        $ownerId = Auth::id();
+        $status = $request->query('status', 'active');
+
+        $query = Booking::with(['customer', 'kos', 'room', 'contract'])
+            ->whereHas('kos', function ($q) use ($ownerId) {
+                $q->where('owner_id', $ownerId);
+            });
+
+        if ($status === 'active') {
+            $query->where('status', 'active');
+        } elseif ($status === 'confirmed') {
+            $query->where('status', 'confirmed');
+        } elseif ($status === 'completed') {
+            $query->where('status', 'completed');
+        } else {
+            $query->whereIn('status', ['confirmed', 'active', 'completed']);
+        }
+
+        $tenants = $query->latest('start_date')->paginate(12)->withQueryString();
+
+        $activeCount = Booking::whereHas('kos', fn($q) => $q->where('owner_id', $ownerId))->where('status', 'active')->count();
+        $confirmedCount = Booking::whereHas('kos', fn($q) => $q->where('owner_id', $ownerId))->where('status', 'confirmed')->count();
+        $completedCount = Booking::whereHas('kos', fn($q) => $q->where('owner_id', $ownerId))->where('status', 'completed')->count();
+
+        return view('owner.penghuni.index', compact('tenants', 'status', 'activeCount', 'confirmedCount', 'completedCount'));
     }
 }

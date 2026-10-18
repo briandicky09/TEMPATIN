@@ -48,6 +48,9 @@
                 </div>
 
                 <div class="d-flex gap-2">
+                    <a href="{{ route('owner.kos.rooms.index', $kos['slug']) }}" class="btn" style="background-color: var(--surface-page-canvas); color: var(--color-midnight-ink); border: var(--border-hairline); font-weight: 600; font-size: 13px; padding: 10px 18px; border-radius: var(--radius-buttons);">
+                        <i class="fa fa-door-open mr-1"></i> Kelola Kamar ({{ $kos->rooms()->count() }})
+                    </a>
                     <a href="{{ route('owner.kos.edit', $kos['slug']) }}" class="btn" style="background-color: var(--color-notion-blue); color: #ffffff; font-weight: 700; font-size: 13px; padding: 10px 18px; border-radius: var(--radius-buttons); border: none; box-shadow: 0 2px 8px rgba(0, 117, 222, 0.25);">
                         <i class="fa fa-edit mr-1"></i> Edit Kos
                     </a>

@@ -30,13 +30,34 @@
                             </p>
                         </div>
 
-                        <form id="form-forgot-password" class="ts-form" method="POST" action="#" onsubmit="event.preventDefault(); alert('Instruksi pengaturan ulang kata sandi telah dikirim ke email kamu jika terdaftar di TEMPATIN.');">
+                        @if (session('status'))
+                            <div class="alert alert-success d-flex align-items-center mb-4" role="alert" style="border-radius: var(--radius-buttons); font-size: 13.5px; border-left: 4px solid #10b981;">
+                                <i class="fa fa-check-circle mr-2"></i>
+                                <div>{{ session('status') }}</div>
+                            </div>
+                        @endif
+
+                        @if ($errors->any())
+                            <div class="alert alert-danger mb-4" role="alert" style="border-radius: var(--radius-buttons); font-size: 13.5px; border-left: 4px solid #ef4444;">
+                                <div class="d-flex align-items-center mb-1">
+                                    <i class="fa fa-exclamation-circle mr-2"></i>
+                                    <strong>Gagal Mengirim Tautan:</strong>
+                                </div>
+                                <ul class="mb-0 pl-3">
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
+
+                        <form id="form-forgot-password" class="ts-form" method="POST" action="{{ route('password.email') }}">
                             @csrf
 
                             <!-- Email Input -->
                             <div class="form-group mb-4">
                                 <label for="forgot-email" style="font-size: 13px; font-weight: 600; color: var(--color-midnight-ink); margin-bottom: 6px;">Alamat Email</label>
-                                <input type="email" class="form-control" id="forgot-email" name="email" placeholder="nama@email.com" required style="border-radius: var(--radius-inputs); border: var(--border-hairline); font-size: 14px; padding: 10px 14px;">
+                                <input type="email" class="form-control" id="forgot-email" name="email" value="{{ old('email') }}" placeholder="nama@email.com" required autofocus style="border-radius: var(--radius-inputs); border: var(--border-hairline); font-size: 14px; padding: 10px 14px;">
                             </div>
 
                             <!-- Submit Button -->

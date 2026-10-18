@@ -23,6 +23,6 @@ class HomeController extends Controller
      */
     public function about(): View
     {
-        return view('owner.tentang');
+        return view('tentang.index');
     }
 }

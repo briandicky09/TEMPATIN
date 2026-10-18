@@ -28,7 +28,7 @@
                     </div>
                     <div class="mt-2 mt-md-0">
                         <span class="badge badge-light border text-dark px-3 py-2">
-                            <i class="fa fa-list-ul mr-1 text-primary"></i> Total {{ count($listKos) }} Kos Tersedia
+                            <i class="fa fa-list-ul mr-1 text-primary"></i> Total {{ method_exists($listKos, 'total') ? $listKos->total() : count($listKos) }} Kos Tersedia
                         </span>
                     </div>
                 </div>
@@ -77,12 +77,51 @@
                                            value="{{ request('city') }}" placeholder="Contoh: Surabaya, Yogyakarta">
                                 </div>
 
-                                <!-- Max Price -->
-                                <div class="form-group mb-4">
-                                    <label for="max_price" class="small font-weight-bold">Batas Harga Maksimal (Rp)</label>
-                                    <input type="number" class="form-control" id="max_price" name="max_price" 
-                                           value="{{ request('max_price') }}" placeholder="Contoh: 1500000">
+                                <!-- Price Range -->
+                                <div class="row">
+                                    <div class="col-6 mb-3">
+                                        <label for="min_price" class="small font-weight-bold">Harga Min (Rp)</label>
+                                        <input type="number" class="form-control" id="min_price" name="min_price" 
+                                               value="{{ request('min_price') }}" placeholder="0">
+                                    </div>
+                                    <div class="col-6 mb-3">
+                                        <label for="max_price" class="small font-weight-bold">Harga Max (Rp)</label>
+                                        <input type="number" class="form-control" id="max_price" name="max_price" 
+                                               value="{{ request('max_price') }}" placeholder="Contoh: 1500000">
+                                    </div>
                                 </div>
+
+                                <!-- Sorting -->
+                                <div class="form-group mb-3">
+                                    <label for="sort" class="small font-weight-bold">Urutkan Berdasarkan</label>
+                                    <select class="custom-select" id="sort" name="sort">
+                                        <option value="newest" {{ request('sort') === 'newest' ? 'selected' : '' }}>Terbaru</option>
+                                        <option value="price_asc" {{ request('sort') === 'price_asc' ? 'selected' : '' }}>Harga Terendah</option>
+                                        <option value="price_desc" {{ request('sort') === 'price_desc' ? 'selected' : '' }}>Harga Tertinggi</option>
+                                        <option value="rating_desc" {{ request('sort') === 'rating_desc' ? 'selected' : '' }}>Rating Tertinggi</option>
+                                    </select>
+                                </div>
+
+                                <!-- Facilities Checkboxes -->
+                                @if(isset($facilities) && $facilities->isNotEmpty())
+                                    <div class="form-group mb-4">
+                                        <label class="small font-weight-bold d-block mb-2">Fasilitas Kos</label>
+                                        <div style="max-height: 180px; overflow-y: auto; padding-right: 5px;">
+                                            @foreach($facilities as $facility)
+                                                <div class="custom-control custom-checkbox mb-1">
+                                                    <input type="checkbox" class="custom-control-input" 
+                                                           id="fac_{{ $facility->id }}" 
+                                                           name="facilities[]" 
+                                                           value="{{ $facility->id }}"
+                                                           {{ in_array($facility->id, (array) request('facilities', [])) ? 'checked' : '' }}>
+                                                    <label class="custom-control-label small" for="fac_{{ $facility->id }}">
+                                                        {{ $facility->name }}
+                                                    </label>
+                                                </div>
+                                            @endforeach
+                                        </div>
+                                    </div>
+                                @endif
 
                                 <!-- Submit Button -->
                                 <button type="submit" class="btn btn-primary btn-block py-2 font-weight-bold">
@@ -204,6 +243,12 @@
                                 </div>
                             </div>
                             @endforelse
+
+                            @if(method_exists($listKos, 'hasPages') && $listKos->hasPages())
+                                <div class="col-12 mt-4 d-flex justify-content-center">
+                                    {{ $listKos->links('pagination::bootstrap-4') }}
+                                </div>
+                            @endif
                         </div>
                     </div>
 

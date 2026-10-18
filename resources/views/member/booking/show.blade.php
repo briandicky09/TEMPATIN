@@ -165,18 +165,41 @@
 
                         @if($booking->status === 'pending')
                         <div class="pt-3 mt-3 border-top" style="border-color: rgba(0,0,0,0.06) !important;">
+                            <div class="p-3 rounded mb-2" style="background-color: #fffbeb; border: 1px solid #fde68a; color: #92400e; font-size: 13px;">
+                                <div class="font-weight-bold mb-1"><i class="fa fa-clock mr-1"></i> Menunggu Persetujuan Pemilik</div>
+                                <div>Pengajuan booking Anda sedang ditinjau oleh pemilik kos. Tombol pembayaran akan aktif otomatis begitu booking disetujui.</div>
+                            </div>
+                        </div>
+                        @elseif($booking->status === 'approved')
+                        <div class="pt-3 mt-3 border-top" style="border-color: rgba(0,0,0,0.06) !important;">
+                            <div class="p-3 rounded mb-3" style="background-color: var(--color-sky-tint); border: 1px solid rgba(0, 117, 222, 0.25); color: var(--color-ink-black); font-size: 13px;">
+                                <div class="font-weight-bold mb-1" style="color: var(--color-notion-blue);"><i class="fa fa-check-circle mr-1"></i> Pengajuan Disetujui Pemilik!</div>
+                                <div>Silakan lanjutkan ke gerbang pembayaran Midtrans untuk menyelesaikan transaksi dan mengamankan kamar Anda.</div>
+                            </div>
                             <a href="{{ route('member.booking.payment', ['slug' => $booking->kos->slug, 'booking_code' => $booking->booking_code]) }}" class="btn btn-block" style="background-color: var(--color-notion-blue); color: #ffffff; font-weight: 700; font-size: 14px; padding: 12px; border-radius: var(--radius-buttons); text-align: center; border: none; box-shadow: 0 4px 12px rgba(0, 117, 222, 0.25);">
-                                <i class="fa fa-credit-card mr-2"></i> Lanjutkan Pembayaran (Midtrans)
+                                <i class="fa fa-credit-card mr-2"></i> Bayar Sekarang (Midtrans)
                             </a>
                         </div>
-                        @else
+                        @elseif(in_array($booking->status, ['confirmed', 'active', 'completed']))
                         <div class="pt-3 mt-3 border-top text-center" style="border-color: rgba(0,0,0,0.06) !important;">
                             <span class="badge px-3 py-2 mb-3 d-inline-block" style="background-color: var(--color-sky-tint); color: var(--color-ink-black); font-size: 12px;">
                                 <i class="fa fa-check-circle mr-1 text-primary"></i> Pembayaran Terverifikasi
                             </span>
-                            <a href="{{ route('member.booking.nota.pdf', $booking->booking_code) }}" class="btn btn-block" style="background-color: var(--color-notion-blue); color: #ffffff; font-weight: 700; font-size: 13.5px; padding: 12px; border-radius: var(--radius-buttons); text-align: center; border: none; box-shadow: 0 4px 12px rgba(0, 117, 222, 0.25);">
-                                <i class="fa fa-file-pdf mr-2"></i> Unduh Nota Pembayaran (PDF)
-                            </a>
+                            <div class="d-flex flex-column" style="gap: 8px;">
+                                <a href="{{ route('contracts.forBooking', $booking->booking_code) }}" class="btn btn-block font-weight-bold" style="background-color: var(--surface-page-canvas); color: var(--color-midnight-ink); border: var(--border-hairline); font-size: 13.5px; padding: 11px; border-radius: var(--radius-buttons);">
+                                    <i class="fa fa-file-contract mr-2" style="color: var(--color-notion-blue);"></i> Perjanjian / Kontrak Sewa Digital
+                                </a>
+                                <a href="{{ route('member.booking.nota.pdf', $booking->booking_code) }}" class="btn btn-block" style="background-color: var(--color-notion-blue); color: #ffffff; font-weight: 700; font-size: 13.5px; padding: 12px; border-radius: var(--radius-buttons); text-align: center; border: none; box-shadow: 0 4px 12px rgba(0, 117, 222, 0.25);">
+                                    <i class="fa fa-file-pdf mr-2"></i> Unduh Nota Pembayaran (PDF)
+                                </a>
+                            </div>
+                        </div>
+                        @elseif($booking->status === 'rejected')
+                        <div class="pt-3 mt-3 border-top" style="border-color: rgba(0,0,0,0.06) !important;">
+                            <div class="p-3 rounded text-left" style="background-color: #fee2e2; border: 1px solid #fca5a5; color: #991b1b; font-size: 13px;">
+                                <div class="font-weight-bold mb-1"><i class="fa fa-times-circle mr-1"></i> Pengajuan Ditolak</div>
+                                <div>{{ $booking->rejection_reason ?? 'Maaf, pengajuan booking tidak dapat disetujui oleh pemilik kos saat ini.' }}</div>
+                            </div>
                         </div>
                         @endif
                     </div>

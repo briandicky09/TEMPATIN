@@ -90,4 +90,68 @@ class User extends Authenticatable
     {
         return $this->role === 'customer';
     }
+
+    /**
+     * Cek apakah user memiliki peran sebagai admin platform.
+     */
+    public function isAdmin(): bool
+    {
+        return $this->role === 'admin';
+    }
+
+    /**
+     * Record favorit yang disimpan oleh user ini.
+     */
+    public function favorites(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Favorite::class, 'user_id');
+    }
+
+    /**
+     * Kos yang difavoritkan oleh user ini.
+     */
+    public function favoriteKos(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
+        return $this->belongsToMany(Kos::class, 'favorites', 'user_id', 'kos_id')->withTimestamps();
+    }
+
+    /**
+     * Alias untuk favoriteKos.
+     */
+    public function favoritedKos(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
+        return $this->favoriteKos();
+    }
+
+    /**
+     * Pengajuan survei yang dibuat oleh customer ini.
+     */
+    public function surveys(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Survey::class, 'customer_id');
+    }
+
+    /**
+     * Laporan kerusakan yang diajukan oleh user ini.
+     */
+    public function maintenanceReports(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(MaintenanceReport::class, 'customer_id');
+    }
+
+    /**
+     * Percakapan chat sebagai customer.
+     */
+    public function customerConversations(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Conversation::class, 'customer_id');
+    }
+
+    /**
+     * Percakapan chat sebagai owner.
+     */
+    public function ownerConversations(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Conversation::class, 'owner_id');
+    }
 }

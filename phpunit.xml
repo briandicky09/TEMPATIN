@@ -28,5 +28,8 @@
         <env name="TELESCOPE_ENABLED" value="false"/>
         <env name="DB_CONNECTION" value="sqlite"/>
         <env name="DB_DATABASE" value="database/testing.sqlite"/>
+        <env name="MIDTRANS_SERVER_KEY" value="SB-Mid-server-test-key-mock-12345"/>
+        <env name="MIDTRANS_CLIENT_KEY" value="SB-Mid-client-test-key-mock-12345"/>
+        <env name="MIDTRANS_IS_PRODUCTION" value="false"/>
     </php>
 </phpunit>
