@@ -12,7 +12,7 @@
          1. NOTION HERO (CENTERED STACK LAYOUT)
          ========================================================================= -->
     <section class="pt-3 pb-5 position-relative overflow-hidden" style="background-color: var(--surface-page-canvas); border-bottom: var(--border-hairline);">
-        <!-- Solid City Skyline Illustration Backdrop Behind Headline -->
+        <!-- Animated Architectural City Skyline Backdrop Behind Headline -->
         <div class="hero-skyline-backdrop" aria-hidden="true" style="position: absolute; top: 15px; left: 50%; transform: translateX(-50%); width: 100%; max-width: 1240px; height: 360px; pointer-events: none; z-index: 0; opacity: 0.42; mix-blend-mode: multiply; user-select: none;">
             @include('partials.city-skyline')
         </div>
