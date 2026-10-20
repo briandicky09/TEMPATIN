@@ -5703,7 +5703,7 @@ img.mfp-img {
 }
 
 .ts-card .card-img,
-.ts-item__image {
+.ts-item:not(.ts-item__list) .ts-item__image {
     height: 220px !important;
     background-size: cover !important;
     background-position: center center !important;

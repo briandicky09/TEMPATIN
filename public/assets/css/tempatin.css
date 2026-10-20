@@ -875,39 +875,74 @@ p {
 }
 
 /* Horizontal List Cards on /kos */
+.card.ts-item.ts-item__list,
 .ts-item__list {
-    display: flex;
-    flex-direction: row;
-    min-height: 180px;
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: stretch !important;
+    min-height: 240px;
+    border-radius: var(--radius-cards) !important;
+    overflow: hidden !important;
 }
 
-@media (max-width: 767px) {
-    .ts-item__list {
-        flex-direction: column;
-    }
-}
-
+.card.ts-item.ts-item__list .card-img.ts-item__image,
 .ts-item__list .card-img.ts-item__image {
-    min-width: 240px;
-    max-width: 280px;
-    border-top-right-radius: 0;
-    border-bottom-left-radius: var(--radius-cards);
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    flex: 0 0 280px !important;
+    width: 280px !important;
+    min-width: 280px !important;
+    max-width: 280px !important;
+    height: 100% !important;
+    min-height: 100% !important;
+    align-self: stretch !important;
+    background-size: cover !important;
+    background-position: center center !important;
+    background-repeat: no-repeat !important;
+    border-top-left-radius: var(--radius-cards) !important;
+    border-bottom-left-radius: var(--radius-cards) !important;
+    border-top-right-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+    display: block !important;
+}
+
+.card.ts-item.ts-item__list .card-body,
+.ts-item__list .card-body,
+.ts-item__list .ts-item__body {
+    flex: 1 1 auto !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
+    padding-left: 1.5rem !important;
 }
 
 @media (max-width: 767px) {
-    .ts-item__list .card-img.ts-item__image {
-        min-width: 100%;
-        max-width: 100%;
-        border-top-right-radius: var(--radius-cards);
-        border-bottom-left-radius: 0;
+    .card.ts-item.ts-item__list,
+    .ts-item__list {
+        flex-direction: column !important;
     }
-}
 
-.ts-item__list .ts-item__body {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    .card.ts-item.ts-item__list .card-img.ts-item__image,
+    .ts-item__list .card-img.ts-item__image {
+        flex: none !important;
+        width: 100% !important;
+        min-width: 100% !important;
+        max-width: 100% !important;
+        height: 220px !important;
+        min-height: 220px !important;
+        align-self: auto !important;
+        border-top-left-radius: var(--radius-cards) !important;
+        border-top-right-radius: var(--radius-cards) !important;
+        border-bottom-left-radius: 0 !important;
+        border-bottom-right-radius: 0 !important;
+    }
+
+    .card.ts-item.ts-item__list .card-body,
+    .ts-item__list .card-body,
+    .ts-item__list .ts-item__body {
+        padding-left: 1rem !important;
+    }
 }
 
 /* Kos Meta Badges */

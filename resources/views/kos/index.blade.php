@@ -140,7 +140,7 @@
                                     
                                     <!-- Image Thumbnail -->
                                     <a href="{{ route('kos.show', $kos['slug']) }}" class="card-img ts-item__image" 
-                                       style="background-image: url('{{ asset($kos['thumbnail']) }}'); background-size: cover; background-position: center; min-height: 200px;">
+                                       style="background-image: url('{{ asset($kos['thumbnail']) }}');">
                                         <!-- Type Pill Badge -->
                                         @php
                                             $typeLower = strtolower($kos['type'] ?? 'campur');
